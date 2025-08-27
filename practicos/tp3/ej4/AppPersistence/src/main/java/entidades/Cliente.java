@@ -1,12 +1,23 @@
 package entidades;
 
+import lombok.*;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "cliente")
+@Audited
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cliente implements Serializable {
 
     @Serial
@@ -14,74 +25,48 @@ public class Cliente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long clienteId;
-    @Column(name = "nombre")
+
+    @NonNull
+    @Column(name = "nombre", nullable = false)
     private String nombre;
-    @Column(name = "apellido")
+
+    @NonNull
+    @Column(name = "apellido", nullable = false)
     private String apellido;
-    @Column(name = "dni", unique = true)
+
+    @Column(name = "dni", unique = true, nullable = false)
     private int dni;
-    // cascada ALL es para que si elimino un cliente (padre), se elimine su domicilio (hijo) también
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_domicilio", referencedColumnName = "domicilioId")
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "fk_domicilio")
     private Domicilio domicilio;
 
-    //En los Constructores: this.clienteId = clienteId; // no es necesario porque lo vamos a crear desde la BDD
+    @Builder.Default
+    @OneToMany(mappedBy = "cliente", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Factura> facturas = new ArrayList<>();
 
-    public Cliente(Long clienteId, String nombre, String apellido, int dni, Domicilio domicilio) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.dni = dni;
-        this.domicilio = domicilio;
+    // Helper methods
+    public void addFactura(Factura factura) {
+        if (factura == null) return;
+        if (!facturas.contains(factura)) facturas.add(factura);
+        if (factura.getCliente() != this) factura.setCliente(this);
     }
 
-    public Cliente(String nombre, String apellido, int dni) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.dni = dni;
+    public void removeFactura(Factura factura) {
+        if (factura == null) return;
+        facturas.remove(factura);
+        if (factura.getCliente() == this) factura.setCliente(null);
     }
 
-    public Cliente() {
-
-    }
-
-    public Domicilio getDomicilio() {
-        return domicilio;
-    }
-
-    public void setDomicilio(Domicilio domicilio) {
-        this.domicilio = domicilio;
-    }
-
-    public Long getClienteId() {
-        return clienteId;
-    }
-
-    public void setClienteId(Long clienteId) {
-        this.clienteId = clienteId;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public int getDni() {
-        return dni;
-    }
-
-    public void setDni(int dni) {
-        this.dni = dni;
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "id=" + clienteId +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", dni=" + dni +
+                '}';
     }
 }

@@ -12,34 +12,94 @@ public class PersistenceApp {
         EntityManager em = emf.createEntityManager();
 
         try {
-            em.getTransaction().begin(); // Inicia una nueva transacción en la base de datos
+            em.getTransaction().begin();
 
-            Cliente cliente = new Cliente("Juan", "Pérez", 12345678);
-            Domicilio domicilio = new Domicilio("Calle Falsa", 123);
-            cliente.setDomicilio(domicilio); // Asocia el dom al cliente
-            domicilio.setCliente(cliente); // Asocia el cliente al domicilio (esto es opcional, pero útil si necesitas acceder al cliente desde el domicilio)
+//            // Cliente + domicilio (builder Lombok)
+//            Domicilio domicilio = Domicilio.builder()
+//                    .nombreCalle("Calle Principal")
+//                    .numero(456)
+//                    .build();
+//
+//            Cliente cliente = Cliente.builder()
+//                    .nombre("María")
+//                    .apellido("Gómez")
+//                    .dni(87654321)
+//                    .domicilio(domicilio)
+//                    .build();
+//
+//
+//            em.persist(cliente); // cascada a domicilio
+//
+//            // Categorías y artículos
+//            Categoria perecederos = Categoria.builder().denominacion("Perecederos").build();
+//            Categoria lacteos = Categoria.builder().denominacion("Lácteos").build();
+//            Categoria limpieza = Categoria.builder().denominacion("Limpieza").build();
+//
+//            Articulo yogurt = Articulo.builder()
+//                    .cantidad(200)
+//                    .denominacion("Yogurt Entero")
+//                    .precio(1499)
+//                    .build();
+//            Articulo detergente = Articulo.builder()
+//                    .cantidad(300)
+//                    .denominacion("Detergente Líquido")
+//                    .precio(3000)
+//                    .build();
+//
+//            yogurt.addCategoria(perecederos);
+//            yogurt.addCategoria(lacteos);
+//            detergente.addCategoria(limpieza);
+//
+//            em.persist(yogurt);
+//            em.persist(detergente);
+//
+//            // Factura y detalles
+//            Factura factura = Factura.builder()
+//                    .numero(12)
+//                    .cliente(cliente)
+//                    .fecha("2023-10-10")
+//                    .build();
+//
+//            Factura factura2 = Factura.builder().build();
+//
+//            DetalleFactura detalle1 = DetalleFactura.builder()
+//                    .cantidad(2)
+//                    .subtotal(2 * yogurt.getPrecio())
+//                    .articulo(yogurt)
+//                    .build();
+//            factura.addDetalle(detalle1);
+//
+//            DetalleFactura detalle2 = DetalleFactura.builder()
+//                    .cantidad(5)
+//                    .subtotal(5 * detergente.getPrecio())
+//                    .articulo(detergente)
+//                    .build();
+//            factura.addDetalle(detalle2);
+//
+//            factura.setTotal((int) (detalle1.getSubtotal() + detalle2.getSubtotal()));
 
-            em.persist(cliente); // Marca el objeto cli para ser insertado en la base de datos
-            em.flush(); // Fuerza la sincronización inmediata de los cambios pendientes con la base de datos
+    //            Factura factura = em.find(Factura.class, 1L);
+    //            factura.setNumero(85);
+    //
+    //            em.merge(factura);
+    //            em.remove(factura);
+    //
+    //            em.getTransaction().commit();
 
-            Domicilio dom = em.find(Domicilio.class, 1L); // Busca un dom existente por su ID
-            Cliente cli = em.find(Cliente.class, 1L); // Busca un cli existente por su ID
-            System.out.println("Obtengo Cliente desde Domicilio: " + dom.getCliente().getNombre() + " " + dom.getCliente().getApellido());
-            System.out.println("Obtengo Domicilio desde Cliente: " + cli.getDomicilio().getNombreCalle() + " " + cli.getDomicilio().getNumero());
-
-            
-            // Si se llama a flush, pero no a commit, los cambios se envían a la base de datos pero no se confirman; si ocurre un rollback o termina el bloque sin commit, los cambios se pierden.
-            em.getTransaction().commit(); // Confirma la transacción y guarda los cambios en la base de datos
+//            System.out.println("Factura persistida id=" + factura.getFacturaId());
+//            System.out.println("Detalles: " + factura.getDetallesFactura().size());
+//
+//            System.out.println("Factura con datos: " + factura);
+//            System.out.println("Factura sin datos: " + factura2);
 
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback(); // Revierte la transacción en caso de error
+                em.getTransaction().rollback();
             }
-            e.printStackTrace(); // Imprime el error en la consola para depuración
+            e.printStackTrace();
         } finally {
-            em.close(); // Cierra el EntityManager
-            emf.close(); // Cierra el EntityManagerFactory
-
+            em.close();
+            emf.close();
         }
     }
 }

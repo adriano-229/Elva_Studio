@@ -1,11 +1,23 @@
 package entidades;
 
+import lombok.*;
+import org.hibernate.envers.Audited;
+
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "articulo")
+@Audited
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Articulo implements Serializable {
 
     @Serial
@@ -13,6 +25,7 @@ public class Articulo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long articuloId;
 
     @Column(name = "cantidad")
@@ -24,45 +37,31 @@ public class Articulo implements Serializable {
     @Column(name = "precio")
     private double precio;
 
-    public Articulo(int cantidad, String denominacion, double precio) {
-        this.cantidad = cantidad;
-        this.denominacion = denominacion;
-        this.precio = precio;
+    // Owning side ManyToMany: cascade persist/merge so new categorías are saved with artículo
+    @Builder.Default
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "articulo_categoria",
+            joinColumns = @JoinColumn(name = "fk_articulo"),
+            inverseJoinColumns = @JoinColumn(name = "fk_categoria")
+    )
+    private List<Categoria> categorias = new ArrayList<>();
+
+    // Inverse side OneToMany (DetalleFactura lifecycle managed by Factura)
+    @Builder.Default
+    @OneToMany(mappedBy = "articulo")
+    private List<DetalleFactura> detalleFacturas = new ArrayList<>();
+
+    // Helper methods
+    public void addCategoria(Categoria categoria) {
+        if (categoria == null) return;
+        if (!categorias.contains(categoria)) categorias.add(categoria);
+        if (!categoria.getArticulos().contains(this)) categoria.getArticulos().add(this);
     }
 
-    public Articulo() {
-        // Constructor por defecto necesario para JPA
-    }
-
-    public Long getArticuloId() {
-        return articuloId;
-    }
-
-    public void setArticuloId(Long articuloId) {
-        this.articuloId = articuloId;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public String getDenominacion() {
-        return denominacion;
-    }
-
-    public void setDenominacion(String denominacion) {
-        this.denominacion = denominacion;
-    }
-
-    public double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
+    public void removeCategoria(Categoria categoria) {
+        if (categoria == null) return;
+        categorias.remove(categoria);
+        categoria.getArticulos().remove(this);
     }
 }

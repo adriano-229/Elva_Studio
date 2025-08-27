@@ -1,11 +1,21 @@
 package entidades;
 
+import lombok.*;
+import org.hibernate.envers.Audited;
+
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "domicilio")
+@Audited
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Domicilio implements Serializable {
 
     @Serial
@@ -13,61 +23,32 @@ public class Domicilio implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long domicilioId;
 
-    @Column(name = "calle")
+    @NonNull
+    @Column(name = "calle", nullable = false)
     private String nombreCalle;
 
-    @Column(name = "numero")
+    @Column(name = "numero", nullable = false)
     private int numero;
 
     @OneToOne(mappedBy = "domicilio")
     private Cliente cliente;
 
-    public Domicilio(Long domicilioId, String nombreCalle, int numero, Cliente cliente) {
-        this.domicilioId = domicilioId;
-        this.nombreCalle = nombreCalle;
-        this.numero = numero;
+    public void asignarACliente(Cliente cliente) {
         this.cliente = cliente;
+        if (cliente != null && cliente.getDomicilio() != this) {
+            cliente.setDomicilio(this);
+        }
     }
 
-    public Domicilio() {
-    }
-
-    public Domicilio(String nombreCalle, int numero) {
-        this.nombreCalle = nombreCalle;
-        this.numero = numero;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Long getDomicilioId() {
-        return domicilioId;
-    }
-
-    public void setDomicilioId(Long domicilioId) {
-        this.domicilioId = domicilioId;
-    }
-
-    public String getNombreCalle() {
-        return nombreCalle;
-    }
-
-    public void setNombreCalle(String nombreCalle) {
-        this.nombreCalle = nombreCalle;
-    }
-
-    public int getNumero() {
-        return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
+    @Override
+    public String toString() {
+        return "Domicilio{" +
+                "id=" + domicilioId +
+                ", calle='" + nombreCalle + '\'' +
+                ", numero=" + numero +
+                '}';
     }
 }

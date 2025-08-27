@@ -1,11 +1,23 @@
 package entidades;
 
+import lombok.*;
+import org.hibernate.envers.Audited;
+
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "categoria")
+@Audited
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Categoria implements Serializable {
 
     @Serial
@@ -13,32 +25,35 @@ public class Categoria implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long categoriaId;
 
-    @Column(name = "denominacion", unique = true)
+    @NonNull
+    @Column(name = "denominacion", unique = true, nullable = false)
     private String denominacion;
 
-    public Categoria(String denominacion) {
-        this.denominacion = denominacion;
+    // Lado inverso: no definimos cascade aquí; lo controla el owning side (Articulo.categorias)
+    @Builder.Default
+    @ManyToMany(mappedBy = "categorias")
+    private List<Articulo> articulos = new ArrayList<>();
+
+    public void addArticulo(Articulo articulo) {
+        if (articulo == null) return;
+        if (!articulos.contains(articulo)) articulos.add(articulo);
+        if (!articulo.getCategorias().contains(this)) articulo.getCategorias().add(this);
     }
 
-    public Categoria() {
-        // Constructor por defecto necesario para JPA
+    public void removeArticulo(Articulo articulo) {
+        if (articulo == null) return;
+        articulos.remove(articulo);
+        articulo.getCategorias().remove(this);
     }
 
-    public Long getCategoriaId() {
-        return categoriaId;
-    }
-
-    public void setCategoriaId(Long categoriaId) {
-        this.categoriaId = categoriaId;
-    }
-
-    public String getDenominacion() {
-        return denominacion;
-    }
-
-    public void setDenominacion(String denominacion) {
-        this.denominacion = denominacion;
+    @Override
+    public String toString() {
+        return "Categoria{" +
+                "id=" + categoriaId +
+                ", denominacion='" + denominacion + '\'' +
+                '}';
     }
 }
