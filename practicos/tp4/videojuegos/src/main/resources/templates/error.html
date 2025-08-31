@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Página de errores</title>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg bg-body-tertiary">
+		  <div class="container-fluid">
+		    <a class="navbar-brand" th:href="@{/inicio}">UNCUYO-Videojuegos</a>
+		    
+		    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+		        <li class="nav-item">
+		          <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" th:href="@{/crud}">CRUD</a>
+		        </li>
+		        
+		      </ul>
+		      <form class="d-flex" role="search">
+		        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+		        <button class="btn btn-outline-success" type="submit">Search</button>
+		      </form>
+		    </div>
+		  </div>
+		</nav>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="alert alert-danger mt-5" role="alert" th:if="${error}">
+				  <span th:text="${error}"></span>
+				</div>
+				<div class="alert alert-danger mt-5" role="alert" th:unless="${error}">
+				  Hubo un error(unless)
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</body>
+</html>
