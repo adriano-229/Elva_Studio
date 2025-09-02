@@ -1,0 +1,95 @@
+<diagram program="umletino" version="15.1"><zoom_level>1</zoom_level><element><id>UMLActor</id><coordinates><x>441</x><y>270</y><w>6</w><h>11</h></coordinates><panel_attributes>Usuario</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>461</x><y>276</y><w>10</w><h>3</h></coordinates><panel_attributes>Interfaz UI</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>443</x><y>279</y><w>3</w><h>7</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>465</x><y>278</y><w>3</w><h>8</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>474</x><y>276</y><w>21</w><h>3</h></coordinates><panel_attributes>SistemaAutenticacionController</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>482</x><y>278</y><w>3</w><h>11</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>506</x><y>276</y><w>19</w><h>3</h></coordinates><panel_attributes>SistemaAutenticacionService</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>513</x><y>278</y><w>3</w><h>12</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>527</x><y>296</y><w>10</w><h>3</h></coordinates><panel_attributes>usuario: Usuario</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>531</x><y>298</y><w>3</w><h>46</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;440</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>534</x><y>276</y><w>21</w><h>3</h></coordinates><panel_attributes>DAOSistemaAutenticacion</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>543</x><y>278</y><w>3</w><h>14</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;120</additional_attributes></element><element><id>Relation</id><coordinates><x>443</x><y>282</y><w>25</w><h>4</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-
+solicitarCambioContraseña(valor)</panel_attributes><additional_attributes>230;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>466</x><y>285</y><w>18</w><h>4</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-
+Event()</panel_attributes><additional_attributes>160;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>483</x><y>286</y><w>32</w><h>4</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-
+Usuario: buscarUsuario(username)</panel_attributes><additional_attributes>300;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>514</x><y>345</y><w>31</w><h>4</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-
+void:actualizarUsuario(usuario)</panel_attributes><additional_attributes>290;20;10;20</additional_attributes></element><element><id>Text</id><coordinates><x>462</x><y>268</y><w>8</w><h>8</h></coordinates><panel_attributes>// Boundary Element
+	  
+	  
+_umletcode=
+// Boundary Symbol
+drawCircle(50, 50, 20)
+drawLine(20, 50, 30, 50)
+drawLine(20, 30, 20, 70)	 
+	</panel_attributes><additional_attributes></additional_attributes></element><element><id>Text</id><coordinates><x>509</x><y>268</y><w>8</w><h>8</h></coordinates><panel_attributes>// Control Element
+	     
+	     
+_umletcode=
+// Control Symbol
+drawCircle(50, 50, 20)
+drawLine(44, 31, 54, 21)
+drawLine(44, 31, 54, 41)
+	</panel_attributes><additional_attributes></additional_attributes></element><element><id>Text</id><coordinates><x>539</x><y>268</y><w>8</w><h>8</h></coordinates><panel_attributes>// Control Element
+	     
+	     
+_umletcode=
+// Control Symbol
+drawCircle(50, 50, 20)
+drawLine(44, 31, 54, 21)
+drawLine(44, 31, 54, 41)
+	</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>544</x><y>346</y><w>21</w><h>4</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-
+void:merge(usuario)</panel_attributes><additional_attributes>190;20;10;20</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>443</x><y>284</y><w>2</w><h>72</h></coordinates><panel_attributes></panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>465</x><y>284</y><w>2</w><h>70</h></coordinates><panel_attributes></panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>482</x><y>287</y><w>2</w><h>66</h></coordinates><panel_attributes></panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>513</x><y>288</y><w>2</w><h>63</h></coordinates><panel_attributes></panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>543</x><y>346</y><w>2</w><h>4</h></coordinates><panel_attributes></panel_attributes><additional_attributes></additional_attributes></element><element><id>Text</id><coordinates><x>563</x><y>347</y><w>8</w><h>6</h></coordinates><panel_attributes>// Text Element
+// DB Symbol
+_umletcode=
+fg='black';
+bg='#222222';
+drawArc(0,0,width,height*2/5,0,180,true) //Parameters (x, y, width, height, start, extent, open)
+bg='bg';
+drawArc(0,0,width,height*2/5,180,180,true)  //Parameters (x, y, width, height, start, extent, open)
+fg='#929292';
+bg='#222222';
+drawRectangle(0,(height+0.5)/5,width,(height)*3/5-1)  //Parameters (x, y, width, height)
+fg='black'
+drawLine(0,height/5,0,height*4/5) //Parameters (x1, y1, x2, y2)
+drawLine(width,height/5,width,height*4/5) //Parameters (x1, y1, x2, y2)
+bg='bg';
+drawArc(0,height*1/5,width,height*2/5,180,180,true)  //Parameters (x, y, width, height, start, extent, open)
+drawArc(0,height*2/5,width,height*2/5,180,180,true)  //Parameters (x, y, width, height, start, extent, open)
+bg='#222222'
+drawArc(0,height*3/5,width,height*2/5,180,180,true)  //Parameters (x, y, width, height, start, extent, open)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>544</x><y>348</y><w>21</w><h>3</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;190;10</additional_attributes></element><element><id>Relation</id><coordinates><x>514</x><y>349</y><w>31</w><h>3</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;290;10</additional_attributes></element><element><id>Relation</id><coordinates><x>466</x><y>352</y><w>18</w><h>3</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;160;10</additional_attributes></element><element><id>Relation</id><coordinates><x>444</x><y>353</y><w>23</w><h>3</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;210;10</additional_attributes></element><element><id>UMLFrame</id><coordinates><x>443</x><y>319</y><w>70</w><h>7</h></coordinates><panel_attributes>alt Error Validación: "Contraseña repetida"</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>483</x><y>321</y><w>32</w><h>4</h></coordinates><panel_attributes>lt=&lt;..
+Mensaje Error</panel_attributes><additional_attributes>10;20;300;20</additional_attributes></element><element><id>Relation</id><coordinates><x>466</x><y>322</y><w>18</w><h>4</h></coordinates><panel_attributes>lt=&lt;..
+Mensaje Error</panel_attributes><additional_attributes>10;20;160;20</additional_attributes></element><element><id>Relation</id><coordinates><x>444</x><y>323</y><w>23</w><h>4</h></coordinates><panel_attributes>lt=&lt;..
+Mensaje Error</panel_attributes><additional_attributes>10;20;210;20</additional_attributes></element><element><id>Relation</id><coordinates><x>513</x><y>350</y><w>3</w><h>12</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element><element><id>Relation</id><coordinates><x>482</x><y>352</y><w>3</w><h>10</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;80</additional_attributes></element><element><id>Relation</id><coordinates><x>465</x><y>353</y><w>3</w><h>8</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>Relation</id><coordinates><x>443</x><y>355</y><w>3</w><h>7</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>Text</id><coordinates><x>478</x><y>268</y><w>8</w><h>8</h></coordinates><panel_attributes>// Control Element
+	     
+	     
+_umletcode=
+// Control Symbol
+drawCircle(50, 50, 20)
+drawLine(44, 31, 54, 21)
+drawLine(44, 31, 54, 41)
+	</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>514</x><y>288</y><w>32</w><h>4</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-
+Usuario:buscarUsuarioPorNombre(username)</panel_attributes><additional_attributes>300;20;10;20</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>543</x><y>290</y><w>2</w><h>15</h></coordinates><panel_attributes></panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>544</x><y>289</y><w>22</w><h>4</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-
+Object:find(id)</panel_attributes><additional_attributes>200;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>544</x><y>291</y><w>22</w><h>3</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;200;10</additional_attributes></element><element><id>Text</id><coordinates><x>564</x><y>288</y><w>8</w><h>6</h></coordinates><panel_attributes>// Text Element
+// DB Symbol
+_umletcode=
+fg='black';
+bg='#222222';
+drawArc(0,0,width,height*2/5,0,180,true) //Parameters (x, y, width, height, start, extent, open)
+bg='bg';
+drawArc(0,0,width,height*2/5,180,180,true)  //Parameters (x, y, width, height, start, extent, open)
+fg='#929292';
+bg='#222222';
+drawRectangle(0,(height+0.5)/5,width,(height)*3/5-1)  //Parameters (x, y, width, height)
+fg='black'
+drawLine(0,height/5,0,height*4/5) //Parameters (x1, y1, x2, y2)
+drawLine(width,height/5,width,height*4/5) //Parameters (x1, y1, x2, y2)
+bg='bg';
+drawArc(0,height*1/5,width,height*2/5,180,180,true)  //Parameters (x, y, width, height, start, extent, open)
+drawArc(0,height*2/5,width,height*2/5,180,180,true)  //Parameters (x, y, width, height, start, extent, open)
+bg='#222222'
+drawArc(0,height*3/5,width,height*2/5,180,180,true)  //Parameters (x, y, width, height, start, extent, open)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>531</x><y>299</y><w>14</w><h>3</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;120;10</additional_attributes></element><element><id>Relation</id><coordinates><x>483</x><y>350</y><w>32</w><h>3</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;300;10</additional_attributes></element><element><id>Text</id><coordinates><x>527</x><y>288</y><w>8</w><h>8</h></coordinates><panel_attributes>// Entity Element
+	    
+	      
+_umletcode=
+// Entity Symbol
+drawCircle(50, 50, 20)
+drawLine(30, 70, 70, 70)
+	</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>514</x><y>301</y><w>31</w><h>3</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;10;290;10</additional_attributes></element><element><id>Relation</id><coordinates><x>543</x><y>304</y><w>3</w><h>44</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;420</additional_attributes></element><element><id>Relation</id><coordinates><x>483</x><y>309</y><w>32</w><h>4</h></coordinates><panel_attributes>lt=&lt;..
+Mensaje Error</panel_attributes><additional_attributes>10;20;300;20</additional_attributes></element><element><id>Relation</id><coordinates><x>466</x><y>311</y><w>18</w><h>4</h></coordinates><panel_attributes>lt=&lt;..
+Mensaje Error</panel_attributes><additional_attributes>10;20;160;20</additional_attributes></element><element><id>Relation</id><coordinates><x>444</x><y>312</y><w>23</w><h>4</h></coordinates><panel_attributes>lt=&lt;..
+Mensaje Error</panel_attributes><additional_attributes>10;20;210;20</additional_attributes></element><element><id>UMLFrame</id><coordinates><x>443</x><y>308</y><w>70</w><h>7</h></coordinates><panel_attributes>alt Error Validación: "Debe ingresar la contraseña" </panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>543</x><y>349</y><w>3</w><h>13</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;110</additional_attributes></element><element><id>Relation</id><coordinates><x>483</x><y>304</y><w>32</w><h>4</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-
+void: cambiarContraseña(usuario, nueva)</panel_attributes><additional_attributes>300;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>483</x><y>316</y><w>32</w><h>4</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-
+void: validarNoRepetida(usuario, nueva)</panel_attributes><additional_attributes>300;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>483</x><y>330</y><w>32</w><h>4</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-
+void: modificarUsuario(username, nueva, email)</panel_attributes><additional_attributes>300;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>514</x><y>339</y><w>20</w><h>4</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-
+setContraseñaActual(nueva)</panel_attributes><additional_attributes>180;20;10;20</additional_attributes></element></diagram>
