@@ -1,5 +1,5 @@
 package edu.egg.tinder.enumeration;
 
-public enum Sexo {
-	Macho, Hembra;
+public enum Tipo {
+	Gato, Perro;
 }
