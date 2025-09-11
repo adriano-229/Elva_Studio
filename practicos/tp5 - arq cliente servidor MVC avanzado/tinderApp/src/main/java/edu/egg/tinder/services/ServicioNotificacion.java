@@ -9,18 +9,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ServicioNotificacion {
-	 
-	@Autowired
-	private JavaMailSender mailSender;
-	
-	@Async
-	public void enviar(String cuerpo, String titulo, String mail) {
-		SimpleMailMessage mensaje = new SimpleMailMessage();
-		mensaje.setTo(mail);
-		mensaje.setFrom("");
-		mensaje.setSubject(titulo);
-		mensaje.setText(cuerpo);
-		
-		mailSender.send(mensaje);
-	}
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Async
+    public void enviar(String cuerpo, String titulo, String mail) {
+        SimpleMailMessage mensaje = new SimpleMailMessage();
+        mensaje.setTo(mail);
+        mensaje.setFrom("");
+        mensaje.setSubject(titulo);
+        mensaje.setText(cuerpo);
+
+        mailSender.send(mensaje);
+    }
 }
