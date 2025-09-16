@@ -1,10 +1,12 @@
 package elva.studio.entities;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import elva.studio.enumeration.TipoDocumento;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,8 +16,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED) 
 public abstract class Persona implements Serializable{
 	
@@ -29,7 +37,9 @@ public abstract class Persona implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaNacimiento;
 	
+	@Enumerated(EnumType.STRING)
 	private TipoDocumento tipoDocumento;
+	
 	private String numeroDocumento;
 	private String telefono;
 	private String correoElectronico;
