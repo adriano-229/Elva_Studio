@@ -1,29 +1,30 @@
 package elva.studio.entities;
 
-import java.io.Serializable;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 
 @Entity
-@Table(name = "pais") 
-@Data
+@Table(name = "socio")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pais implements Serializable{
+public class Socio extends Persona{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String nombre;
-	private boolean eliminado;
+	private Long numeroSocio;
+	
+	
 
 }
