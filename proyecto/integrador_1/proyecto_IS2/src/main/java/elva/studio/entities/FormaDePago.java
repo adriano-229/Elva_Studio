@@ -1,13 +1,10 @@
 package elva.studio.entities;
 
-import java.io.Serializable;
+import java.util.Date;
 
-import javax.management.relation.Role;
-
-import elva.studio.enumeration.Rol;
+import elva.studio.enumeration.EstadoFactura;
+import elva.studio.enumeration.TipoPago;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,21 +14,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="usuario")
+@Table(name="formaDePago")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Usuario implements Serializable {
+public class FormaDePago {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String nombreUsuario;
-	private String clave;
-	
-	@Enumerated(EnumType.STRING)
-	private Rol rol;
-	
+	private TipoPago tipoPago;
+	private String observacion;
 	private boolean eliminado;
 	
 	
