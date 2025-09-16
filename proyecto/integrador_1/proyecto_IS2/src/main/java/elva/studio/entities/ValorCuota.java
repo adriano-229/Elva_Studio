@@ -1,38 +1,40 @@
 package elva.studio.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="direccion")
+@Table(name = "valor_cuota")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Direccion implements Serializable{
+public class ValorCuota implements Serializable{
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String calle;
-	private String numeracion;
-	private String barrio;
-	private String manzana;
-	private String casaDepartamento;
-	private String referencia;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fechaDesde;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fechaHasta;
+	
+	private double valorCuota;
+	
 	private boolean eliminado;
 	
-	@ManyToOne
-	@JoinColumn(name="fk_localidad")
-	private Localidad localidad;
 	
+
 }
