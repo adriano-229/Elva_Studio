@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import elva.studio.entities.CuotaMensual;
+import elva.studio.entities.Socio;
 import elva.studio.enumeration.EstadoCuota;
 import elva.studio.enumeration.Mes;
 import elva.studio.repositories.CuotaMensualRepository;
 import jakarta.transaction.Transactional;
 
 @Service
-public class CuotaMensualService implements ServicioBase<CuotaMensual>{
+public class CuotaMensualService implements ServicioBase<CuotaMensual, Socio>{
 	
 	@Autowired
 	public CuotaMensualRepository repository;
@@ -108,9 +109,9 @@ public class CuotaMensualService implements ServicioBase<CuotaMensual>{
 	// listarCuotaMensualActivo ----------------------
 	@Override
 	@Transactional
-	public List<CuotaMensual> listarActivos() throws Exception{
+	public List<CuotaMensual> listarActivos(Socio socio) throws Exception{
 		try {
-			List<CuotaMensual> cuotas = this.repository.listarCuotaMensualActivo();
+			List<CuotaMensual> cuotas = this.repository.listarCuotaMensualActivo(socio);
 			return cuotas;
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
@@ -127,9 +128,9 @@ public class CuotaMensualService implements ServicioBase<CuotaMensual>{
 	
 	// listarCuotaMensualPorEstado ----------------------
 	@Transactional
-	public List<CuotaMensual> listarPorEstado(EstadoCuota estado) throws Exception{
+	public List<CuotaMensual> listarPorEstado(Socio socio, EstadoCuota estado) throws Exception{
 		try {
-			List<CuotaMensual> cuotas = this.repository.listarCuotaMensualPorEstado(estado);
+			List<CuotaMensual> cuotas = this.repository.listarCuotaMensualPorEstado(socio, estado);
 			return cuotas;
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
@@ -138,14 +139,48 @@ public class CuotaMensualService implements ServicioBase<CuotaMensual>{
 		
 	// listarCuotaMensualPorFecha ----------------------
 	@Transactional
-	public List<CuotaMensual> listarPorFecha(Date fechaDesde, Date fechaHasta) throws Exception{
+	public List<CuotaMensual> listarPorFecha(Socio socio, Date fechaDesde, Date fechaHasta) throws Exception{
 		try {
-			List<CuotaMensual> cuotas = this.repository.listarCuotaMensualPorFecha(fechaHasta);
+			List<CuotaMensual> cuotas = this.repository.listarCuotaMensualPorFecha(socio, fechaDesde, fechaHasta);
 			return cuotas;
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
 	}
+	
+	// listarCuotaMensualPorFecha ----------------------
+		@Transactional
+		public List<CuotaMensual> listarPorFechayEstado(Socio socio, Date fechaDesde, Date fechaHasta, EstadoCuota estado) throws Exception{
+			try {
+				List<CuotaMensual> cuotas = this.repository.listarCuotaMensualPorFechayEstado(socio, fechaDesde, fechaHasta, estado);
+				return cuotas;
+			} catch (Exception e) {
+				throw new Exception(e.getMessage());
+			}
+		}
+		
+		@Transactional
+		public List<CuotaMensual> listarPorIds(List<Long> idCuotas) throws Exception{
+			try {
+				return this.repository.findAllById(idCuotas);
+				
+			} catch (Exception e) {
+				throw new Exception(e.getMessage());
+			}
+			
+		}
+		
+		@Transactional
+		public List<CuotaMensual> buscarPorSocio(Socio socio) throws Exception{
+			try {
+				List<CuotaMensual> cuotas = this.repository.listarCuotaMensualPorSocio(socio);
+				return cuotas;
+				
+			} catch (Exception e) {
+				throw new Exception(e.getMessage());
+			}
+			
+		}
 
 	
 
