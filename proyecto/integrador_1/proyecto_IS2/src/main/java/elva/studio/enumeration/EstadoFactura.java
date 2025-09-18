@@ -1,5 +1,5 @@
 package elva.studio.enumeration;
 
 public enum EstadoFactura {
-	PAGADA, ANULADA, SIN_DEFINIR;
+	Pagada, Anulada, Sin_definir;
 }

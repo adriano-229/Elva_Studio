@@ -3,10 +3,10 @@ package elva.studio.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import elva.studio.enumeration.EstadoCuota;
 import elva.studio.enumeration.EstadoFactura;
-import elva.studio.enumeration.Mes;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,6 +36,7 @@ public class Factura implements Serializable {
 	
 	private double totalPagado;
 	
+	@Enumerated(EnumType.STRING)
 	private EstadoFactura estado;
 	
 	private boolean eliminado;
