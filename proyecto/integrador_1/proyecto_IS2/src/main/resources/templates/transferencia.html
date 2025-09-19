@@ -46,125 +46,12 @@
       <div class="navbar-menu-wrapper d-flex align-items-top"> 
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text"><span class="text-black fw-bold">Realizar Pago</span></h1>
-            <h3 class="welcome-sub-text">Estas a punto de pagar</h3>
+            <h1 class="welcome-text"><span class="text-black fw-bold">Transferencia</span></h1>
+            <!--<h3 class="welcome-sub-text"></h3>-->
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
 			
-          <!-- EMPIEZA AQUI<li class="nav-item dropdown d-none d-lg-block">
-            <a class="nav-link dropdown-bordered dropdown-toggle dropdown-toggle-split" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false"> Seleccionar Estado </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
-              <a class="dropdown-item py-3" >
-                <p class="mb-0 font-weight-medium float-left">Seleccionar Estado</p>
-              </a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item preview-item">
-                <div class="preview-item-content flex-grow py-2">
-                  <p class="preview-subject ellipsis font-weight-medium text-dark">Emitida </p>
-                  <p class="fw-light small-text mb-0">This is a Bundle featuring 16 unique dashboards</p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-item-content flex-grow py-2">
-                  <p class="preview-subject ellipsis font-weight-medium text-dark">Pendiente</p>
-                  <p class="fw-light small-text mb-0">Everything you’ll ever need for your Angular projects</p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-item-content flex-grow py-2">
-                  <p class="preview-subject ellipsis font-weight-medium text-dark">Vencida</p>
-                  <p class="fw-light small-text mb-0">Bundle of 6 Premium Vue Admin Dashboard</p>
-                </div>
-              </a>
-              <a class="dropdown-item preview-item">
-                <div class="preview-item-content flex-grow py-2">
-                  <p class="preview-subject ellipsis font-weight-medium text-dark">React Bundle</p>
-                  <p class="fw-light small-text mb-0">Bundle of 8 Premium React Admin Dashboard</p>
-                </div>
-              </a>
-            </div>
-          </li>
-          <li class="nav-item d-none d-lg-block">
-            <div id="datepicker-popup" class="input-group date datepicker navbar-date-picker">
-              <span class="input-group-addon input-group-prepend border-right">
-                <span class="icon-calendar input-group-text calendar-icon"></span>
-              </span>
-              <input type="text" class="form-control" value="2025-09-17">
-            </div>
-          </li> TERMINA AQUI-->
-          <!--<li class="nav-item">
-            <form class="search-form" action="@{/cuotas/buscar}">
-              <i class="icon-search"></i>
-              <input type="date" class="form-control" name="fechaVencimiento">
-			  <select class="from-control" name="estado">
-				<option value="">-- Estado --</option>
-				<option value="PENDIENTE">Emitida</option>
-				<option value="PENDIENTE">Pagada</option>
-				<option value="PENDIENTE">Vencida</option>
-			  </select>
-			  
-			  <button type="submit" class="btn btn-primary btn-sm">Buscar</button>
-            </form>
-          </li>
-		  
-		  <li class="nav-item d-none d-lg-block">
-		  	<form th:action="@{/cuotas/buscar}" method="get" class="d-flex align-items-center gap-2">
-			  
-			  <div class="row g-2 mb-0">
-				<div class="col-auto">
-					<label class="form-label mb-0" for="Desde">Desde:</label>
-				</div>
-				<div class="col-auto">
-					
-			    	<div class="input-group input-group-sm">
-			        	
-			        	<input type="date" class="form-control form-control-sm" id="fechaDesde" name="fechaDesde"
-								required
-								max="${#dates.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')}">
-			      	</div>
-				</div>
-			  </div>
-				  
-			  
-			  <div class="row g-2 mb-0">
-  				<div class="col-auto">
-  					<label class="form-label mb-0" for="Hasta">Hasta:</label>
-  				</div>
-  				<div class="col-auto">
-  					
-  			    	<div class="input-group input-group-sm">
-  			        	
-  			        	<input type="date" class="form-control form-control-sm" id="fechaHasta" name="fechaHasta" 
-								required 
-								max="${#dates.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')}">
-  			      	</div>
-  			    </div>
-  			  </div>
-			  	  
-		      
-			  <div class="col-auto">
-			      <div class="input-group input-group-sm">
-			        <span class="input-group-text"><i class="mdi mdi-filter"></i></span>
-			        <select class="form-control form-control-sm" name="estado">
-			          <option value="">Seleccionar Estado</option>
-			          <option value="Emitida">Emitida</option>
-			          <option value="Pagada">Pagada</option>
-			          <option value="Vencida">Vencida</option>
-					  
-			        </select>
-			      </div>
-		      </div>
-				
-			  
-			  <div>
-				<button type="submit" class="btn btn-primary btn-sm">Buscar</button>
-			  </div>
-			      
-			</form>
-		  </li>-->
-		  
-
           <li class="nav-item dropdown">
             <a class="nav-link count-indicator" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
               <i class="icon-mail icon-lg"></i>
@@ -591,56 +478,55 @@
       <div class="col-lg-10 grid-margin stretch-card">
 	      <div class="card">
 	        <div class="card-body">
-	          <h4 class="card-title">Detalle</h4>
-	          <p class="card-description"><code>Confirme los datos</code></p>
+	          <h4 class="card-title">Pago por Transferencia Bancaria</h4>
+	          <!--<p class="card-description"><code>Confirme los datos</code></p>-->
 			  <div class="card mb-3 p-3 border">
 				<p><strong>Nro de socio:</strong><span th:text="${socio.numeroSocio}">NroSocio</span></p>
-				<p><strong>Nombre:</strong><span th:text="${socio.nombre}">Nombre</span></p>
-				<p><strong>Apellido:</strong><span th:text="${socio.apellido}">Apellido</span></p>
-				<p><strong>DNI:</strong><span th:text="${socio.numeroDocumento}">DNI</span></p>
-				<p><strong>Correo Electronico:</strong><span th:text="${socio.correoElectronico}">Correo</span></p>
-				<p><strong>Telefono:</strong><span th:text="${socio.telefono}">Telefono</span></p>
+				<p><strong>Total a Abonar:</strong><span th:text="${totalAPagar}">Total</span></p>
 			  </div>
-	          <form th:action="@{/pagos/confirmarDatos}" method="post">
-		          <div class="table-responsive">
-		            <table class="table table-striped">
-		              <thead>
-		                <tr>
-						  <th>Mes-Año</th>
-		                  <th>Fecha Vencimiento</th>
-		                  <th>Valor</th>
-		                </tr>
-		              </thead>
-		              <tbody>
-						<tr th:each="cuota : ${cuotasAPagar}">
-							<td th:text="${cuota.mes} + '-' + ${cuota.anio}"></td>
-							<td th:text="${cuota.fechaVencimiento}"></td>
-							<td th:text="${cuota.valorCuota.valorCuota}"></td>
-							<input type="hidden" name="idCuotas" th:value="${cuota.id}">
-						</tr>
-						<tr>
-							<input type="hidden" name="totalAPagar" th:value="${totalAPagar}">
-						    <td colspan="2"><strong>Total a pagar:</strong></td>
-						    <td th:text="${totalAPagar}">0.00</td>
-						</tr>
-						
-                      </tbody>
-		            </table>
-		          </div>
-				  
-				  <!-- Selección de forma de pago -->
-				  <div class="text-center mb-3 mt-4">
-				      <label for="formaPago" class="form-label small"><strong>Forma de Pago:</strong></label>
-				      <select class="form-select form-select-sm w-auto d-inline-block" id="formaPago" name="formaPago" required>
-				          <option value="">Seleccione una forma de pago</option>
-				          <option value="Billetera_virtual">MercadoPago</option>
-				          <option value="Transferencia">Transferencia</option>
-				      </select>
+	          <form th:action="@{/pagos/transferencia}" method="post">
+		          <div class="container my-4">
+					<div class="row justify-content-center">
+						<div class="col-md-6">
+				              <div class="card">
+				                <div class="card-body">
+				                  <h4 class="card-title">Realice una TRANSFERENCIA BANCARIA con los siguientes datos</h4>
+				                  <div class="media mb-3">
+				                    <i class="ti-world icon-md text-info d-flex align-self-start me-3"></i>
+				                    <div class="media-body">
+										<ul class="card-text">
+											<li><strong>Alias/CBU:</strong> GYM.ELVA.PAGOS</li>
+											<li><strong>Banco</strong> Banco X</li>
+											<li><strong>Monto exacto:</strong><span th:text="${totalAPagar}">Total</span></li>
+										</ul>
+				                    </div>
+				                  </div>
+				                </div>
+								
+								<div class="card-body">
+				                  <h4 class="card-title">Una vez hecha la transferecnia</h4>
+				                  <div class="media">
+				                    <i class="ti-world icon-md text-info d-flex align-self-start me-3"></i>
+				                    <div class="media-body">
+										<ul class="card-text">
+											<li>Adjunte el comprobante en esta misma pagina</li>
+											<li>Un operador validará el pago y confirmará la factura</li>
+										</ul>
+				                    </div>
+				                  </div>
+				                </div>
+								
+								
+				              </div>
+				            </div>
+						</div>
+		            </div>
+				  </div>
+				
+				 <div class="text-end">
+					<button type="submit" class="btn btn-success btn">Subir Comprobante</button>
 				  </div>
 				  
-				  <div class="mt-3 text-end">
-					<button type="submit" class="btn btn-success btn">Confirmar</button>
-				</div>
 			  </form>
 	        </div>
 	      </div>
@@ -1095,4 +981,22 @@
   <!-- endinject -->
   <!-- Custom js for this page-->
   <!-- End custom js for this page-->
+  <script>
+	  const checkboxes = document.querySelectorAll('.cuotaCheck');
+	  const subtotalSpan = document.getElementById('subtotal');
+	
+	  function actualizarSubtotal() {
+	      let subtotal = 0;
+	      checkboxes.forEach(cb => {
+	          if(cb.checked) {
+	              subtotal += parseFloat(cb.dataset.valor);
+	          }
+	      });
+	      subtotalSpan.textContent = subtotal.toFixed(2);
+	  }
+	
+	  checkboxes.forEach(cb => cb.addEventListener('change', actualizarSubtotal));
+  </script>
+</body>
+
 </html>
