@@ -60,7 +60,7 @@ public class PortalControlador {
 			
 			//guardo al socio para mostrarlo
 			session.setAttribute("socio",socio);
-			return "redirect:/inicio";
+			return "redirect:/homepage";
 		}
 		return "redirect:/login?error=true";
 	}
@@ -76,5 +76,12 @@ public class PortalControlador {
 		model.addAttribute("socio",socio);
 		return "inicio";
 	}
+	
+	@GetMapping("/homepage")
+	public String irAHomepage() {
+		return "homepage";
+	}
+	
+	
 	
 }

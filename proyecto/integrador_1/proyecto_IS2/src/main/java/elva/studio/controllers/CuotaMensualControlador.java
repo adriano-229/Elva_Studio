@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,15 +45,12 @@ public class CuotaMensualControlador {
 		}
 		
 		return "cuotas";
-		
-		
-		
 	}
 	
 	@GetMapping("/buscar")
 	public String buscarCuotas( HttpSession session,
-								@RequestParam(required = true)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaDesde,
-								@RequestParam(required = true)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaHasta,
+								@RequestParam(required = false)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaDesde,
+								@RequestParam(required = false)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaHasta,
 								@RequestParam(required = false)EstadoCuota estado, 
 								Model model) throws Exception{
 		
@@ -119,6 +117,7 @@ public class CuotaMensualControlador {
 			}
 			
 			model.addAttribute("totalAPagar", totalAPagar);
+			model.addAttribute("socio", socio);
 		
 		} catch (Exception e) {
 			model.addAttribute("msgError", "Error de Sistema");
