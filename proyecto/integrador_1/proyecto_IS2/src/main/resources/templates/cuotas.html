@@ -109,7 +109,11 @@
           </li>-->
 		  
 		  <li class="nav-item d-none d-lg-block">
-		  	<form th:action="@{/cuotas/buscar}" method="get" class="d-flex align-items-center gap-2">
+		  	<form th:action="@{/cuotas/buscar}" th:object="${deudaForm}" method="get" class="d-flex align-items-center gap-2">
+				<input type="hidden" th:field="*{idCuotas}"/>
+			    <input type="hidden" th:field="*{idSocio}"/>
+			    <input type="hidden" th:field="*{totalAPagar}"/>
+			    <input type="hidden" th:field="*{formaPago}"/>
 			  <!--DESDE-->
 			  <div class="row g-2 mb-0">
 				<div class="col-auto">

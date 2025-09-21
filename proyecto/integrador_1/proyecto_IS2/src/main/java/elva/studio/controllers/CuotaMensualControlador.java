@@ -70,6 +70,7 @@ public class CuotaMensualControlador {
 								@RequestParam(required = false)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaDesde,
 								@RequestParam(required = false)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaHasta,
 								@RequestParam(required = false)EstadoCuota estado, 
+								@ModelAttribute DeudaForm deudaForm,
 								Model model) throws Exception{
 		
 		try {
@@ -79,6 +80,7 @@ public class CuotaMensualControlador {
 		    }
 			
 			model.addAttribute("socio", socio);
+			model.addAttribute("deudaFom", deudaForm);
 			
 			if (fechaDesde == null || fechaHasta == null) {
 				

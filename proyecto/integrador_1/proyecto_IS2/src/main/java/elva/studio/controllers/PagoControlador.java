@@ -217,9 +217,10 @@ public class PagoControlador {
 		
 		// logo sport gym - ¡Muchas Gracias, nombreSocio! tu pago esta siendo procesado. Podras ver tu factura en tu cuenta una vez que sea aporbado
 		// Monto abonado:
-		
-		return "redirect:/cuotas";
+		return "confirmacion";
 	}
+	
+	
 	
 	
 	@GetMapping("/pagoPendiente")
