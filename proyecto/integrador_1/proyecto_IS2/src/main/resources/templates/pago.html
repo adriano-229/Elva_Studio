@@ -601,7 +601,7 @@
 				<p><strong>Correo Electronico:</strong><span th:text="${socio.correoElectronico}">Correo</span></p>
 				<p><strong>Telefono:</strong><span th:text="${socio.telefono}">Telefono</span></p>
 			  </div>
-	          <form th:action="@{/pagos/confirmarDatos}" method="post">
+	          <form th:action="@{/pagos/confirmarDatos}" th:object="${deudaForm}" method="post">
 		          <div class="table-responsive">
 		            <table class="table table-striped">
 		              <thead>
@@ -612,14 +612,15 @@
 		                </tr>
 		              </thead>
 		              <tbody>
-						<tr th:each="cuota : ${cuotasAPagar}">
+						<input type="hidden" th:field="*{idCuotas}"/>
+						<tr th:each="cuota, iter : ${cuotasAPagar}">
 							<td th:text="${cuota.mes} + '-' + ${cuota.anio}"></td>
 							<td th:text="${cuota.fechaVencimiento}"></td>
 							<td th:text="${cuota.valorCuota.valorCuota}"></td>
-							<input type="hidden" name="idCuotas" th:value="${cuota.id}">
 						</tr>
 						<tr>
-							<input type="hidden" name="totalAPagar" th:value="${totalAPagar}">
+							<input type="hidden" th:field="*{idSocio}"/>
+							<input type="hidden" th:field="*{totalAPagar}"/>
 						    <td colspan="2"><strong>Total a pagar:</strong></td>
 						    <td th:text="${totalAPagar}">0.00</td>
 						</tr>
@@ -631,11 +632,10 @@
 				  <!-- Selección de forma de pago -->
 				  <div class="text-center mb-3 mt-4">
 				      <label for="formaPago" class="form-label small"><strong>Forma de Pago:</strong></label>
-				      <select class="form-select form-select-sm w-auto d-inline-block" id="formaPago" name="formaPago" required>
-				          <option value="">Seleccione una forma de pago</option>
-				          <option value="Billetera_virtual">MercadoPago</option>
-				          <option value="Transferencia">Transferencia</option>
-				      </select>
+					  <select th:field="*{formaPago}" required>
+					    <option value="">Seleccione una forma de pago</option>
+					    <option th:each="tipo : ${tiposPago}" th:value="${tipo}" th:text="${tipo}"></option>
+					  </select>
 				  </div>
 				  
 				  <div class="mt-3 text-end">
