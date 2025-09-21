@@ -580,10 +580,10 @@
                 <div class="card-body">
                   <h4 class="card-title">Cuotas</h4>
                   <p class="card-description">Total a pagar: <span id="subtotal">0.00</span></p>
-				  <form th:action="@{/cuotas/pagar}" method="post">
+				  <form th:action="@{/cuotas/pagar}" th:object="${deudaForm}" method="post">
 					<div class="table-responsive">
 	                   <table class="table">
-					   
+					   	 <input type="hidden" th:field="*{idSocio}"/>
 
 	                     <thead>
 	                       <tr>
@@ -597,7 +597,7 @@
 						 <tbody>
 							<tr th:each="cuota : ${listaCuotas}">
 								<td>
-									<input type="checkbox" class="cuotaCheck" name="idCuotas" th:value="${cuota.id}" th:disabled="${cuota.estado.name() == 'Pagada'}" th:data-valor="${cuota.valorCuota.valorCuota}">
+									<input type="checkbox" class="cuotaCheck" th:field="*{idCuotas}" th:value="${cuota.id}" th:disabled="${cuota.estado.name() == 'Pagada'}" th:data-valor="${cuota.valorCuota.valorCuota}"/>
 								</td>
 								<td th:text="${cuota.mes} + '-' + ${cuota.anio}"></td>
 								<td th:text="${cuota.fechaVencimiento}"></td>
@@ -1322,6 +1322,10 @@
 	
 	  checkboxes.forEach(cb => cb.addEventListener('change', actualizarSubtotal));
   </script>
+  
+  
+	  
+  
 </body>
 
 </html>

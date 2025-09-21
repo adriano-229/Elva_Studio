@@ -25,7 +25,7 @@ public class PortalControlador {
 	
 	@GetMapping("/")
 	public String index() {
-		return "homepage";
+		return "index";
 	}
 	
 	@GetMapping("/login")

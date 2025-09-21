@@ -1,5 +1,6 @@
 package elva.studio.controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -13,9 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
+
+import elva.studio.dto.DeudaForm;
 import elva.studio.entities.CuotaMensual;
 import elva.studio.entities.Socio;
 import elva.studio.enumeration.EstadoCuota;
+import elva.studio.enumeration.TipoPago;
 import elva.studio.services.CuotaMensualService;
 import jakarta.servlet.http.HttpSession;
 
@@ -35,9 +39,23 @@ public class CuotaMensualControlador {
 		        return "redirect:/login";
 		    }
 		    
+		    model.addAttribute("socio", socio);
+		    
 			Collection<CuotaMensual> listaCuotas = this.svcCuota.buscarPorSocio(socio);
 			//Collection<CuotaMensual> listaCuotas = this.svcCuota.listarActivos();
 			model.addAttribute("listaCuotas", listaCuotas);
+			
+			/*Collection<CuotaMensual> cuotasVencidas = this.svcCuota.listarPorEstado(socio, EstadoCuota.Vencida);
+			if (!cuotasVencidas.isEmpty()) {
+						
+			DeudaForm deuda = new DeudaForm();
+			model.addAttribute("deudaForm", deuda);
+				
+			}*/
+			
+			DeudaForm deudaForm = new DeudaForm();
+			deudaForm.setIdSocio(socio.getId());
+		    model.addAttribute("deudaForm", deudaForm);
 				
 		} catch (Exception e) {
 			model.addAttribute("msgError", "Error de Sistema");
@@ -60,6 +78,8 @@ public class CuotaMensualControlador {
 		        return "redirect:/login";
 		    }
 			
+			model.addAttribute("socio", socio);
+			
 			if (fechaDesde == null || fechaHasta == null) {
 				
 				if (estado == null) {
@@ -81,8 +101,6 @@ public class CuotaMensualControlador {
 					
 				}
 			
-			
-			
 		} catch (Exception e) {
 			model.addAttribute("msgError", "Error de Sistema");
 		}
@@ -93,7 +111,7 @@ public class CuotaMensualControlador {
 	
 		
 	@PostMapping("/pagar")
-	public String pagarCuota(HttpSession session, @RequestParam(required = false)List<Long> idCuotas, Model model) throws Exception {
+	public String pagarCuota(HttpSession session, @ModelAttribute DeudaForm deudaForm, Model model) throws Exception {
 		
 		try {
 			Socio socio = (Socio) session.getAttribute("socio");
@@ -101,13 +119,19 @@ public class CuotaMensualControlador {
 		        return "redirect:/login";
 		    }
 			
+			model.addAttribute("socio", socio);
+			
+			List<Long> idCuotas = deudaForm.getIdCuotas();
+			
 			if (idCuotas == null || idCuotas.isEmpty()) {
+				model.addAttribute("deudaForm", new DeudaForm());
 				model.addAttribute("msgError", "No ha seleccionado ninguna cuota");
 				return "cuotas";
 			}
-				
+			
 			Collection<CuotaMensual> cuotasAPagar = this.svcCuota.listarPorIds(idCuotas);
 			
+						
 			model.addAttribute("cuotasAPagar", cuotasAPagar);
 			
 			double totalAPagar = 0;
@@ -116,9 +140,11 @@ public class CuotaMensualControlador {
 				totalAPagar += c.getValorCuota().getValorCuota();
 			}
 			
+			deudaForm.setTotalAPagar(totalAPagar);
 			model.addAttribute("totalAPagar", totalAPagar);
-			model.addAttribute("socio", socio);
-		
+			model.addAttribute("tiposPago", TipoPago.values());
+	        model.addAttribute("deudaForm", deudaForm);
+	        
 		} catch (Exception e) {
 			model.addAttribute("msgError", "Error de Sistema");
 		}

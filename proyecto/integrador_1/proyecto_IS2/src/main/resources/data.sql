@@ -105,9 +105,9 @@ INSERT INTO socio (id, numero_socio) VALUES
 -- ValorCuota
 -- -------------------------------
 INSERT INTO valor_cuota (fecha_desde, fecha_hasta, valor_cuota, eliminado) VALUES
-('2025-01-01', '2025-01-31', 3000.00, false),
-('2025-02-01', '2025-02-28', 3200.00, false),
-('2025-03-01', '2025-03-31', 3500.00, false);
+('2025-01-01', '2025-01-31', 10.00, false),
+('2025-02-01', '2025-02-28', 20.00, false),
+('2025-03-01', '2025-03-31', 250.00, false);
 
 -- -------------------------------
 -- CuotaMensual

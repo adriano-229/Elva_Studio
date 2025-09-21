@@ -484,7 +484,13 @@
 				<p><strong>Nro de socio:</strong><span th:text="${socio.numeroSocio}">NroSocio</span></p>
 				<p><strong>Total a Abonar:</strong><span th:text="${totalAPagar}">Total</span></p>
 			  </div>
-	          <form th:action="@{/pagos/transferencia}" method="post">
+	          <form th:action="@{/pagos/transferencia}" th:object="${deudaForm}"  method="post">
+				  
+				  <input type="hidden" th:each="cuota : ${cuotasAPagar}" th:field="*{idCuotas}" th:value="${cuota.id}"/>
+				  <input type="hidden" th:field="*{idSocio}" th:value="${socio.id}"/>
+				  <input type="hidden" th:field="*{totalAPagar}" th:value="${totalAPagar}"/>
+				  <input type="hidden" th:field="*{formaPago}" th:value="${formaPago}"/>
+				  
 		          <div class="container my-4">
 					<div class="row justify-content-center">
 						<div class="col-md-6">
