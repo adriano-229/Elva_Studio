@@ -117,7 +117,23 @@ public class ValorCuotaService implements ServicioBase<ValorCuota, CuotaMensual>
 	// validar -----------------------------------
 	@Transactional
 	public void validar(Date fechaDesde, Date fechaHasta, double valorCuota) {
-		//TODO
+		
+		if (fechaDesde == null) {
+			throw new IllegalArgumentException("Ingrese una fecha válida");
+		}
+		
+		if (fechaHasta == null) {
+			throw new IllegalArgumentException("Ingrese una fecha válida");
+		}
+		
+		if (fechaDesde.after(fechaHasta)) {
+			throw new IllegalArgumentException("La fecha desde no puede ser mayor que la fecha hasta");
+			
+		}
+		
+		if (valorCuota <= 0) {
+			throw new IllegalArgumentException("el valor de la cuota no es válido");
+		}
 	}
 	
 	// buscarValorCuotaVigente -------------------

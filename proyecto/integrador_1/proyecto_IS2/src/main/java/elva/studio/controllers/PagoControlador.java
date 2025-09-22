@@ -97,7 +97,7 @@ public class PagoControlador {
 				
 				return "transferencia";
 				
-			} else {
+			} else if (deudaForm.getFormaPago() == TipoPago.Billetera_virtual){
 			// MERCADOPAGO-----------------------------------------------------------------------
 				
 				List<PreferenceItemRequest> items = new ArrayList<>();
@@ -147,6 +147,9 @@ public class PagoControlador {
 				pagoOnline = this.svcPagoOnline.crear(deudaForm.getIdSocio(), deudaForm.getTotalAPagar(), deudaForm.getIdCuotas(), deudaForm.getFormaPago());
 				
 				return "mercadoPago";
+			} else {
+				
+				return "efectivo";
 			}
 			
 			
