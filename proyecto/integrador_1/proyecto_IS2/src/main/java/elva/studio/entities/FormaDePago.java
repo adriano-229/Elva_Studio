@@ -29,7 +29,7 @@ public class FormaDePago {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-  @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
 	private TipoPago tipoPago;
 	
 	private String observacion;
