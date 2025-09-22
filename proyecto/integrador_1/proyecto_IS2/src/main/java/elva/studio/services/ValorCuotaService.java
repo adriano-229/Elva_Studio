@@ -7,12 +7,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import elva.studio.entities.CuotaMensual;
 import elva.studio.entities.ValorCuota;
 import elva.studio.repositories.ValorCuotaRepository;
 import jakarta.transaction.Transactional;
 
 @Service
-public class ValorCuotaService implements ServicioBase<ValorCuota>{
+public class ValorCuotaService implements ServicioBase<ValorCuota, CuotaMensual>{
 	
 	@Autowired
 	ValorCuotaRepository repository;
@@ -102,7 +103,7 @@ public class ValorCuotaService implements ServicioBase<ValorCuota>{
 	// listarValorCuotaActivo -------------------
 	@Override
 	@Transactional
-	public List<ValorCuota> listarActivos() throws Exception {
+	public List<ValorCuota> listarActivos(CuotaMensual cuotaMensual) throws Exception {
 		try {
 			List<ValorCuota> entities = this.repository.listarValorCuotaActivo();
 			return entities;
