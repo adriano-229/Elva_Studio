@@ -78,7 +78,13 @@ public class PortalControlador {
 	}
 	
 	@GetMapping("/homepage")
-	public String irAHomepage() {
+	public String irAHomepage(HttpSession session, ModelMap model) {
+		Socio socio = (Socio) session.getAttribute("socio");
+	    if (socio == null) {
+	        return "redirect:/login";
+	    }
+	    
+	    model.addAttribute("socio", socio);
 		return "homepage";
 	}
 	
