@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::content})}">
+<div th:fragment="content">
+  <!-- Breadcrumb + título -->
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+    </ol>
+  </nav>
+
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <div>
+      <h1 class="h3 mb-0" th:text="${titulo} ?: 'Bienvenido'">Bienvenido</h1>
+      <small class="text-muted">Último acceso:
+        <span th:text="${#temporals.format(ahora, 'dd/MM/yyyy HH:mm')}">--</span>
+      </small>
+    </div>
+  </div>
+
+  <!-- Tarjetas de ejemplo -->
+  <!-- Tarjetas rápidas -->
+          <div class="row g-3">
+            <div class="col-12 col-md-6 col-xl-3">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                      <div class="text-muted">Socios activos</div>
+                      <div class="h4 mb-0" th:text="${metricas?.sociosActivos} ?: 0">0</div>
+                    </div>
+                    <i class="bi bi-people fs-2"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-3">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                      <div class="text-muted">Cuotas pendientes</div>
+                      <div class="h4 mb-0" th:text="${metricas?.cuotasPendientes} ?: 0">0</div>
+                    </div>
+                    <i class="bi bi-exclamation-circle fs-2"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-3">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                      <div class="text-muted">Ingresos (mes)</div>
+                      <div class="h4 mb-0" th:text="${metricas?.ingresosMes} ?: '$0'">$0</div>
+                    </div>
+                    <i class="bi bi-cash-coin fs-2"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-3">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                      <div class="text-muted">Notificaciones</div>
+                      <div class="h4 mb-0" th:text="${metricas?.notificaciones} ?: 0">0</div>
+                    </div>
+                    <i class="bi bi-bell fs-2"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabla ejemplo -->
+          <div class="card shadow-sm mt-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <span><i class="bi bi-list-task me-2"></i>Últimas acciones</span>
+              <a href="#" class="btn btn-sm btn-outline-primary"><i class="bi bi-arrow-repeat me-1"></i>Actualizar</a>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th>#</th>
+                      <th>Acción</th>
+                      <th>Usuario</th>
+                      <th>Fecha</th>
+                      <th>Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="item,idx : ${acciones}">
+                      <td th:text="${idx.index + 1}">1</td>
+                      <td th:text="${item.nombre}">Alta de socio</td>
+                      <td th:text="${item.usuario}">operador</td>
+                      <td th:text="${#temporals.format(item.fecha, 'dd/MM/yyyy HH:mm')}">01/01/2025 12:00</td>
+                      <td>
+                        <span class="badge text-bg-success" th:if="${item.ok}">OK</span>
+                        <span class="badge text-bg-warning" th:if="${!item.ok}">Pendiente</span>
+                      </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(acciones)}">
+                      <td colspan="5" class="text-center text-muted py-4">Sin movimientos recientes</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+</div>
+</html>
