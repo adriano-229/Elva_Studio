@@ -22,5 +22,7 @@ public class Socio extends Persona{
 	private Long id;
 	
 	private Long numeroSocio;
+	
+	private boolean eliminado;
 
 }

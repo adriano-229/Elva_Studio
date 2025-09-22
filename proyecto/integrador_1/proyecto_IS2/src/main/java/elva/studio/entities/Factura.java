@@ -2,16 +2,25 @@ package elva.studio.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import elva.studio.enumeration.EstadoCuota;
 import elva.studio.enumeration.EstadoFactura;
 import elva.studio.enumeration.Mes;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+
+import elva.studio.enumeration.EstadoFactura;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -35,7 +44,8 @@ public class Factura implements Serializable {
 	private Date fechaFactura;
 	
 	private double totalPagado;
-	
+
+	@Enumerated(EnumType.STRING)
 	private EstadoFactura estado;
 	
 	private boolean eliminado;
@@ -43,5 +53,6 @@ public class Factura implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="fk_formaDePago")
 	private FormaDePago formaDePago;
+	
 	
 }
