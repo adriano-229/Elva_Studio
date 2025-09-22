@@ -1,8 +1,8 @@
 package elva.studio.controllers;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,9 +67,9 @@ public class CuotaMensualControlador {
 	
 	@GetMapping("/buscar")
 	public String buscarCuotas( HttpSession session,
-								@RequestParam(required = false)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaDesde,
-								@RequestParam(required = false)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaHasta,
-								@RequestParam(required = false)EstadoCuota estado, 
+								@RequestParam(required = false)@DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaDesde,
+								@RequestParam(required = false)@DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaHasta,
+								@RequestParam(required = false)EstadoCuota estado,
 								@ModelAttribute DeudaForm deudaForm,
 								Model model) throws Exception{
 		
@@ -82,7 +82,30 @@ public class CuotaMensualControlador {
 			model.addAttribute("socio", socio);
 			model.addAttribute("deudaFom", deudaForm);
 			
-			if (fechaDesde == null || fechaHasta == null) {
+			List<CuotaMensual> listaCuotasSocio = this.svcCuota.buscarPorSocio(socio);	
+			System.out.println("Fecha desde: " + fechaDesde);
+			System.out.println("Fecha hasta: " + fechaHasta);
+			System.out.println("Lista de cuotas (antes de validar): " + listaCuotasSocio.size());
+			
+			//Validaciones de fecha.
+			Date hoy = new Date();
+
+		    if (fechaDesde != null && fechaHasta != null) {
+		        if (fechaDesde.after(fechaHasta)) {
+		            model.addAttribute("error", "La fecha 'Desde' no puede ser mayor que la fecha 'Hasta'.");
+		            model.addAttribute("listaCuotas", listaCuotasSocio);
+		            System.out.println("Lista de cuotas: " + listaCuotasSocio.size());
+		            return "/cuotas";
+		        }
+		        if (fechaHasta.after(hoy)) {
+		            model.addAttribute("error", "La fecha 'Hasta' no puede ser mayor que la fecha actual.");
+		            model.addAttribute("listaCuotas", listaCuotasSocio);
+		            System.out.println("Lista de cuotas: " + listaCuotasSocio.size());
+		            return "/cuotas";
+		        }
+		    }
+			
+			if (fechaDesde == null && fechaHasta == null) {
 				
 				if (estado == null) {
 					return "redirect:/cuotas";
@@ -93,14 +116,21 @@ public class CuotaMensualControlador {
 				}
 				
 			}else 
-				if (estado != null) {
-					Collection<CuotaMensual> listaCuotas = this.svcCuota.listarPorFechayEstado(socio, fechaDesde, fechaHasta, estado);
-					model.addAttribute("listaCuotas", listaCuotas);
+				if (fechaDesde == null || fechaHasta == null) {
+					model.addAttribute("error", "Para filtrar por fecha ingrese ambas fechas");
+					model.addAttribute("listaCuotas", listaCuotasSocio);
+		            return "cuotas";
 					
-				}else {
-					Collection<CuotaMensual> listaCuotas = this.svcCuota.listarPorFecha(socio, fechaDesde, fechaHasta);
-					model.addAttribute("listaCuotas", listaCuotas);
-					
+				} else {
+					if (estado != null) {
+						Collection<CuotaMensual> listaCuotas = this.svcCuota.listarPorFechayEstado(socio, fechaDesde, fechaHasta, estado);
+						model.addAttribute("listaCuotas", listaCuotas);
+						
+					}else {
+						Collection<CuotaMensual> listaCuotas = this.svcCuota.listarPorFecha(socio, fechaDesde, fechaHasta);
+						model.addAttribute("listaCuotas", listaCuotas);
+						
+					}
 				}
 			
 		} catch (Exception e) {
