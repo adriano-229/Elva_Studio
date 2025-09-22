@@ -1,7 +1,9 @@
 package elva.studio.entities;
 
 import java.io.Serializable;
+import java.security.MessageDigest;
 
+import elva.studio.enumeration.Mes;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +28,8 @@ public class Sucursal implements Serializable{
 	
 	private String nombre;
 	private boolean eliminado;
+	public static final Mes mesCreacion = Mes.Enero;
+	public static final Long anioCreacion = (long) 2025;
 	
 	@ManyToOne
 	@JoinColumn(name="fk_direccion")
@@ -34,5 +38,7 @@ public class Sucursal implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="fk_empresa")
 	private Empresa empresa;
+	
+	
 	
 }

@@ -22,7 +22,6 @@
   <link rel="stylesheet" th:href="@{/css/vertical-layout-light/style-home.css}">
   <!-- endinject -->
   <link rel="shortcut icon" th:href="@{/images/favicon.png}" />
-  
 </head>
 <body>
   <div class="container-scroller"> 
@@ -47,7 +46,7 @@
       <div class="navbar-menu-wrapper d-flex align-items-top"> 
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text"><span class="text-black fw-bold">Pago Online</span></h1>
+            <h1 class="welcome-text"><span class="text-black fw-bold">Pago en Efectivo</span></h1>
             <!--<h3 class="welcome-sub-text"></h3>-->
           </li>
         </ul>
@@ -328,7 +327,49 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-		  <li class="nav-item">
+		  <!--<li class="nav-item">
+			<div class="col-md-6 col-lg-12 grid-margin stretch-card">
+	          <div class="card card-rounded ms-2">
+	            <div class="card-body">
+	              <div class="row justify-content-center">
+	                <div class="col-sm-4">
+	                  <div class="d-flex justify-content-center align-items-center mb-2 mb-sm-0">
+	                    <div class="circle-progress-width me-2">
+	                      <div id="totalVisitors" class="progressbar-js-circle pr-2"></div>
+	                    </div>
+	                    <div class="text-center">
+	                      <p class="text-small mb-2 text-primary">Altura</p>
+	                      <h4 class="mb-0 fw-bold">170 cm</h4>
+	                    </div>
+	                  </div>
+	                </div>
+	                <div class="col-sm-4">
+	                  <div class="d-flex justify-content-center align-items-center">
+	                    <div class="circle-progress-width">
+	                      <div id="visitperday" class="progressbar-js-circle pr-2"></div>
+	                    </div>
+	                    <div class="text-center">
+	                      <p class="text-small mb-2 text-primary">Peso</p>
+	                      <h4 class="mb-0 fw-bold">75 kg</h4>
+	                    </div>
+	                  </div>
+	                </div>
+					<div class="col-sm-4">
+	                  <div class="d-flex justify-content-center align-items-center">
+	                    <div class="circle-progress-width">
+	                      <div id="age" class="progressbar-js-circle pr-2"></div>
+	                    </div>
+	                    <div class="text-center">
+	                      <p class="text-small mb-2 text-primary">Edad</p>
+	                      <h4 class="mb-0 fw-bold">35 años</h4>
+	                    </div>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+	          </div>
+		  </li>-->
+          <li class="nav-item">
             <a class="nav-link" href="index.html">
               <i class="mdi mdi-grid-large menu-icon"></i>
               <span class="menu-title">Home</span>
@@ -374,58 +415,111 @@
           </li>
         </ul>
       </nav>
-      		
-      <div class="col-lg-10 grid-margin stretch-card">
-	      <div class="card">
-	        <div class="card-body">
-	          <h4 class="card-title">Pago con Mercado Pago</h4>
-	          <p class="card-description"><code>Completa tu pago de manera segura y rápida usando tu cuenta de Mercado Pago o tarjeta.</code></p>
-			  <div class="card mb-3 p-3 border">
-				<p><strong>Nro de socio:</strong><span th:text="${socio.numeroSocio}">NroSocio</span></p>
-				<p><strong>Total a Abonar:</strong><span th:text="${totalAPagar}">Total</span></p>
-			  </div>
-	          <!--<form th:action="@{/pagos/mercadopago}" th:object="${deudaForm}" method="post">
-				<input type="hidden" th:each="cuota, iter : ${cuotasAPagar}" th:field="*{idCuotas[__${iter.index}__]}" th:value="${cuota.id}"/>
-			    <input type="hidden" th:field="*{idSocio}" th:value="${socio.id}"/>
-			    <input type="hidden" th:field="*{totalAPagar}" th:value="${totalAPagar}"/>
-			    <input type="hidden" th:field="*{formaPago}" th:value="${formaPago}"/>-->
-				<div class="container my-2">
-					<div class="row justify-content-center">
-						<div class="col-md-6">
-			              <div class="card">
-			                <div class="card-body">
-								<div class="mt-6 text-center">
-									<div id="walletBrick_container" style="min-height: 150px;"></div>							
-									<!--<a th:href="${initPoint}" class="btn btn-success btn">Ir a MP</a>-->
-								</div>
-								<!--<div>
-									<p class="text-center">Se abrirá una ventana de MercadoPago</p>
-								</div>-->
-							  </div>
-							</div>
-						</div>
-					  </div>
+      <!-- partial -->
+      <!--<div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row justify-content-center">
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Pago</h4>
+                  <p class="card-description">Confirme los datos de la factura<span id="subtotal">0.00</span></p>
+				  <form th:action="@{/cuotas/pagar}" method="post">
+					<div class="table-responsive">
+	                   <table class="table">
+	                     <thead>
+	                       <tr>
+	                         <th>Mes-Año</th>
+	                         <th>Fecha vencimiento</th>
+	                         <th>Valor</th>
+	                         <th>Estado</th>
+	                       </tr>
+	                     </thead>
+						 <thbody>
+							<tr th:each="cuota : ${listaCuotas}">
+								<td>
+									<input type="checkbox" class="cuotaCheck" name="idCuotas" th:value="${cuota.id}" th:disabled="${cuota.estado != 'Pagada'" th:data-valor="${cuota.valor}}">
+								</td>
+								<td th:text="${cuota.mes} + '-' + ${cuota.anio}"></td>
+								<td th:text="${cuota.fechaVencimiento}"></td>
+								<td th:text="${cuota.valor}"></td>
+								<td>
+									<label th:classappend="${cuota.estado == 'Emitida'} ? 'badge badge-warning' :
+																${cuota.estado == 'Pagada'} ? 'badge badge-success' :
+																'badge badge-danger'"
+											th:text="${cuota.estado}"></label>
+								</td>
+							</tr>
+						 </thbody>
+					   </table>
 					</div>
-				</form>
+						
+						
+					<div class="mt-3 text-end">
+						<button type="submit" class="btn btn-success btn">Pagar Cuotas</button>
+					</div>
+					
+					<tfoot>
+				      <tr>
+				        <td colspan="2" class="text-center">
+				          <strong>Total a pagar: </strong>
+				          <span id="subtotal">0.00</span>
+				        </td>
+				      </tr>
+				    </tfoot>
+					
+				  </form>
+		      </div>
+			</div>
+		  </div>
+		</div>
+      </div>-->
+		
+	  <div class="container my-4">
+	    <div class="row justify-content-center">
+	      <div class="col-md-6">
+	        <div class="card">
+	          <div class="card-body">
+	            <!--<h4 class="card-title">
+	              Diríjase a la <strong>ventanilla / puerta de entrada</strong> para realizar el pago en <strong>EFECTIVO</strong>
+	            </h4>-->
+	            <div class="media mb-3">
+	              <i class="ti-world icon-md text-info d-flex align-self-start me-3"></i>
+	              <div class="media-body">
+	                <ul class="card-text">
+					  <li>Diríjase a la ventanilla/puerta de entrada para realizar el pago en efcetivo</li>
+	                  <li>Presente su número de socio al personal de cobro</li>
+	                </ul>
+	              </div>
+	            </div>
+	          </div>
 	        </div>
+
+	        <!-- Botón justo debajo de la card -->
+	        <div class="text-center mt-2">
+	          <a href="/cuotas" class="btn btn-success btn-sm">Aceptar</a>
+	        </div>
+
 	      </div>
 	    </div>
+	  </div>
+
 	    
-        <!-- partial:../../partials/_footer.html -->
-        <footer class="footer">
-          <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2021. All rights reserved.</span>
-          </div>
-        </footer>
+        
         <!-- partial -->
       </div>
       <!-- main-panel ends -->
+	  <!-- content-wrapper ends -->
+      <!-- partial:../../partials/_footer.html -->
+      <footer class="footer">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+          <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash.</span>
+          <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2021. All rights reserved.</span>
+        </div>
+      </footer>
     </div>
     <!-- page-body-wrapper ends -->
   </div>
-  
-  
   <!-- container-scroller -->
   <!-- plugins:js -->
   <script th:src="@{/vendors/js/vendor.bundle.base.js}"></script>
@@ -442,25 +536,22 @@
   <!-- endinject -->
   <!-- Custom js for this page-->
   <!-- End custom js for this page-->
-  
-  <script src="https://sdk.mercadopago.com/js/v2"></script>
-  <script th:inline="javascript">
-      const publicKey = /*[[${publicKey}]]*/ 'TU_PUBLIC_KEY';
-      const preferenceId = /*[[${preferenceId}]]*/ 'TU_PREFERENCE_ID';
-
-      const mp = new MercadoPago(publicKey);
-
-      const bricksBuilder = mp.bricks();
-      const renderWalletBrick = async (bricksBuilder) => {
-        await bricksBuilder.create("wallet", "walletBrick_container", {
-          initialization: {
-            preferenceId: preferenceId, // Aquí usás la variable del backend
-          }
-        });
-      };
-
-      renderWalletBrick(bricksBuilder);
-   </script>
-  
+  <script>
+	  const checkboxes = document.querySelectorAll('.cuotaCheck');
+	  const subtotalSpan = document.getElementById('subtotal');
+	
+	  function actualizarSubtotal() {
+	      let subtotal = 0;
+	      checkboxes.forEach(cb => {
+	          if(cb.checked) {
+	              subtotal += parseFloat(cb.dataset.valor);
+	          }
+	      });
+	      subtotalSpan.textContent = subtotal.toFixed(2);
+	  }
+	
+	  checkboxes.forEach(cb => cb.addEventListener('change', actualizarSubtotal));
+  </script>
 </body>
+
 </html>
