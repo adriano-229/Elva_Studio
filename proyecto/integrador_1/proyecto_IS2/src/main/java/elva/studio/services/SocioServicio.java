@@ -18,15 +18,13 @@ public class SocioServicio {
 	// valido que un usuario es socio
 	@Transactional
 	public boolean validarSocio(Socio socio, Long numeroSocio) {
-		
-		if (socio == null || numeroSocio == null) {
+    if (socio == null || numeroSocio == null) {
 	        return false; // evitamos NullPointerException
 	    }
 	    return numeroSocio.equals(socio.getNumeroSocio());
 
 	}
-	
-	
+
 	@Transactional
 	public Socio buscarPorNrosocio(Long numeroSocio) {
 		Optional<Socio> respuesta = repoSocio.buscarPorNroSocio(numeroSocio);
