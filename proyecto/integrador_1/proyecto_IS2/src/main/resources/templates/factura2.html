@@ -18,8 +18,15 @@
   
     <!-- Encabezado -->
     <div class="row">
+    
+	  <!-- Texto a la izq -->
       <div class="col-md-6">
-        <h5><strong>GIMNASIO ELVA STUDIO</strong></h5>
+      
+      	<div class="d-flex align-items-center">
+      		<h5 class="mb=0"><strong>GIMNASIO ELVA STUDIO</strong></h5>
+      		<img th:src="@{/img/logo.jpg}" alt="" style="height: 40px; margin-left: 10px;" />
+      	</div>
+        
         <p>CUIT: 30-61118252-6</p>
         <p>Dirección: General Paz 323 - Mendoza</p>
       </div>
@@ -45,7 +52,7 @@
       <div class="col-md-6">
         <div class="cuadro">
           <p><strong>Condición de IVA:</strong> Consumidor Final</p>
-          <p><strong>Forma de pago:</strong> Cuenta Corriente</p>
+          <p><strong>Forma de pago:</strong> Efectivo</p>
         </div>
       </div>
     </div>
@@ -71,7 +78,7 @@
           <td>Bonificación</td>
           <td class="text-end">-</td>
           <td class="text-end">-</td>
-          <td class="text-end">-$500</td>
+          <td class="text-end">$ <span th:text="${bonificacion}"></span></td>
         </tr>
       </tbody>
     </table>
@@ -82,7 +89,7 @@
         <table class="table">
           <tr>
             <td class="text-end"><strong>Neto:</strong></td>
-            <td class="text-end">$<span th:text="${total}"></span></td>
+            <td class="text-end">$<span th:text="${neto}"></span></td>
           </tr>
           <tr>
             <td class="text-end"><strong>IVA (21%):</strong></td>

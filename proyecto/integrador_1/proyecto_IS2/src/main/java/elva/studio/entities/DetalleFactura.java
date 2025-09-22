@@ -14,7 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="detalleFactura")
+@Table(name="detalle_factura")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,4 +28,8 @@ public class DetalleFactura implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="fk_factura")
 	private Factura factura;
+	
+	@ManyToOne
+	@JoinColumn(name="fk_cuota_mensual")
+	private CuotaMensual cuotaMensual;
 }
