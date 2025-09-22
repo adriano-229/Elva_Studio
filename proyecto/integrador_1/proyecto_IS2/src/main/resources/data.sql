@@ -19,6 +19,11 @@ TRUNCATE TABLE pais;
 TRUNCATE TABLE valor_cuota;
 TRUNCATE TABLE forma_de_pago;
 
+ALTER TABLE forma_de_pago MODIFY COLUMN tipo_pago VARCHAR(50);
+ALTER TABLE persona MODIFY COLUMN tipo_documento VARCHAR(50);
+ALTER TABLE cuota_mensual MODIFY COLUMN estado VARCHAR(50);
+ALTER TABLE factura MODIFY COLUMN estado VARCHAR(50);
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- -------------------------------
