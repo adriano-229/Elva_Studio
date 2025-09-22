@@ -1,5 +1,6 @@
 package elva.studio.controllers;
 
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -310,8 +311,6 @@ public class PagoControlador {
 	    
 	}
 	
-	
-		
 	@PostMapping("confirmar-pago")
 	public String confirmarPago() {
 		

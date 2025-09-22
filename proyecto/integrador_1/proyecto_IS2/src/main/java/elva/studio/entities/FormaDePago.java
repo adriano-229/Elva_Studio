@@ -5,6 +5,7 @@ import java.util.Date;
 import elva.studio.enumeration.EstadoFactura;
 import elva.studio.enumeration.TipoPago;
 import jakarta.persistence.Entity;
+
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +29,7 @@ public class FormaDePago {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Enumerated(EnumType.STRING)
+  @Enumerated(EnumType.STRING)
 	private TipoPago tipoPago;
 	
 	private String observacion;
@@ -37,6 +38,4 @@ public class FormaDePago {
 	@ManyToOne
 	@JoinColumn(name = "fk_pagoOnline")
 	PagoOnline pagoOnline;
-	
-	
 }
