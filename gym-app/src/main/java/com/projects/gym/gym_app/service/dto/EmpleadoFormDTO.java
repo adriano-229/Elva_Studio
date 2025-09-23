@@ -43,6 +43,8 @@ public class EmpleadoFormDTO {
     @NotNull
     private TipoEmpleado tipo;
 
+    @NotBlank private String rol;            // Enum en String
+
     private boolean activo = true;
 
     private String usuarioId;
@@ -51,26 +53,14 @@ public class EmpleadoFormDTO {
     private String nombreUsuario;
 
     private String clave;
-    private String direccionId;
 
-    @NotBlank
-    private String calle;
-
-    @NotBlank
-    private String numeracion;
-
+    // Direccion (usamos creación inline)
+    private String direccionId;              // opcional: seleccionar existente
+    @NotBlank private String calle;
+    @NotBlank private String numeracion;
     private String barrio;
-
     private String manzanaPiso;
-
     private String casaDepartamento;
-
     private String referencia;
-
-    @NotBlank
-    private String localidadId;
-
-    @NotBlank
-    private String rol;
-
+    @NotBlank private String localidadId;    // select en cascada
 }

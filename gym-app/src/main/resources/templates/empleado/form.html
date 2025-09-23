@@ -164,11 +164,8 @@
         </div>
 
         <div class="col-md-4">
-          <label class="form-label">Clave</label>
-          <input type="password" class="form-control" th:field="*{clave}"
-                 th:attr="${form.id} == null ? 'required=required' : null"
-                 th:placeholder="${form.id} == null ? 'Ingresá una clave temporal' : 'Dejar en blanco para mantener la actual'}">
-          <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('clave')}" th:errors="*{clave}"></div>
+        <label class="form-label">Clave</label>
+        <input type="password" class="form-control" th:field="*{clave}">
         </div>
 
         <div class="col-12 mt-4 d-flex gap-2">
