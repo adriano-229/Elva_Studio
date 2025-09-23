@@ -1,0 +1,37 @@
+package elva.studio.services;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import elva.studio.entities.Socio;
+import elva.studio.repositories.SocioRepository;
+import jakarta.transaction.Transactional;
+
+@Service
+public class SocioServicio {
+	
+	@Autowired
+	private SocioRepository repoSocio;
+	
+	// valido que un usuario es socio
+	@Transactional
+	public boolean validarSocio(Socio socio, Long numeroSocio) {
+    if (socio == null || numeroSocio == null) {
+	        return false; // evitamos NullPointerException
+	    }
+	    return numeroSocio.equals(socio.getNumeroSocio());
+
+	}
+
+	@Transactional
+	public Socio buscarPorNrosocio(Long numeroSocio) {
+		Optional<Socio> respuesta = repoSocio.buscarPorNroSocio(numeroSocio);
+		if (respuesta.isPresent()){
+			Socio socio = respuesta.get();
+			return socio;
+		}
+		return null;
+	}
+}
