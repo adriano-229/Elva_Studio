@@ -83,9 +83,20 @@ public class PortalControlador {
 					return "admin";
 				
 				} else if (rolUsuario == Rol.Socio){
-					model.addAttribute("socio",persona);
-					//session.setAttribute("socio", usuario);
-					return "inicio";
+					Optional<Socio> optSocio = this.svcSocio.buscarPorId(persona.getId());
+					
+					if (optSocio.isPresent()) {
+						Socio socio = optSocio.get();
+						session.setAttribute("socio", socio);
+						model.addAttribute("socio",socio);
+						//session.setAttribute("socio", usuario);
+						return "inicio";
+						
+					} else {
+				        // Si por algún motivo no existe el socio, redirigimos al login o mostramos un error
+				        return "redirect:/login";
+				    }
+					
 					
 				} else if (rolUsuario == Rol.Empleado) {
 					model.addAttribute("empleado",persona);
@@ -156,6 +167,19 @@ public class PortalControlador {
 
 	return "redirect:/exito";
 		
+	}
+	
+	@GetMapping("/homepage")
+	public String irAHomepage(HttpSession session, ModelMap model) {
+		Socio socio = (Socio) session.getAttribute("socio");
+	    if (socio == null) {
+	        return "redirect:/login";
+	    }
+	    
+	    
+	    
+	    model.addAttribute("socio", socio);
+		return "homepage";
 	}
 	
 	@GetMapping("/exito")

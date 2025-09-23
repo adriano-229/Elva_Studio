@@ -101,10 +101,10 @@ INSERT INTO persona (nombre, apellido, fecha_nacimiento, tipo_documento, numero_
 -- -------------------------------
 -- Socio (usar el mismo ID que Persona)
 -- -------------------------------
-INSERT INTO socio (id, numero_socio, eliminado) VALUES
-(1, 1001, false),
-(2, 1002, false),
-(3, 1003, false);
+INSERT INTO socio (id, numero_socio) VALUES
+(1, 1001),
+(2, 1002),
+(3, 1003);
 
 -- -------------------------------
 -- ValorCuota

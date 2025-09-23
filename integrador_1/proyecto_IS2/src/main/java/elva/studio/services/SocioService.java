@@ -76,12 +76,15 @@ public class SocioService {
 	}
 	
 	@Transactional
-	public Socio buscarPorId(Long idSocio) {
-		Optional<Socio> respuesta = repoSocio.findById(idSocio);
+	public Optional<Socio> buscarPorId(Long idSocio) {
+		
+		return repoSocio.findById(idSocio);
+	}
+		/*Optional<Socio> respuesta = repoSocio.findById(idSocio);
 		if (respuesta.isPresent()) {
 			Socio socio = respuesta.get();
 			return socio;
 		}
 		return null;
-	}
+	}*/
 }
