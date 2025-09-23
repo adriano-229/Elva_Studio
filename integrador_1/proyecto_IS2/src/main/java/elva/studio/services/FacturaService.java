@@ -142,8 +142,10 @@ public class FacturaService {
 	@Transactional
 	public List<Factura> listarFacturaPorSocio(Long idSocio){
 		// busco las cuotas por socio
-		Socio socio = svcSocio.buscarPorId(idSocio);
-		if (socio != null) {
+		
+		Optional<Socio> socio = svcSocio.buscarPorId(idSocio);
+		
+		if (socio.isPresent()) {
 			List<Factura> facturas = repoFactura.findFacturasBySocio(idSocio);
 			return facturas;
 		}
@@ -154,8 +156,8 @@ public class FacturaService {
 	// listar facturas activas por socio
 	@Transactional
 	public List<Factura> listarFacturaPorSocioActivas(Long idSocio){
-		Socio socio = svcSocio.buscarPorId(idSocio);
-		if (socio != null) {
+		Optional<Socio> socio = svcSocio.buscarPorId(idSocio);
+		if (socio.isPresent()) {
 			List<Factura> facturasActivas = repoFactura.findFacturasBySocioActivas(idSocio);
 			return facturasActivas;
 		}

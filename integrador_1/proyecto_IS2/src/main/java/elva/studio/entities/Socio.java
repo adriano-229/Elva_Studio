@@ -17,12 +17,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Socio extends Persona{
 	
-	@Id
+	/*@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long id;*/
 	
 	private Long numeroSocio;
-	
-	private boolean eliminado;
 
 }
