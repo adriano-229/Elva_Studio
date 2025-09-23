@@ -221,6 +221,7 @@ public class PagoControlador {
 	        return "redirect:/login";
 	    }	
 		
+		System.out.println("ESTOY EN TRANSFERENCIA COMPROBANTE---------------------------------");
 		
 		//DeudaForm deudaForm = (DeudaForm) session.getAttribute("deudaForm");		
 		System.out.println("DEUDAFORM: idSocio:" + deudaForm.getIdSocio());

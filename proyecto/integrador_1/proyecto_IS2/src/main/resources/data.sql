@@ -19,6 +19,11 @@ TRUNCATE TABLE pais;
 TRUNCATE TABLE valor_cuota;
 TRUNCATE TABLE forma_de_pago;
 
+ALTER TABLE forma_de_pago MODIFY COLUMN tipo_pago VARCHAR(50);
+ALTER TABLE persona MODIFY COLUMN tipo_documento VARCHAR(50);
+ALTER TABLE cuota_mensual MODIFY COLUMN estado VARCHAR(50);
+ALTER TABLE factura MODIFY COLUMN estado VARCHAR(50);
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- -------------------------------
@@ -114,14 +119,14 @@ INSERT INTO valor_cuota (fecha_desde, fecha_hasta, valor_cuota, eliminado) VALUE
 -- -------------------------------
 INSERT INTO cuota_mensual (mes, anio, estado, fecha_vencimiento, eliminado, fk_valor_cuota, fk_socio) VALUES
 ('Enero', 2025, 'Pagada', '2025-01-31', false, 1, 1),
-('Febrero', 2025, 'Vencida', '2025-02-28', false, 2, 2),
+('Febrero', 2025, 'Adeudada', '2025-02-28', false, 2, 2),
 ('Marzo', 2025, 'Pagada', '2025-03-31', false, 1, 3),
 ('Abril', 2025, 'Pagada', '2025-04-30', false, 1, 3),
-('Mayo', 2025, 'Vencida', '2025-05-30', false, 1, 3),
-('Junio', 2025, 'Vencida', '2025-06-30', false, 2, 3),
-('Julio', 2025, 'Vencida', '2025-07-30', false, 2, 3),
-('Agosto', 2025, 'Vencida', '2025-08-30', false, 3, 3),
-('Septiembre', 2025, 'Emitida', '2025-09-30', false, 3, 3);
+('Mayo', 2025, 'Adeudada', '2025-05-30', false, 1, 3),
+('Junio', 2025, 'Adeudada', '2025-06-30', false, 2, 3),
+('Julio', 2025, 'Adeudada', '2025-07-30', false, 2, 3),
+('Agosto', 2025, 'Adeudada', '2025-08-30', false, 3, 3),
+('Septiembre', 2025, 'Adeudada', '2025-09-30', false, 3, 3);
 
 
 

@@ -138,13 +138,16 @@ public class PagoServicio{
         formaPago.setObservacion("Transferencia");
         //formaPago.setPago(pagoTransferencia);
         //formaPagoRepo.save(formaPago);
-        //------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------*/
         
         List<Long> idCuotasAPagar =  pagoTransferencia.getIdCuotas();
         
         List<CuotaMensual> cuotasAPagar = this.svcCuota.listarPorIds(idCuotasAPagar);
         
-        
+        cuotasAPagar.forEach(cuota -> {
+        		cuota.setEstado(EstadoCuota.Procesando);
+        });
+    		
         cuotasAPagar.forEach(cuota -> {
     		    		
         		System.out.println("ESTADO CUOTA ACTUALIZADO : " + cuota.getId() + ", ESTADO: " + cuota.getEstado());
@@ -155,9 +158,7 @@ public class PagoServicio{
     		    		
         		System.out.println("cuotas a pagar" + idCuotasAPagar);
     		
-        });*/
-		
-		//-------------------NOTIFICAR AL ADMIN--------------------------
+        });
     }
 	
 }
