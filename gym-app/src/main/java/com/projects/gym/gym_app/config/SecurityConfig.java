@@ -25,6 +25,7 @@ public class SecurityConfig {
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/admin/usuarios/**", "/admin/config/cuota/**").hasRole("ADMIN")
                 .requestMatchers("/admin/**").hasAnyRole("ADMIN", "OPERADOR")
+                .requestMatchers("/profesor/**").hasAnyRole("PROFESOR","ADMIN", "OPERADOR")
                 .requestMatchers("/api/ubicacion/**").hasAnyRole("ADMIN", "OPERADOR")
                 .requestMatchers("/api/facturas/**").hasAnyRole("ADMIN", "OPERADOR", "SOCIO")
                 .requestMatchers("/socio/**").hasAnyRole("SOCIO", "ADMIN")

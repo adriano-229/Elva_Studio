@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -109,7 +110,7 @@ public class SociosController {
 
     private void loadFormOptions(Model model) {
         model.addAttribute("paises", ubicacionQueryService.listarPaisesActivos());
-        model.addAttribute("roles", Arrays.stream(Rol.values()).map(Rol::name).toList());
+        model.addAttribute("roles", List.of(Rol.SOCIO.name()));
         model.addAttribute("tiposDoc", Arrays.stream(TipoDocumento.values()).map(TipoDocumento::name).toList());
         model.addAttribute("sucursales", sucursalService.listarActivas());
     }

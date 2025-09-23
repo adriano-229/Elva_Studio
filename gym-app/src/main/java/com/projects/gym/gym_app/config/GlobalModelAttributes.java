@@ -27,6 +27,11 @@ public class GlobalModelAttributes {
         return hasRole(authentication, "ROLE_OPERADOR");
     }
 
+    @ModelAttribute("esProfesor")
+    public boolean esProfesor(Authentication authentication) {
+        return hasRole(authentication, "ROLE_PROFESOR");
+    }
+
     @ModelAttribute("esStaff")
     public boolean esStaff(Authentication authentication) {
         return hasRole(authentication, "ROLE_ADMIN") || hasRole(authentication, "ROLE_OPERADOR");

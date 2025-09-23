@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::content})}">
+<div th:fragment="content" class="py-4">
+  <div class="mb-4">
+    <h1 class="h3 mb-1">Rutinas para socios</h1>
+    <p class="text-muted mb-0">Generá y actualizá los planes de entrenamiento asignados a tus alumnos.</p>
+  </div>
+
+  <div class="row g-4 mb-4">
+    <div class="col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header">
+          <h2 class="h5 mb-0">Crear nueva rutina</h2>
+        </div>
+        <div class="card-body">
+          <div th:if="${#lists.isEmpty(profesores)}" class="alert alert-warning" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i>No hay profesores activos disponibles. Contactá al administrador.
+          </div>
+
+          <form th:action="@{/profesor/rutinas/nueva}" th:object="${rutinaForm}" method="post" class="row g-3">
+
+            <div class="col-md-6">
+              <label class="form-label">Número de socio</label>
+              <input type="number" class="form-control" min="1" th:field="*{numeroSocio}" required>
+              <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('numeroSocio')}" th:errors="*{numeroSocio}"></div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Profesor</label>
+              <select class="form-select" th:field="*{profesorId}" th:disabled="${#lists.isEmpty(profesores)}" required>
+                <option value="" disabled th:selected="${rutinaForm.profesorId == null}">Seleccioná un profesor</option>
+                <option th:each="profesor : ${profesores}" th:value="${profesor.id}" th:text="${profesor.nombreCompleto}"></option>
+              </select>
+              <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('profesorId')}" th:errors="*{profesorId}"></div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Fecha de inicio</label>
+              <input type="date" class="form-control" th:field="*{fechaInicia}" required>
+              <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('fechaInicia')}" th:errors="*{fechaInicia}"></div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Fecha de finalización</label>
+              <input type="date" class="form-control" th:field="*{fechaFinaliza}" required>
+              <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('fechaFinaliza')}" th:errors="*{fechaFinaliza}"></div>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Objetivo</label>
+              <textarea class="form-control" rows="2" th:field="*{objetivo}" placeholder="Describí el objetivo principal" required></textarea>
+              <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('objetivo')}" th:errors="*{objetivo}"></div>
+            </div>
+            <div class="col-12 d-flex gap-2">
+              <button type="submit" class="btn btn-primary" th:disabled="${#lists.isEmpty(profesores)}">Crear rutina</button>
+              <button type="reset" class="btn btn-outline-secondary">Limpiar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header">
+          <h2 class="h5 mb-0">Buscar rutina vigente</h2>
+        </div>
+        <div class="card-body">
+          <form class="row g-3" method="get" th:action="@{/profesor/rutinas}">
+            <div class="col-md-8">
+              <label class="form-label">Número de socio</label>
+              <input type="number" min="1" class="form-control" name="numeroSocio" th:value="${numeroSocio}" required>
+            </div>
+            <div class="col-md-4 align-self-end d-grid">
+              <button class="btn btn-outline-primary">Buscar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div th:if="${mensaje}" class="alert" th:classappend="${mensajeTipo} == 'error' ? ' alert-danger' : ' alert-success'" role="alert">
+    <i class="bi" th:classappend="${mensajeTipo} == 'error' ? ' bi-exclamation-circle me-2' : ' bi-check-circle me-2'"></i>
+    <span th:text="${mensaje}"></span>
+  </div>
+
+  <div th:if="${rutinaNoEncontrada}" class="alert alert-info" role="alert">
+    <i class="bi bi-info-circle me-2"></i>No se encontró una rutina en proceso para el socio indicado.
+  </div>
+
+  <div th:if="${rutina}" class="vstack gap-4">
+    <div class="card shadow-sm">
+      <div class="card-body row g-3 align-items-center">
+        <div class="col-lg-4">
+          <h2 class="h5 mb-1">Rutina actual</h2>
+          <p class="mb-0"><strong>Socio:</strong> <span th:text="${rutina.socio.apellido}"></span>, <span th:text="${rutina.socio.nombre}"></span></p>
+          <p class="mb-0"><strong>Objetivo:</strong> <span th:text="${rutina.objetivo}"></span></p>
+        </div>
+        <div class="col-lg-3">
+          <p class="mb-0"><strong>Inicio:</strong> <span th:text="${rutina.fechaInicia}"></span></p>
+          <p class="mb-0"><strong>Fin:</strong> <span th:text="${rutina.fechaFinaliza}"></span></p>
+        </div>
+        <div class="col-lg-3">
+          <p class="mb-0"><strong>Estado:</strong>
+            <span class="badge"
+                  th:classappend="${rutina.estadoRutina}=='FINALIZADA' ? ' text-bg-success' : (${rutina.estadoRutina}=='ANULADA' ? ' text-bg-secondary' : ' text-bg-primary')"
+                  th:text="${rutina.estadoRutina}"></span>
+          </p>
+        </div>
+        <div class="col-lg-2">
+          <form th:action="@{|/profesor/rutinas/${rutina.id}/estado|}" method="post" class="d-flex gap-2">
+            <input type="hidden" name="numeroSocio" th:value="${numeroSocio}">
+            <select class="form-select form-select-sm" name="estado">
+              <option th:each="estado : ${estados}" th:value="${estado}" th:text="${estado}"
+                      th:selected="${estado} == ${rutina.estadoRutina}"></option>
+            </select>
+            <button class="btn btn-sm btn-outline-primary">Actualizar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h2 class="h5 mb-0">Días de entrenamiento</h2>
+        <form th:action="@{|/profesor/rutinas/${rutina.id}/detalles|}" method="post" class="d-flex align-items-center gap-2">
+          <input type="hidden" name="rutinaId" th:value="${rutina.id}">
+          <input type="hidden" name="numeroSocio" th:value="${numeroSocio}">
+          <label class="mb-0">Día</label>
+          <input type="number" class="form-control form-control-sm" style="width:6rem" name="numeroDia" min="1" required>
+          <button class="btn btn-sm btn-outline-primary">Agregar</button>
+        </form>
+      </div>
+      <div class="card-body">
+        <div th:if="${#lists.isEmpty(detalles)}" class="alert alert-info" role="alert">
+          <i class="bi bi-info-circle me-2"></i>Aún no se registraron días para esta rutina.
+        </div>
+
+        <div th:each="detalle : ${detalles}" class="mb-4">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h3 class="h6 mb-0">Día <span th:text="${detalle.numeroDia}"></span></h3>
+            <span class="badge" th:classappend="${detalle.activo} ? ' text-bg-success' : ' text-bg-secondary'"
+                  th:text="${detalle.activo} ? 'Activo' : 'Inactivo'"></span>
+          </div>
+
+          <div class="table-responsive mb-3">
+            <table class="table table-sm table-striped">
+              <thead class="table-light">
+              <tr>
+                <th>Actividad</th>
+                <th>Grupo muscular</th>
+                <th>Series</th>
+                <th>Repeticiones</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="ejercicio : ${detalle.detalleEjercicios}">
+                <td th:text="${ejercicio.actividad}"></td>
+                <td th:text="${ejercicio.grupoMuscular}"></td>
+                <td th:text="${ejercicio.series}"></td>
+                <td th:text="${ejercicio.repeticiones}"></td>
+              </tr>
+              <tr th:if="${detalle.detalleEjercicios == null || #lists.isEmpty(detalle.detalleEjercicios)}">
+                <td colspan="4" class="text-center text-muted">Sin ejercicios asignados todavía.</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <form th:action="@{|/profesor/rutinas/${rutina.id}/detalles/${detalle.id}/ejercicios|}" method="post" class="row g-2 align-items-end">
+            <input type="hidden" name="rutinaId" th:value="${rutina.id}">
+            <input type="hidden" name="detalleDiarioId" th:value="${detalle.id}">
+            <input type="hidden" name="numeroSocio" th:value="${numeroSocio}">
+
+            <div class="col-md-4">
+              <label class="form-label">Actividad</label>
+              <input type="text" class="form-control form-control-sm" name="actividad" required>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Grupo</label>
+              <select class="form-select form-select-sm" name="grupoMuscular" required>
+                <option th:each="grupo : ${grupos}" th:value="${grupo}" th:text="${grupo}"></option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Series</label>
+              <input type="number" class="form-control form-control-sm" name="series" min="1" required>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Repeticiones</label>
+              <input type="number" class="form-control form-control-sm" name="repeticiones" min="1" required>
+            </div>
+            <div class="col-md-2 d-grid">
+              <button class="btn btn-sm btn-outline-primary">Agregar ejercicio</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</html>

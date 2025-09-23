@@ -1,5 +1,7 @@
 package com.projects.gym.gym_app.domain;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,4 +20,6 @@ public class Socio extends Persona {
     @JoinColumn(name="direccion_id", nullable=false)
     private Direccion direccion;
 
+    @OneToMany(mappedBy = "socio", cascade = CascadeType.ALL)
+    private List<Rutina> rutinas;
 }
