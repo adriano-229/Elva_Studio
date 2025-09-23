@@ -66,8 +66,7 @@ public class PortalControlador {
 		// valido que exista
 		Usuario usuario = svcUsuario.buscarUsuarioPorNombre(nombreUsuario);
 		if (usuario != null) {
-			
-			
+
 			// valido el usuario
 			boolean usuarioValido = svcUsuario.validarUsuarioLogueado(usuario, nombreUsuario, clave);
 			if (usuarioValido == true) {
@@ -95,6 +94,7 @@ public class PortalControlador {
 			} 
 			
 		} 
+
 		return "redirect:/login?error=true";
 	}
 	
@@ -109,7 +109,7 @@ public class PortalControlador {
 		model.addAttribute("socio",socio);
 		return "inicio";
 	}
-	
+
 	// al presionar el boton salir, redirige al inicio
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
@@ -161,6 +161,7 @@ public class PortalControlador {
 	@GetMapping("/exito")
 	public String exito() {
 	    return "exito";
+
 	}
 
 }
