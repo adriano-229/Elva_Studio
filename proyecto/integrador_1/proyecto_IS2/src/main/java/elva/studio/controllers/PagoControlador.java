@@ -1,7 +1,12 @@
 package elva.studio.controllers;
 
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
+import java.io.File;
 import java.math.BigDecimal;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,13 +41,15 @@ import com.mercadopago.resources.preference.Preference;
 import org.springframework.ui.Model;
 
 import elva.studio.dto.DeudaForm;
+import elva.studio.dto.Pago;
+import elva.studio.dto.PagoOnline;
+import elva.studio.dto.PagoTransferencia;
 import elva.studio.entities.CuotaMensual;
 import elva.studio.entities.FormaDePago;
 import elva.studio.entities.Socio;
-import elva.studio.entities.PagoOnline;
 import elva.studio.enumeration.TipoPago;
 import elva.studio.services.CuotaMensualService;
-import elva.studio.services.PagoOnlineServicio;
+import elva.studio.services.PagoServicio;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -51,7 +58,7 @@ import jakarta.servlet.http.HttpSession;
 public class PagoControlador {
 	
 	@Autowired
-	private PagoOnlineServicio svcPagoOnline;
+	private PagoServicio svcPago;
 	
 	@Autowired
 	private CuotaMensualService svcCuota;
@@ -63,11 +70,17 @@ public class PagoControlador {
 	private String ngrokUrl;
 	//set NGROK_URL=https...
     
+    @Value("${app.upload.dir}")
+    private String uploadDir;
+    
     @Autowired
     	PaymentClient paymentClient;
     
     private PagoOnline pagoOnline;
     
+    private PagoTransferencia pagoTransferencia;
+    
+        
 	@PostMapping("/confirmarDatos")
 	public String pagarCuota(HttpSession session, @ModelAttribute DeudaForm deudaForm, Model model) throws Exception {
 		
@@ -79,6 +92,7 @@ public class PagoControlador {
 		        return "redirect:/login";
 		    }			
 			model.addAttribute("socio", socio);
+			model.addAttribute("deudaForm", deudaForm);
 			
 						
 			// tomo el atributo idCuotas del duedaForm y lo paso a una lista de objetos CuotaMensual
@@ -94,6 +108,17 @@ public class PagoControlador {
 			// TRANSFERENCIA---------------------------------------------------------------------
 			
 			if (deudaForm.getFormaPago() == TipoPago.Transferencia) {
+				
+				pagoTransferencia = PagoTransferencia.builder()
+						.idSocio(deudaForm.getIdSocio())
+						.idCuotas(deudaForm.getIdCuotas())
+						.totalAPagar(deudaForm.getTotalAPagar())
+						.tipoPago(deudaForm.getFormaPago())
+						.build();
+				
+				session.setAttribute("deudaForm", deudaForm);
+				session.setAttribute("pagoTransferencia", pagoTransferencia);
+				
 				
 				return "transferencia";
 				
@@ -144,7 +169,15 @@ public class PagoControlador {
 				session.setAttribute("preferenceId", preference.getId());
 				
 				// creo un objeto pagoOnline para guardar los datos del duedaForm pq sino los pierdo cuando llego a "/pagos/webhook"
-				pagoOnline = this.svcPagoOnline.crear(deudaForm.getIdSocio(), deudaForm.getTotalAPagar(), deudaForm.getIdCuotas(), deudaForm.getFormaPago());
+				//pagoOnline = this.svcPagoOnline.crear(deudaForm.getIdSocio(), deudaForm.getTotalAPagar(), deudaForm.getIdCuotas(), deudaForm.getFormaPago());
+				pagoOnline = PagoOnline.builder()
+						.idSocio(deudaForm.getIdSocio())
+						.idCuotas(deudaForm.getIdCuotas())
+						.totalAPagar(deudaForm.getTotalAPagar())
+						.tipoPago(deudaForm.getFormaPago())
+						.build();
+				
+				session.setAttribute("pagoOnline", pagoOnline);
 				
 				return "mercadoPago";
 			} else {
@@ -166,19 +199,85 @@ public class PagoControlador {
 		}
 	}
 	
-	@PostMapping("/transferencia")
-	public String transferencia(@ModelAttribute DeudaForm deudaForm, @RequestParam("comprobante") MultipartFile archivo, Model model) {
+	// Endpoint para renderizar la vista
+	@GetMapping("/transferencia")
+	public String mostrarTransferencia(HttpSession session, Model model) {
+	    Socio socio = (Socio) session.getAttribute("socio");
+	    if (socio == null) return "redirect:/login";
+
+	    DeudaForm deudaForm = (DeudaForm) session.getAttribute("deudaForm");
+	    model.addAttribute("socio", socio);
+	    model.addAttribute("deudaForm", deudaForm);
+
+	    return "transferencia";
+	}
+	
+	
+	@PostMapping("/transferenciaComprobante")
+	public String subirComprobante(HttpSession session,@ModelAttribute DeudaForm deudaForm, Model model) {
+		
+		Socio socio = (Socio) session.getAttribute("socio");
+		if (socio == null) {
+	        return "redirect:/login";
+	    }	
+		
+		
+		//DeudaForm deudaForm = (DeudaForm) session.getAttribute("deudaForm");		
+		System.out.println("DEUDAFORM: idSocio:" + deudaForm.getIdSocio());
+		
+		PagoTransferencia pagoTransferencia = (PagoTransferencia) session.getAttribute("pagoTransferencia");
+		
+
+		model.addAttribute("socio", socio);
+		model.addAttribute("deudaForm", deudaForm);
+        //model.addAttribute("deudaForm", deudaForm);
+        
+        MultipartFile archivo = deudaForm.getComprobante();
+        
+                
+        System.out.println("DEUDA FORM:" + deudaForm.getIdCuotas());
+		
+		// Validación de archivo
 	    if (archivo.isEmpty()) {
 	        model.addAttribute("msgError", "No se seleccionó archivo");
-	        return "pago";
+	        return "transferencia"; // nombre de tu HTML
 	    }
-	    // guardar archivo y procesar pago: El comrpobante ha sido recibido con exito, su pago esta siendo procesado
-	    model.addAttribute("msgSuccess", "El comprobante ha sido recibido con exito, su pago esta siendo procesado...");
-	    //creo model atribute para cada uno de los atributos del deuda 
-	    //form para pasarlos a la pag del admin junto con el comprobante
-	    
-	    return "confirmacion";
+
+	    // Validar extensión
+	    String nombreArchivo = System.currentTimeMillis() + "_" + archivo.getOriginalFilename();
+	    if (nombreArchivo != null && !nombreArchivo.matches("(?i).+\\.(jpg|jpeg|pdf)$")) {
+	    		deudaForm.setComprobante(null);
+	    		model.addAttribute("msgError", "Solo se permiten archivos JPG o PDF");
+	        return "transferencia";
+	    }
+
+	    try {
+	        // Guardar archivo en carpeta local
+	        String rutaDestino = uploadDir; 
+	        File carpeta = new File(rutaDestino);
+	        if (!carpeta.exists()) carpeta.mkdirs();
+
+	        Path pathDestino = Paths.get(rutaDestino, nombreArchivo);
+	        archivo.transferTo(pathDestino.toFile());
+	        
+	        model.addAttribute("msgExito", "Archivo subido correctamente");
+	        this.svcPago.procesarPagoTransferencia(pathDestino.toString(), pagoTransferencia);
+	        
+	        // deudaForm.setComprobantePath(pathDestino.toString());
+	        // svcPago.guardarTransferencia(deudaForm);
+
+	        model.addAttribute("msgExito", "Archivo subido correctamente");
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        deudaForm.setComprobante(null);
+	        model.addAttribute("msgError", "Error al subir archivo");
+	        return "transferencia";
+	    }
+	    return "transferencia";
 	}
+	
+	
 	
 	
 	// tu pago ha sido confirmado, ver factura.
@@ -295,14 +394,15 @@ public class PagoControlador {
 	            return ResponseEntity.ok("Pago no aprobado, no se procesa");
 	        }
 	        
+	        
 	        // Evitar procesar el mismo pago dos veces
-	        if (this.svcPagoOnline.pagoExistente(paymentId)) {
-	            return ResponseEntity.ok("El pago ya había sido procesado");
+	        //if (this.svcPagoOnline.pagoExistente(paymentId)) {
+	        if (pagoOnline.getPaymentId() != null) {
+	        		return ResponseEntity.ok("El pago ya había sido procesado");
 	        }
 	        
-	        	          
 	        // este metodo procesa el pago, actualiza el estado de las cuotas y crea fcatura
-	        this.svcPagoOnline.procesarPago(paymentId, status, pagoOnline);
+	        this.svcPago.procesarPagoOnline(paymentId, status, pagoOnline);
 	        
 	        System.out.println("Pago aprobado y registrado: " + paymentId);
 

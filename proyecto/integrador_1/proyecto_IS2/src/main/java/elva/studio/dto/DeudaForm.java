@@ -3,6 +3,8 @@ package elva.studio.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import elva.studio.enumeration.TipoPago;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +19,7 @@ public class DeudaForm {
 	private Double totalAPagar;
 	private List<Long> idCuotas = new ArrayList<>();
 	private TipoPago formaPago;
+	private MultipartFile comprobante;
 	
 
 }
