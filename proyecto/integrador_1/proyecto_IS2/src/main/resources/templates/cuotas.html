@@ -83,9 +83,9 @@
 	              <label class="form-label mb-0">Estado:</label>
 	              <select class="form-control form-control-sm" name="estado">
 	                <option value="">Seleccionar Estado</option>
-	                <option value="Emitida">Emitida</option>
+					<option value="Procesando">Procesando</option>
 	                <option value="Pagada">Pagada</option>
-	                <option value="Vencida">Vencida</option>
+	                <option value="Adeudada">Adeudada</option>
 	              </select>
 	            </div>
 
@@ -146,15 +146,15 @@
 						 <tbody>
 							<tr th:each="cuota : ${listaCuotas}">
 								<td>
-									<input type="checkbox" class="cuotaCheck" th:field="*{idCuotas}" th:value="${cuota.id}" th:disabled="${cuota.estado.name() == 'Pagada'}" th:data-valor="${cuota.valorCuota.valorCuota}"/>
+									<input type="checkbox" class="cuotaCheck" th:field="*{idCuotas}" th:value="${cuota.id}" th:disabled="${cuota.estado.name() == 'Pagada' or cuota.estado.name() == 'Procesando'}" th:data-valor="${cuota.valorCuota.valorCuota}"/>
 								</td>
 								<td th:text="${cuota.mes} + '-' + ${cuota.anio}"></td>
 								<td th:text="${cuota.fechaVencimiento}"></td>
 								<td th:text="${cuota.valorCuota.valorCuota}"></td>
 								<td>
-									<label th:classappend="${cuota.estado.name() == 'Emitida' ? 'badge badge-warning' :
-															cuota.estado.name() == 'Pagada' ? 'badge badge-success' :
-																'badge badge-danger'}"
+									<label th:classappend="${cuota.estado.name() == 'Pagada' ? 'badge badge-success' 
+															: cuota.estado.name() == 'Procesando' ? 'badge badge-primary' 
+															: 'badge badge-danger'}"
 											th:text="${cuota.estado.name()}"></label>
 								</td>
 							</tr>
