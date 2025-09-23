@@ -62,6 +62,12 @@
             </a>
           </li>
 
+          <li class="nav-item" th:if="${esAdmin}">
+            <a class="nav-link" th:classappend="${active}=='empleados' ? ' active'" th:href="@{/admin/empleados}">
+              <i class="bi bi-person-badge me-1"></i>Empleados
+            </a>
+          </li>
+
           <li class="nav-item">
             <a class="nav-link" th:classappend="${active}=='cuotas' ? ' active'" th:href="@{/admin/cuotas}">
               <i class="bi bi-cash-coin me-1"></i>Cuota
@@ -129,6 +135,9 @@
           <a th:href="${esAdmin} ? @{/admin/rutinas} : @{/profesor/rutinas}" class="sidebar-link" th:classappend="${active}=='rutinas' ? ' active'">
             <i class="bi bi-clipboard-heart me-2"></i>Rutinas
           </a>
+          <a th:if="${esAdmin}" th:href="@{/admin/empleados}" class="sidebar-link" th:classappend="${active}=='empleados' ? ' active'">
+            <i class="bi bi-person-badge me-2"></i>Empleados
+          </a>
           <a th:href="@{/admin/cuotas}" class="sidebar-link" th:classappend="${active}=='cuotas' ? ' active'">
             <i class="bi bi-cash-coin me-2"></i>Cuota
           </a>
@@ -167,6 +176,7 @@
           <a th:href="@{/admin/facturas}" class="sidebar-link" th:classappend="${active}=='facturas' ? ' active'"><i class="bi bi-receipt me-2"></i>Facturas</a>
           <a th:href="@{/admin/pagos}" class="sidebar-link" th:classappend="${active}=='pagos' ? ' active'"><i class="bi bi-wallet2 me-2"></i>Pagos</a>
           <a th:href="${esAdmin} ? @{/admin/rutinas} : @{/profesor/rutinas}" class="sidebar-link" th:classappend="${active}=='rutinas' ? ' active'"><i class="bi bi-clipboard-heart me-2"></i>Rutinas</a>
+          <a th:if="${esAdmin}" th:href="@{/admin/empleados}" class="sidebar-link" th:classappend="${active}=='empleados' ? ' active'"><i class="bi bi-person-badge me-2"></i>Empleados</a>
           <a th:href="@{/admin/cuotas}" class="sidebar-link" th:classappend="${active}=='cuotas' ? ' active'"><i class="bi bi-cash-coin me-2"></i>Cuota</a>
           <a th:href="@{/admin/reportes}" class="sidebar-link" th:classappend="${active}=='reportes' ? ' active'"><i class="bi bi-clipboard-data me-2"></i>Reportes</a>
           <hr>
