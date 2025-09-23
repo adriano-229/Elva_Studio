@@ -35,7 +35,4 @@ public class FormaDePago {
 	private String observacion;
 	private boolean eliminado;
 	
-	@ManyToOne
-	@JoinColumn(name = "fk_pagoOnline")
-	PagoOnline pagoOnline;
 }
