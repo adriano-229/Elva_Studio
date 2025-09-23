@@ -35,5 +35,6 @@ public interface ValorCuotaRepository extends JpaRepository<ValorCuota, Long>{
 	public Optional<ValorCuota> buscarValorCuotaVigente();
 	
 	
+	
 
 }
