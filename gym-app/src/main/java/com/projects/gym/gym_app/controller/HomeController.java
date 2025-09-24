@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
     @GetMapping("")
   public String home(Model model) {
-    model.addAttribute("appName", "Gimnasio XYZ");
     model.addAttribute("titulo", "Bienvenido");
     model.addAttribute("seccion", "Dashboard");
     model.addAttribute("active", "home");

@@ -21,18 +21,20 @@
   <!-- NAVBAR TOP -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
-      <button class="btn btn-outline-light me-2 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu">
+      <button class="btn btn-outline-light me-2 d-lg-none" type="button" data-bs-toggle="offcanvas"
+              th:if="${esAdmin} or (${esOperador and !esAdmin})"
+              th:attr="data-bs-target=${esAdmin} ? '#offcanvasMenu' : '#offcanvasMenuOperador'">
         <i class="bi bi-list"></i>
       </button>
 
-      <a class="navbar-brand" th:href="@{/admin}" th:text="${appName} ?: 'Mi App'">Mi App</a>
+      <a class="navbar-brand" th:text="${appName} ?: 'Mi App'">Mi App</a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNav">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div id="topNav" class="collapse navbar-collapse">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0" th:if="${esStaff}">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" th:if="${esAdmin}">
 
           <li class="nav-item">
             <a class="nav-link" th:classappend="${active}=='home' ? ' active'" th:href="@{/admin}">
@@ -65,15 +67,46 @@
             </a>
           </li>
 
+          <li class="nav-item" th:if="${esAdmin}">
+            <a class="nav-link" th:classappend="${active}=='empleados' ? ' active'" th:href="@{/admin/empleados}">
+              <i class="bi bi-person-badge me-1"></i>Empleados
+            </a>
+          </li>
+
           <li class="nav-item">
             <a class="nav-link" th:classappend="${active}=='cuotas' ? ' active'" th:href="@{/admin/cuotas}">
               <i class="bi bi-cash-coin me-1"></i>Cuota
             </a>
           </li>
-
+          <!--
           <li class="nav-item">
             <a class="nav-link" th:classappend="${active}=='reportes' ? ' active'" th:href="@{/admin/reportes}">
               <i class="bi bi-graph-up-arrow me-1"></i>Reportes
+            </a>
+          </li>
+          -->
+        </ul>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" th:if="${esOperador and !esAdmin}">
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${active}=='operador-portal' ? ' active'" th:href="@{/operador/portal}">
+              <i class="bi bi-house-heart me-1"></i>Inicio
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${active}=='pagos' ? ' active'" th:href="@{/admin/pagos}">
+              <i class="bi bi-wallet2 me-1"></i>Pagos
+            </a>
+          </li>
+        </ul>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" th:if="${esProfesor}">
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${active}=='profesor-portal' ? ' active'" th:href="@{/profesor/portal}">
+              <i class="bi bi-house-heart me-1"></i>Inicio
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${active}=='profesor-rutinas' ? ' active'" th:href="@{/profesor/rutinas}">
+              <i class="bi bi-clipboard-check me-1"></i>Rutinas
             </a>
           </li>
         </ul>
@@ -114,7 +147,7 @@
   <div class="container-fluid">
     <div class="row d-flex">
       <!-- SIDEBAR IZQUIERDA (desktop) -->
-      <aside class="col-lg-3 col-xl-2 d-none d-lg-block border-end" th:if="${esStaff}">
+      <aside class="col-lg-3 col-xl-2 d-none d-lg-block border-end" th:if="${esAdmin}">
         <div class="p-3">
           <h6 class="text-uppercase text-muted">Navegación</h6>
           <a th:href="@{/admin}" class="sidebar-link" th:classappend="${active}=='home' ? ' active'">
@@ -132,15 +165,20 @@
           <a th:href="${esAdmin} ? @{/admin/rutinas} : @{/profesor/rutinas}" class="sidebar-link" th:classappend="${active}=='rutinas' ? ' active'">
             <i class="bi bi-clipboard-heart me-2"></i>Rutinas
           </a>
+          <a th:if="${esAdmin}" th:href="@{/admin/empleados}" class="sidebar-link" th:classappend="${active}=='empleados' ? ' active'">
+            <i class="bi bi-person-badge me-2"></i>Empleados
+          </a>
           <a th:href="@{/admin/cuotas}" class="sidebar-link" th:classappend="${active}=='cuotas' ? ' active'">
             <i class="bi bi-cash-coin me-2"></i>Cuota
           </a>
           <a th:href="@{/admin/mensajes}" class="sidebar-link" th:classappend="${active}=='mensajes' ? ' active'">
             <i class="bi bi-envelope me-2"></i>Mensajes
           </a>
+          <!--
           <a th:href="@{/admin/reportes}" class="sidebar-link" th:classappend="${active}=='reportes' ? ' active'">
             <i class="bi bi-clipboard-data me-2"></i>Reportes
           </a>
+          -->
           <hr>
           <h6 class="text-uppercase text-muted">Sistema</h6>
           <a th:if="${esAdmin}" th:href="@{/admin/empresas}" class="sidebar-link" th:classappend="${active}=='empresas' ? ' active'">
@@ -149,17 +187,30 @@
           <a th:if="${esAdmin}" th:href="@{/admin/sucursales}" class="sidebar-link" th:classappend="${active}=='sucursales' ? ' active'">
             <i class="bi bi-geo-alt me-2"></i>Sucursales
           </a>
+          <!--
           <a th:if="${esAdmin}" th:href="@{/admin/config}" class="sidebar-link" th:classappend="${active}=='config' ? ' active'">
             <i class="bi bi-gear me-2"></i>Configuración
           </a>
           <a th:if="${esAdmin}" th:href="@{/admin/permisos}" class="sidebar-link" th:classappend="${active}=='permisos' ? ' active'">
             <i class="bi bi-shield-lock me-2"></i>Permisos
           </a>
+          -->
+        </div>
+      </aside>
+      <aside class="col-lg-3 col-xl-2 d-none d-lg-block border-end" th:if="${esOperador and !esAdmin}">
+        <div class="p-3">
+          <h6 class="text-uppercase text-muted">Navegación</h6>
+          <a th:href="@{/operador/portal}" class="sidebar-link" th:classappend="${active}=='operador-portal' ? ' active'">
+            <i class="bi bi-house-heart me-2"></i>Inicio
+          </a>
+          <a th:href="@{/admin/pagos}" class="sidebar-link" th:classappend="${active}=='pagos' ? ' active'">
+            <i class="bi bi-wallet2 me-2"></i>Pagos
+          </a>
         </div>
       </aside>
 
       <!-- OFFCANVAS (mobile) -->
-      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu" th:if="${esStaff}">
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu" th:if="${esAdmin}">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" th:text="${appName} ?: 'Mi App'">Mi App</h5>
           <button class="btn-close" data-bs-dismiss="offcanvas"></button>
@@ -170,6 +221,7 @@
           <a th:href="@{/admin/facturas}" class="sidebar-link" th:classappend="${active}=='facturas' ? ' active'"><i class="bi bi-receipt me-2"></i>Facturas</a>
           <a th:href="@{/admin/pagos}" class="sidebar-link" th:classappend="${active}=='pagos' ? ' active'"><i class="bi bi-wallet2 me-2"></i>Pagos</a>
           <a th:href="${esAdmin} ? @{/admin/rutinas} : @{/profesor/rutinas}" class="sidebar-link" th:classappend="${active}=='rutinas' ? ' active'"><i class="bi bi-clipboard-heart me-2"></i>Rutinas</a>
+          <a th:if="${esAdmin}" th:href="@{/admin/empleados}" class="sidebar-link" th:classappend="${active}=='empleados' ? ' active'"><i class="bi bi-person-badge me-2"></i>Empleados</a>
           <a th:href="@{/admin/cuotas}" class="sidebar-link" th:classappend="${active}=='cuotas' ? ' active'"><i class="bi bi-cash-coin me-2"></i>Cuota</a>
           <a th:href="@{/admin/reportes}" class="sidebar-link" th:classappend="${active}=='reportes' ? ' active'"><i class="bi bi-clipboard-data me-2"></i>Reportes</a>
           <hr>
@@ -177,6 +229,16 @@
           <a th:if="${esAdmin}" th:href="@{/admin/sucursales}" class="sidebar-link" th:classappend="${active}=='sucursales' ? ' active'"><i class="bi bi-geo-alt me-2"></i>Sucursales</a>
           <a th:if="${esAdmin}" th:href="@{/admin/config}" class="sidebar-link" th:classappend="${active}=='config' ? ' active'"><i class="bi bi-gear me-2"></i>Configuración</a>
           <a th:if="${esAdmin}" th:href="@{/admin/permisos}" class="sidebar-link" th:classappend="${active}=='permisos' ? ' active'"><i class="bi bi-shield-lock me-2"></i>Permisos</a>
+        </div>
+      </div>
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenuOperador" th:if="${esOperador and !esAdmin}">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" th:text="${appName} ?: 'Mi App'">Mi App</h5>
+          <button class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+          <a th:href="@{/operador/portal}" class="sidebar-link" th:classappend="${active}=='operador-portal' ? ' active'"><i class="bi bi-house-heart me-2"></i>Inicio</a>
+          <a th:href="@{/admin/pagos}" class="sidebar-link" th:classappend="${active}=='pagos' ? ' active'"><i class="bi bi-wallet2 me-2"></i>Pagos</a>
         </div>
       </div>
 

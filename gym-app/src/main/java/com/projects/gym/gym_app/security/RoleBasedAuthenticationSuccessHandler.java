@@ -28,17 +28,26 @@ public class RoleBasedAuthenticationSuccessHandler extends SavedRequestAwareAuth
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    private static final String ROLE_PROFESOR = "ROLE_PROFESOR";
+
+
     @Override
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) {
         Set<String> authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toSet());
-        if (authorities.contains(ROLE_ADMIN) || authorities.contains(ROLE_OPERADOR)) {
+        if (authorities.contains(ROLE_ADMIN)) {
             return "/admin";
+        }
+        if (authorities.contains(ROLE_OPERADOR)) {
+            return "/operador/portal";
         }
         if (authorities.contains(ROLE_SOCIO)) {
             return "/socio/portal";
+        }
+        if (authorities.contains(ROLE_PROFESOR)) {
+            return "/profesor/portal";
         }
         return super.determineTargetUrl(request, response, authentication);
     }

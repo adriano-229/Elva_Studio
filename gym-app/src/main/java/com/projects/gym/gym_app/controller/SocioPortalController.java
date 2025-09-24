@@ -73,6 +73,8 @@ public class SocioPortalController {
         }
 
         Rutina rutina = rutinaService.buscarRutinaActual(socio.getNumeroSocio());
+        List<Rutina> rutinasFinalizadas = rutinaService.listarRutinasFinalizadasPorSocio(socio.getNumeroSocio());
+        model.addAttribute("rutinasFinalizadas", rutinasFinalizadas);
         if (rutina == null) {
             model.addAttribute("rutinaNoEncontrada", true);
             return "socio/rutinas";
@@ -80,7 +82,7 @@ public class SocioPortalController {
 
         List<DetalleDiario> detalles = rutina.getDetallesDiarios() != null
                 ? rutina.getDetallesDiarios().stream()
-                .sorted(Comparator.comparingInt(DetalleDiario::getNumeroDia))
+                .sorted(Comparator.comparingInt(d -> d.getDiaSemana() != null ? d.getDiaSemana().ordinal() : Integer.MAX_VALUE))
                 .toList()
                 : List.of();
 
