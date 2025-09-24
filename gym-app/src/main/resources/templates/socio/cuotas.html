@@ -20,7 +20,7 @@
               <input type="date" class="form-control form-control-sm" id="fechaHasta" name="fechaHasta"
                      max="${#temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')}">
             </div>
-            <div class="col-md-3">
+            <!--<div class="col-md-3">
               <label class="form-label">Estado:</label>
               <select class="form-select form-select-sm" name="estado">
                 <option value="">Seleccionar Estado</option>
@@ -28,7 +28,7 @@
                 <option value="PAGADA">PAGADA</option>
                 <option value="ADEUDADA">ADEUDADA</option>
               </select>
-            </div>
+            </div>-->
             <div class="col-md-3 d-grid">
               <button type="submit" class="btn btn-primary btn-sm mt-1">Buscar</button>
             </div>
@@ -69,9 +69,9 @@
                       <td th:text="${cuota.valorCuota.valorCuota}"></td>
                       <td>
                         <span th:text="${cuota.estado.name()}" 
-                              th:classappend="${cuota.estado.name() == 'PAGADA' ? 'badge text-success' 
-                              : cuota.estado.name() == 'PROCESANDO' ? 'badge text-primary' 
-                              : 'badge text-danger'}"></span>
+                              th:classappend="${cuota.estado.name() == 'PAGADA' ? 'badge bg-success' 
+                              : cuota.estado.name() == 'PROCESANDO' ? 'badge bg-primary' 
+                              : 'badge bg-danger'}"></span>
                       </td>
                     </tr>
                   </tbody>

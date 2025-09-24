@@ -422,7 +422,7 @@ public class PagoControlador {
 			
 			DeudaForm deudaForm = (DeudaForm) session.getAttribute("deudaForm");
 			if (deudaForm == null) {
-				return "redirect:/cuotas";
+				return "redirect:/cuotas/adeudadas";
 			}
 			//model.addAttribute("deudaForm", deudaForm);
 			
