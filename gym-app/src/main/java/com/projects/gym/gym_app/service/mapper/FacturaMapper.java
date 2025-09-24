@@ -7,6 +7,8 @@ import com.projects.gym.gym_app.domain.Socio;
 import com.projects.gym.gym_app.service.dto.DetalleFacturaDTO;
 import com.projects.gym.gym_app.service.dto.FacturaDTO;
 
+import com.projects.gym.gym_app.domain.enums.Mes;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -51,7 +53,7 @@ public final class FacturaMapper {
     private static DetalleFacturaDTO mapDetalle(DetalleFactura detalle) {
         var cuota = detalle.getCuotaMensual();
         String cuotaId = cuota != null ? cuota.getId() : null;
-        String mes = cuota != null ? cuota.getMes() : null;
+        Mes mes = cuota != null ? cuota.getMes() : null;
         Integer anio = cuota != null ? cuota.getAnio() : null;
         BigDecimal importe = Optional.ofNullable(detalle.getImporte()).orElse(BigDecimal.ZERO);
 

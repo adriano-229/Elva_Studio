@@ -84,7 +84,7 @@ create table if not exists cuota_mensual (
   anio             integer not null,
   estado           varchar(20) not null,
   fecha_vencimiento date,
-  valor            decimal(12,2),
+  valor_cuota_id   varchar(36) not null,
   eliminado        boolean not null,
   socio_id         bigint not null,
   version          bigint,

@@ -13,6 +13,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.projects.gym.gym_app.domain.enums.Mes;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,6 +28,9 @@ public class Sucursal {
 
     @Column(nullable = false, length = 150)
     private String nombre;
+    
+    public static final Mes mesCreacion = Mes.ENERO;
+	public static final Long anioCreacion = (long) 2025;
 
     @Column(nullable = false)
     private boolean eliminado = false;
