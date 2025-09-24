@@ -29,6 +29,7 @@ public class SecurityConfig {
                 .requestMatchers("/admin/pagos/**").hasAnyRole("ADMIN", "OPERADOR")
                 .requestMatchers("/admin/cuotas/**").hasAnyRole("ADMIN", "OPERADOR")
                 .requestMatchers("/admin/mensajes/**").hasAnyRole("ADMIN", "OPERADOR")
+                .requestMatchers("/operador/**").hasAnyRole("OPERADOR", "ADMIN")
                 .requestMatchers("/profesor/**").hasRole("PROFESOR")
                 .requestMatchers("/api/ubicacion/**").hasAnyRole("ADMIN", "OPERADOR")
                 .requestMatchers("/api/facturas/**").hasAnyRole("ADMIN", "OPERADOR", "SOCIO")

@@ -24,8 +24,11 @@ public class RoleBasedAuthenticationSuccessHandler extends SavedRequestAwareAuth
         Set<String> authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toSet());
-        if (authorities.contains(ROLE_ADMIN) || authorities.contains(ROLE_OPERADOR)) {
+        if (authorities.contains(ROLE_ADMIN)) {
             return "/admin";
+        }
+        if (authorities.contains(ROLE_OPERADOR)) {
+            return "/operador/portal";
         }
         if (authorities.contains(ROLE_SOCIO)) {
             return "/socio/portal";
