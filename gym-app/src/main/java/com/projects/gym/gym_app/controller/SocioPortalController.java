@@ -31,6 +31,7 @@ public class SocioPortalController {
         model.addAttribute("usuarioActual", username);
         model.addAttribute("active", "socio-portal");
         return "socio/portal";
+       
     }
 
     @GetMapping("/rutinas")
