@@ -36,7 +36,7 @@ public class ValorCuota {
     private Integer anio;
 
     @Column(nullable = false, precision = 12, scale = 2)
-    private BigDecimal valor;
+    private BigDecimal valorCuota;
 
     @Column(name = "creado_el", nullable = false)
     private LocalDateTime creadoEl;
