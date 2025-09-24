@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/ubicacion/**").hasAnyRole("ADMIN", "OPERADOR")
                 .requestMatchers("/api/facturas/**").hasAnyRole("ADMIN", "OPERADOR", "SOCIO")
                 .requestMatchers("/socio/**").hasAnyRole("SOCIO", "ADMIN")
+                .requestMatchers("/pagos/webhook").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
@@ -45,7 +46,12 @@ public class SecurityConfig {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
                 .permitAll()
-            );
+            )
+            .csrf(csrf -> csrf
+	            .ignoringRequestMatchers("/pagos/webhook") // permite POST sin CSRF
+	        );
+        
+        
 
         return http.build();
     }

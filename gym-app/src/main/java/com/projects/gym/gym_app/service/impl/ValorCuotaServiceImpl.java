@@ -45,7 +45,7 @@ public class ValorCuotaServiceImpl implements ValorCuotaService {
         ValorCuota entidad = new ValorCuota();
         entidad.setMes(form.getMes());
         entidad.setAnio(form.getAnio());
-        entidad.setValor(form.getValor());
+        entidad.setValorCuota(form.getValor());
 
         ValorCuota guardado = valorCuotaRepository.save(entidad);
         return toDto(guardado);
@@ -72,7 +72,7 @@ public class ValorCuotaServiceImpl implements ValorCuotaService {
                 .id(entidad.getId())
                 .mes(entidad.getMes())
                 .anio(entidad.getAnio())
-                .valor(entidad.getValor())
+                .valor(entidad.getValorCuota())
                 .creadoEl(entidad.getCreadoEl())
                 .build();
     }

@@ -6,8 +6,12 @@ import com.projects.gym.gym_app.repository.*;
 import com.projects.gym.gym_app.service.SocioService;
 import com.projects.gym.gym_app.service.dto.SocioFormDTO;
 import com.projects.gym.gym_app.service.mapper.SocioMapper;
+
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Optional;
+
 import org.springframework.data.domain.*;
 import org.springframework.security.crypto.password.PasswordEncoder; // opcional
 import org.springframework.stereotype.Service;
@@ -73,6 +77,12 @@ public class SocioServiceImpl implements SocioService {
         return socioRepo.findById(socioId).map(SocioMapper::toDto)
                 .orElseThrow(() -> new EntityNotFoundException("Socio no encontrado"));
     }
+    
+    @Override @Transactional
+	public Optional<Socio> buscarPorNroSocio(Long numeroSocio) {
+	    return socioRepo.findByNumeroSocio(numeroSocio);
+	}
+    
 
     @Override
     public SocioFormDTO modificar(String id, SocioFormDTO d) {
