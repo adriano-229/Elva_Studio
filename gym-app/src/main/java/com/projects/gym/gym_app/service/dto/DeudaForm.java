@@ -19,6 +19,7 @@ public class DeudaForm {
 	
 	private Long idSocio;
 	private BigDecimal totalAPagar;
+	private BigDecimal deuda;
 	private List<String> idCuotas = new ArrayList<>();
 	private TipoPago formaPago;
 	private MultipartFile comprobante;

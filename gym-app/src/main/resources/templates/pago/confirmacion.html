@@ -22,31 +22,9 @@
                 </p>
               </div>
             </div>
-            <a class="btn btn-success mt-3" th:href="@{/cuotas}">Aceptar</a>
+            <a class="btn btn-success mt-3" th:href="@{/cuotas/adeudadas}">Aceptar</a>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Contenedor opcional para Mercado Pago -->
-    <div id="walletBrick_container" class="d-none mt-4"></div>
-
-    <script src="https://sdk.mercadopago.com/js/v2"></script>
-    <script th:inline="javascript">
-      const publicKey = /*[[${publicKey}]]*/ 'TU_PUBLIC_KEY';
-      const preferenceId = /*[[${preferenceId}]]*/ 'TU_PREFERENCE_ID';
-
-      const mp = new MercadoPago(publicKey);
-      const bricksBuilder = mp.bricks();
-
-      const renderWalletBrick = async (bricksBuilder) => {
-        await bricksBuilder.create("wallet", "walletBrick_container", {
-          initialization: { preferenceId: preferenceId }
-        });
-      };
-
-      renderWalletBrick(bricksBuilder);
-    </script>
-  </div>
-
 </html>

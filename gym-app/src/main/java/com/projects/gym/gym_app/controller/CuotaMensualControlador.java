@@ -44,7 +44,7 @@ public class CuotaMensualControlador {
 	private SocioRepository repoSocio;
 	
 	
-	@GetMapping
+	@GetMapping("/adeudadas")
 	public String listarCuotas(Authentication authentication, Model model) {
 		if (authentication == null || !authentication.isAuthenticated()) {
 	        return "redirect:/login";
@@ -61,7 +61,7 @@ public class CuotaMensualControlador {
 
 	        model.addAttribute("socio", socio);
 
-	        Collection<CuotaMensual> listaCuotas = svcCuota.buscarPorSocio(socio);
+	        Collection<CuotaMensual> listaCuotas = svcCuota.listarPorEstado(socio, EstadoCuota.ADEUDADA);
 	        model.addAttribute("listaCuotas", listaCuotas);
 
 	        DeudaForm deudaForm = new DeudaForm();
@@ -98,61 +98,132 @@ public class CuotaMensualControlador {
 									.orElseThrow(() -> new RuntimeException("El usuario no tiene un socio asociado"));
 		
 					
-			model.addAttribute("socio", socio);
-			model.addAttribute("deudaForm", deudaForm);
-			
-			List<CuotaMensual> listaCuotasSocio = this.svcCuota.buscarPorSocio(socio);	
-			System.out.println("Fecha desde: " + fechaDesde);
-			System.out.println("Fecha hasta: " + fechaHasta);
-			System.out.println("Lista de cuotas (antes de validar): " + listaCuotasSocio.size());
-			
-			//Validaciones de fecha.
-			LocalDate hoy = LocalDate.now();
-			
-		    if (fechaDesde != null && fechaHasta != null) {
-		        if (fechaDesde.isAfter(fechaHasta)) {
-		            model.addAttribute("error", "La fecha 'Desde' no puede ser mayor que la fecha 'Hasta'.");
-		            model.addAttribute("listaCuotas", listaCuotasSocio);
-		            System.out.println("Lista de cuotas: " + listaCuotasSocio.size());
-		            return "socio/cuotas";
-		        }
-		        if (fechaHasta.isAfter(hoy.plusDays(1))) {
-		            model.addAttribute("error", "La fecha 'Hasta' no puede ser mayor que la fecha actual.");
-		            model.addAttribute("listaCuotas", listaCuotasSocio);
-		            System.out.println("Lista de cuotas: " + listaCuotasSocio.size());
-		            return "socio/cuotas";
-		        }
-		    }
-			
-			if (fechaDesde == null && fechaHasta == null) {
-				
-				if (estado == null) {
-					return "redirect:/cuotas";
-				}else {
-					Collection<CuotaMensual> listaCuotas = this.svcCuota.listarPorEstado(socio, estado);
-					model.addAttribute("listaCuotas", listaCuotas);
+		model.addAttribute("socio", socio);
+		
+		model.addAttribute("deudaForm", deudaForm);
+		model.addAttribute("deuda", deudaForm.getDeuda());
+		
+		List<CuotaMensual> listaCuotasSocio = this.svcCuota.buscarPorSocio(socio);	
+		System.out.println("Fecha desde: " + fechaDesde);
+		System.out.println("Fecha hasta: " + fechaHasta);
+		System.out.println("Lista de cuotas (antes de validar): " + listaCuotasSocio.size());
+		
+		//Validaciones de fecha.
+		LocalDate hoy = LocalDate.now();
+		
+	    if (fechaDesde != null && fechaHasta != null) {
+	    	
+	    	// 1. el orden de las fechas no es correcto --------------------------------------------------------
+	        if (fechaDesde.isAfter(fechaHasta)) {
+	            model.addAttribute("error", "La fecha 'Desde' no puede ser mayor que la fecha 'Hasta'.");
+	            
+	            if (deudaForm.getDeuda() == null) {
 					
-				}
-				
-			}else 
-				if (fechaDesde == null || fechaHasta == null) {
-					model.addAttribute("error", "Para filtrar por fecha ingrese ambas fechas");
-					model.addAttribute("listaCuotas", listaCuotasSocio);
-		            return "socio/cuotas";
+					Collection<CuotaMensual> listaCuotas = this.svcCuota.listarPorFechayEstado(socio, fechaDesde, fechaHasta, EstadoCuota.ADEUDADA);
+					model.addAttribute("listaCuotas", listaCuotas);
+					return "socio/cuotas";
 					
 				} else {
-					if (estado != null) {
-						Collection<CuotaMensual> listaCuotas = this.svcCuota.listarPorFechayEstado(socio, fechaDesde, fechaHasta, estado);
-						model.addAttribute("listaCuotas", listaCuotas);
-						
-					}else {
-						Collection<CuotaMensual> listaCuotas = this.svcCuota.listarPorFecha(socio, fechaDesde, fechaHasta);
-						model.addAttribute("listaCuotas", listaCuotas);
-						
-					}
+					model.addAttribute("listaCuotas", listaCuotasSocio);
+					return "socio/deuda";
 				}
+			}
+	        
+	        // 2. La fecha hasta es mayor que la fecha actual -----------------------------------------------------
+	        if (fechaHasta.isAfter(hoy.plusDays(1))) {
+	            model.addAttribute("error", "La fecha 'Hasta' no puede ser mayor que la fecha actual.");
+	            
+	            if (deudaForm.getDeuda() == null) {
+					
+					Collection<CuotaMensual> listaCuotas = this.svcCuota.listarPorFechayEstado(socio, fechaDesde, fechaHasta, EstadoCuota.ADEUDADA);
+					model.addAttribute("listaCuotas", listaCuotas);
+					return "socio/cuotas";
+					
+				} else {
+					model.addAttribute("listaCuotas", listaCuotasSocio);
+					return "socio/deuda";
+				}
+	        }
+	        
+	        
+	        // Las dos fechas estan correctas -------------------------------------------------------------------------
+	        
+	        // VERIFICO EL ESTADO -----------------------------------
+	        //Si es NO null estan llamando el medoto desde deuda -> filtro por por fecha y estado
+	        if (estado != null) {
+				
+				Collection<CuotaMensual> listaCuotas = this.svcCuota.listarPorFechayEstado(socio, fechaDesde, fechaHasta, estado);
+				model.addAttribute("listaCuotas", listaCuotas);
+				return "socio/deuda";
+				
+			} else {
+				// Si ES null lo pueden estar llamando desde deudas o cuotas adeudadas
+				
+				//VERIFICO LA DEDUDA -----------------------------------
+				// Si ES null estan llamando el metodo desde cuotas adeudadas -> filtro por fecha y estado ADEUDADA
+				if (deudaForm.getDeuda() == null) {
+					
+					Collection<CuotaMensual> listaCuotas = this.svcCuota.listarPorFechayEstado(socio, fechaDesde, fechaHasta, EstadoCuota.ADEUDADA);
+					model.addAttribute("listaCuotas", listaCuotas);
+					return "socio/cuotas";
+				
+				} else {
+					// Si NO  es null estan llamando el estado desde deuda -> filtro por FECHA
+					
+					
+					Collection<CuotaMensual> listaCuotas = this.svcCuota.listarPorFecha(socio, fechaDesde, fechaHasta);
+					model.addAttribute("listaCuotas", listaCuotas);
+					return "socio/deuda";
+				}
+				
+			}
+	        
+	        
+	    }
+		
+		if (fechaDesde == null && fechaHasta == null) {
 			
-		return "socio/cuotas";
+			if (estado == null) {
+				System.out.println("ESTOY AQUI: " + deudaForm.getDeuda());
+				
+				if (deudaForm.getDeuda() == null) {
+					return "redirect:/cuotas/adeudadas";
+					
+				} else {
+					return "redirect:/socio/deuda";
+				}
+				
+			}else {
+				
+				Collection<CuotaMensual> listaCuotas = this.svcCuota.listarPorEstado(socio, estado);
+				model.addAttribute("listaCuotas", listaCuotas);
+				return "socio/deuda";
+			}
+			
+		}else 
+			if (fechaDesde == null || fechaHasta == null) {
+				model.addAttribute("error", "Para filtrar por fecha ingrese ambas fechas");
+				
+				if (deudaForm.getDeuda() == null) {
+					
+					Collection<CuotaMensual> listaCuotas = this.svcCuota.listarPorFechayEstado(socio, fechaDesde, fechaHasta, EstadoCuota.ADEUDADA);
+					model.addAttribute("listaCuotas", listaCuotas);
+					return "socio/cuotas";
+					
+				} else {
+					
+					model.addAttribute("listaCuotas", listaCuotasSocio);
+					return "socio/deuda";
+				}
+			}
+			
+		if (deudaForm.getDeuda() == null) {
+			return "socio/cuotas";
+			
+		} else {
+			return "socio/deuda";
+		}
+		
 		
 	}
 	
