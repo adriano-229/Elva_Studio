@@ -3,6 +3,7 @@ package com.projects.gym.gym_app.controller;
 import com.projects.gym.gym_app.domain.DetalleDiario;
 import com.projects.gym.gym_app.domain.DetalleEjercicio;
 import com.projects.gym.gym_app.domain.Rutina;
+import com.projects.gym.gym_app.domain.enums.DiaSemana;
 import com.projects.gym.gym_app.domain.enums.EstadoRutina;
 import com.projects.gym.gym_app.domain.enums.GrupoMuscular;
 import com.projects.gym.gym_app.service.EmpleadoService;
@@ -45,8 +46,9 @@ public class RutinaAdminController {
     public String gestionar(@RequestParam(required = false) Long numeroSocio,
                             @RequestParam(required = false) String mensaje,
                             @RequestParam(required = false) String mensajeTipo,
+                            @RequestParam(required = false, defaultValue = "false") boolean verFinalizadas,
                             Model model) {
-        prepareCommon(model);
+        prepareCommon(model, verFinalizadas);
         model.addAttribute("numeroSocio", numeroSocio);
         model.addAttribute("mensaje", mensaje);
         model.addAttribute("mensajeTipo", mensajeTipo != null ? mensajeTipo : "success");
@@ -64,7 +66,7 @@ public class RutinaAdminController {
                               Model model,
                               RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            prepareCommon(model);
+            prepareCommon(model, false);
             loadRutina(form.getNumeroSocio(), model);
             return "rutina/gestion";
         }
@@ -74,7 +76,7 @@ public class RutinaAdminController {
                     form.getFechaInicia(), form.getFechaFinaliza(), form.getObjetivo());
         } catch (IllegalArgumentException | EntityNotFoundException ex) {
             bindingResult.reject("rutinaForm", ex.getMessage());
-            prepareCommon(model);
+            prepareCommon(model, false);
             loadRutina(form.getNumeroSocio(), model);
             return "rutina/gestion";
         }
@@ -104,13 +106,13 @@ public class RutinaAdminController {
                                RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addAttribute("numeroSocio", form.getNumeroSocio());
-            redirectAttributes.addAttribute("mensaje", "Revisá el número de día");
+            redirectAttributes.addAttribute("mensaje", "Revisá el día seleccionado");
             redirectAttributes.addAttribute("mensajeTipo", "error");
             return "redirect:/admin/rutinas";
         }
 
         try {
-            rutinaService.crearDetalleDiario(rutinaId, form.getNumeroDia());
+            rutinaService.crearDetalleDiario(rutinaId, form.getDiaSemana());
             redirectAttributes.addAttribute("mensaje", "Se agregó un día a la rutina");
             redirectAttributes.addAttribute("mensajeTipo", "success");
         } catch (RuntimeException ex) {
@@ -154,13 +156,18 @@ public class RutinaAdminController {
         return "redirect:/admin/rutinas";
     }
 
-    private void prepareCommon(Model model) {
+    private void prepareCommon(Model model, boolean verFinalizadas) {
         model.addAttribute("titulo", "Gestión de rutinas");
         model.addAttribute("active", "rutinas");
         model.addAttribute("estados", EstadoRutina.values());
         model.addAttribute("grupos", GrupoMuscular.values());
+        model.addAttribute("diasSemana", DiaSemana.values());
         List<EmpleadoDTO> profesores = empleadoService.listarProfesoresActivos();
         model.addAttribute("profesores", profesores);
+        model.addAttribute("verFinalizadas", verFinalizadas);
+        model.addAttribute("rutinasFinalizadas", verFinalizadas
+                ? rutinaService.listarRutinasFinalizadas()
+                : List.of());
         if (!model.containsAttribute("rutinaForm")) {
             model.addAttribute("rutinaForm", new RutinaForm());
         }
@@ -179,12 +186,13 @@ public class RutinaAdminController {
 
         List<DetalleDiario> detalles = rutina.getDetallesDiarios() != null
                 ? rutina.getDetallesDiarios().stream()
-                .sorted(Comparator.comparingInt(DetalleDiario::getNumeroDia))
+                .sorted(Comparator.comparingInt(d -> d.getDiaSemana() != null ? d.getDiaSemana().ordinal() : Integer.MAX_VALUE))
                 .toList()
                 : List.of();
 
         model.addAttribute("rutina", rutina);
         model.addAttribute("detalles", detalles);
+        model.addAttribute("diasSemana", DiaSemana.values());
         model.addAttribute("detalleForm", new DetalleDiarioForm(rutina.getId(), numeroSocio));
         model.addAttribute("ejercicioForm", new DetalleEjercicioForm(rutina.getId(), numeroSocio));
         Object formObj = model.asMap().get("rutinaForm");
@@ -213,17 +221,19 @@ public class RutinaAdminController {
     public static class DetalleDiarioForm {
         @NotNull
         private Long rutinaId;
-        @NotNull @Min(1)
-        private Integer numeroDia;
+        @NotNull
+        private DiaSemana diaSemana;
         @NotNull
         private Long numeroSocio;
 
         public DetalleDiarioForm() {
+            this.diaSemana = DiaSemana.LUNES;
         }
 
         public DetalleDiarioForm(Long rutinaId, Long numeroSocio) {
             this.rutinaId = rutinaId;
             this.numeroSocio = numeroSocio;
+            this.diaSemana = DiaSemana.LUNES;
         }
     }
 

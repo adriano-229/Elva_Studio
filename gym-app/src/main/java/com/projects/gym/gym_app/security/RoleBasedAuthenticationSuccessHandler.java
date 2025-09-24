@@ -16,6 +16,7 @@ public class RoleBasedAuthenticationSuccessHandler extends SavedRequestAwareAuth
     private static final String ROLE_ADMIN = "ROLE_ADMIN";
     private static final String ROLE_OPERADOR = "ROLE_OPERADOR";
     private static final String ROLE_SOCIO = "ROLE_SOCIO";
+    private static final String ROLE_PROFESOR = "ROLE_PROFESOR";
 
     @Override
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response,
@@ -28,6 +29,9 @@ public class RoleBasedAuthenticationSuccessHandler extends SavedRequestAwareAuth
         }
         if (authorities.contains(ROLE_SOCIO)) {
             return "/socio/portal";
+        }
+        if (authorities.contains(ROLE_PROFESOR)) {
+            return "/profesor/portal";
         }
         return super.determineTargetUrl(request, response, authentication);
     }

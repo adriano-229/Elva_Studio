@@ -3,6 +3,7 @@ package com.projects.gym.gym_app.controller;
 import com.projects.gym.gym_app.domain.DetalleDiario;
 import com.projects.gym.gym_app.domain.DetalleEjercicio;
 import com.projects.gym.gym_app.domain.Rutina;
+import com.projects.gym.gym_app.domain.enums.DiaSemana;
 import com.projects.gym.gym_app.domain.enums.EstadoRutina;
 import com.projects.gym.gym_app.domain.enums.GrupoMuscular;
 import com.projects.gym.gym_app.service.EmpleadoService;
@@ -16,6 +17,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/profesor/rutinas")
@@ -45,8 +48,10 @@ public class ProfesorRutinaController {
     public String gestionar(@RequestParam(required = false) Long numeroSocio,
                             @RequestParam(required = false) String mensaje,
                             @RequestParam(required = false) String mensajeTipo,
+                            @RequestParam(required = false, defaultValue = "false") boolean verFinalizadas,
+                            Authentication authentication,
                             Model model) {
-        prepareCommon(model);
+        prepareCommon(authentication, model, verFinalizadas);
         model.addAttribute("numeroSocio", numeroSocio);
         model.addAttribute("mensaje", mensaje);
         model.addAttribute("mensajeTipo", mensajeTipo != null ? mensajeTipo : "success");
@@ -61,10 +66,11 @@ public class ProfesorRutinaController {
     @PostMapping("/nueva")
     public String crearRutina(@Valid @ModelAttribute("rutinaForm") ProfesorRutinaForm form,
                               BindingResult bindingResult,
+                              Authentication authentication,
                               Model model,
                               RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            prepareCommon(model);
+            prepareCommon(authentication, model, false);
             loadRutina(form.getNumeroSocio(), model);
             return "profesor/rutina/gestion";
         }
@@ -74,7 +80,7 @@ public class ProfesorRutinaController {
                     form.getFechaInicia(), form.getFechaFinaliza(), form.getObjetivo());
         } catch (IllegalArgumentException | EntityNotFoundException ex) {
             bindingResult.reject("rutinaForm", ex.getMessage());
-            prepareCommon(model);
+            prepareCommon(authentication, model, false);
             loadRutina(form.getNumeroSocio(), model);
             return "profesor/rutina/gestion";
         }
@@ -104,13 +110,13 @@ public class ProfesorRutinaController {
                                RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addAttribute("numeroSocio", form.getNumeroSocio());
-            redirectAttributes.addAttribute("mensaje", "Revisá el número de día");
+            redirectAttributes.addAttribute("mensaje", "Revisá el día seleccionado");
             redirectAttributes.addAttribute("mensajeTipo", "error");
             return "redirect:/profesor/rutinas";
         }
 
         try {
-            rutinaService.crearDetalleDiario(rutinaId, form.getNumeroDia());
+            rutinaService.crearDetalleDiario(rutinaId, form.getDiaSemana());
             redirectAttributes.addAttribute("mensaje", "Se agregó un día a la rutina");
             redirectAttributes.addAttribute("mensajeTipo", "success");
         } catch (RuntimeException ex) {
@@ -154,14 +160,32 @@ public class ProfesorRutinaController {
         return "redirect:/profesor/rutinas";
     }
 
-    private void prepareCommon(Model model) {
+    private void prepareCommon(Authentication authentication, Model model, boolean verFinalizadas) {
         model.addAttribute("titulo", "Mis rutinas");
         model.addAttribute("seccion", "Profesores");
         model.addAttribute("active", "rutinas");
         model.addAttribute("estados", EstadoRutina.values());
         model.addAttribute("grupos", GrupoMuscular.values());
-        List<EmpleadoDTO> profesores = empleadoService.listarProfesoresActivos();
+        model.addAttribute("diasSemana", DiaSemana.values());
+        boolean profesorLogueado = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(auth -> "ROLE_PROFESOR".equals(auth.getAuthority()));
+
+        Optional<EmpleadoDTO> profesorActualOpt = profesorLogueado
+                ? empleadoService.buscarProfesorActivoPorUsuario(authentication.getName())
+                : Optional.empty();
+
+        List<EmpleadoDTO> profesores = profesorLogueado
+                ? profesorActualOpt.map(List::of).orElse(List.of())
+                : empleadoService.listarProfesoresActivos();
+
         model.addAttribute("profesores", profesores);
+        model.addAttribute("bloquearSelectorProfesor", profesorLogueado);
+        model.addAttribute("verFinalizadas", verFinalizadas);
+        Long profesorId = profesorActualOpt.map(EmpleadoDTO::getId)
+                .orElseGet(() -> !profesores.isEmpty() ? profesores.get(0).getId() : null);
+        model.addAttribute("rutinasFinalizadas", verFinalizadas && profesorId != null
+                ? rutinaService.listarRutinasFinalizadasPorProfesor(profesorId)
+                : List.of());
         if (!model.containsAttribute("rutinaForm")) {
             ProfesorRutinaForm form = new ProfesorRutinaForm();
             if (!profesores.isEmpty()) {
@@ -184,12 +208,13 @@ public class ProfesorRutinaController {
 
         List<DetalleDiario> detalles = rutina.getDetallesDiarios() != null
                 ? rutina.getDetallesDiarios().stream()
-                .sorted(Comparator.comparingInt(DetalleDiario::getNumeroDia))
+                .sorted(Comparator.comparingInt(d -> d.getDiaSemana() != null ? d.getDiaSemana().ordinal() : Integer.MAX_VALUE))
                 .toList()
                 : List.of();
 
         model.addAttribute("rutina", rutina);
         model.addAttribute("detalles", detalles);
+        model.addAttribute("diasSemana", DiaSemana.values());
         model.addAttribute("detalleForm", new DetalleDiarioForm(rutina.getId(), numeroSocio));
         model.addAttribute("ejercicioForm", new DetalleEjercicioForm(rutina.getId(), numeroSocio));
         Object formObj = model.asMap().get("rutinaForm");
@@ -218,17 +243,19 @@ public class ProfesorRutinaController {
     public static class DetalleDiarioForm {
         @NotNull
         private Long rutinaId;
-        @NotNull @Min(1)
-        private Integer numeroDia;
+        @NotNull
+        private DiaSemana diaSemana;
         @NotNull
         private Long numeroSocio;
 
         public DetalleDiarioForm() {
+            this.diaSemana = DiaSemana.LUNES;
         }
 
         public DetalleDiarioForm(Long rutinaId, Long numeroSocio) {
             this.rutinaId = rutinaId;
             this.numeroSocio = numeroSocio;
+            this.diaSemana = DiaSemana.LUNES;
         }
     }
 

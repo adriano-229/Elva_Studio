@@ -1,6 +1,7 @@
 package com.projects.gym.gym_app.service.impl;
 
 import com.projects.gym.gym_app.domain.*;
+import com.projects.gym.gym_app.domain.enums.DiaSemana;
 import com.projects.gym.gym_app.domain.enums.EstadoRutina;
 import com.projects.gym.gym_app.domain.enums.TipoEmpleado;
 import com.projects.gym.gym_app.repository.DetalleDiarioRepository;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -104,7 +106,7 @@ public class RutinaServiceImpl implements RutinaService {
     }
 
     @Override
-    public DetalleDiario crearDetalleDiario(Long rutinaId, int numeroDia) {
+    public DetalleDiario crearDetalleDiario(Long rutinaId, DiaSemana diaSemana) {
         Rutina r = rutinaRepo.findById(rutinaId)
                 .orElseThrow(() -> new EntityNotFoundException("Rutina no encontrada: " + rutinaId));
 
@@ -113,12 +115,12 @@ public class RutinaServiceImpl implements RutinaService {
         }
 
         if (r.getDetallesDiarios() != null && r.getDetallesDiarios().stream()
-                .anyMatch(d -> d.getNumeroDia() == numeroDia)) {
-            throw new IllegalArgumentException("Ya existe un día " + numeroDia + " para esta rutina");
+                .anyMatch(d -> d.getDiaSemana() == diaSemana)) {
+            throw new IllegalArgumentException("Ya existe un día " + diaSemana.getDisplayName() + " para esta rutina");
         }
 
         DetalleDiario d = DetalleDiario.builder()
-                .numeroDia(numeroDia)
+                .diaSemana(diaSemana)
                 .activo(true)
                 .rutina(r)
                 .build();
@@ -150,6 +152,30 @@ public class RutinaServiceImpl implements RutinaService {
         }
         d.getDetalleEjercicios().add(guardado);
         return guardado;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Rutina> listarRutinasFinalizadas() {
+        return rutinaRepo.findByEstadoRutinaOrderByFechaFinalizaDesc(EstadoRutina.FINALIZADA);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Rutina> listarRutinasFinalizadasPorProfesor(Long profesorId) {
+        if (profesorId == null) {
+            return List.of();
+        }
+        return rutinaRepo.findByProfesor_IdAndEstadoRutinaOrderByFechaFinalizaDesc(profesorId, EstadoRutina.FINALIZADA);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Rutina> listarRutinasFinalizadasPorSocio(Long numeroSocio) {
+        if (numeroSocio == null) {
+            return List.of();
+        }
+        return rutinaRepo.findBySocio_NumeroSocioAndEstadoRutinaOrderByFechaFinalizaDesc(numeroSocio, EstadoRutina.FINALIZADA);
     }
 
     private void actualizarEstadoSegunFechas(Rutina rutina) {
