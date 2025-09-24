@@ -3,12 +3,18 @@ package com.projects.gym.gym_app.controller;
 import com.projects.gym.gym_app.domain.DetalleDiario;
 import com.projects.gym.gym_app.domain.Rutina;
 import com.projects.gym.gym_app.domain.Socio;
+import com.projects.gym.gym_app.domain.Usuario;
 import com.projects.gym.gym_app.repository.SocioRepository;
 import com.projects.gym.gym_app.service.RutinaService;
+
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,6 +28,9 @@ public class SocioPortalController {
 
     private final RutinaService rutinaService;
     private final SocioRepository socioRepository;
+    
+    @Autowired
+    private SocioRepository repoSocio;
 
     @GetMapping("/portal")
     public String portal(Authentication authentication, Model model) {
@@ -80,4 +89,21 @@ public class SocioPortalController {
         model.addAttribute("active", "socio-deuda");
         return "socio/deuda";
     }
+    
+    @GetMapping("/homepage")
+	public String irAHomepage(Authentication authentication, ModelMap model) {
+				
+		if (authentication == null || !authentication.isAuthenticated()) {
+	        return "redirect:/login";
+	    }
+		
+		Usuario usuario = (Usuario) authentication.getDetails();
+
+        Socio socio = this.repoSocio
+                         .findByUsuario_NombreUsuarioAndEliminadoFalse(authentication.getName())
+                         .orElseThrow(() -> new RuntimeException("El usuario no tiene un socio asociado"));
+        
+        model.addAttribute("socio", socio);
+		return "socio/homepage";
+	}
 }
