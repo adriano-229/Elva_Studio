@@ -11,6 +11,9 @@
     body { padding-top: 4.5rem; }
     .sidebar-link { display:block; padding:.5rem 1rem; border-radius:.5rem; text-decoration:none; color:inherit; }
     .sidebar-link.active, .sidebar-link:hover { background:#f1f3f5; }
+	main .container {
+	  max-width: 1000px; /* o el ancho que quieras */
+	}
   </style>
 </head>
 
@@ -109,7 +112,7 @@
   </nav>
 
   <div class="container-fluid">
-    <div class="row">
+    <div class="row d-flex">
       <!-- SIDEBAR IZQUIERDA (desktop) -->
       <aside class="col-lg-3 col-xl-2 d-none d-lg-block border-end" th:if="${esStaff}">
         <div class="p-3">
@@ -178,7 +181,7 @@
       </div>
 
       <!-- CONTENIDO (slot) -->
-      <main class="col-lg-9 col-xl-10">
+      <main class="flex-grow-1">
         <div class="container py-3">
           <th:block th:if="${content != null}" th:replace="${content}"></th:block>
           <th:block th:unless="${content != null}">
