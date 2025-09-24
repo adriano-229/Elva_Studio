@@ -45,7 +45,8 @@
         </div>
 
         <div th:each="detalle : ${detalles}" class="mb-4">
-          <h3 class="h6">Día <span th:text="${detalle.numeroDia}"></span>
+          <h3 class="h6">
+            <span th:text="${detalle.diaSemana != null ? 'Día ' + detalle.diaSemana.displayName : 'Día'}"></span>
             <span class="badge ms-2" th:classappend="${detalle.activo} ? ' text-bg-success' : ' text-bg-secondary'" th:text="${detalle.activo} ? 'Activo' : 'Inactivo'"></span>
           </h3>
 
@@ -73,6 +74,32 @@
             </table>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mt-4" th:if="${rutinasFinalizadas != null && !#lists.isEmpty(rutinasFinalizadas)}">
+    <div class="card-header">
+      <h2 class="h5 mb-0">Rutinas finalizadas</h2>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-sm table-striped align-middle">
+          <thead class="table-light">
+          <tr>
+            <th>Período</th>
+            <th>Profesor</th>
+            <th>Objetivo</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="item : ${rutinasFinalizadas}">
+            <td><span th:text="${item.fechaInicia}"></span> - <span th:text="${item.fechaFinaliza}"></span></td>
+            <td th:text="${item.profesor.apellido + ', ' + item.profesor.nombre}"></td>
+            <td th:text="${item.objetivo}"></td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

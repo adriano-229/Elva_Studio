@@ -27,10 +27,11 @@
             </div>
             <div class="col-md-6">
               <label class="form-label">Profesor</label>
-              <select class="form-select" th:field="*{profesorId}" th:disabled="${#lists.isEmpty(profesores)}" required>
+              <select class="form-select" th:field="*{profesorId}" th:disabled="${bloquearSelectorProfesor || #lists.isEmpty(profesores)}" required>
                 <option value="" disabled th:selected="${rutinaForm.profesorId == null}">Seleccioná un profesor</option>
                 <option th:each="profesor : ${profesores}" th:value="${profesor.id}" th:text="${profesor.nombreCompleto}"></option>
               </select>
+              <input th:if="${bloquearSelectorProfesor}" type="hidden" name="profesorId" th:value="${rutinaForm.profesorId}">
               <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('profesorId')}" th:errors="*{profesorId}"></div>
             </div>
             <div class="col-md-6">
@@ -125,7 +126,9 @@
           <input type="hidden" name="rutinaId" th:value="${rutina.id}">
           <input type="hidden" name="numeroSocio" th:value="${numeroSocio}">
           <label class="mb-0">Día</label>
-          <input type="number" class="form-control form-control-sm" style="width:6rem" name="numeroDia" min="1" required>
+          <select class="form-select form-select-sm" name="diaSemana" required>
+            <option th:each="dia : ${diasSemana}" th:value="${dia}" th:text="${dia.displayName}"></option>
+          </select>
           <button class="btn btn-sm btn-outline-primary">Agregar</button>
         </form>
       </div>
@@ -136,7 +139,9 @@
 
         <div th:each="detalle : ${detalles}" class="mb-4">
           <div class="d-flex justify-content-between align-items-center mb-2">
-            <h3 class="h6 mb-0">Día <span th:text="${detalle.numeroDia}"></span></h3>
+            <h3 class="h6 mb-0">
+              <span th:text="${detalle.diaSemana != null ? 'Día ' + detalle.diaSemana.displayName : 'Día'}"></span>
+            </h3>
             <span class="badge" th:classappend="${detalle.activo} ? ' text-bg-success' : ' text-bg-secondary'"
                   th:text="${detalle.activo} ? 'Activo' : 'Inactivo'"></span>
           </div>
@@ -192,6 +197,53 @@
               <button class="btn btn-sm btn-outline-primary">Agregar ejercicio</button>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mt-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h2 class="h5 mb-0">Historial de rutinas finalizadas</h2>
+      <div class="d-flex gap-2">
+        <a th:if="${!verFinalizadas}" class="btn btn-sm btn-outline-primary" th:href="@{/profesor/rutinas(verFinalizadas=true)}">
+          Ver historial
+        </a>
+        <a th:if="${verFinalizadas}" class="btn btn-sm btn-outline-secondary" th:href="@{/profesor/rutinas}">
+          Ocultar
+        </a>
+      </div>
+    </div>
+    <div class="card-body">
+      <div th:if="${!verFinalizadas}" class="text-muted small">
+        Hacé clic en "Ver historial" para revisar las rutinas que ya finalizaste con tus alumnos.
+      </div>
+      <div th:if="${verFinalizadas}">
+        <div th:if="${#lists.isEmpty(rutinasFinalizadas)}" class="alert alert-info" role="alert">
+          <i class="bi bi-info-circle me-2"></i>Todavía no tenés rutinas finalizadas para mostrar.
+        </div>
+        <div th:if="${!#lists.isEmpty(rutinasFinalizadas)}" class="table-responsive">
+          <table class="table table-sm table-striped align-middle">
+            <thead class="table-light">
+            <tr>
+              <th>Socio</th>
+              <th>Período</th>
+              <th>Objetivo</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${rutinasFinalizadas}">
+              <td>
+                <div><strong th:text="${item.socio.numeroSocio}"></strong></div>
+                <div class="text-muted small" th:text="${item.socio.apellido + ', ' + item.socio.nombre}"></div>
+              </td>
+              <td>
+                <div><span th:text="${item.fechaInicia}"></span> - <span th:text="${item.fechaFinaliza}"></span></div>
+              </td>
+              <td th:text="${item.objetivo}"></td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

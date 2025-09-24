@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -48,13 +49,20 @@ public class EmpleadoServiceImpl implements EmpleadoService {
                 .stream()
                 .sorted(Comparator.comparing(Empleado::getApellido, stringComparator)
                         .thenComparing(Empleado::getNombre, stringComparator))
-                .map(emp -> EmpleadoDTO.builder()
-                        .id(emp.getId())
-                        .nombreCompleto(emp.getApellido() + ", " + emp.getNombre())
-                        .tipo(emp.getTipo())
-                        .activo(emp.isActivo())
-                        .build())
+                .map(this::toEmpleadoDto)
                 .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<EmpleadoDTO> buscarProfesorActivoPorUsuario(String nombreUsuario) {
+        if (nombreUsuario == null || nombreUsuario.isBlank()) {
+            return Optional.empty();
+        }
+
+        return empleadoRepository.findByUsuario_NombreUsuarioAndActivoTrue(nombreUsuario)
+                .filter(emp -> emp.getTipo() == TipoEmpleado.PROFESOR)
+                .map(this::toEmpleadoDto);
     }
 
     @Override
@@ -281,5 +289,14 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 
     private Rol mapRol(TipoEmpleado tipo) {
         return tipo == TipoEmpleado.PROFESOR ? Rol.PROFESOR : Rol.OPERADOR;
+    }
+
+    private EmpleadoDTO toEmpleadoDto(Empleado emp) {
+        return EmpleadoDTO.builder()
+                .id(emp.getId())
+                .nombreCompleto(emp.getApellido() + ", " + emp.getNombre())
+                .tipo(emp.getTipo())
+                .activo(emp.isActivo())
+                .build();
     }
 }
