@@ -125,10 +125,9 @@ public class FacturaAdminController {
                 model.addAttribute("pagoForm", new PagoCommand());
             }
             List<FormaDePago> opciones = formasPagoManuales();
+            boolean sinFormasPago = opciones.isEmpty();
             model.addAttribute("formasPago", opciones);
-            if (opciones.isEmpty()) {
-                model.addAttribute("sinFormasPago", true);
-            }
+            model.addAttribute("sinFormasPago", sinFormasPago);
             model.addAttribute("factura", factura);
             if (mensaje != null && !mensaje.isBlank() && !atributos.containsKey("mensaje")) {
                 model.addAttribute("mensaje", mensaje);
