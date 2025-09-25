@@ -235,6 +235,8 @@ public class PagoControlador {
 					c = this.svcCuota.actualizar(c, c.getId());
 				}
 				
+				session.setAttribute("tipoPago", TipoPago.EFECTIVO);
+				
 				return "pago/efectivo";
 			}
 			

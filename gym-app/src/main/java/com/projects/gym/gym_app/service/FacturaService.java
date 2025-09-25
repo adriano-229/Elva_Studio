@@ -43,6 +43,7 @@ public class FacturaService {
 	// crear factura 
 	@Transactional
 	public Factura crearFactura(Long numeroFactura,
+							Socio socio,
 							Date fechaFactura, 
 							BigDecimal totalPago, 
 							EstadoFactura estadoFactura, 
@@ -50,6 +51,7 @@ public class FacturaService {
 							FormaDePago formaDePago) {
 		
 		Factura factura = new Factura();
+		factura.setSocio(socio);
 		factura.setNumeroFactura(numeroFactura);
 		factura.setFechaFactura(fechaFactura);
 		factura.setTotalPagado(totalPago);

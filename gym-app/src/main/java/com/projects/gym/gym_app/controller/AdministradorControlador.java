@@ -199,14 +199,16 @@ public class AdministradorControlador {
 		        svcCuota.actualizar(cuota, cuota.getId());}
 			
 			// obtengo el tipo de pago temporal guardado por el socio
-		    TipoPago tipoPago = (TipoPago) session.getAttribute("pagoEfectivo");
+		    TipoPago tipoPago = (TipoPago) session.getAttribute("tipoPago");
 		    FormaDePago formaPago = svcFormaPago.buscarPorTipoPago(tipoPago);
 
 		    // creo la factura
 		    Date fecha = new Date();
 		    Long numeroFactura = System.currentTimeMillis();
 		    
-		    svcFactura.crearFactura(numeroFactura, fecha, totalAPagar, EstadoFactura.PAGADA, detalles, formaPago);
+		    Socio socio = cuotas.get(0).getSocio();
+		    
+		    svcFactura.crearFactura(numeroFactura, socio, fecha, totalAPagar, EstadoFactura.PAGADA, detalles, formaPago);
 
 		 // suponiendo que totalAPagar ya es un BigDecimal
 		    BigDecimal iva = totalAPagar
@@ -218,7 +220,7 @@ public class AdministradorControlador {
 		    BigDecimal precioFinal = totalAPagar;        // queda igual que el total
 
 		    
-		    Socio socio = cuotas.get(0).getSocio();
+		    
 		    // datos que necesita la factura: 
 		    
 		    model.addAttribute("detalles", detalles);
@@ -229,7 +231,7 @@ public class AdministradorControlador {
 		    model.addAttribute("neto", neto);
 		    model.addAttribute("iva", iva);
 		    model.addAttribute("precioFinal", precioFinal);
-		    model.addAttribute("formaPago", formaPago.getTipoPago());
+		    model.addAttribute("formaPago", formaPago);
 
 		    model.addAttribute("fecha", fecha);
 		    model.addAttribute("numeroFactura", numeroFactura);
