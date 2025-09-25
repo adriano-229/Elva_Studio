@@ -1,0 +1,4 @@
+<form th:if="${factura.estado.name() == 'SIN_DEFINIR'}"
+      th:action="@{|/pagos/facturas/${factura.id}|}" method="get">
+  <button class="btn btn-success">Registrar pago</button>
+</form>

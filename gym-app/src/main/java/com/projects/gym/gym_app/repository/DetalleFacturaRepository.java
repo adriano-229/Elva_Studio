@@ -1,0 +1,25 @@
+package com.projects.gym.gym_app.repository;
+
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.projects.gym.gym_app.domain.CuotaMensual;
+import com.projects.gym.gym_app.domain.DetalleFactura;
+
+@Repository
+public interface DetalleFacturaRepository extends JpaRepository<DetalleFactura, String> {
+	
+	// detalles de una cuota
+	List<DetalleFactura> findByCuotaMensual(CuotaMensual cuota);
+	
+	// detalles de muchas cuotas
+	List<DetalleFactura> findByCuotaMensualIn(List<CuotaMensual> cuota);
+	
+	@Query("SELECT d FROM DetalleFactura d WHERE d.cuotaMensual.id = :idCuota")
+    List<DetalleFactura> buscarPorCuota(@Param("idCuota") String idCuota);
+}

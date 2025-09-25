@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layoutSocio :: layout(~{::content})}">
+
+  <div th:fragment="content" class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+
+        <!-- Header principal -->
+        <div class="text-center mb-4">
+          <i class="ti-credit-card icon-lg text-primary mb-2"></i>
+          <h2 class="fw-bold mb-2">Pago por Transferencia Bancaria</h2>
+          <p class="text-muted mb-0">Sigue los pasos para completar tu pago</p>
+        </div>
+
+        <!-- Card de información del socio -->
+        <div class="card shadow-sm mb-4 border-primary">
+          <div class="card-header bg-primary text-white">
+            Información de pago
+          </div>
+          <div class="card-body">
+            <p><strong>Nro de socio:</strong> <span th:text="${socio.numeroSocio}">NroSocio</span></p>
+            <p><strong>Total a Abonar:</strong> <span th:text="${totalAPagar}">Total</span></p>
+          </div>
+        </div>
+
+        <!-- Detalles de la transferencia -->
+        <div class="card shadow-sm mb-4 border-info">
+          <div class="card-header bg-info text-white">
+            Detalles de la Transferencia
+          </div>
+          <div class="card-body d-flex align-items-start">
+            <i class="ti-world icon-md text-info me-3"></i>
+            <div>
+              <ul class="mb-2">
+                <li><strong>Alias/CBU:</strong> GYM.ELVA.PAGOS</li>
+                <li><strong>Banco:</strong> Banco X</li>
+                <li><strong>Monto exacto:</strong> <span th:text="${totalAPagar}">Total</span></li>
+              </ul>
+              <p class="mb-1">Una vez realizada la transferencia, subí el comprobante.</p>
+              <p class="mb-0">Un operador validará el pago y confirmará la factura.</p>
+              <span class="badge bg-warning mt-2">Pendiente</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulario de subida de comprobante -->
+        <form th:action="@{/pagos/transferenciaComprobante}" th:object="${deudaForm}" method="post" enctype="multipart/form-data">
+          <input type="hidden" th:each="cuota, iter : ${cuotasAPagar}" th:field="*{idCuotas[__${iter.index}__]}" th:value="${cuota.id}"/>
+          <input type="hidden" th:field="*{idSocio}"/>
+          <input type="hidden" th:field="*{totalAPagar}"/>
+          <input type="hidden" th:field="*{formaPago}"/>
+
+          <div class="mb-3 text-center" th:if="${msgExito == null}">
+            <label for="comprobante" class="form-label d-block">Seleccione comprobante (JPG o PDF)</label>
+            <div class="d-flex justify-content-center align-items-center flex-wrap" style="gap: 10px; max-width: 400px; margin: 0 auto;">
+              <input type="file" th:field="*{comprobante}" id="comprobante" class="form-control" accept=".jpg,.jpeg,.pdf" required>
+              <button type="submit" class="btn btn-success">Subir comprobante</button>
+            </div>
+          </div>
+
+          <!-- Mensajes -->
+          <div class="mt-3 text-center">
+            <div th:if="${msgError}" class="alert alert-danger" th:text="${msgError}"></div>
+            <div th:if="${msgExito}" class="alert alert-success" th:text="${msgExito}"></div>
+          </div>
+
+          <!-- Botones de acción -->
+          <div class="d-flex justify-content-between mt-4">
+            <a class="btn btn-secondary" th:href="@{/cuotas/adeudadas}">
+              <i class="bi bi-arrow-left me-1"></i> Volver a Cuotas
+            </a>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+</html>

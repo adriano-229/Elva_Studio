@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layoutSocio :: layout(~{::content})}">
+  <div th:fragment="content">
+    <div class="content-wrapper">
+      <div class="text-center container-fluid py-4">
+        <h2 class="fw-bold">Mis Cuotas</h2>
+        <p class="text-muted">Seleccione las cuotas que desea pagar</p>
+
+        <!-- Filtros de búsqueda -->
+        <form th:action="@{/cuotas/buscar}" th:object="${deudaForm}" method="get" class="mb-4">
+          <div class="row g-2 align-items-end">
+            <div class="col-md-3">
+              <label for="fechaDesde" class="form-label">Desde:</label>
+              <input type="date" class="form-control form-control-sm" id="fechaDesde" name="fechaDesde"
+                     max="${#temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')}">
+            </div>
+            <div class="col-md-3">
+              <label for="fechaHasta" class="form-label">Hasta:</label>
+              <input type="date" class="form-control form-control-sm" id="fechaHasta" name="fechaHasta"
+                     max="${#temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')}">
+            </div>
+            <!--<div class="col-md-3">
+              <label class="form-label">Estado:</label>
+              <select class="form-select form-select-sm" name="estado">
+                <option value="">Seleccionar Estado</option>
+                <option value="PROCESANDO">PROCESANDO</option>
+                <option value="PAGADA">PAGADA</option>
+                <option value="ADEUDADA">ADEUDADA</option>
+              </select>
+            </div>-->
+            <div class="col-md-3 d-grid">
+              <button type="submit" class="btn btn-primary btn-sm mt-1">Buscar</button>
+            </div>
+          </div>
+
+          <div class="mt-2" th:if="${error}">
+            <div class="alert alert-danger py-1 px-2" role="alert" th:text="${error}"></div>
+          </div>
+        </form>
+
+        <!-- Card principal -->
+        <div class="card shadow-sm w-100">
+          <div class="card-body">
+
+            <!-- Tabla de cuotas -->
+            <form th:action="@{/cuotas/pagar}" th:object="${deudaForm}" method="post">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle w-100">
+                  <input type="hidden" th:field="*{idSocio}"/>
+                  <thead class="table-light">
+                    <tr>
+                      <th></th>
+                      <th>Mes-Año</th>
+                      <th>Fecha vencimiento</th>
+                      <th>Valor</th>
+                      <th>Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="cuota : ${listaCuotas}">
+                      <td>
+                        <input type="checkbox" class="cuotaCheck" th:field="*{idCuotas}" th:value="${cuota.id}" 
+                               th:disabled="${cuota.estado.name() == 'PAGADA' or cuota.estado.name() == 'PROCESANDO'}" 
+                               th:data-valor="${cuota.valorCuota.valorCuota}"/>
+                      </td>
+                      <td th:text="${cuota.mes} + '-' + ${cuota.anio}"></td>
+                      <td th:text="${cuota.fechaVencimiento}"></td>
+                      <td th:text="${cuota.valorCuota.valorCuota}"></td>
+                      <td>
+                        <span th:text="${cuota.estado.name()}" 
+                              th:classappend="${cuota.estado.name() == 'PAGADA' ? 'badge bg-success' 
+                              : cuota.estado.name() == 'PROCESANDO' ? 'badge bg-primary' 
+                              : 'badge bg-danger'}"></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Total y botones -->
+              <div class="d-flex justify-content-between align-items-center p-3 border rounded shadow-sm mb-2 bg-light">
+                <a th:href="@{/socio/portal}" class="btn btn-secondary btn-sm">Volver al portal</a>
+                <span><strong>Total a pagar:</strong> <span id="subtotal">0.00</span></span>
+                <button type="submit" class="btn btn-success">Pagar</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estilos checkbox y tabla -->
+    <style>
+      .cuotaCheck {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #0d6efd;
+        border-radius: 5px;
+        appearance: none;
+        -webkit-appearance: none;
+        background-color: #fff;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+	  .cuotaCheck {
+	      width: 16px;
+	      height: 16px;
+	      border: 2px solid #0d6efd;
+	      border-radius: 4px;
+	      appearance: none;
+	      -webkit-appearance: none;
+	      background-color: #fff;
+	      cursor: pointer;
+	      transition: background-color 0.2s, border-color 0.2s;
+	  }
+
+	  .cuotaCheck:checked {
+	      background-color: #0d6efd;
+	      border-color: #0d6efd;
+	  }
+
+	  /* Deshabilitado */
+	  .cuotaCheck:disabled {
+	      background-color: #e9ecef;
+	      border-color: #adb5bd;
+	      cursor: not-allowed;
+	  }
+
+
+      table.table-hover tbody tr:hover {
+        background-color: #f1f5f9;
+      }
+
+      table.table {
+        border-radius: 8px;
+        overflow: hidden;
+      }
+    </style>
+
+    <!-- Script subtotal -->
+    <script>
+      const checkboxes = document.querySelectorAll('.cuotaCheck');
+      const subtotalSpan = document.getElementById('subtotal');
+
+      function actualizarSubtotal() {
+          let subtotal = 0;
+          checkboxes.forEach(cb => {
+              if(cb.checked) {
+                  subtotal += parseFloat(cb.dataset.valor);
+              }
+          });
+          subtotalSpan.textContent = subtotal.toFixed(2);
+      }
+
+      checkboxes.forEach(cb => cb.addEventListener('change', actualizarSubtotal));
+    </script>
+  </div>
+</html>
