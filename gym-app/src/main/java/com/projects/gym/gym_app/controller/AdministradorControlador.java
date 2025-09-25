@@ -35,6 +35,7 @@ import com.projects.gym.gym_app.domain.Socio;
 import com.projects.gym.gym_app.domain.enums.EstadoCuota;
 import com.projects.gym.gym_app.domain.enums.EstadoFactura;
 import com.projects.gym.gym_app.domain.enums.TipoPago;
+import com.projects.gym.gym_app.error.ErrorServicio;
 
 
 
@@ -134,7 +135,7 @@ public class AdministradorControlador {
 	    model.addAttribute("listaCuotas", listaCuotasAdmin);
 	    model.addAttribute("numeroSocio", numeroSocio);
 	    model.addAttribute("estado", estado);
-
+	    
 	    return "cuotasAdmin";
 	}
 
@@ -247,10 +248,15 @@ public class AdministradorControlador {
 		} catch (Exception e) {
 				e.printStackTrace();
 		}
+		
+		
+		List<CuotaMensual> listaCuotasActualizada = svcCuota.listarTodos();
+        model.addAttribute("listaCuotas", listaCuotasActualizada);
 
 	    return "cuotasAdmin";
 
 	}
+	
 	
 	
 	

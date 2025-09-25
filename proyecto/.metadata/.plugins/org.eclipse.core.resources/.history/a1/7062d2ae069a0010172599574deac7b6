@@ -1,0 +1,36 @@
+package com.projects.gym.gym_app.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import elva.studio.entities.DetalleFactura;
+import elva.studio.entities.Factura;
+import elva.studio.repositories.DetalleFacturaRepository;
+import elva.studio.services.Autowired;
+import elva.studio.services.Transactional;
+
+@Service
+public class DetalleFacturaService {
+	
+	@Autowired
+	private DetalleFacturaRepository repoDetalle;
+	
+	
+	// guardar el detalle de una factura
+	@Transactional
+	public void guardarDetalles(Factura factura, List<DetalleFactura> detalles) {
+		for (DetalleFactura detalle : detalles) {
+			detalle.setFactura(factura);
+			repoDetalle.save(detalle);
+		}
+	}
+	
+	@Transactional
+	public List<DetalleFactura> buscarPorCuota(Long idCuota){
+		return repoDetalle.buscarPorCuota(idCuota);
+	}
+}
+

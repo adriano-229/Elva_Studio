@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.projects.gym.gym_app.domain.CuotaMensual"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Repository"/>
+    <fullyQualifiedTypeName name="com.projects.gym.gym_app.repository.FacturaRepository1"/>
+    <fullyQualifiedTypeName name="com.projects.gym.gym_app.domain.enums.EstadoFactura"/>
+    <fullyQualifiedTypeName name="com.projects.gym.gym_app.repository.DetalleFacturaRepository"/>
+    <fullyQualifiedTypeName name="com.projects.gym.gym_app.domain.DetalleFactura"/>
+    <fullyQualifiedTypeName name="com.projects.gym.gym_app.domain.Factura"/>
+    <fullyQualifiedTypeName name="java.time.LocalDate"/>
+    <fullyQualifiedTypeName name="com.projects.gym.gym_app.error.ErrorServicio"/>
+    <fullyQualifiedTypeName name="com.projects.gym.gym_app.domain.Socio"/>
+    <fullyQualifiedTypeName name="com.projects.gym.gym_app.repository.FacturaRepository"/>
+    <fullyQualifiedTypeName name="java.math.BigDecimal"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
+    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+    <fullyQualifiedTypeName name="com.projects.gym.gym_app.repository.FormaDePagoRepository"/>
+    <fullyQualifiedTypeName name="jakarta.transaction.Transactional"/>
+    <fullyQualifiedTypeName name="com.projects.gym.gym_app.domain.FormaDePago"/>
+    <fullyQualifiedTypeName name="com.projects.gym.gym_app.domain.enums.TipoPago"/>
+    <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.Query"/>
+    <fullyQualifiedTypeName name="org.springframework.data.repository.query.Param"/>
+    <fullyQualifiedTypeName name="com.projects.gym.gym_app.service.FormaDePagoService"/>
+    <fullyQualifiedTypeName name="com.projects.gym.gym_app.service.DetalleFacturaService"/>
+    <fullyQualifiedTypeName name="java.math.RoundingMode"/>
+    <fullyQualifiedTypeName name="com.projects.gym.gym_app.service.FacturaService1"/>
+    <fullyQualifiedTypeName name="com.projects.gym.gym_app.service.FacturaService"/>
+</qualifiedTypeNameHistroy>

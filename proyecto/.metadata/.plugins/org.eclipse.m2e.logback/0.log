@@ -1,0 +1,176 @@
+2025-09-25 08:42:40,205 [Worker-0: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2025-09-25 08:43:09,913 [Worker-7: Importing Maven projects] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.projects.gym:gym-app:0.0.1-SNAPSHOT @ C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\pom.xml.
+2025-09-25 08:43:17,548 [Worker-7: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /gym-app/src/main/java
+2025-09-25 08:43:17,553 [Worker-7: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /gym-app/src/main/resources
+2025-09-25 08:43:17,555 [Worker-7: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /gym-app/src/main/resources
+2025-09-25 08:43:17,557 [Worker-7: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /gym-app/src/test/java
+2025-09-25 08:43:17,560 [Worker-7: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /gym-app/src/test/resources
+2025-09-25 08:43:19,097 [Worker-7: Importing Maven projects] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 1 project(s) in 14 sec
+2025-09-25 08:43:22,149 [Worker-6: Updating Maven Project] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2025-09-25 08:43:24,634 [Worker-6: Updating Maven Project] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.projects.gym:gym-app:0.0.1-SNAPSHOT @ C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\pom.xml.
+2025-09-25 08:43:30,884 [Worker-6: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /gym-app/src/main/java
+2025-09-25 08:43:30,886 [Worker-6: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /gym-app/src/main/resources
+2025-09-25 08:43:30,887 [Worker-6: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /gym-app/src/main/resources
+2025-09-25 08:43:30,889 [Worker-6: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /gym-app/src/test/java
+2025-09-25 08:43:30,890 [Worker-6: Updating Maven Project] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /gym-app/src/test/resources
+2025-09-25 08:43:33,312 [Worker-6: Updating Maven Project] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed for 1 poms: local refresh takes 0.00 sec, refresh facades takes 7.00 sec, update config takes 1.00 sec 
+2025-09-25 08:43:43,236 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:43:43,303 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:43:45,371 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:46:10,136 [Worker-10: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: elva:proyecto_IS2:0.0.1-SNAPSHOT @ C:\Users\trini\IS2\Elva_Studio\integrador_1\proyecto_IS2\pom.xml.
+2025-09-25 08:46:12,773 [Worker-5: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: elva:proyecto_IS2:0.0.1-SNAPSHOT @ C:\Users\trini\IS2\Elva_Studio\integrador_1\proyecto_IS2\pom.xml.
+2025-09-25 08:46:17,134 [Worker-5: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:46:17,184 [Worker-5: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 180 resources from src\main\resources to target\classes
+2025-09-25 08:46:18,771 [Worker-5: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\test\resources to target\test-classes
+2025-09-25 08:46:22,110 [Worker-1: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: elva:proyecto_IS2:0.0.1-SNAPSHOT @ C:\Users\trini\IS2\Elva_Studio\integrador_1\proyecto_IS2\pom.xml.
+2025-09-25 08:46:26,059 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:46:26,105 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 180 resources from src\main\resources to target\classes
+2025-09-25 08:46:29,257 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\test\resources to target\test-classes
+2025-09-25 08:46:32,420 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:46:32,437 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 180 resources from src\main\resources to target\classes
+2025-09-25 08:46:34,846 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\test\resources to target\test-classes
+2025-09-25 08:46:59,972 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:47:00,058 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:47:00,349 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:51:52,851 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:51:52,990 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:51:53,365 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:51:57,275 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:51:57,363 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:51:57,560 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:52:40,048 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:52:40,136 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:52:40,351 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:52:59,474 [Worker-2: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:52:59,560 [Worker-2: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:52:59,800 [Worker-2: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:53:29,853 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:53:29,992 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:53:30,243 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:53:39,578 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:53:39,640 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:53:39,837 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:53:48,050 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:53:48,127 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:53:48,296 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:54:53,296 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:54:53,383 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:54:53,679 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:55:49,913 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:55:50,006 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:55:50,241 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:55:56,399 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:55:56,468 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:55:56,621 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:56:34,786 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:56:34,852 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:56:35,053 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:57:00,639 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:57:00,716 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:57:00,891 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:57:24,523 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:57:24,584 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:57:24,827 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:58:26,684 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:58:26,745 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:58:26,922 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:58:31,982 [Worker-12: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:58:32,059 [Worker-12: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:58:32,182 [Worker-12: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:58:50,518 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:58:50,581 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:58:50,750 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:59:29,730 [Worker-2: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:59:29,793 [Worker-2: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:59:29,945 [Worker-2: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 08:59:43,139 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 08:59:43,202 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 08:59:43,411 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:00:09,911 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:00:09,949 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:00:10,065 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:02:09,784 [Worker-2: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:02:09,875 [Worker-2: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:02:10,101 [Worker-2: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:03:03,092 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:03:03,156 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:03:03,356 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:04:31,507 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:04:31,596 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:04:31,748 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:05:09,162 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:05:09,270 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:05:09,442 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:08:16,751 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:08:16,824 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:08:17,070 [Worker-13: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:08:51,276 [Worker-10: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:08:51,456 [Worker-10: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:08:51,590 [Worker-10: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:09:22,963 [Worker-10: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:09:23,030 [Worker-10: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:09:23,205 [Worker-10: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:10:05,002 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:10:05,275 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:10:05,442 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:11:22,478 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:11:22,598 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:11:22,856 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:12:47,590 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:12:47,762 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:12:48,064 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:12:49,582 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:12:49,660 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:12:49,921 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:13:08,653 [Worker-19: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:13:08,814 [Worker-19: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:13:09,022 [Worker-19: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:13:24,637 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:13:24,889 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:13:25,162 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:13:46,950 [Worker-21: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:13:47,012 [Worker-21: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:13:47,181 [Worker-21: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:14:07,578 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:14:07,634 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:14:07,799 [Worker-0: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:14:45,062 [Worker-22: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:14:45,110 [Worker-22: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:14:45,301 [Worker-22: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:14:55,408 [Worker-19: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:14:55,596 [Worker-19: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:14:55,773 [Worker-19: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:15:53,962 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:15:54,177 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:15:54,339 [Worker-15: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:16:56,066 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:16:56,254 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:16:56,386 [Worker-16: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:17:52,160 [Worker-18: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:17:52,378 [Worker-18: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:17:52,569 [Worker-18: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:18:09,791 [Worker-18: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:18:09,927 [Worker-18: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:18:10,022 [Worker-18: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:18:22,801 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:18:22,963 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:18:23,108 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:18:53,120 [Worker-18: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:18:53,184 [Worker-18: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:18:53,352 [Worker-18: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:19:26,449 [Worker-22: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:19:26,595 [Worker-22: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:19:26,766 [Worker-22: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:20:31,759 [Worker-22: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:20:31,853 [Worker-22: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:20:31,995 [Worker-22: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:21:21,158 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:21:21,324 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:21:21,452 [Worker-24: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:26:10,493 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:26:10,728 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:26:10,981 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:26:59,821 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-09-25 09:27:00,237 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 223 resources from src\main\resources to target\classes
+2025-09-25 09:27:00,501 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\proyecto\gym-app\src\test\resources
+2025-09-25 09:56:36,236 [Worker-2: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.

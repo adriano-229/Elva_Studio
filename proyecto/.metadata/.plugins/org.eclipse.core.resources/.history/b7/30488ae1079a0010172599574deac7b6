@@ -1,0 +1,183 @@
+package com.projects.gym.gym_app.service;
+
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.projects.gym.gym_app.domain.DetalleFactura;
+import com.projects.gym.gym_app.domain.Factura;
+import com.projects.gym.gym_app.domain.FormaDePago;
+import com.projects.gym.gym_app.domain.Socio;
+import com.projects.gym.gym_app.domain.enums.EstadoFactura;
+import com.projects.gym.gym_app.error.ErrorServicio;
+import com.projects.gym.gym_app.repository.DetalleFacturaRepository;
+import com.projects.gym.gym_app.repository.FacturaRepository;
+import com.projects.gym.gym_app.repository.FacturaRepository1;
+import com.projects.gym.gym_app.service.dto.SocioFormDTO;
+
+import jakarta.transaction.Transactional;
+
+@Service
+public class FacturaService {
+	
+	@Autowired
+	private FacturaRepository repoFactura;
+	
+	@Autowired
+	private DetalleFacturaService svcDetalleFactura;
+	
+	@Autowired
+	private SocioService svcSocio;
+
+	// crear factura 
+	@Transactional
+	public Factura crearFactura(Long numeroFactura,
+							LocalDate fechaFactura, 
+							double totalPago, 
+							EstadoFactura estadoFactura, 
+							List<DetalleFactura> detalles,
+							FormaDePago formaDePago) {
+		
+		Factura factura = new Factura();
+		factura.setNumeroFactura(numeroFactura);
+		factura.setFechaFactura(fechaFactura);
+		factura.setTotalPagado(totalPago);
+		factura.setEstado(estadoFactura);
+		factura.setFormaDePago(formaDePago);
+		
+		
+		// guardamos la factura
+		Factura facturaGuardada = repoFactura.save(factura);
+		
+		// le agrego los detalles a la factura
+		svcDetalleFactura.guardarDetalles(facturaGuardada, detalles);
+		
+		return factura;
+	}
+	
+	//buscar factura por id
+	@Transactional
+	public Factura buscarFacturaPorId(String idFactura) {
+		//la busco
+		Optional<Factura> respuesta = repoFactura.findById(idFactura);
+		if (respuesta.isPresent()) {
+			Factura factura = respuesta.get();
+			return factura;
+		}
+		return null;
+	}
+	
+	//modificar factura
+	@Transactional
+	public void modificarFactura(String idFactura, 
+								LocalDate fechaFactura, 
+								double totalPago, 
+								EstadoFactura estado, 
+								List<DetalleFactura> detalles) {
+		
+		// primero verifico que exista la factura a modificar
+		Factura factura = buscarFacturaPorId(idFactura);
+		if (factura != null) {
+			//modifico datos
+			try {
+				// validar los datos que se quieren modificar
+				validar(fechaFactura, totalPago, estado, detalles);
+				factura.setFechaFactura(fechaFactura);
+				factura.setTotalPagado(totalPago);
+				factura.setEstado(estado);
+				
+				repoFactura.save(factura);
+				
+				svcDetalleFactura.guardarDetalles(factura,detalles);
+				
+			} catch (ErrorServicio e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+	
+	// validar
+	@Transactional
+	public void validar(LocalDate fechaFactura,
+						double totalPago,
+						EstadoFactura estado,
+						List<DetalleFactura> detalles) throws ErrorServicio {
+		
+		// valido fecha
+		LocalDate hoy = LocalDate.now();
+		if (fechaFactura == null || fechaFactura.isAfter(hoy)) {
+			throw new ErrorServicio("La fecha no puede ser nula ni futura");
+		}
+		if (totalPago <= 0) {
+			throw new ErrorServicio("El total no puede ser menor a cero");	
+		}
+		//aunq hibernate solo deja entrar esos valores, lo anotamos para largar el error
+		if (!(estado.equals("Pagada") || estado.equals("Anulada") || estado.equals("Sin_definir"))) {
+			throw new ErrorServicio("Estado de factura invalido");
+		}
+		if (detalles == null || detalles.isEmpty()) {
+			throw new ErrorServicio("El detalle no puede ser ni nulo ni vacio");
+		}
+	}
+
+	
+	//eliminar factura
+	@Transactional
+	public void eliminarfactura(String idFactura) {
+		
+		// la busco, si existe la elimino de manera logica
+		Factura factura = buscarFacturaPorId(idFactura);
+		
+		if (factura != null) {
+			factura.setEliminado(true);
+		}
+	}
+	
+	// listar facturas
+	@Transactional
+	public List<Factura> listarFacturaPorSocio(String idSocio){
+		// busco las cuotas por socio
+		
+		SocioFormDTO socio = svcSocio.buscarPorId(idSocio);
+		List<Factura> facturas = repoFactura.findFacturasBySocio(idSocio);
+		return facturas;
+		
+	}
+	
+	
+	// listar facturas activas por socio
+	@Transactional
+	public List<Factura> listarFacturaPorSocioActivas(String idSocio){
+		
+		SocioFormDTO socio = svcSocio.buscarPorId(idSocio);
+		List<Factura> facturasActivas = repoFactura.findFacturasBySocioActivas(idSocio);
+		return facturasActivas;
+		
+		/*Optional<Socio> socio = Optional.empty();
+		if (socio.isPresent()) {
+			List<Factura> facturasActivas = repoFactura.findFacturasBySocioActivas(idSocio);
+			return facturasActivas;
+		}
+		return null;*/
+	}
+	
+	// listar facturas por estado
+	@Transactional
+	public List<Factura> listarFacturaPorEstado(EstadoFactura estado){
+		List<Factura> facturas = repoFactura.buscarPorEstado(estado);
+		return facturas;
+	}
+	
+	// crear detalle factura
+	
+	// buscar detalle factura
+	
+	//modificar detalle factura
+	
+	// eliminar detalle factura
+}

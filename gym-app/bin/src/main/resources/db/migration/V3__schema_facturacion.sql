@@ -1,0 +1,3 @@
+-- src/main/resources/db/migration/V3__schema_facturacion.sql
+-- El esquema de facturación se consolidó en V1__schema.sql.
+-- Este script se deja intencionalmente vacío para mantener la secuencia de migraciones.
