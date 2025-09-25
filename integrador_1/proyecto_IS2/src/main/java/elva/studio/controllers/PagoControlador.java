@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -50,11 +51,15 @@ import elva.studio.dto.Pago;
 import elva.studio.dto.PagoOnline;
 import elva.studio.dto.PagoTransferencia;
 import elva.studio.entities.CuotaMensual;
+import elva.studio.entities.DetalleFactura;
 import elva.studio.entities.FormaDePago;
 import elva.studio.entities.Socio;
+import elva.studio.enumeration.EstadoCuota;
+import elva.studio.enumeration.EstadoFactura;
 import elva.studio.enumeration.TipoPago;
 import elva.studio.services.CuotaMensualService;
-
+import elva.studio.services.FacturaService;
+import elva.studio.services.FormaDePagoService;
 import elva.studio.services.SocioService;
 
 import elva.studio.services.PagoService;
@@ -78,6 +83,12 @@ public class PagoControlador {
 	@Autowired
 	private CuotaMensualService svcCuota;
 	
+	@Autowired
+	private FacturaService svcFactura;
+	
+	@Autowired
+	private FormaDePagoService svcFormaPago;
+	
 	@Value("${mercadopago.public-key}")
 	private String publicKey;
 
@@ -93,6 +104,94 @@ public class PagoControlador {
     
     private PagoOnline pagoOnline;
     private PagoTransferencia pagoTransferencia;
+    
+    @GetMapping("/factura")
+    public String mostrarFactura(HttpSession session, ModelMap model) throws Exception {
+
+        PagoOnline pagoOnline = (PagoOnline) session.getAttribute("pagoOnline");
+        if (pagoOnline == null) return "redirect:/login";
+
+        List<CuotaMensual> cuotas = svcCuota.listarPorIds(pagoOnline.getIdCuotas());
+
+        double total = pagoOnline.getTotalAPagar();
+        double valorCuota = cuotas.get(0).getValorCuota().getValorCuota();
+        int cantidad = cuotas.size();
+        double iva = Math.round(total * 0.21 * 100.0) / 100.0;
+        double neto = total - iva;
+
+        Socio socio = cuotas.get(0).getSocio();
+        FormaDePago formaPago = new FormaDePago();
+        formaPago.setTipoPago(pagoOnline.getTipoPago());
+        formaPago.setObservacion("Mercado Pago");
+
+        Date fecha = new Date();
+        Long numeroFactura = System.currentTimeMillis();
+
+        // Pasar al modelo
+        model.addAttribute("detalles", cuotas);
+        model.addAttribute("total", total);
+        model.addAttribute("valorCuota", valorCuota);
+        model.addAttribute("cantidad", cantidad);
+        model.addAttribute("bonificacion", 0);
+        model.addAttribute("neto", neto);
+        model.addAttribute("iva", iva);
+        model.addAttribute("precioFinal", total);
+        model.addAttribute("formaPago", formaPago.getTipoPago());
+        model.addAttribute("fecha", fecha);
+        model.addAttribute("numeroFactura", numeroFactura);
+        model.addAttribute("nombre", socio.getNombre());
+        model.addAttribute("apellido", socio.getApellido());
+        model.addAttribute("direccion", socio.getDireccion().getCalle());
+        model.addAttribute("documento", socio.getNumeroDocumento());
+
+        return "factura2";
+    }
+    
+    /*
+    
+ // para probar la factura de mp
+    @GetMapping("/testFacturaMP")
+    public String testFacturaMP(HttpSession session, Model model) throws Exception {
+        // Creo pagoOnline
+        PagoOnline pagoOnline = svcPago.crear(1L, 1500.0, List.of(1L,2L,3L), TipoPago.Billetera_virtual);
+        session.setAttribute("pagoOnline", pagoOnline);
+
+        // Simulo las cuotas y socio
+        List<CuotaMensual> cuotas = svcCuota.listarPorIds(List.of(1L,2L,3L));
+        Socio socio = cuotas.get(0).getSocio();
+
+        double totalAPagar = pagoOnline.getTotalAPagar();
+        double valorCuota = cuotas.get(0).getValorCuota().getValorCuota();
+        int cantidadCuotas = cuotas.size();
+        double iva = Math.round(totalAPagar * 0.21 * 100.0) / 100.0;
+        double neto = totalAPagar - iva;
+        double precioFinal = totalAPagar;
+
+        model.addAttribute("detalles", cuotas);
+        model.addAttribute("total", totalAPagar);
+        model.addAttribute("valorCuota", valorCuota);
+        model.addAttribute("cantidad", cantidadCuotas);
+        model.addAttribute("bonificacion", 0);
+        model.addAttribute("neto", neto);
+        model.addAttribute("iva", iva);
+        model.addAttribute("precioFinal", precioFinal);
+        model.addAttribute("formaPago", TipoPago.Billetera_virtual);
+
+        model.addAttribute("fecha", new Date());
+        model.addAttribute("numeroFactura", System.currentTimeMillis());
+        model.addAttribute("nombre", socio.getNombre());
+        model.addAttribute("apellido", socio.getApellido());
+        model.addAttribute("direccion", socio.getDireccion().getCalle());
+        model.addAttribute("documento", socio.getNumeroDocumento());
+
+        return "factura2";
+    }
+
+    
+    
+    
+ */
+    
 
     @GetMapping("/mis-pagos")
 	public String misPagos(HttpSession session,@RequestParam Long numeroSocio, ModelMap model) {
@@ -138,6 +237,8 @@ public class PagoControlador {
 			// Agrego al modelo los valores de los atributos que vaya a necesitar en la vista
 			model.addAttribute("idSocio",socio.getId());
 			model.addAttribute("totalAPagar", deudaForm.getTotalAPagar());
+			System.out.println("Total a pagar"+ deudaForm.getTotalAPagar());
+			model.addAttribute("cuotasSeleccionadas", cuotasAPagar);
 			
 			// En el deudaForm recibo la formaPago dependiendo de eso el boton -confirmarDatos- carga las preferencias de mp o manda al usuario a transferencia
 			
@@ -217,7 +318,13 @@ public class PagoControlador {
 				
 				return "mercadoPago";
 			} else {
+				// paso el estado de las cuotas a procesando
+				for (CuotaMensual cuota: cuotasAPagar) {
+					cuota.setEstado(EstadoCuota.Procesando);
+					svcCuota.guardarCuota(cuota);
+				}
 				
+				session.setAttribute("pagoEfectivo", TipoPago.Efectivo);
 				return "efectivo";
 			}
 			
@@ -235,6 +342,7 @@ public class PagoControlador {
 		}
 	}
 	
+
 	// Endpoint para renderizar la vista
 	@GetMapping("/transferencia")
 	public String mostrarTransferencia(HttpSession session, Model model) {

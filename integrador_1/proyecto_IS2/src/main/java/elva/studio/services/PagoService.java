@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import elva.studio.repositories.SocioRepository;
 import jakarta.transaction.Transactional;
 import elva.studio.dto.DeudaForm;
@@ -24,7 +25,6 @@ public class PagoService{
 	
 	@Autowired
 	private CuotaMensualService svcCuota;
-	
 	
 	
 	public PagoOnline crear(Long idSocio, Double totalAPagar, List<Long> idCuotas, TipoPago tipoPago) {

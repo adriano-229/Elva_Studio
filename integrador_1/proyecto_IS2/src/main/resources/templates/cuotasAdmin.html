@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Sport Gym</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" th:href="@{/vendors/feather/feather.css}">
+  <link rel="stylesheet" th:href="@{/vendors/mdi/css/materialdesignicons.min.css}">
+  <link rel="stylesheet" th:href="@{/vendors/ti-icons/css/themify-icons.css}">
+  <link rel="stylesheet" th:href="@{/vendors/typicons/typicons.css}">
+  <link rel="stylesheet" th:href="@{/vendors/simple-line-icons/css/simple-line-icons.css}">
+  <link rel="stylesheet" th:href="@{/vendors/css/vendor.bundle.base.css}">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <!--<link rel="stylesheet" href="vendors/datatables.net-bs4/dataTables.bootstrap4.css">-->
+  <link rel="stylesheet" th:href="@{/js/select.dataTables.min.css}">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" th:href="@{/css/vertical-layout-light/style-home.css}">
+  <!-- endinject -->
+  <link rel="shortcut icon" th:href="@{/images/favicon.png}" />
+</head>
+<body>
+  <div class="container-scroller"> 
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+        <div class="me-3">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
+            <span class="icon-menu"></span>
+          </button>
+        </div>
+        <div>
+		  <!--VER LOGO-->
+          <a class="navbar-brand brand-logo" href="index.html">
+            <img th:src="@{/images/logo.png}" alt="logo" />
+          </a>
+          <!--<a class="navbar-brand brand-logo-mini" href="index.html">
+            <img src="images/logo-mini.svg" alt="logo" />
+          </a>-->
+        </div>
+      </div>
+	  <div class="navbar-menu-wrapper d-flex align-items-top"> 
+	    <ul class="navbar-nav">
+	      <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
+	        <h1 class="welcome-text">
+	          <span class="text-black fw-bold">Historial de Cuotas</span>
+	        </h1>
+	      </li>
+	    </ul>
+
+	    <ul class="navbar-nav ms-auto">
+	    	<li th:replace="fragments/notificaciones :: notificaciones"></li>
+	      	<li th:replace="fragments/user :: user"></li>
+	    </ul>
+	   </div>
+  	</nav>
+	   
+	      <!-- Contenido principal -->
+  <div class="container-fluid page-body-wrapper">
+    <sidebar th:replace="fragments/sidebar :: miSidebar"></sidebar>
+
+    <div class="main-panel">
+      <div class="content-wrapper">
+
+        <!-- Bloque de filtros -->
+        <div class="card mb-3">
+          <div class="card-body">
+            <form th:action="@{/admin/cuotas}" method="get" class="row g-3 align-items-end">
+              
+              <div class="col-auto">
+                <label for="numeroSocio" class="form-label mb-0">Socio:</label>
+                <input type="text" class="form-control form-control-sm" id="numeroSocio" name="numeroSocio"
+                       th:value="${numeroSocio}">
+              </div>
+              
+              <div class="col-auto">
+                <label class="form-label mb-0">Estado:</label>
+                <select class="form-control form-control-sm" name="estado">
+                  <option value="">Seleccionar Estado</option>
+                  <option value="Procesando">Procesando</option>
+                  <option value="Pagada">Pagada</option>
+                  <option value="Adeudada">Adeudada</option>
+                </select>
+              </div>
+              <div class="col-auto">
+                <button type="submit" class="btn btn-primary btn-sm">Buscar</button>
+                <a th:href="@{/admin/cuotas}" class="btn btn-secondary btn-sm">Ver todos</a>
+              </div>
+            </form>
+          </div>
+        </div>
+    <!-- partial -->
+    <!-- Bloque de tabla de cuotas -->
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Cuotas</h4>
+            <form th:action="@{/admin/cuotas/pagar}" method="post">
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Socio</th>
+                      <th>Mes-Año</th>
+                      <th>Fecha vencimiento</th>
+                      <th>Valor</th>
+                      <th>Estado</th>
+                      <th>Modo de pago</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                  
+                  <tr th:each="cuotaAdmin : ${listaCuotas}">
+					  <td>
+					    <input type="checkbox" name="idCuotas" class="cuotaCheck"  
+					           th:value="${cuotaAdmin.cuota.id}" 
+					           th:disabled="${cuotaAdmin.cuota.estado.name() == 'Pagada' or cuotaAdmin.cuota.estado.name() == 'Adeudada'}"
+					           th:data-valor="${cuotaAdmin.cuota.valorCuota.valorCuota}" />
+					  </td>
+					  <td th:text="${cuotaAdmin.cuota.socio.numeroSocio}"></td>
+					  <td th:text="${cuotaAdmin.cuota.mes} + '-' + ${cuotaAdmin.cuota.anio}"></td>
+					  <td th:text="${cuotaAdmin.cuota.fechaVencimiento}"></td>
+					  <td th:text="${cuotaAdmin.cuota.valorCuota.valorCuota}"></td>
+					  <td>
+					    <label th:classappend="${cuotaAdmin.cuota.estado.name() == 'Pagada' ? 'badge badge-success' 
+					                            : cuotaAdmin.cuota.estado.name() == 'Procesando' ? 'badge badge-primary' 
+					                            : 'badge badge-danger'}"
+					           th:text="${cuotaAdmin.cuota.estado.name()}"></label>
+					  </td>
+					  <td>
+					    <span th:text="${cuotaAdmin.tipoPago != null ? cuotaAdmin.tipoPago : 'N/A'}"></span>
+					  </td>
+					</tr>
+
+                  </tbody>
+                </table>
+              </div>
+
+		      <button type="submit" class="btn btn-success mt-2">Pagar cuotas seleccionadas</button>
+             </form>
+
+              
+			
+          </div>
+        </div>
+
+      </div> <!-- content-wrapper -->
+    </div> <!-- main-panel -->
+  </div> <!-- page-body-wrapper -->
+</div> <!-- container-scroller -->
+		
+            
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2021. All rights reserved.</span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script th:src="@{/vendors/js/vendor.bundle.base.js}"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script th:src="@{/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js}"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script th:src="@{/js/off-canvas.js}"></script>
+  <script th:src="@{/js/hoverable-collapse.js}"></script>
+  <script th:src="@{/js/template.js}"></script>
+  <script th:src="@{/js/settings.js}"></script>
+  <script th:src="@{/js/todolist.js}"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <!-- End custom js for this page-->
+  <script>
+	  const checkboxes = document.querySelectorAll('.cuotaCheck');
+	  const subtotalSpan = document.getElementById('subtotal');
+	
+	  function actualizarSubtotal() {
+	      let subtotal = 0;
+	      checkboxes.forEach(cb => {
+	          if(cb.checked) {
+	              subtotal += parseFloat(cb.dataset.valor);
+	          }
+	      });
+	      subtotalSpan.textContent = subtotal.toFixed(2);
+	  }
+	
+	  checkboxes.forEach(cb => cb.addEventListener('change', actualizarSubtotal));
+  </script>
+  
+  
+	  
+  
+</body>
+
+</html>

@@ -2,6 +2,7 @@ package elva.studio.services;
 
 import java.time.LocalDate;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +25,9 @@ public class CuotaMensualService implements ServicioBase<CuotaMensual, Socio>{
 	@Autowired
 	public CuotaMensualRepository repository;
 	
+	@Autowired
+	private SocioService svcSocio;
+	
 	// crearCuota--------------------------------------
 	
 	//-------------------------------------------------
@@ -42,6 +46,16 @@ public class CuotaMensualService implements ServicioBase<CuotaMensual, Socio>{
 		}
 		
 		
+	}
+	
+	public void guardarCuota(CuotaMensual entity) throws Exception {
+		try {
+			CuotaMensual cuotaMensual = this.repository.save(entity);
+	
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+
 	}
 	
 	// modificarCuota -----------------------------------
@@ -168,7 +182,30 @@ public class CuotaMensualService implements ServicioBase<CuotaMensual, Socio>{
 			throw new Exception(e.getMessage());
 		}
 	}
-		
+	
+	// listar por estado y socio por id
+	@Transactional
+	public List<CuotaMensual> listarPorEstadoID(Long idSocio, String estado) throws Exception{
+		try {
+			Optional<Socio> respuesta = svcSocio.buscarPorId(idSocio);
+			
+			if (respuesta.isPresent()) {
+				Socio socio = respuesta.get();
+				EstadoCuota estadoCuota = null;
+				if (estado != null && !estado.isBlank()) {
+					estadoCuota = EstadoCuota.valueOf(estado);
+				}
+				List<CuotaMensual> cuotas = this.repository.listarCuotaMensualPorEstado(socio, estadoCuota);
+				return cuotas;
+			}
+			
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+		return null;
+	}
+	
+	
 	// listarCuotaMensualPorFecha ----------------------
 	@Transactional
 	public List<CuotaMensual> listarPorFecha(Socio socio, Date fechaDesde, Date fechaHasta) throws Exception{
@@ -213,6 +250,24 @@ public class CuotaMensualService implements ServicioBase<CuotaMensual, Socio>{
 			}
 			
 		}
+		
+		@Transactional
+		public List<CuotaMensual> buscarPorIDSocio(Long idSocio) throws Exception{
+			try {
+				Optional<Socio> respuesta = svcSocio.buscarPorId(idSocio);
+				if (respuesta.isPresent()) {
+					Socio socio = respuesta.get();
+					List<CuotaMensual> cuotas = this.repository.listarCuotaMensualPorSocio(socio);
+					return cuotas;
+				} else {
+					return null;
+				}
+
+			} catch (Exception e) {
+				throw new Exception(e.getMessage());
+			}
+			
+		}
 
 		@Transactional
 		public double valorCuotaPorSocio(Socio socio) {
@@ -230,7 +285,41 @@ public class CuotaMensualService implements ServicioBase<CuotaMensual, Socio>{
 			return valorCuota;
 			 
 		}
-
+		
+		@Transactional
+		public List<CuotaMensual> buscarConFiltros(Long idSocio,
+													//LocalDate fechaDesde,
+													//LocalDate fechaHasta,
+												String estado) {
+			EstadoCuota estadoCuota = null;
+			if (estado != null && !estado.isBlank()) {
+				estadoCuota = EstadoCuota.valueOf(estado);
+			}
+			
+			List<CuotaMensual> listaCuotas = repository.buscarConFiltros(idSocio, estadoCuota);
+			
+			return listaCuotas;
+		}
+		
+		@Transactional
+		public List<CuotaMensual> buscarPorEstado(String estado){
+			
+			EstadoCuota estadoCuota = null;
+			if (estado != null && !estado.isBlank()) {
+				estadoCuota = EstadoCuota.valueOf(estado);
+			}
+			List<CuotaMensual> listaCuotas = repository.buscarPorEstado(estadoCuota);
+			return listaCuotas;
+		}
+		
+		@Transactional
+		public List<CuotaMensual> buscarPorIds(List<Long> ids) {
+	        if (ids == null || ids.isEmpty()) {
+	            return new ArrayList<>();
+	        }
+	        return repository.findByIdIn(ids);
+	    }
+		
 	
 
 }

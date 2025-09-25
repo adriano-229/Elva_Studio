@@ -21,4 +21,6 @@ public interface DetalleFacturaRepository extends JpaRepository<DetalleFactura, 
 	// detalles de muchas cuotas
 	List<DetalleFactura> findByCuotaMensualIn(List<CuotaMensual> cuota);
 	
+	@Query("SELECT d FROM DetalleFactura d WHERE d.cuotaMensual.id = :idCuota")
+    List<DetalleFactura> buscarPorCuota(@Param("idCuota") Long idCuota);
 }

@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import elva.studio.entities.CuotaMensual;
 import elva.studio.entities.DetalleFactura;
 import elva.studio.entities.Factura;
+import elva.studio.entities.FormaDePago;
 import elva.studio.entities.Socio;
 import elva.studio.enumeration.EstadoFactura;
+import elva.studio.enumeration.TipoPago;
 import elva.studio.error.ErrorServicio;
 import elva.studio.repositories.CuotaMensualRepository;
 import elva.studio.repositories.DetalleFacturaRepository;
@@ -38,25 +40,28 @@ public class FacturaService {
 
 	// crear factura 
 	@Transactional
-	public void crearFactura(Long numeroFactura,
+	public Factura crearFactura(Long numeroFactura,
 							Date fechaFactura, 
 							double totalPago, 
 							EstadoFactura estadoFactura, 
-							List<DetalleFactura> detalles) {
+							List<DetalleFactura> detalles,
+							FormaDePago formaDePago) {
 		
 		Factura factura = new Factura();
 		factura.setNumeroFactura(numeroFactura);
 		factura.setFechaFactura(fechaFactura);
 		factura.setTotalPagado(totalPago);
 		factura.setEstado(estadoFactura);
+		factura.setFormaDePago(formaDePago);
 		
 		
-		// guardamos la facura
+		// guardamos la factura
 		Factura facturaGuardada = repoFactura.save(factura);
 		
 		// le agrego los detalles a la factura
 		svcDetalleFactura.guardarDetalles(facturaGuardada, detalles);
 		
+		return factura;
 	}
 	
 	//buscar factura por id
