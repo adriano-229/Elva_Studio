@@ -1,18 +1,25 @@
 package com.projects.gym.gym_app.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
+
+import com.projects.gym.gym_app.service.dto.EmisionFacturaCommand;
+import com.projects.gym.gym_app.service.dto.FacturaDTO;
 import com.projects.gym.gym_app.service.dto.PagoOnline;
 import com.projects.gym.gym_app.service.dto.PagoTransferencia;
 import com.projects.gym.gym_app.domain.CuotaMensual;
+import com.projects.gym.gym_app.domain.Factura;
 import com.projects.gym.gym_app.domain.FormaDePago;
 import com.projects.gym.gym_app.domain.enums.EstadoCuota;
+import com.projects.gym.gym_app.domain.enums.EstadoFactura;
 import com.projects.gym.gym_app.domain.enums.TipoPago;
+import com.projects.gym.gym_app.repository.FormaDePagoRepository;
 
 
 
@@ -21,6 +28,14 @@ public class PagoService{
 	
 	@Autowired
 	private CuotaMensualService svcCuota;
+	
+	@Autowired
+	private FacturaService svcFactura;
+	
+	@Autowired
+	private FormaDePagoRepository repoFormaPago;
+	
+	private EmisionFacturaCommand facturaDto;
 	
 	
 	
@@ -82,7 +97,7 @@ public class PagoService{
         formaPago.setTipoPago(TipoPago.BILLETERA_VIRTUAL);
         formaPago.setObservacion("Mercado Pago");
         //formaPago.setPagoOnline(pagoOnline);
-        //formaPagoRepo.save(formaPago);
+        formaPago = this.repoFormaPago.save(formaPago);
         //------------------------------------------------------------------------------
         
         //System.out.println("FORMA PAGO - tipo pago: " + formaPago.getTipoPago() + " observacion: " + formaPago.getObservacion() + " pago online - paymentId: " + formaPago.getPagoOnline().getPaymentId());
@@ -96,10 +111,9 @@ public class PagoService{
 				try {
 					cuotaMensual = this.svcCuota.buscarPorId(id);
 					cuotaMensual.setEstado(EstadoCuota.PAGADA);
-					//ESTO LO DESCOMENTAMOS CUANDO YA FUNCIONE TODO;
-					//this.svcCuota.actualizar(cuotaMensual, cuotaMensual.getId());
+					cuotaMensual = this.svcCuota.actualizar(cuotaMensual, cuotaMensual.getId());
 				} catch (Exception e) {
-										e.printStackTrace();
+					e.printStackTrace();
 				}
         		
         });
@@ -113,6 +127,16 @@ public class PagoService{
     		
         });
         
+        
+        
+        facturaDto = new EmisionFacturaCommand();
+        facturaDto.setSocioId(pagoOnline.getIdSocio());
+        facturaDto.setCuotasIds(idCuotasPagadas);
+        facturaDto.setFormaDePagoId(formaPago.getId());
+        facturaDto.setMarcarPagada(true);
+        facturaDto.setObservacionPago("aporbado mercadoPago");
+        
+        FacturaDTO factura = this.svcFactura.crearFactura(facturaDto);
     }
 	
 	@Transactional
@@ -128,21 +152,20 @@ public class PagoService{
 		if (pagoTransferencia.getIdCuotas() == null) {
 			System.out.println("IDCUOTAS ES NULL EN PROCESAR PAGO");
 		}
-		/*
-		//ESTO EN OTRO METODO EN LA CLASE SERVICIO CREARFORMAPAGO-----------------------
-        FormaDePago formaPago = new FormaDePago();
-        formaPago.setTipoPago(TipoPago.Transferencia);
-        formaPago.setObservacion("Transferencia");
-        //formaPago.setPago(pagoTransferencia);
-        //formaPagoRepo.save(formaPago);
-        //------------------------------------------------------------------------------*/
-        
+		
         List<String> idCuotasAPagar =  pagoTransferencia.getIdCuotas();
         
         List<CuotaMensual> cuotasAPagar = this.svcCuota.listarPorIds(idCuotasAPagar);
         
+       
         cuotasAPagar.forEach(cuota -> {
         		cuota.setEstado(EstadoCuota.PROCESANDO);
+        		 try {
+        			 cuota = this.svcCuota.actualizar(cuota, cuota.getId());
+    			} catch (Exception e) {
+    				e.printStackTrace();
+    			}
+        		
         });
     		
         cuotasAPagar.forEach(cuota -> {
@@ -157,5 +180,24 @@ public class PagoService{
     		
         });
     }
+	
+	@Transactional
+	public void procesarPagoEfectivo(List<String> idCuotasAPagar) throws Exception {
+		
+		List<CuotaMensual> cuotasAPagar = this.svcCuota.listarPorIds(idCuotasAPagar);
+        
+	       
+        cuotasAPagar.forEach(cuota -> {
+        		cuota.setEstado(EstadoCuota.PROCESANDO);
+        		 try {
+        			 cuota = this.svcCuota.actualizar(cuota, cuota.getId());
+    			} catch (Exception e) {
+    				e.printStackTrace();
+    			}
+        		
+        });
+        
+       
+	}
 	
 }
