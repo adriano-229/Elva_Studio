@@ -60,63 +60,68 @@ public class AdministradorControlador {
 	
 	@GetMapping
 	public String listarCuotas(@RequestParam(required = false) Long numeroSocio,
-						        @RequestParam(required = false) EstadoCuota estado,
-						        ModelMap model) throws Exception {
-		
-		List<CuotaMensual> cuotas = null;
+	                           @RequestParam(required = false) String estado,
+	                           ModelMap model) throws Exception {
 
-		
-		if (numeroSocio != null && estado != null) {
+	    List<CuotaMensual> cuotas = new ArrayList<>(); // siempre inicializada
+	    EstadoCuota estadoEnum = null;
+	    
+	    // Convertir estado a Enum si no está vacío
+	    if (estado != null && !estado.isEmpty()) {
+	        try {
+	            estadoEnum = EstadoCuota.valueOf(estado);
+	        } catch (IllegalArgumentException e) {
+	            System.out.println("Estado inválido: " + estado);
+	        }
+	    }
+
+	    // Filtrado por número de socio y estado
+	    if (numeroSocio != null && estadoEnum != null) {
 	        Optional<Socio> optSocio = svcSocio.buscarPorNroSocio(numeroSocio);
-	        
-	        Socio socio = optSocio.get();
-	        
-	        if (socio != null) {
+	        if (optSocio.isPresent()) {
+	            Socio socio = optSocio.get();
 	            try {
-					cuotas = svcCuota.listarPorEstadoYSocio(socio, estado);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+	                cuotas = svcCuota.listarPorEstadoYSocio(socio, estadoEnum);
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
 	        }
 	    } else if (numeroSocio != null) {
-	    	Optional<Socio> optSocio = svcSocio.buscarPorNroSocio(numeroSocio);
-	        
-	        Socio socio = optSocio.get();
-	        
-	        if (socio != null) {
+	        Optional<Socio> optSocio = svcSocio.buscarPorNroSocio(numeroSocio);
+	        if (optSocio.isPresent()) {
+	            Socio socio = optSocio.get();
+	            System.out.println("NUMERO SOCIO: " + socio.getNumeroSocio());
 	            try {
-					cuotas = svcCuota.listarActivos(socio);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+	                cuotas = svcCuota.listarActivos(socio);
+	                System.out.println("CUOTAS: " + cuotas);
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
 	        }
-	    } else if (estado != null) {
-	    	try {
-	    		cuotas = svcCuota.listarPorEstado(estado);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-	        
+	    } else if (estadoEnum != null) {
+	        try {
+	            cuotas = svcCuota.listarPorEstado(estadoEnum);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
 	    } else {
 	        try {
-				cuotas = svcCuota.listarTodos();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+	            cuotas = svcCuota.listarTodos();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
 	    }
-		
-		List<CuotaAdmin> listaCuotasAdmin = new ArrayList<>();
-		
-		//para traerme la forma de pago del socio
-		for (CuotaMensual cuota : cuotas) {
+
+	    // Crear lista de DTO para la vista
+	    List<CuotaAdmin> listaCuotasAdmin = new ArrayList<>();
+	    for (CuotaMensual cuota : cuotas) {
 	        TipoPago tipoPago = null;
 
-	        //  detalleFactura de esta cuota
 	        List<DetalleFactura> detalles = svcDetalle.buscarPorCuota(cuota.getId());
 	        if (!detalles.isEmpty()) {
 	            Factura factura = detalles.get(0).getFactura();
 	            if (factura != null && factura.getFormaDePago() != null) {
-	            	tipoPago = factura.getFormaDePago().getTipoPago();
+	                tipoPago = factura.getFormaDePago().getTipoPago();
 	            }
 	        }
 
@@ -125,13 +130,14 @@ public class AdministradorControlador {
 	        cuotaDto.setTipoPago(tipoPago);
 	        listaCuotasAdmin.add(cuotaDto);
 	    }
-		
 
-		model.addAttribute("listaCuotas",listaCuotasAdmin);
-		model.addAttribute("numeroSocio", numeroSocio);
-		model.addAttribute("estado", estado);
-		return "cuotasAdmin";
+	    model.addAttribute("listaCuotas", listaCuotasAdmin);
+	    model.addAttribute("numeroSocio", numeroSocio);
+	    model.addAttribute("estado", estado);
+
+	    return "cuotasAdmin";
 	}
+
 	
 	@PostMapping("/calcularTotal")
 	public String calcularTotal(@RequestParam List<String> idCuotas, ModelMap model) {
@@ -162,7 +168,7 @@ public class AdministradorControlador {
 	
 	
 	@PostMapping("/pagar")
-	public String pagarCuota(@RequestParam List<String> idCuotas, HttpSession session,ModelMap model) throws Exception {
+	public String pagarCuota(@RequestParam(required = false) List<String> idCuotas, HttpSession session,ModelMap model) throws Exception {
 		
 		if (idCuotas == null || idCuotas.isEmpty()) {
 	        return "redirect:/admin/pagos";
