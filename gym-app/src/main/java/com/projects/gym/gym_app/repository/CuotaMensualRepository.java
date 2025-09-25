@@ -33,7 +33,12 @@ public interface CuotaMensualRepository extends JpaRepository<CuotaMensual, Stri
 	
 	// Listar cuota mensual por estado ----------------
 	@Query("SELECT c FROM CuotaMensual c WHERE c.socio = :socio AND c.estado = :estado AND c.eliminado = FALSE")
-	public List<CuotaMensual> listarCuotaMensualPorEstado(@Param("socio")Socio socio, @Param("estado")EstadoCuota estado);
+	public List<CuotaMensual> listarCuotaMensualPorEstadoYSocio(@Param("socio")Socio socio, @Param("estado")EstadoCuota estado);
+	
+	// Listar cuota mensual por estado ----------------
+	@Query("SELECT c FROM CuotaMensual c WHERE c.estado = :estado AND c.eliminado = FALSE")
+	public List<CuotaMensual> listarCuotaMensualPorEstado(@Param("estado")EstadoCuota estado);
+
 	
 	// Listar cuota mensual por fecha -----------------
 	@Query("SELECT c FROM CuotaMensual c WHERE c.socio = :socio AND c.fechaVencimiento >= :fechaDesde AND c.fechaVencimiento <= :fechaHasta  AND c.eliminado = FALSE")

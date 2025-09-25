@@ -162,9 +162,19 @@ public class CuotaMensualService implements ServicioBase<CuotaMensual, Socio>{
 	
 	// listarCuotaMensualPorEstado ----------------------
 	@Transactional
-	public List<CuotaMensual> listarPorEstado(Socio socio, EstadoCuota estado) throws Exception{
+	public List<CuotaMensual> listarPorEstadoYSocio(Socio socio, EstadoCuota estado) throws Exception{
 		try {
-			List<CuotaMensual> cuotas = this.repository.listarCuotaMensualPorEstado(socio, estado);
+			List<CuotaMensual> cuotas = this.repository.listarCuotaMensualPorEstadoYSocio(socio, estado);
+			return cuotas;
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+	}
+	
+	@Transactional
+	public List<CuotaMensual> listarPorEstado(EstadoCuota estado) throws Exception{
+		try {
+			List<CuotaMensual> cuotas = this.repository.listarCuotaMensualPorEstado(estado);
 			return cuotas;
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());

@@ -1,18 +1,42 @@
 package com.projects.gym.gym_app.repository;
 
-import com.projects.gym.gym_app.domain.Factura;
-import com.projects.gym.gym_app.domain.enums.EstadoFactura;
-
-import org.springframework.data.domain.*;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
-public interface FacturaRepository extends JpaRepository<Factura,String>{
-    Optional<Factura> findByNumeroFactura(long numeroFactura);
-    Page<Factura> findByEliminadoFalse(Pageable pageable);
-    Page<Factura> findByEliminadoFalseAndEstado(EstadoFactura estado, Pageable pageable);
-    Page<Factura> findByEliminadoFalseAndFechaFacturaBetween(LocalDate desde, LocalDate hasta, Pageable pageable);
-    Page<Factura> findByEliminadoFalseAndSocioId(String socioId, Pageable pageable);
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import elva.studio.entities.Factura;
+import elva.studio.enumeration.EstadoFactura;
+
+@Repository
+public interface FacturaRepository extends JpaRepository<Factura,Long>{
+
+	// devuelvo el id de la factura
+	@Query("SELECT f FROM Factura f WHERE f.id = :id")
+	Optional<Factura> buscrPorId(@Param("id")Long id);
+	
+	// factura por estado 
+	@Query("SELECT f FROM Factura f WHERE f.estado = :estado")
+	List<Factura> buscarPorEstado(@Param("estado")EstadoFactura estado);
+	
+	// facturas por socio
+	@Query("SELECT DISTINCT d.factura " +
+	           "FROM DetalleFactura d " +
+	           "JOIN d.cuotaMensual c " +
+	           "JOIN c.socio s " +
+	           "WHERE s.id = :idSocio")
+	List<Factura> findFacturasBySocio(@Param("idSocio") Long idSocio);
+	
+	// facturas por socio activas
+	@Query("SELECT DISTINCT d.factura " +
+				"FROM DetalleFactura d " +
+				"JOIN d.cuotaMensual c " +
+				"JOIN c.socio s " +
+				"WHERE s.id = :idSocio " + 
+				"AND d.factura.eliminado = false")
+	List<Factura> findFacturasBySocioActivas(@Param("idSocio") Long idSocio);
+	
 }
