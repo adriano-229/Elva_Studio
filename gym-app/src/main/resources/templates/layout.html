@@ -50,13 +50,13 @@
               <li><a class="dropdown-item" href="#">Grupos familiares</a></li>
             </ul>
           </li>
-
+          <!-- 
           <li class="nav-item">
             <a class="nav-link" th:classappend="${active}=='pagos' ? ' active'" th:href="@{/admin/pagos}">
               <i class="bi bi-wallet2 me-1"></i>Pagos
             </a>
           </li>
-
+          -->
           <li class="nav-item">
             <a class="nav-link" th:classappend="${active}=='rutinas' ? ' active'"
                th:href="${esAdmin} ? @{/admin/rutinas} : @{/profesor/rutinas}">
@@ -89,11 +89,13 @@
               <i class="bi bi-house-heart me-1"></i>Inicio
             </a>
           </li>
+          <!--
           <li class="nav-item">
             <a class="nav-link" th:classappend="${active}=='pagos' ? ' active'" th:href="@{/admin/pagos}">
               <i class="bi bi-wallet2 me-1"></i>Pagos
             </a>
           </li>
+          -->
         </ul>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0" th:if="${esProfesor}">
           <li class="nav-item">
@@ -156,9 +158,11 @@
           <a th:href="@{/admin/facturas}" class="sidebar-link" th:classappend="${active}=='facturas' ? ' active'">
             <i class="bi bi-receipt me-2"></i>Facturas
           </a>
+          <!--
           <a th:href="@{/admin/pagos}" class="sidebar-link" th:classappend="${active}=='pagos' ? ' active'">
             <i class="bi bi-wallet2 me-2"></i>Pagos
           </a>
+          -->
           <a th:href="${esAdmin} ? @{/admin/rutinas} : @{/profesor/rutinas}" class="sidebar-link" th:classappend="${active}=='rutinas' ? ' active'">
             <i class="bi bi-clipboard-heart me-2"></i>Rutinas
           </a>
