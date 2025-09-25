@@ -26,6 +26,9 @@ public class DetalleFacturaService {
 		}
 	}
 	
+	public List<DetalleFactura> buscarPorCuota(Long idCuota){
+		return repoDetalle.buscarPorCuota(idCuota);
+	}
 	
 	
 

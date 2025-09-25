@@ -1,5 +1,6 @@
 package elva.studio.repositories;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -44,5 +45,16 @@ public interface CuotaMensualRepository extends JpaRepository<CuotaMensual, Long
 	@Query("SELECT c FROM CuotaMensual c WHERE c.socio = :socio AND c.eliminado = FALSE")
 	public List<CuotaMensual> listarCuotaMensualPorSocio(@Param("socio")Socio socio);
 	
+	
+	@Query("SELECT c FROM CuotaMensual c " +
+	           "WHERE (:idSocio IS NULL OR c.socio.id = :idSocio) " +
+	           "AND (:estado IS NULL OR c.estado = :estado)")
+	    List<CuotaMensual> buscarConFiltros(@Param("idSocio") Long idSocio,
+	                                        @Param("estado") EstadoCuota estado);
+	
+	@Query("SELECT c from CuotaMensual c WHERE c.estado = :estado")
+	public List<CuotaMensual> buscarPorEstado(@Param("estado") EstadoCuota estado);
+	
+	List<CuotaMensual> findByIdIn(List<Long> ids);
 	Optional<CuotaMensual> findBySocio(Socio socio);
 }

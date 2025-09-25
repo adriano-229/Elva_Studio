@@ -47,6 +47,7 @@
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
             <h1 class="welcome-text"><span class="text-black fw-bold">Pago en Efectivo</span></h1>
+            <h4>Comprobante de Orden de Pago</h4>
             <!--<h3 class="welcome-sub-text"></h3>-->
           </li>
         </ul>
@@ -65,7 +66,8 @@
       <!-- partial:partials/_sidebar.html -->
 	  <sidebar th:replace="fragments/sidebar :: miSidebar"></sidebar>
       <div class="container my-4">
-	    <div class="row justify-content-center">
+      	
+      	<div class="row justify-content-center">
 	      <div class="col-md-6">
 	        <div class="card">
 	          <div class="card-body">
@@ -76,19 +78,27 @@
 	              <i class="ti-world icon-md text-info d-flex align-self-start me-3"></i>
 	              <div class="media-body">
 	                <ul class="card-text">
-					  <li>Diríjase a la ventanilla/puerta de entrada para realizar el pago en efcetivo</li>
-	                  <li>Presente su número de socio al personal de cobro</li>
+					  <li>Socio: <strong th:text="|${socio.nombre}  ${socio.apellido}|"></strong></li>
+					  <li>Numero de Socio: <strong th:text="${socio.numeroSocio}"></strong></li>
+	                  <li>Cuotas a pagar:</li>
+	                  	<ul>
+						    <li th:each="cuota : ${cuotasSeleccionadas}" 
+						        th:text="${cuota.mes} + '-' + ${cuota.anio}"></li>
+						</ul>
+	                  <li>Total a abonar: <strong th:text="${deudaForm.totalAPagar}"></strong> </li>
+	                  <li>Dirigase a la caja para completar el pago y efectuar su factura</li>
 	                </ul>
 	              </div>
 	            </div>
 	          </div>
 	        </div>
+      	
 
 	        <!-- Botón justo debajo de la card -->
 	        <div class="text-center mt-2">
 	          <a href="/cuotas" class="btn btn-success btn-sm">Aceptar</a>
 	        </div>
-
+	
 	      </div>
 	    </div>
 	  </div>
