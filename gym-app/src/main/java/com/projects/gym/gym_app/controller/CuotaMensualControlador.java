@@ -61,7 +61,7 @@ public class CuotaMensualControlador {
 
 	        model.addAttribute("socio", socio);
 
-	        Collection<CuotaMensual> listaCuotas = svcCuota.listarPorEstado(socio, EstadoCuota.ADEUDADA);
+	        Collection<CuotaMensual> listaCuotas = svcCuota.listarPorEstadoYSocio(socio, EstadoCuota.ADEUDADA);
 	        model.addAttribute("listaCuotas", listaCuotas);
 
 	        DeudaForm deudaForm = new DeudaForm();
@@ -195,7 +195,7 @@ public class CuotaMensualControlador {
 				
 			}else {
 				
-				Collection<CuotaMensual> listaCuotas = this.svcCuota.listarPorEstado(socio, estado);
+				Collection<CuotaMensual> listaCuotas = this.svcCuota.listarPorEstadoYSocio(socio, estado);
 				model.addAttribute("listaCuotas", listaCuotas);
 				return "socio/deuda";
 			}

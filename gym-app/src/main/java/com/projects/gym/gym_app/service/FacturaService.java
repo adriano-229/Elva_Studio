@@ -1,5 +1,6 @@
 package com.projects.gym.gym_app.service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -7,24 +8,25 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import elva.studio.entities.CuotaMensual;
-import elva.studio.entities.DetalleFactura;
-import elva.studio.entities.Factura;
-import elva.studio.entities.FormaDePago;
-import elva.studio.entities.Socio;
-import elva.studio.enumeration.EstadoFactura;
-import elva.studio.enumeration.TipoPago;
-import elva.studio.error.ErrorServicio;
-import elva.studio.repositories.CuotaMensualRepository;
-import elva.studio.repositories.DetalleFacturaRepository;
-import elva.studio.repositories.FacturaRepository;
+import com.projects.gym.gym_app.domain.CuotaMensual;
+import com.projects.gym.gym_app.domain.DetalleFactura;
+import com.projects.gym.gym_app.service.DetalleFacturaService;
+import com.projects.gym.gym_app.domain.Factura;
+import com.projects.gym.gym_app.domain.FormaDePago;
+import com.projects.gym.gym_app.domain.Socio;
+import com.projects.gym.gym_app.domain.enums.EstadoFactura;
+import com.projects.gym.gym_app.domain.enums.TipoPago;
+import com.projects.gym.gym_app.error.ErrorServicio;
+import com.projects.gym.gym_app.repository.CuotaMensualRepository;
+import com.projects.gym.gym_app.repository.DetalleFacturaRepository;
+import com.projects.gym.gym_app.repository.FacturaRepository;
 import jakarta.transaction.Transactional;
 
 @Service
 public class FacturaService {
 	
 	@Autowired
-	private FacturaRepository1 repoFactura;
+	private FacturaRepository repoFactura;
 	
 	@Autowired
 	private DetalleFacturaRepository repoDetalleFactura;
@@ -42,7 +44,7 @@ public class FacturaService {
 	@Transactional
 	public Factura crearFactura(Long numeroFactura,
 							Date fechaFactura, 
-							double totalPago, 
+							BigDecimal totalPago, 
 							EstadoFactura estadoFactura, 
 							List<DetalleFactura> detalles,
 							FormaDePago formaDePago) {
@@ -66,7 +68,7 @@ public class FacturaService {
 	
 	//buscar factura por id
 	@Transactional
-	public Factura buscarFacturaPorId(Long idFactura) {
+	public Factura buscarFacturaPorId(String idFactura) {
 		//la busco
 		Optional<Factura> respuesta = repoFactura.findById(idFactura);
 		if (respuesta.isPresent()) {
@@ -78,9 +80,9 @@ public class FacturaService {
 	
 	//modificar factura
 	@Transactional
-	public void modificarFactura(Long idFactura, 
+	public void modificarFactura(String idFactura, 
 								Date fechaFactura, 
-								double totalPago, 
+								BigDecimal totalPago, 
 								EstadoFactura estado, 
 								List<DetalleFactura> detalles) {
 		
@@ -109,7 +111,7 @@ public class FacturaService {
 	// validar
 	@Transactional
 	public void validar(Date fechaFactura,
-						double totalPago,
+						BigDecimal totalPago,
 						EstadoFactura estado,
 						List<DetalleFactura> detalles) throws ErrorServicio {
 		
@@ -118,11 +120,11 @@ public class FacturaService {
 		if (fechaFactura == null || fechaFactura.after(hoy)) {
 			throw new ErrorServicio("La fecha no puede ser nula ni futura");
 		}
-		if (totalPago <= 0) {
+		if (totalPago.compareTo(BigDecimal.ZERO) <= 0) {
 			throw new ErrorServicio("El total no puede ser menor a cero");	
 		}
 		//aunq hibernate solo deja entrar esos valores, lo anotamos para largar el error
-		if (!(estado.equals("Pagada") || estado.equals("Anulada") || estado.equals("Sin_definir"))) {
+		if (!(estado.equals("PAGADA") || estado.equals("ANULADA") || estado.equals("SIN_DEFINIR"))) {
 			throw new ErrorServicio("Estado de factura invalido");
 		}
 		if (detalles == null || detalles.isEmpty()) {
@@ -133,7 +135,7 @@ public class FacturaService {
 	
 	//eliminar factura
 	@Transactional
-	public void eliminarfactura(Long idFactura) {
+	public void eliminarfactura(String idFactura) {
 		
 		// la busco, si existe la elimino de manera logica
 		Factura factura = buscarFacturaPorId(idFactura);
@@ -145,7 +147,7 @@ public class FacturaService {
 	
 	// listar facturas
 	@Transactional
-	public List<Factura> listarFacturaPorSocio(Long idSocio){
+	public List<Factura> listarFacturaPorSocio(String idSocio){
 		// busco las cuotas por socio
 		
 		Optional<Socio> socio = svcSocio.buscarPorId(idSocio);
@@ -160,7 +162,7 @@ public class FacturaService {
 	
 	// listar facturas activas por socio
 	@Transactional
-	public List<Factura> listarFacturaPorSocioActivas(Long idSocio){
+	public List<Factura> listarFacturaPorSocioActivas(String idSocio){
 		Optional<Socio> socio = svcSocio.buscarPorId(idSocio);
 		if (socio.isPresent()) {
 			List<Factura> facturasActivas = repoFactura.findFacturasBySocioActivas(idSocio);

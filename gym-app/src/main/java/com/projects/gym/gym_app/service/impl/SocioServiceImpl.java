@@ -72,10 +72,9 @@ public class SocioServiceImpl implements SocioService {
     }
 
     @Override @Transactional(readOnly = true)
-    public SocioFormDTO buscarPorId(String id) {
+    public Optional<Socio> buscarPorId(String id) {
         Long socioId = parseSocioId(id);
-        return socioRepo.findById(socioId).map(SocioMapper::toDto)
-                .orElseThrow(() -> new EntityNotFoundException("Socio no encontrado"));
+        return socioRepo.findById(socioId);
     }
     
     @Override @Transactional

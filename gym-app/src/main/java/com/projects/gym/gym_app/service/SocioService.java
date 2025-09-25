@@ -9,7 +9,7 @@ import org.springframework.data.domain.*;
 
 public interface SocioService {
     SocioFormDTO crear(SocioFormDTO dto);
-    SocioFormDTO buscarPorId(String id);
+    Optional<Socio> buscarPorId(String id);
     Optional<Socio> buscarPorNroSocio(Long nroSocio);
     SocioFormDTO modificar(String id, SocioFormDTO dto);
     void eliminarLogico(String id);

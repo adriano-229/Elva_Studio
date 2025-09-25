@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import elva.studio.entities.Factura;
-import elva.studio.enumeration.EstadoFactura;
-import elva.studio.services.FacturaService;
+import com.projects.gym.gym_app.domain.Factura;
+import com.projects.gym.gym_app.domain.enums.EstadoFactura;
+import com.projects.gym.gym_app.service.FacturaService;
+
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
@@ -24,7 +25,7 @@ import jakarta.servlet.http.HttpSession;
 public class FacturaControlador {
 	
 	@Autowired
-	private FacturaService1 svcFactura;
+	private FacturaService svcFactura;
 	
 	//para probar que me devuelve bien las facturas del socio
 	/*

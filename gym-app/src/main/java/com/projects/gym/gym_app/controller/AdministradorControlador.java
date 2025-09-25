@@ -3,6 +3,7 @@ package com.projects.gym.gym_app.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -23,8 +24,9 @@ import com.projects.gym.gym_app.service.dto.CuotaAdmin;
 
 import jakarta.servlet.http.HttpSession;
 
-import com.projects.gym.gym_app.service.FacturaService1;
-import com.projects.gym.gym_app.error.ErrorServicio;
+import com.projects.gym.gym_app.service.FacturaService;
+import com.projects.gym.gym_app.service.DetalleFacturaService;
+import com.projects.gym.gym_app.service.FormaDePagoService;
 import com.projects.gym.gym_app.domain.CuotaMensual;
 import com.projects.gym.gym_app.domain.DetalleFactura;
 import com.projects.gym.gym_app.domain.Factura;
@@ -37,7 +39,7 @@ import com.projects.gym.gym_app.domain.enums.TipoPago;
 
 
 @Controller
-@RequestMapping("/admin/cuotas")
+@RequestMapping("/admin/pagos")
 public class AdministradorControlador {
 	
 	@Autowired
@@ -47,7 +49,7 @@ public class AdministradorControlador {
 	private SocioService svcSocio;
 	
 	@Autowired
-	private FacturaService1 svcFactura;
+	private FacturaService svcFactura;
 	
 	@Autowired
 	private DetalleFacturaService svcDetalle; //traer
@@ -59,7 +61,7 @@ public class AdministradorControlador {
 	@GetMapping
 	public String listarCuotas(@RequestParam(required = false) Long numeroSocio,
 						        @RequestParam(required = false) EstadoCuota estado,
-						        ModelMap model) throws ErrorServicio {
+						        ModelMap model) throws Exception {
 		
 		List<CuotaMensual> cuotas = null;
 
@@ -89,7 +91,12 @@ public class AdministradorControlador {
 				}
 	        }
 	    } else if (estado != null) {
-	        cuotas = svcCuota.listarPorEstado(estado);
+	    	try {
+	    		cuotas = svcCuota.listarPorEstado(estado);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	        
 	    } else {
 	        try {
 				cuotas = svcCuota.listarTodos();
@@ -130,89 +137,110 @@ public class AdministradorControlador {
 	public String calcularTotal(@RequestParam List<String> idCuotas, ModelMap model) {
 		
 		if (idCuotas == null || idCuotas.isEmpty()) {
-	        return "redirect:/admin/cuotas";
+	        return "redirect:/admin/pagos";
 	    }
 		
-		List<CuotaMensual> cuotas = svcCuota.listarPorIds(idCuotas);
-		BigDecimal totalPagar = BigDecimal.ZERO;
-		
-		for (CuotaMensual cuota: cuotas) {
-			totalPagar = totalPagar.add(cuota.getValorCuota().getValorCuota());
+		try {
+			List<CuotaMensual> cuotas = svcCuota.listarPorIds(idCuotas);;
+			BigDecimal totalPagar = BigDecimal.ZERO;
+			
+			for (CuotaMensual cuota: cuotas) {
+				totalPagar = totalPagar.add(cuota.getValorCuota().getValorCuota());
+			}
+			
+			model.addAttribute("total",totalPagar);
+			return "cuotasAdmin";
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
-		model.addAttribute("total",totalPagar);
 		return "cuotasAdmin";
+		
+		
 	}
 	
 	
 	@PostMapping("/pagar")
-	public String pagarCuota(@RequestParam List<String> idCuotas, HttpSession session,ModelMap model) throws ErrorServicio {
+	public String pagarCuota(@RequestParam List<String> idCuotas, HttpSession session,ModelMap model) throws Exception {
 		
 		if (idCuotas == null || idCuotas.isEmpty()) {
-	        return "redirect:/admin/cuotas";
+	        return "redirect:/admin/pagos";
 	    }
 		
-		List<DetalleFactura> detalles = new ArrayList<>();
-		List<CuotaMensual> cuotas = svcCuota.listarPorIds(idCuotas);
-		//FormaDePago formaPago = null;
 		
-		BigDecimal totalAPagar = BigDecimal.ZERO;
-		BigDecimal valorCuota = BigDecimal.ZERO;
-		int cantCuotas = cuotas.size();
 		
-		for (CuotaMensual cuota : cuotas) {
-	        totalApagar = totalAPagar.add(cuota.getValorCuota().getValorCuota());
-	        valorCuota = cuota.getValorCuota().getValorCuota();
-	        
-	        DetalleFactura detalle = new DetalleFactura();
-	        detalle.setCuotaMensual(cuota);
-	        detalles.add(detalle);
-	        
-	        
-	        cuota.setEstado(EstadoCuota.PAGADA);
-	        try {
-				svcCuota.actualizar(cuota, cuota.getId());
-			} catch (Exception e) {
+		try {
+			
+			List<DetalleFactura> detalles = new ArrayList<>();
+			List<CuotaMensual> cuotas = svcCuota.listarPorIds(idCuotas);
+			//FormaDePago formaPago = null;
+			
+			BigDecimal totalAPagar = BigDecimal.ZERO;
+			BigDecimal valorCuota = BigDecimal.ZERO;
+			int cantCuotas = cuotas.size();
+			
+			for (CuotaMensual cuota : cuotas) {
+		        totalAPagar = totalAPagar.add(cuota.getValorCuota().getValorCuota());
+		        valorCuota = cuota.getValorCuota().getValorCuota();
+		        
+		        DetalleFactura detalle = new DetalleFactura();
+		        detalle.setCuotaMensual(cuota);
+		        detalles.add(detalle);
+		        
+		        
+		        cuota.setEstado(EstadoCuota.PAGADA);
+		        svcCuota.actualizar(cuota, cuota.getId());}
+			
+			// obtengo el tipo de pago temporal guardado por el socio
+		    TipoPago tipoPago = (TipoPago) session.getAttribute("pagoEfectivo");
+		    FormaDePago formaPago = svcFormaPago.buscarPorTipoPago(tipoPago);
+
+		    // creo la factura
+		    Date fecha = new Date();
+		    Long numeroFactura = System.currentTimeMillis();
+		    
+		    svcFactura.crearFactura(numeroFactura, fecha, totalAPagar, EstadoFactura.PAGADA, detalles, formaPago);
+
+		 // suponiendo que totalAPagar ya es un BigDecimal
+		    BigDecimal iva = totalAPagar
+		            .multiply(new BigDecimal("0.21"))     // calcular 21%
+		            .setScale(2, RoundingMode.HALF_UP);   // redondear a 2 decimales
+
+		    BigDecimal neto = totalAPagar.subtract(iva); // restar IVA
+
+		    BigDecimal precioFinal = totalAPagar;        // queda igual que el total
+
+		    
+		    Socio socio = cuotas.get(0).getSocio();
+		    // datos que necesita la factura: 
+		    
+		    model.addAttribute("detalles", detalles);
+		    model.addAttribute("total", totalAPagar);
+		    model.addAttribute("valorCuota", valorCuota);
+		    model.addAttribute("cantidad", cantCuotas);
+		    model.addAttribute("bonificacion", 0); // si no hay bonificación
+		    model.addAttribute("neto", neto);
+		    model.addAttribute("iva", iva);
+		    model.addAttribute("precioFinal", precioFinal);
+		    model.addAttribute("formaPago", formaPago.getTipoPago());
+
+		    model.addAttribute("fecha", fecha);
+		    model.addAttribute("numeroFactura", numeroFactura);
+
+		    model.addAttribute("nombre", socio.getNombre());
+		    model.addAttribute("apellido", socio.getApellido());
+		    model.addAttribute("direccion", socio.getDireccion().getCalle());
+		    model.addAttribute("documento", socio.getNumeroDocumento());
+
+		    return "factura2";
+			
+			
+		} catch (Exception e) {
 				e.printStackTrace();
-			}
-	    }
+		}
 
-	    // obtengo el tipo de pago temporal guardado por el socio
-	    TipoPago tipoPago = (TipoPago) session.getAttribute("pagoEfectivo");
-	    FormaDePago formaPago = svcFormaPago.buscarPorTipoPago(tipoPago);
-
-	    // creo la factura
-	    Date fecha = new Date();
-	    Long numeroFactura = System.currentTimeMillis();
-	    
-	    svcFactura.crearFactura(numeroFactura, fecha, totalAPagar, EstadoFactura.PAGADA, detalles, formaPago);
-
-	    BigDecimal iva = Math.round(totalAPagar * 0.21 * 100.0) / 100.0;
-	    BigDecimal neto = totalApagar - iva;
-	    BigDecimal precioFinal = totalApagar;
-	    
-	    Socio socio = cuotas.get(0).getSocio();
-	    // datos que necesita la factura: 
-	    
-	    model.addAttribute("detalles", detalles);
-	    model.addAttribute("total", totalApagar);
-	    model.addAttribute("valorCuota", valorCuota);
-	    model.addAttribute("cantidad", cantCuotas);
-	    model.addAttribute("bonificacion", 0); // si no hay bonificación
-	    model.addAttribute("neto", neto);
-	    model.addAttribute("iva", iva);
-	    model.addAttribute("precioFinal", precioFinal);
-	    model.addAttribute("formaPago", formaPago.getTipoPago());
-
-	    model.addAttribute("fecha", fecha);
-	    model.addAttribute("numeroFactura", numeroFactura);
-
-	    model.addAttribute("nombre", socio.getNombre());
-	    model.addAttribute("apellido", socio.getApellido());
-	    model.addAttribute("direccion", socio.getDireccion().getCalle());
-	    model.addAttribute("documento", socio.getNumeroDocumento());
-
-	    return "factura2";
+	    return "cuotasAdmin";
 
 	}
 	
