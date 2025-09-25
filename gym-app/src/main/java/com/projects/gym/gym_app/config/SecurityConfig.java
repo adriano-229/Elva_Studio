@@ -35,6 +35,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/facturas/**").hasAnyRole("ADMIN", "OPERADOR", "SOCIO")
                 .requestMatchers("/socio/**").hasAnyRole("SOCIO", "ADMIN")
                 .requestMatchers("/pagos/webhook").permitAll()
+                // ➕ permitir H2 Console
+                .requestMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
@@ -48,9 +50,12 @@ public class SecurityConfig {
                 .permitAll()
             )
             .csrf(csrf -> csrf
-	            .ignoringRequestMatchers("/pagos/webhook") // permite POST sin CSRF
-	        );
-        
+	            .ignoringRequestMatchers("/pagos/webhook", "/h2-console/**") // permite POST sin CSRF
+	        )
+            
+            .headers(headers -> headers
+                .frameOptions(frame -> frame.sameOrigin())
+            );
         
 
         return http.build();
