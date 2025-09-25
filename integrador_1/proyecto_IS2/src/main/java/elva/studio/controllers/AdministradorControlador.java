@@ -60,10 +60,11 @@ public class AdministradorControlador {
 						        ModelMap model) throws ErrorServicio {
 		
 		List<CuotaMensual> cuotas = null;
-
+		
+		Socio socio = svcSocio.buscarPorNrosocio(numeroSocio);
 		
 		if (numeroSocio != null && estado != null && !estado.isEmpty()) {
-	        Socio socio = svcSocio.buscarPorNrosocio(numeroSocio);
+	        //Socio socio = svcSocio.buscarPorNrosocio(numeroSocio);
 	        if (socio != null) {
 	            try {
 					cuotas = svcCuota.listarPorEstadoID(socio.getId(), estado);
@@ -72,7 +73,7 @@ public class AdministradorControlador {
 				}
 	        }
 	    } else if (numeroSocio != null) {
-	        Socio socio = svcSocio.buscarPorNrosocio(numeroSocio);
+	        //Socio socio = svcSocio.buscarPorNrosocio(numeroSocio);
 	        if (socio != null) {
 	            try {
 					cuotas = svcCuota.buscarPorIDSocio(socio.getId());
@@ -111,7 +112,7 @@ public class AdministradorControlador {
 	        listaCuotasAdmin.add(cuotaDto);
 	    }
 		
-
+		model.addAttribute("socio",socio);
 		model.addAttribute("listaCuotas",listaCuotasAdmin);
 		model.addAttribute("numeroSocio", numeroSocio);
 		model.addAttribute("estado", estado);
