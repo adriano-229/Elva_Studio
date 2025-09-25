@@ -47,6 +47,7 @@ import jakarta.servlet.http.HttpSession;
 import com.projects.gym.gym_app.domain.CuotaMensual;
 import com.projects.gym.gym_app.domain.Socio;
 import com.projects.gym.gym_app.domain.Usuario;
+import com.projects.gym.gym_app.domain.enums.EstadoCuota;
 import com.projects.gym.gym_app.domain.enums.TipoPago;
 import com.projects.gym.gym_app.repository.SocioRepository;
 import com.projects.gym.gym_app.service.CuotaMensualService;
@@ -228,6 +229,11 @@ public class PagoControlador {
 				
 				return "pago/mercadoPago";
 			} else {
+				
+				for (CuotaMensual c : cuotasAPagar) {
+					c.setEstado(EstadoCuota.PROCESANDO);
+					c = this.svcCuota.actualizar(c, c.getId());
+				}
 				
 				return "pago/efectivo";
 			}

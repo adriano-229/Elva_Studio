@@ -96,10 +96,11 @@ public class PagoService{
 				try {
 					cuotaMensual = this.svcCuota.buscarPorId(id);
 					cuotaMensual.setEstado(EstadoCuota.PAGADA);
+					cuotaMensual = this.svcCuota.actualizar(cuotaMensual, cuotaMensual.getId());
 					//ESTO LO DESCOMENTAMOS CUANDO YA FUNCIONE TODO;
 					//this.svcCuota.actualizar(cuotaMensual, cuotaMensual.getId());
 				} catch (Exception e) {
-										e.printStackTrace();
+					e.printStackTrace();
 				}
         		
         });
@@ -142,7 +143,13 @@ public class PagoService{
         List<CuotaMensual> cuotasAPagar = this.svcCuota.listarPorIds(idCuotasAPagar);
         
         cuotasAPagar.forEach(cuota -> {
+        	try {
         		cuota.setEstado(EstadoCuota.PROCESANDO);
+        		cuota = this.svcCuota.actualizar(cuota, cuota.getId());
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+        		
         });
     		
         cuotasAPagar.forEach(cuota -> {
