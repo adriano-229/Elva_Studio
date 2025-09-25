@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +55,9 @@ import com.projects.gym.gym_app.service.CuotaMensualService;
 import com.projects.gym.gym_app.service.SocioService;
 
 import com.projects.gym.gym_app.service.PagoService;
+import com.projects.gym.gym_app.service.FacturaService;
+import com.projects.gym.gym_app.service.dto.EmisionFacturaCommand;
+import com.projects.gym.gym_app.service.dto.FacturaDTO;
 
 
 
@@ -70,6 +74,9 @@ public class PagoControlador {
 	
 	@Autowired
 	private PagoService svcPago;
+
+	@Autowired
+	private FacturaService facturaService;
 
 	@Autowired
 	private CuotaMensualService svcCuota;
@@ -167,6 +174,7 @@ public class PagoControlador {
 				session.setAttribute("pagoTransferencia", pagoTransferencia);
 				
 				
+				generarFacturaPendiente(deudaForm, deudaForm.getFormaPago(), session);
 				return "pago/transferencia";
 				
 			} else if (deudaForm.getFormaPago() == TipoPago.BILLETERA_VIRTUAL){
@@ -229,6 +237,7 @@ public class PagoControlador {
 				return "pago/mercadoPago";
 			} else {
 				
+				generarFacturaPendiente(deudaForm, deudaForm.getFormaPago(), session);
 				return "pago/efectivo";
 			}
 			
@@ -498,6 +507,45 @@ public class PagoControlador {
 
     
     
+
+	@SuppressWarnings("unchecked")
+	private void generarFacturaPendiente(DeudaForm deudaForm, TipoPago tipoPago, HttpSession session) {
+		if (deudaForm == null || deudaForm.getIdSocio() == null || session == null) {
+			return;
+		}
+		List<String> cuotasSeleccionadas = deudaForm.getIdCuotas();
+		if (cuotasSeleccionadas == null || cuotasSeleccionadas.isEmpty()) {
+			return;
+		}
+		Long socioId = deudaForm.getIdSocio();
+		List<String> nuevasCuotas = new ArrayList<>(cuotasSeleccionadas);
+		Long socioPrevio = (Long) session.getAttribute("facturaPendienteSocio");
+		List<String> cuotasPrevias = (List<String>) session.getAttribute("facturaPendienteCuotas");
+		if (socioPrevio != null && socioPrevio.equals(socioId) && mismasCuotas(cuotasPrevias, nuevasCuotas)) {
+			return;
+		}
+		TipoPago pagoSeleccionado = tipoPago != null ? tipoPago : TipoPago.EFECTIVO;
+		try {
+			EmisionFacturaCommand cmd = new EmisionFacturaCommand();
+			cmd.setSocioId(socioId);
+			cmd.setCuotasIds(new ArrayList<>(nuevasCuotas));
+			cmd.setMarcarPagada(false);
+			cmd.setObservacionPago("Solicitud desde portal socio - " + pagoSeleccionado.name());
+			FacturaDTO factura = facturaService.crearFactura(cmd);
+			session.setAttribute("facturaPendienteId", factura.id());
+			session.setAttribute("facturaPendienteSocio", socioId);
+			session.setAttribute("facturaPendienteCuotas", nuevasCuotas);
+		} catch (RuntimeException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	private boolean mismasCuotas(List<String> anteriores, List<String> actuales) {
+		if (anteriores == null || actuales == null) {
+			return false;
+		}
+		return new HashSet<>(anteriores).equals(new HashSet<>(actuales));
+	}
 
 	// datos a mostrar en detalle factura
 	/*

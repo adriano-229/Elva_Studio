@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface SocioRepository extends JpaRepository<Socio,Long> {
@@ -20,5 +21,7 @@ public interface SocioRepository extends JpaRepository<Socio,Long> {
     Page<Socio> findByEliminadoFalse(Pageable pageable);
 
     Optional<Socio> findByUsuario_NombreUsuarioAndEliminadoFalse(String nombreUsuario);
+
+    List<Socio> findByEliminadoFalseOrderByApellidoAscNombreAsc();
 
 }
