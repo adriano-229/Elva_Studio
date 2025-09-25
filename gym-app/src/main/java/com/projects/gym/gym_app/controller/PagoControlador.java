@@ -237,6 +237,8 @@ public class PagoControlador {
 				return "pago/mercadoPago";
 			} else {
 				
+				this.svcPago.procesarPagoEfectivo(deudaForm.getIdCuotas());
+				
 				generarFacturaPendiente(deudaForm, deudaForm.getFormaPago(), session);
 				return "pago/efectivo";
 			}

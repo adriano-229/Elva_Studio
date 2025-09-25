@@ -87,7 +87,8 @@ public class FacturaServiceImpl implements FacturaService {
             }
             FormaDePago forma = formaDePagoRepository.findById(cmd.getFormaDePagoId())
                     .orElseThrow(() -> new EntityNotFoundException("No se encontró la forma de pago"));
-            validarFormaDePagoManual(forma);
+            
+            //validarFormaDePagoManual(forma);
             factura.setFormaDePago(forma);
             factura.setEstado(EstadoFactura.PAGADA);
             actualizarEstadoCuotas(cuotas, EstadoCuota.PAGADA);

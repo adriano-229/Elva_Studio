@@ -80,7 +80,8 @@
             <div class="mb-3">
               <label class="form-label">Forma de pago</label>
               <select class="form-select" th:field="*{formaDePagoId}" required th:disabled="${sinFormasPago}">
-                <option value="" disabled th:selected="${*{formaDePagoId} == null}">-- Seleccionar --</option>
+                <!--<option value="" disabled th:selected="${*{formaDePagoId} == null}">-- Seleccionar --</option>-->
+				<option value="" disabled>-- Seleccionar --</option>
                 <option th:each="fp : ${formasPago}" th:value="${fp.id}" th:text="${fp.tipoPago}"></option>
               </select>
             </div>
