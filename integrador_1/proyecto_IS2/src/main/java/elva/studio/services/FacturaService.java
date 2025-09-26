@@ -68,7 +68,7 @@ public class FacturaService {
 	@Transactional
 	public Factura buscarFacturaPorId(Long idFactura) {
 		//la busco
-		Optional<Factura> respuesta = repoFactura.findById(idFactura);
+		Optional<Factura> respuesta = repoFactura.buscaPorId(idFactura);
 		if (respuesta.isPresent()) {
 			Factura factura = respuesta.get();
 			return factura;
