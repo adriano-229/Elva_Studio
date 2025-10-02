@@ -166,18 +166,47 @@
         }
       });
 
-      // Precargar datos si estamos editando
-      /*[# th:if="${provinciasActuales != null}" ]*/
-        cargarOpciones(provinciaSelect, /*[[${provinciasActuales}]]*/ []);
+      // --- INICIO: Lógica para el modo de edición ---
+      function inicializarCascada() {
+        const paisId = paisSelect.value;
+        if (!paisId) return; // No hacer nada si no hay país (modo nuevo)
 
-        /*[# th:if="${departamentosActuales != null}" ]*/
-          cargarOpciones(departamentoSelect, /*[[${departamentosActuales}]]*/ []);
+        // IDs de la dirección existente (si los hay)
+        const provinciaIdActual = "[[${proveedor.direccion?.localidad?.departamento?.provincia?.id}]]";
+        const departamentoIdActual = "[[${proveedor.direccion?.localidad?.departamento?.id}]]";
+        const localidadIdActual = "[[${proveedor.direccion?.localidad?.id}]]";
 
-          /*[# th:if="${localidadesActuales != null}" ]*/
-            cargarOpciones(localidadSelect, /*[[${localidadesActuales}]]*/ []);
-          /*[/]*/
-        /*[/]*/
-      /*[/]*/
+        // 1. Cargar provincias y seleccionar la correcta
+        fetch('/provincias/api/por-pais/' + paisId)
+          .then(response => response.json())
+          .then(provincias => {
+            cargarOpciones(provinciaSelect, provincias, provinciaIdActual);
+            // 2. Si hay provincia, cargar departamentos
+            if (provinciaIdActual) {
+              return fetch('/departamentos/api/por-provincia/' + provinciaIdActual);
+            }
+            return Promise.reject();
+          })
+          .then(response => response.json())
+          .then(departamentos => {
+            cargarOpciones(departamentoSelect, departamentos, departamentoIdActual);
+            // 3. Si hay departamento, cargar localidades
+            if (departamentoIdActual) {
+              return fetch('/localidades/api/por-departamento/' + departamentoIdActual);
+            }
+            return Promise.reject();
+          })
+          .then(response => response.json())
+          .then(localidades => {
+            cargarOpciones(localidadSelect, localidades, localidadIdActual);
+          })
+          .catch(error => {
+            if (error) console.error('Error en la inicialización de la cascada:', error);
+          });
+      }
+
+      inicializarCascada();
+      // --- FIN: Lógica para el modo de edición ---
     });
   </script>
 </div>

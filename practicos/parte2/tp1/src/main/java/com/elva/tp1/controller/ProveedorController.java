@@ -64,21 +64,6 @@ public class ProveedorController {
         model.addAttribute("proveedor", proveedor);
         model.addAttribute("paises", paisService.findAll());
 
-        // Si el proveedor tiene dirección, precargar datos para la cascada
-        if (proveedor.getDireccion() != null && proveedor.getDireccion().getLocalidad() != null) {
-            // Obtener las provincias del país actual
-            Long paisId = proveedor.getDireccion().getLocalidad().getDepartamento().getProvincia().getPais().getId();
-            model.addAttribute("provinciasActuales", provinciaService.findByPaisId(paisId));
-
-            // Obtener los departamentos de la provincia actual
-            Long provinciaId = proveedor.getDireccion().getLocalidad().getDepartamento().getProvincia().getId();
-            model.addAttribute("departamentosActuales", departamentoService.findByProvinciaId(provinciaId));
-
-            // Obtener las localidades del departamento actual
-            Long departamentoId = proveedor.getDireccion().getLocalidad().getDepartamento().getId();
-            model.addAttribute("localidadesActuales", localidadService.findByDepartamentoId(departamentoId));
-        }
-
         return "proveedor/form";
     }
 

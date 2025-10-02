@@ -63,22 +63,6 @@ public class EmpresaController {
         Empresa empresa = empresaService.findById(id).orElseThrow();
         model.addAttribute("empresa", empresa);
         model.addAttribute("paises", paisService.findAll());
-
-        // Si la empresa tiene dirección, precargar datos para la cascada
-        if (empresa.getDireccion() != null && empresa.getDireccion().getLocalidad() != null) {
-            // Obtener las provincias del país actual
-            Long paisId = empresa.getDireccion().getLocalidad().getDepartamento().getProvincia().getPais().getId();
-            model.addAttribute("provinciasActuales", provinciaService.findByPaisId(paisId));
-
-            // Obtener los departamentos de la provincia actual
-            Long provinciaId = empresa.getDireccion().getLocalidad().getDepartamento().getProvincia().getId();
-            model.addAttribute("departamentosActuales", departamentoService.findByProvinciaId(provinciaId));
-
-            // Obtener las localidades del departamento actual
-            Long departamentoId = empresa.getDireccion().getLocalidad().getDepartamento().getId();
-            model.addAttribute("localidadesActuales", localidadService.findByDepartamentoId(departamentoId));
-        }
-
         return "empresa/form";
     }
 
