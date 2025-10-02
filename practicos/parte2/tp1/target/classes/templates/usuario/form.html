@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}">
+<head>
+  <title>Formulario Usuario</title>
+</head>
+<body>
+<div>
+  <h2 th:text="${usuario.id == null} ? 'Nuevo Usuario' : 'Editar Usuario'"></h2>
+  <form th:action="@{/usuarios}" th:object="${usuario}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+
+    <div>
+      <label for="cuenta">Cuenta:</label>
+      <input id="cuenta" type="text" th:field="*{cuenta}" required/>
+    </div>
+
+    <div>
+      <label for="clave">Clave:</label>
+      <input id="clave" type="password" th:field="*{clave}"
+             th:placeholder="${usuario.id != null} ? 'Dejar vacío para mantener clave actual' : ''"
+             th:required="${usuario.id == null}"/>
+    </div>
+
+    <div>
+      <label for="nombre">Nombre:</label>
+      <input id="nombre" type="text" th:field="*{nombre}" required/>
+    </div>
+
+    <div>
+      <label for="apellido">Apellido:</label>
+      <input id="apellido" type="text" th:field="*{apellido}" required/>
+    </div>
+
+    <div>
+      <label for="email">Email:</label>
+      <input id="email" type="email" th:field="*{email}" required/>
+    </div>
+
+    <div>
+      <label for="rol">Rol:</label>
+      <select id="rol" th:field="*{rol}" required>
+        <option value="">-- Seleccione un Rol --</option>
+        <option th:each="rol : ${T(com.elva.tp1.domain.Usuario.Rol).values()}"
+                th:value="${rol}" th:text="${rol}"></option>
+      </select>
+    </div>
+
+    <div>
+      <label for="activo">Activo:</label>
+      <input type="checkbox" id="activo" th:field="*{activo}"/>
+    </div>
+
+    <div>
+      <button type="submit">Guardar</button>
+      <a th:href="@{/usuarios}">Cancelar</a>
+    </div>
+  </form>
+</div>
+</body>
+</html>

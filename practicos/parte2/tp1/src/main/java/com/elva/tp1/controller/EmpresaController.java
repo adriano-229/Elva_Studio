@@ -7,10 +7,17 @@ import com.elva.tp1.service.PaisService;
 import com.elva.tp1.service.ProvinciaService;
 import com.elva.tp1.service.DepartamentoService;
 import com.elva.tp1.service.LocalidadService;
+import com.elva.tp1.service.export.EmpresaReportService;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.prepost.PreAuthorize;
+
+import java.nio.charset.StandardCharsets;
 
 @Controller
 @RequestMapping("/empresas")
@@ -21,15 +28,18 @@ public class EmpresaController {
     private final ProvinciaService provinciaService;
     private final DepartamentoService departamentoService;
     private final LocalidadService localidadService;
+    private final EmpresaReportService empresaReportService;
 
     public EmpresaController(EmpresaService empresaService, DireccionService direccionService, PaisService paisService,
-                            ProvinciaService provinciaService, DepartamentoService departamentoService, LocalidadService localidadService) {
+                            ProvinciaService provinciaService, DepartamentoService departamentoService, LocalidadService localidadService,
+                            EmpresaReportService empresaReportService) {
         this.empresaService = empresaService;
         this.direccionService = direccionService;
         this.paisService = paisService;
         this.provinciaService = provinciaService;
         this.departamentoService = departamentoService;
         this.localidadService = localidadService;
+        this.empresaReportService = empresaReportService;
     }
 
     @GetMapping
@@ -71,5 +81,22 @@ public class EmpresaController {
     public String eliminar(@PathVariable Long id) {
         empresaService.deleteById(id);
         return "redirect:/empresas";
+    }
+
+    @GetMapping("/export/excel")
+    public ResponseEntity<byte[]> exportarExcel() {
+        byte[] excel = empresaReportService.generarExcel();
+
+        ContentDisposition disposition = ContentDisposition.attachment()
+                .filename("empresas.xlsx", StandardCharsets.UTF_8)
+                .build();
+
+        MediaType contentType = MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+        return ResponseEntity.ok()
+                .contentType(contentType)
+                .header(HttpHeaders.CONTENT_DISPOSITION, disposition.toString())
+                .contentLength(excel.length)
+                .body(excel);
     }
 }
