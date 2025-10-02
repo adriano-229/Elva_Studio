@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(pageTitle, pageContent)">
+<head>
+  <title th:replace="${pageTitle}">TP1</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+  <h1>TP1 - Gestión</h1>
+  <nav>
+    <a th:href="@{/personas}">Personas</a>
+    <a th:href="@{/empresas}">Empresas</a>
+  </nav>
+</header>
+
+<main th:replace="${pageContent}"></main>
+
+<footer>
+  <p>© 2025 - TP1</p>
+</footer>
+</body>
+</html>

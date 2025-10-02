@@ -2,7 +2,6 @@ package com.elva.tp1.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +10,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @PrimaryKeyJoinColumn(name = "persona_id")
 public class Proveedor extends Persona {
 
@@ -22,4 +20,3 @@ public class Proveedor extends Persona {
     @JoinColumn(name = "direccion_id", nullable = false)
     private Direccion direccion;
 }
-

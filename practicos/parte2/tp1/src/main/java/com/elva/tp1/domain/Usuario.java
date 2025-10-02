@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @PrimaryKeyJoinColumn(name = "persona_id")
 public class Usuario extends Persona {
 
@@ -24,4 +22,3 @@ public class Usuario extends Persona {
     @Column(nullable = false)
     private String clave; // almacenaré encriptada (BCrypt) en capas superiores
 }
-
