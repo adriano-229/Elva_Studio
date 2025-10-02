@@ -1,7 +1,8 @@
 package com.elva.tp1.service;
 
 import com.elva.tp1.domain.Localidad;
+import java.util.List;
 
 public interface LocalidadService extends CrudService<Localidad, Long> {
-    // acá podés agregar métodos específicos si hacen falta
+    List<Localidad> findByDepartamentoId(Long departamentoId);
 }

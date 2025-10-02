@@ -2,6 +2,8 @@ package com.elva.tp1.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -21,4 +23,12 @@ public class Usuario extends Persona {
 
     @Column(nullable = false)
     private String clave; // almacenaré encriptada (BCrypt) en capas superiores
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Rol rol = Rol.USUARIO; // Por defecto USUARIO
+
+    public enum Rol {
+        ADMIN, USUARIO
+    }
 }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}">
+<head>
+  <title>Departamentos</title>
+</head>
+<body>
+<div>
+  <h2>Listado de Departamentos</h2>
+  <a th:href="@{/departamentos/nuevo}">Nuevo Departamento</a>
+  <table>
+    <thead>
+    <tr><th>ID</th><th>Nombre</th><th>Provincia</th><th>Activo</th><th>Acciones</th></tr>
+    </thead>
+    <tbody>
+    <tr th:each="departamento : ${departamentos}">
+      <td th:text="${departamento.id}"></td>
+      <td th:text="${departamento.nombre}"></td>
+      <td th:text="${departamento.provincia.nombre}"></td>
+      <td th:text="${departamento.activo ? 'Sí' : 'No'}"></td>
+      <td>
+        <a th:href="@{|/departamentos/editar/${departamento.id}|}">Editar</a> |
+        <a th:href="@{|/departamentos/eliminar/${departamento.id}|}">Eliminar</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
