@@ -1,21 +1,64 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(pageTitle, pageContent)">
+<html th:fragment="layout(pageTitle, pageContent)"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <title th:replace="${pageTitle}">TP1</title>
   <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-<header>
-  <h1>TP1 - Gestión</h1>
-  <nav>
-    <a th:href="@{/personas}">Personas</a>
-    <a th:href="@{/empresas}">Empresas</a>
-  </nav>
-</header>
 
-<main th:replace="${pageContent}"></main>
+<div>
+  <!-- Header con información del usuario -->
+  <div sec:authorize="isAuthenticated()" style="text-align: right; padding: 10px; background-color: #f8f9fa;">
+    Bienvenido, <span sec:authentication="name"></span>
+    (<span sec:authentication="authorities"></span>)
+    | <a th:href="@{/cambiar-clave}">Cambiar Contraseña</a>
+    | <a th:href="@{/logout}">Cerrar Sesión</a>
+  </div>
+
+  <main th:replace="${pageContent}"></main>
+  <hr>
+</div>
+
+<nav sec:authorize="isAuthenticated()">
+  <!-- Solo ADMIN puede ver gestión de usuarios -->
+  <div sec:authorize="hasRole('ADMIN')">
+    <a>Usuarios</a>
+    <ul>
+      <li><a th:href="@{/usuarios}">ABM Usuario</a></li>
+    </ul>
+  </div>
+
+  <!-- Solo ADMIN puede ver gestión de direcciones -->
+  <div sec:authorize="hasRole('ADMIN')">
+    <a>Direcciones</a>
+    <ul>
+      <li><a th:href="@{/paises}">ABM País</a></li>
+      <li><a th:href="@{/provincias}">ABM Provincia</a></li>
+      <li><a th:href="@{/departamentos}">ABM Departamento</a></li>
+      <li><a th:href="@{/localidades}">ABM Localidad</a></li>
+    </ul>
+  </div>
+
+  <!-- ADMIN y USUARIO pueden ver empresas y proveedores -->
+  <div sec:authorize="hasAnyRole('ADMIN', 'USUARIO')">
+    <a>Empresas</a>
+    <ul>
+      <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/empresas}">ABM Empresa</a></li>
+      <li sec:authorize="hasRole('USUARIO')"><a th:href="@{/empresas}">M Empresa</a></li>
+    </ul>
+
+    <a>Proveedores</a>
+    <ul>
+      <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/proveedores}">ABM Proveedor</a></li>
+      <li sec:authorize="hasRole('USUARIO')"><a th:href="@{/proveedores}">M Proveedor</a></li>
+    </ul>
+  </div>
+</nav>
 
 <footer>
+  <hr>
   <p>© 2025 - TP1</p>
 </footer>
 </body>
