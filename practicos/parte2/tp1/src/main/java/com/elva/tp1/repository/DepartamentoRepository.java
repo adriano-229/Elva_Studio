@@ -1,12 +1,20 @@
 package com.elva.tp1.repository;
 
 import com.elva.tp1.domain.Departamento;
+import com.elva.tp1.domain.Pais;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import java.util.List;
+
+import java.util.Optional;
 
 @Repository
 public interface DepartamentoRepository extends JpaRepository<Departamento, Long> {
-    List<Departamento> findByProvinciaId(Long provinciaId);
-    List<Departamento> findByActivoTrue();
+
+    Optional<Pais> findByNombreOrderByAsc(String nombreDepartamento);
+
+    Optional<Pais> findByNombreProvinciaOrderByAsc(String nombreProvincia);
+
+    ;
+
+
 }
