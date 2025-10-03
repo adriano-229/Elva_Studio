@@ -1,22 +1,17 @@
 package com.elva.tp1.domain;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "pais")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Pais {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Pais extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String nombre;
-
-    private Boolean activo = true;
 }

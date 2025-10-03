@@ -1,20 +1,14 @@
 package com.elva.tp1.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.PrimaryKeyJoinColumn;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+import com.elva.tp1.enums.UsuarioEnums.Rol;
+import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "usuario")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @PrimaryKeyJoinColumn(name = "persona_id")
 public class Usuario extends Persona {
 
@@ -22,13 +16,9 @@ public class Usuario extends Persona {
     private String cuenta;
 
     @Column(nullable = false)
-    private String clave; // almacenaré encriptada (BCrypt) en capas superiores
+    private String clave; // encriptación con BCrypt en capa de servicio
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Rol rol = Rol.USUARIO; // Por defecto USUARIO
-
-    public enum Rol {
-        ADMIN, USUARIO
-    }
+    private Rol rol = Rol.USUARIO; // Por defecto es USUARIO
 }

@@ -1,24 +1,17 @@
 package com.elva.tp1.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "provincia")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Provincia {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Provincia extends BaseEntity {
 
     @Column(nullable = false)
     private String nombre;
-
-    private Boolean activo = true;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "pais_id", nullable = false)
