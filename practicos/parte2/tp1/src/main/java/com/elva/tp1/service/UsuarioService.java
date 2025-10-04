@@ -1,8 +1,13 @@
 package com.elva.tp1.service;
 
 import com.elva.tp1.domain.Usuario;
-import java.util.Optional;
+import com.elva.tp1.repository.UsuarioRepository;
 
-public interface UsuarioService extends CrudService<Usuario, Long> {
-    Optional<Usuario> findByCuenta(String cuenta);
+public class UsuarioService extends BaseService<Usuario, Long> {
+
+    public UsuarioService(UsuarioRepository repository) {
+        super(repository);
+    }
+
+
 }

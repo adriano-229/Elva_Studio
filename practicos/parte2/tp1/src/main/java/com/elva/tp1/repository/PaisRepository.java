@@ -1,7 +1,6 @@
 package com.elva.tp1.repository;
 
 import com.elva.tp1.domain.Pais;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

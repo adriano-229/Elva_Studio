@@ -1,7 +1,13 @@
 package com.elva.tp1.service;
 
 import com.elva.tp1.domain.Persona;
+import com.elva.tp1.repository.PersonaRepository;
 
-public interface PersonaService extends CrudService<Persona, Long> {
-    // acá podés agregar métodos específicos si hacen falta
+public class PersonaService extends BaseService<Persona, Long> {
+
+    public PersonaService(PersonaRepository repository) {
+        super(repository);
+    }
+
+
 }
