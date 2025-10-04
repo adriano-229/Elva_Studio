@@ -6,15 +6,14 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "proveedor")
 @Data
-@PrimaryKeyJoinColumn(name = "persona_id")
+@PrimaryKeyJoinColumn
 public class Proveedor extends Persona {
 
     @Column(unique = true, nullable = false)
     private String cuit;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "direccion_id", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
     private Direccion direccion;
 }

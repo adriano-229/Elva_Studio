@@ -6,15 +6,16 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "direccion")
 @Data
 public class Direccion extends BaseEntity {
 
+    @Column(nullable = false)
     private String calle;
 
+    @Column(nullable = false)
     private Integer altura;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "departamento_id", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
     private Departamento departamento;
 }

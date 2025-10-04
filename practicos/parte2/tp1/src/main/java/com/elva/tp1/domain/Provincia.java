@@ -4,16 +4,22 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "provincia")
 @Data
 public class Provincia extends BaseEntity {
 
     @Column(nullable = false)
     private String nombre;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "pais_id", nullable = false)
+    // leave default EAGER, usually acceptable since you often need the Pais when working with a Provincia, as one join is cheap
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
     private Pais pais;
+
+    // same logic as in Pais -> Provincia, but now: Provincia -> Departamento
+    @OneToMany(mappedBy = "provincia", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Departamento> departamentos;
 }

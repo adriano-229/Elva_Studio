@@ -3,20 +3,25 @@ package com.elva.tp1.domain;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.Cascade;
+
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "departamento")
 @Data
 public class Departamento extends BaseEntity {
 
     @Column(nullable = false)
     private String nombre;
 
-    @Column(name = "codigo_postal")
+    @Column(nullable = false)
     private Integer codigoPostal;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "provincia_id", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
     private Provincia provincia;
+
+    @OneToMany(mappedBy = "departamento", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Direccion> direcciones;
 }
