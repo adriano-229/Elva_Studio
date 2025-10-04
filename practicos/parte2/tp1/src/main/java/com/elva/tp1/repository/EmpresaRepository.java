@@ -1,14 +1,14 @@
 package com.elva.tp1.repository;
 
 import com.elva.tp1.domain.Empresa;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
-public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
+public interface EmpresaRepository extends BaseRepository<Empresa, Long> {
 
-    Optional<Empresa> findByRazonSocialOrderByAsc(String razonSocial);
+    List<Empresa> findAllByRazonSocialIsContainingIgnoreCaseOrderByRazonSocial(String razonSocial);
+
+
 }
-

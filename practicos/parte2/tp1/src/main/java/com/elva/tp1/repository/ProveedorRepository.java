@@ -1,14 +1,13 @@
 package com.elva.tp1.repository;
 
 import com.elva.tp1.domain.Proveedor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
-public interface ProveedorRepository extends JpaRepository<Proveedor, Long> {
-    Optional<Proveedor> findByCuit(String cuit);
+public interface ProveedorRepository extends BaseRepository<Proveedor, Long> {
 
+    List<Proveedor> findAllByCuitContainsOrderByCuit(String cuit);
 }
 
