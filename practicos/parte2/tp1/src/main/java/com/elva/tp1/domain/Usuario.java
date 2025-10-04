@@ -1,15 +1,13 @@
 package com.elva.tp1.domain;
 
-import com.elva.tp1.enums.UsuarioEnums.Rol;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "usuario")
 @Data
-@PrimaryKeyJoinColumn(name = "persona_id")
+@PrimaryKeyJoinColumn
 public class Usuario extends Persona {
 
     @Column(nullable = false, unique = true)
@@ -21,4 +19,8 @@ public class Usuario extends Persona {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Rol rol = Rol.USUARIO; // Por defecto es USUARIO
+
+    public enum Rol {
+        ADMIN, USUARIO
+    }
 }
