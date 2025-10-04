@@ -1,7 +1,13 @@
 package com.elva.tp1.service;
 
 import com.elva.tp1.domain.Proveedor;
+import com.elva.tp1.repository.ProveedorRepository;
 
-public interface ProveedorService extends CrudService<Proveedor, Long> {
-    // acá podés agregar métodos específicos si hacen falta
+public class ProveedorService extends BaseService<Proveedor, Long> {
+
+    public ProveedorService(ProveedorRepository repository) {
+        super(repository);
+    }
+
+
 }

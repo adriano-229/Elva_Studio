@@ -1,9 +1,13 @@
 package com.elva.tp1.service;
 
 import com.elva.tp1.domain.Departamento;
+import com.elva.tp1.repository.DepartamentoRepository;
 
-import java.util.List;
+public class DepartamentoService extends BaseService<Departamento, Long> {
 
-public interface DepartamentoService extends CrudService<Departamento, Long> {
-    List<Departamento> findByProvinciaId(Long provinciaId);
+    public DepartamentoService(DepartamentoRepository repository) {
+        super(repository);
+    }
+
+
 }

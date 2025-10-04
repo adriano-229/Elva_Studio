@@ -1,10 +1,13 @@
 package com.elva.tp1.service;
 
 import com.elva.tp1.domain.Direccion;
+import com.elva.tp1.repository.DireccionRepository;
 
-import java.util.List;
+public class DireccionService extends BaseService<Direccion, Long> {
 
-public interface DireccionService extends CrudService<Direccion, Long> {
-    List<Direccion> findByLocalidadId(Long localidadId);
-    // acá podés agregar métodos específicos si hacen falta
+    public DireccionService(DireccionRepository repository) {
+        super(repository);
+    }
+
+
 }

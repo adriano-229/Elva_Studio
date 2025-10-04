@@ -2,7 +2,6 @@ package com.elva.tp1.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 
 @Data

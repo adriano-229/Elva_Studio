@@ -1,8 +1,13 @@
 package com.elva.tp1.service;
 
 import com.elva.tp1.domain.Provincia;
-import java.util.List;
+import com.elva.tp1.repository.ProvinciaRepository;
 
-public interface ProvinciaService extends CrudService<Provincia, Long> {
-    List<Provincia> findByPaisId(Long paisId);
+public class ProvinciaService extends BaseService<Provincia, Long> {
+
+    public ProvinciaService(ProvinciaRepository repository) {
+        super(repository);
+    }
+
+
 }

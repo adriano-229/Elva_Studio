@@ -1,7 +1,13 @@
 package com.elva.tp1.service;
 
 import com.elva.tp1.domain.Empresa;
+import com.elva.tp1.repository.EmpresaRepository;
 
-public interface EmpresaService extends CrudService<Empresa, Long> {
-    // acá podés agregar métodos específicos si hacen falta
+public class EmpresaService extends BaseService<Empresa, Long> {
+
+    public EmpresaService(EmpresaRepository repository) {
+        super(repository);
+    }
+
+
 }
