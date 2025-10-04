@@ -1,13 +1,14 @@
 package com.elva.tp1.repository;
 
 import com.elva.tp1.domain.Direccion;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
-public interface DireccionRepository extends JpaRepository<Direccion, Long> {
+public interface DireccionRepository extends BaseRepository<Direccion, Long> {
 
-    Optional<Direccion> findByCalleOrderByAlturaDesc(String calle);
+    List<Direccion> findAllByCalleIsContainingIgnoreCaseOrderByCalleOrderByAltura(String calle);
+
+    List<Direccion> findAllByDepartamento_NombreOrderByCalleOrderByAltura(String departamentoNombre);
 }

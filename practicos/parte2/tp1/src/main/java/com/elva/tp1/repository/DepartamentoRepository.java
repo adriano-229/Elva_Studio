@@ -1,20 +1,16 @@
 package com.elva.tp1.repository;
 
 import com.elva.tp1.domain.Departamento;
-import com.elva.tp1.domain.Pais;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
-public interface DepartamentoRepository extends JpaRepository<Departamento, Long> {
+public interface DepartamentoRepository extends BaseRepository<Departamento, Long> {
 
-    Optional<Pais> findByNombreOrderByAsc(String nombreDepartamento);
+    List<Departamento> findAllByNombreIsContainingIgnoreCaseOrderByNombre(String nombre);
 
-    Optional<Pais> findByNombreProvinciaOrderByAsc(String nombreProvincia);
-
-    ;
-
+    List<Departamento> findAllByProvincia_NombreOrderByNombre(String provinciaNombre);
 
 }

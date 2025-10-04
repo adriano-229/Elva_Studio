@@ -1,13 +1,16 @@
 package com.elva.tp1.repository;
 
 import com.elva.tp1.domain.Pais;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
-public interface PaisRepository extends JpaRepository<Pais, Long> {
+public interface PaisRepository extends BaseRepository<Pais, Long> {
 
-    Optional<Pais> findByNombreOrderByAsc(String nombrePais);
+    // findAllBy and findBy are
+    List<Pais> findAllByNombreIsContainingIgnoreCaseOrderByNombre(String nombre);
+
+
 }
