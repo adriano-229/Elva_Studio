@@ -3,6 +3,7 @@ package com.elva.tp1.service;
 import com.elva.tp1.domain.BaseEntity;
 import com.elva.tp1.repository.BaseRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseService<T extends BaseEntity, ID> implements CrudHooks<T, ID> {
@@ -11,6 +12,10 @@ public abstract class BaseService<T extends BaseEntity, ID> implements CrudHooks
 
     public BaseService(BaseRepository<T, ID> baseRepository) {
         this.baseRepository = baseRepository;
+    }
+
+    public List<T> findAll() {
+        return baseRepository.findAll();
     }
 
     public Optional<T> findById(ID id) {
@@ -27,7 +32,7 @@ public abstract class BaseService<T extends BaseEntity, ID> implements CrudHooks
         return saved;
     }
 
-    public void softDelete(ID id) {
+    public void softDeleteById(ID id) {
         beforeDelete(id);
         baseRepository.findById(id).ifPresent(entity -> {
             entity.setEliminado(true);  // soft delete = mark eliminado
