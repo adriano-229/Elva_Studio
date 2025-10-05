@@ -20,6 +20,6 @@ public class Provincia extends BaseEntity {
     private Pais pais;
 
     // same logic as in Pais -> Provincia, but now: Provincia -> Departamento
-    @OneToMany(mappedBy = "provincia", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "provincia", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Departamento> departamentos;
 }

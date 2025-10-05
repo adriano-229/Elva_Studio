@@ -1,40 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Iniciar Sesión - TP1</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <title>Iniciar Sesión - TP1</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 <div style="max-width: 400px; margin: 100px auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
-    <h2 style="text-align: center;">Iniciar Sesión</h2>
+  <h2 style="text-align: center;">Iniciar Sesión</h2>
 
-    <div th:if="${error}" style="color: red; margin-bottom: 15px;">
-        <p th:text="${error}"></p>
+  <div style="color: red; margin-bottom: 15px;" th:if="${error}">
+    <p th:text="${error}"></p>
+  </div>
+
+  <div style="color: green; margin-bottom: 15px;" th:if="${message}">
+    <p th:text="${message}"></p>
+  </div>
+
+  <form method="post" th:action="@{/login}">
+    <div style="margin-bottom: 15px;">
+      <label for="username">Usuario:</label>
+      <input id="username" name="username" required style="width: 100%; padding: 8px; margin-top: 5px;"
+             type="text"/>
     </div>
 
-    <div th:if="${message}" style="color: green; margin-bottom: 15px;">
-        <p th:text="${message}"></p>
+    <div style="margin-bottom: 15px;">
+      <label for="password">Contraseña:</label>
+      <input id="password" name="password" required style="width: 100%; padding: 8px; margin-top: 5px;"
+             type="password"/>
     </div>
 
-    <form th:action="@{/login}" method="post">
-        <div style="margin-bottom: 15px;">
-            <label for="username">Usuario:</label>
-            <input type="text" id="username" name="username" required
-                   style="width: 100%; padding: 8px; margin-top: 5px;"/>
-        </div>
-
-        <div style="margin-bottom: 15px;">
-            <label for="password">Contraseña:</label>
-            <input type="password" id="password" name="password" required
-                   style="width: 100%; padding: 8px; margin-top: 5px;"/>
-        </div>
-
-        <div style="text-align: center;">
-            <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 3px;">
-                Ingresar
-            </button>
-        </div>
-    </form>
+    <div style="text-align: center;">
+      <button style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 3px;"
+              type="submit">
+        Ingresar
+      </button>
+    </div>
+  </form>
 </div>
 </body>
 </html>

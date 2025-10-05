@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}">
+<html th:fragment="layout(pageTitle, pageContent)"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Proveedores</title>
 </head>
@@ -14,7 +15,17 @@
 
   <table>
     <thead>
-    <tr><th>ID</th><th>CUIT</th><th>Nombre</th><th>Apellido</th><th>Email</th><th>Dirección</th><th>Activo</th><th>Acciones</th></tr>
+    <tr>
+      <th>ID</th>
+      <th>CUIT</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Email</th>
+      <th>Dirección</th>
+      <th>Acciones</th>
+      <th>Eliminado</th>
+
+    </tr>
     </thead>
     <tbody>
     <tr th:each="proveedor : ${proveedores}">
@@ -23,8 +34,14 @@
       <td th:text="${proveedor.nombre}"></td>
       <td th:text="${proveedor.apellido}"></td>
       <td th:text="${proveedor.email}"></td>
-      <td th:text="${proveedor.direccion.calle + ' ' + proveedor.direccion.altura}"></td>
-      <td th:text="${proveedor.activo ? 'Sí' : 'No'}"></td>
+      <td th:if="${proveedor.direccion != null}"
+          th:text="${proveedor.direccion.calle} + ' ' + ${proveedor.direccion.altura} + ', '
+             + ${proveedor.direccion.departamento?.nombre} + ', '
+             + ${proveedor.direccion.departamento?.provincia?.nombre} + ', '
+             + ${proveedor.direccion.departamento?.provincia?.pais?.nombre}">
+      </td>
+      <td th:unless="${proveedor.direccion != null}">Sin dirección</td>
+      proveedor
       <td>
         <!-- Todos pueden editar -->
         <a th:href="@{|/proveedores/editar/${proveedor.id}|}">Editar</a>
@@ -33,6 +50,7 @@
           | <a th:href="@{|/proveedores/eliminar/${proveedor.id}|}">Eliminar</a>
         </span>
       </td>
+      <td th:text="${proveedor.eliminado} ? 'Sí' : 'No'"></td>
     </tr>
     </tbody>
   </table>

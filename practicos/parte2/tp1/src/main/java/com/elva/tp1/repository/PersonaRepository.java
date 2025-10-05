@@ -13,5 +13,5 @@ public interface PersonaRepository extends BaseRepository<Persona, Long> {
     @Query("SELECT p FROM Persona p WHERE LOWER(CONCAT(p.nombre, ' ', p.apellido)) LIKE LOWER(CONCAT('%', :search, '%'))")
     List<Persona> findAllByNombreApellidoContainsIgnoreCaseOrderByApellido(@Param("search") String search);
 
-    List<Persona> findAllByDocumentoContainsOrderByDocumento(String documento);
+    List<Persona> findAllByEmailContainsOrderByEmail(String email);
 }

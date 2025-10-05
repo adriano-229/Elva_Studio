@@ -8,9 +8,9 @@ import java.util.List;
 @Repository
 public interface DireccionRepository extends BaseRepository<Direccion, Long> {
 
-    List<Direccion> findAllByCalleIsContainingIgnoreCaseOrderByCalleOrderByAltura(String calle);
+    List<Direccion> findAllByCalleIsContainingIgnoreCaseOrderByCalleAsc(String calle);
 
-    List<Direccion> findAllByDepartamento_NombreOrderByCalleOrderByAltura(String departamentoNombre);
+    List<Direccion> findAllByDepartamento_NombreOrderByCalleAsc(String departamentoNombre);
 
     List<Direccion> findAllByOrderByCalleAsc();
 }

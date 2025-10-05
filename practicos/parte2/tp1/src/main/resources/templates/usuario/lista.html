@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}">
+<html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
+      xmlns:th="http://www.thymeleaf.org">
 <head><title>Usuarios</title></head>
 <body>
 <div>
@@ -8,7 +8,16 @@
   <a th:href="@{/usuarios/nuevo}">Nuevo Usuario</a>
   <table>
     <thead>
-    <tr><th>ID</th><th>Cuenta</th><th>Nombre</th><th>Apellido</th><th>Email</th><th>Rol</th><th>Activo</th><th>Acciones</th></tr>
+    <tr>
+      <th>ID</th>
+      <th>Cuenta</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Email</th>
+      <th>Rol</th>
+      <th>Acciones</th>
+      <th>Eliminado</th>
+    </tr>
     </thead>
     <tbody>
     <tr th:each="usuario : ${usuarios}">
@@ -18,11 +27,11 @@
       <td th:text="${usuario.apellido}"></td>
       <td th:text="${usuario.email}"></td>
       <td th:text="${usuario.rol}"></td>
-      <td th:text="${usuario.activo ? 'Sí' : 'No'}"></td>
       <td>
         <a th:href="@{|/usuarios/editar/${usuario.id}|}">Editar</a> |
         <a th:href="@{|/usuarios/eliminar/${usuario.id}|}">Eliminar</a>
       </td>
+      <td th:text="${usuario.eliminado} ? 'Sí' : 'No'"></td>
     </tr>
     </tbody>
   </table>

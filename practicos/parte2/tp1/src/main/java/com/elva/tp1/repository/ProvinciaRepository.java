@@ -1,6 +1,5 @@
 package com.elva.tp1.repository;
 
-import com.elva.tp1.domain.Pais;
 import com.elva.tp1.domain.Provincia;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +10,7 @@ public interface ProvinciaRepository extends BaseRepository<Provincia, Long> {
 
     List<Provincia> findAllByNombreIsContainingIgnoreCaseOrderByNombre(String nombre);
 
-    List<Provincia> findAllByPais_NombreOrderByNombre(String paisNombre);
+    List<Provincia> findAllByPais_NombreOrderByNombreAsc(String paisNombre);
 
     List<Provincia> findAllByOrderByNombreAsc();
 

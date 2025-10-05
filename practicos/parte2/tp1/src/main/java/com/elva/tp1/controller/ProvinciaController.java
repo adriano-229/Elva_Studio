@@ -62,7 +62,7 @@ public class ProvinciaController {
     @ResponseBody
     public ResponseEntity<List<Map<String, Object>>> obtenerProvinciasPorPais(@PathVariable String nombrePais) {
         return ResponseEntity.ok(
-                provinciaService.findAllByPais_NombreOrderByNombre(nombrePais).stream()
+                provinciaService.findAllByPais_NombreOrderByNombreAsc(nombrePais).stream()
                         .map(p -> {
                             Map<String, Object> map = new HashMap<>();
                             map.put("id", p.getId());

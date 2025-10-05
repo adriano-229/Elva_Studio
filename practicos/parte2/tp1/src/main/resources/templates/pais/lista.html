@@ -1,22 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}">
-<head><title>Paises</title></head>
+<html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head><title>Países</title></head>
 <body>
 <div>
   <h2>Listado de Países</h2>
   <a th:href="@{/paises/nuevo}">Nuevo País</a>
   <table>
-    <thead><tr><th>ID</th><th>Nombre</th><th>Activo</th><th>Acciones</th></tr></thead>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Acciones</th>
+      <th>Eliminado</th>
+    </tr>
+    </thead>
     <tbody>
     <tr th:each="pais : ${paises}">
       <td th:text="${pais.id}"></td>
       <td th:text="${pais.nombre}"></td>
-      <td th:text="${pais.activo ? 'Sí' : 'No'}"></td>
       <td>
         <a th:href="@{|/paises/editar/${pais.id}|}">Editar</a> |
         <a th:href="@{|/paises/eliminar/${pais.id}|}">Eliminar</a>
       </td>
+      <td th:text="${pais.eliminado} ? 'Sí' : 'No'"></td>
     </tr>
     </tbody>
   </table>

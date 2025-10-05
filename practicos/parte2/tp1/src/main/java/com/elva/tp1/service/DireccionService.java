@@ -11,6 +11,7 @@ public class DireccionService extends BaseService<Direccion, Long> {
 
     private final DireccionRepository direccionRepository;
 
+
     public DireccionService(DireccionRepository repository, DireccionRepository direccionRepository) {
         super(repository);
         this.direccionRepository = direccionRepository;
@@ -20,8 +21,8 @@ public class DireccionService extends BaseService<Direccion, Long> {
         return direccionRepository.findAllByOrderByCalleAsc();
     }
 
-    public List<Direccion> findAllByDepartamento_NombreOrderByCalleOrderByAltura(String departamentoNombre) {
-        return direccionRepository.findAllByDepartamento_NombreOrderByCalleOrderByAltura(departamentoNombre);
+    public List<Direccion> findAllByDepartamento_NombreOrderByCalleAsc(String departamentoNombre) {
+        return direccionRepository.findAllByDepartamento_NombreOrderByCalleAsc(departamentoNombre);
     }
 
 

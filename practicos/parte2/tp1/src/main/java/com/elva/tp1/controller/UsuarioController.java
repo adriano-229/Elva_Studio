@@ -1,6 +1,7 @@
 package com.elva.tp1.controller;
 
 import com.elva.tp1.domain.Usuario;
+import com.elva.tp1.service.UsuarioService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,7 +56,7 @@ public class UsuarioController {
 
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Long id) {
-        usuarioService.deleteById(id);
+        usuarioService.softDeleteById(id);
         return "redirect:/usuarios";
     }
 
