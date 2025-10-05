@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}">
+<html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Cambiar Contraseña</title>
 </head>
@@ -8,28 +8,28 @@
 <div>
   <h2>Cambiar Mi Contraseña</h2>
 
-  <div th:if="${error}" style="color: red; margin-bottom: 15px;">
+  <div style="color: red; margin-bottom: 15px;" th:if="${error}">
     <p th:text="${error}"></p>
   </div>
 
-  <div th:if="${success}" style="color: green; margin-bottom: 15px;">
+  <div style="color: green; margin-bottom: 15px;" th:if="${success}">
     <p th:text="${success}"></p>
   </div>
 
-  <form th:action="@{/cambiar-clave}" method="post">
+  <form method="post" th:action="@{/cambiar-clave}">
     <div>
       <label for="claveActual">Contraseña Actual:</label>
-      <input type="password" id="claveActual" name="claveActual" required/>
+      <input id="claveActual" name="claveActual" required type="password"/>
     </div>
 
     <div>
       <label for="claveNueva">Nueva Contraseña:</label>
-      <input type="password" id="claveNueva" name="claveNueva" required minlength="6"/>
+      <input id="claveNueva" minlength="6" name="claveNueva" required type="password"/>
     </div>
 
     <div>
       <label for="confirmarClave">Confirmar Nueva Contraseña:</label>
-      <input type="password" id="confirmarClave" name="confirmarClave" required minlength="6"/>
+      <input id="confirmarClave" minlength="6" name="confirmarClave" required type="password"/>
     </div>
 
     <div>

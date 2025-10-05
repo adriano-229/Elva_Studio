@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html th:fragment="layout(pageTitle, pageContent)"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
   <title th:replace="${pageTitle}">TP1</title>
   <link rel="stylesheet" th:href="@{/css/styles.css}">
@@ -37,7 +37,6 @@
       <li><a th:href="@{/paises}">ABM País</a></li>
       <li><a th:href="@{/provincias}">ABM Provincia</a></li>
       <li><a th:href="@{/departamentos}">ABM Departamento</a></li>
-      <li><a th:href="@{/localidades}">ABM Localidad</a></li>
     </ul>
   </div>
 

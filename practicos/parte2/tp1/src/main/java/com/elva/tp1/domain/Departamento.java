@@ -21,6 +21,6 @@ public class Departamento extends BaseEntity {
     @JoinColumn(nullable = false)
     private Provincia provincia;
 
-    @OneToMany(mappedBy = "departamento", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "departamento", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Direccion> direcciones;
 }

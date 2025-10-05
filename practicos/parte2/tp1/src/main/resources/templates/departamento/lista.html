@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}">
+<html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Departamentos</title>
 </head>
@@ -10,18 +10,25 @@
   <a th:href="@{/departamentos/nuevo}">Nuevo Departamento</a>
   <table>
     <thead>
-    <tr><th>ID</th><th>Nombre</th><th>Provincia</th><th>Activo</th><th>Acciones</th></tr>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Provincia</th>
+      <th>Acciones</th>
+      <th>Eliminado</th>
+    </tr>
     </thead>
     <tbody>
     <tr th:each="departamento : ${departamentos}">
       <td th:text="${departamento.id}"></td>
       <td th:text="${departamento.nombre}"></td>
       <td th:text="${departamento.provincia.nombre}"></td>
-      <td th:text="${departamento.activo ? 'Sí' : 'No'}"></td>
+      <td th:text="${departamento.provincia.pais.nombre}"></td>
       <td>
         <a th:href="@{|/departamentos/editar/${departamento.id}|}">Editar</a> |
         <a th:href="@{|/departamentos/eliminar/${departamento.id}|}">Eliminar</a>
       </td>
+      <td th:text="${departamento.eliminado} ? 'Sí' : 'No'"></td>
     </tr>
     </tbody>
   </table>

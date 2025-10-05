@@ -15,7 +15,7 @@ public class Empresa extends BaseEntity {
     @Column(nullable = false)
     private String razonSocial;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(nullable = false)
+    @ManyToOne
+    @JoinColumn
     private Direccion direccion;
 }

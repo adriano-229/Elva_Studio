@@ -15,7 +15,6 @@ public class Pais extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String nombre;
 
-    @OneToMany(mappedBy = "pais", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "pais", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Provincia> provincias = new ArrayList<>();
 }
-

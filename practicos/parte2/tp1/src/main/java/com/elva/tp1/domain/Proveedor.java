@@ -13,7 +13,7 @@ public class Proveedor extends Persona {
     @Column(unique = true, nullable = false)
     private String cuit;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(nullable = false)
+    @ManyToOne
+    @JoinColumn
     private Direccion direccion;
 }

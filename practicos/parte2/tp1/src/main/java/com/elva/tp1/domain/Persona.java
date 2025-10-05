@@ -20,5 +20,5 @@ public class Persona extends BaseEntity {
     private String apellido;
 
     @Column(nullable = false, unique = true)
-    private String documento;
+    private String email;
 }

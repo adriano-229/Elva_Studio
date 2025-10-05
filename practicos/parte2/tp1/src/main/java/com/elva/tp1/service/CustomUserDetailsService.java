@@ -29,7 +29,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 usuario.getCuenta(),
                 usuario.getClave(),
-                usuario.isEliminado(),
+                !usuario.isEliminado(),
                 true, // account non expired
                 true, // credentials non expired
                 true, // account non-locked

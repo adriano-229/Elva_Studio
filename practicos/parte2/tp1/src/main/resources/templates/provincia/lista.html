@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}">
+<html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Provincias</title>
 </head>
@@ -10,18 +10,24 @@
   <a th:href="@{/provincias/nuevo}">Nueva Provincia</a>
   <table>
     <thead>
-    <tr><th>ID</th><th>Nombre</th><th>País</th><th>Activo</th><th>Acciones</th></tr>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>País</th>
+      <th>Acciones</th>
+      <th>Eliminado</th>
+    </tr>
     </thead>
     <tbody>
     <tr th:each="provincia : ${provincias}">
       <td th:text="${provincia.id}"></td>
       <td th:text="${provincia.nombre}"></td>
       <td th:text="${provincia.pais.nombre}"></td>
-      <td th:text="${provincia.activo ? 'Sí' : 'No'}"></td>
       <td>
         <a th:href="@{|/provincias/editar/${provincia.id}|}">Editar</a> |
         <a th:href="@{|/provincias/eliminar/${provincia.id}|}">Eliminar</a>
       </td>
+      <td th:text="${provincia.eliminado} ? 'Sí' : 'No'"></td>
     </tr>
     </tbody>
   </table>

@@ -47,7 +47,7 @@ public class CambiarClaveController {
         String cuentaActual = authentication.getName();
         Optional<Usuario> usuarioOpt = usuarioService.findByCuenta(cuentaActual);
 
-        if (!usuarioOpt.isPresent()) {
+        if (usuarioOpt.isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "Usuario no encontrado");
             return "redirect:/cambiar-clave";
         }

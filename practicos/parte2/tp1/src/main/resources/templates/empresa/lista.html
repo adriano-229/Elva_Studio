@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-i      th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}">
+<html th:fragment="layout(pageTitle, pageContent)"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Empresas</title>
 </head>
@@ -14,14 +15,25 @@ i      th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}">
 
   <table>
     <thead>
-    <tr><th>ID</th><th>Razón Social</th><th>Dirección</th><th>Activo</th><th>Acciones</th></tr>
+    <tr>
+      <th>ID</th>
+      <th>Razón Social</th>
+      <th>Dirección</th>
+      <th>Acciones</th>
+      <th>Eliminado</th>
+    </tr>
     </thead>
     <tbody>
     <tr th:each="empresa : ${empresas}">
       <td th:text="${empresa.id}"></td>
       <td th:text="${empresa.razonSocial}"></td>
-      <td th:text="${empresa.direccion.calle + ' ' + empresa.direccion.altura}"></td>
-      <td th:text="${empresa.activo ? 'Sí' : 'No'}"></td>
+      <td th:if="${empresa.direccion != null}"
+          th:text="${empresa.direccion.calle} + ' ' + ${empresa.direccion.altura} + ', '
+             + ${empresa.direccion.departamento?.nombre} + ', '
+             + ${empresa.direccion.departamento?.provincia?.nombre} + ', '
+             + ${empresa.direccion.departamento?.provincia?.pais?.nombre}">
+      </td>
+      <td th:unless="${empresa.direccion != null}">Sin dirección</td>
       <td>
         <!-- Todos pueden editar -->
         <a th:href="@{|/empresas/editar/${empresa.id}|}">Editar</a>
@@ -30,6 +42,7 @@ i      th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}">
           | <a th:href="@{|/empresas/eliminar/${empresa.id}|}">Eliminar</a>
         </span>
       </td>
+      <td th:text="${empresa.eliminado} ? 'Sí' : 'No'"></td>
     </tr>
     </tbody>
   </table>

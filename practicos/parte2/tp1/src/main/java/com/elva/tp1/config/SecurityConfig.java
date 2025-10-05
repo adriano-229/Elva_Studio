@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -36,43 +37,43 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .userDetailsService(userDetailsService)
-            .authorizeHttpRequests(authz -> authz
-                // Recursos públicos
-                .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                .userDetailsService(userDetailsService)
+                .authorizeHttpRequests(authz -> authz
+                        // Recursos públicos
+                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
 
-                // Solo ADMIN puede acceder a usuarios y gestión de direcciones
-                .requestMatchers("/usuarios/**").hasRole("ADMIN")
-                .requestMatchers("/paises/**", "/provincias/**", "/departamentos/**", "/localidades/**").hasRole("ADMIN")
+                        // Solo ADMIN puede acceder a usuarios y gestión de direcciones
+                        .requestMatchers("/usuarios/**").hasRole("ADMIN")
+                        .requestMatchers("/paises/**", "/provincias/**", "/departamentos/**").hasRole("ADMIN")
 
-              // Solo ADMIN puede crear/eliminar empresas y proveedores
-                .requestMatchers("/empresas/nueva", "/empresas/eliminar/**").hasRole("ADMIN")
-                .requestMatchers("/proveedores/nuevo", "/proveedores/eliminar/**").hasRole("ADMIN")
+                        // Solo ADMIN puede crear/eliminar empresas y proveedores
+                        .requestMatchers("/empresas/nueva", "/empresas/eliminar/**").hasRole("ADMIN")
+                        .requestMatchers("/proveedores/nuevo", "/proveedores/eliminar/**").hasRole("ADMIN")
 
-                // USUARIO y ADMIN pueden ver listas y editar empresas y proveedores
-                .requestMatchers("/empresas/**", "/proveedores/**").hasAnyRole("ADMIN", "USUARIO")
+                        // USUARIO y ADMIN pueden ver listas y editar empresas y proveedores
+                        .requestMatchers("/empresas/**", "/proveedores/**").hasAnyRole("ADMIN", "USUARIO")
 
-                // Cambio de clave personal (solo su propia clave)
-                .requestMatchers("/cambiar-clave").authenticated()
+                        // Cambio de clave personal (solo su propia clave)
+                        .requestMatchers("/cambiar-clave").authenticated()
 
-                // Página principal accesible para usuarios autenticados
-                .requestMatchers("/", "/home").authenticated()
+                        // Página principal accesible para usuarios autenticados
+                        .requestMatchers("/", "/home").authenticated()
 
-                // Todo lo demás requiere autenticación
-                .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
-                .loginPage("/login")
-                .defaultSuccessUrl("/", true)
-                .failureUrl("/login?error=true")
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout=true")
-                .permitAll()
-            )
-            .csrf(csrf -> csrf.disable()); // Para simplificar el desarrollo
+                        // Todo lo demás requiere autenticación
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/", true)
+                        .failureUrl("/login?error=true")
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout=true")
+                        .permitAll()
+                )
+                .csrf(AbstractHttpConfigurer::disable); // Para simplificar el desarrollo
 
         return http.build();
     }

@@ -6,6 +6,7 @@ import com.elva.tp1.service.DepartamentoService;
 import com.elva.tp1.service.DireccionService;
 import com.elva.tp1.service.PaisService;
 import com.elva.tp1.service.ProvinciaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ public class DireccionController {
     private final ProvinciaService provinciaService;
     private final PaisService paisService;
 
+    @Autowired
     public DireccionController(DireccionService direccionService, DepartamentoService departamentoService, ProvinciaService provinciaService, PaisService paisService) {
         this.direccionService = direccionService;
         this.departamentoService = departamentoService;
@@ -71,7 +73,7 @@ public class DireccionController {
     @ResponseBody
     public ResponseEntity<List<Map<String, Object>>> obtenerDireccionesPorProvincia(@PathVariable String nombreDepartamento) {
         return ResponseEntity.ok(
-                direccionService.findAllByDepartamento_NombreOrderByCalleOrderByAltura(nombreDepartamento).stream()
+                direccionService.findAllByDepartamento_NombreOrderByCalleAsc(nombreDepartamento).stream()
                         .map(p -> {
                             Map<String, Object> map = new HashMap<>();
                             map.put("id", p.getId());

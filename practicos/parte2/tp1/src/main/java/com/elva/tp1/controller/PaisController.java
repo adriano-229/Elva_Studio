@@ -20,7 +20,7 @@ public class PaisController {
 
     @GetMapping
     public String listar(Model model) {
-        model.addAttribute("paises", paisService.findAllByOrderByNombreAsc());
+        model.addAttribute("paises", paisService.findAll());
         return "pais/lista";
     }
 
