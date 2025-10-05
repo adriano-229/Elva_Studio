@@ -39,10 +39,10 @@ public class CambiarClaveController {
 
     @PostMapping("/cambiar-clave")
     public String cambiarClave(@RequestParam("claveActual") String claveActual,
-                              @RequestParam("claveNueva") String claveNueva,
-                              @RequestParam("confirmarClave") String confirmarClave,
-                              Authentication authentication,
-                              RedirectAttributes redirectAttributes) {
+                               @RequestParam("claveNueva") String claveNueva,
+                               @RequestParam("confirmarClave") String confirmarClave,
+                               Authentication authentication,
+                               RedirectAttributes redirectAttributes) {
 
         String cuentaActual = authentication.getName();
         Optional<Usuario> usuarioOpt = usuarioService.findByCuenta(cuentaActual);

@@ -12,4 +12,6 @@ public interface DepartamentoRepository extends BaseRepository<Departamento, Lon
 
     List<Departamento> findAllByProvincia_NombreOrderByNombre(String provinciaNombre);
 
+    List<Departamento> findAllByOrderByNombreAsc();
+
 }

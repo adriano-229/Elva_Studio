@@ -2,7 +2,9 @@ package com.elva.tp1.service;
 
 import com.elva.tp1.domain.Persona;
 import com.elva.tp1.repository.PersonaRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PersonaService extends BaseService<Persona, Long> {
 
     public PersonaService(PersonaRepository repository) {

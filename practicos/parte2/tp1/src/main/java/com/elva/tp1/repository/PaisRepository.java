@@ -8,8 +8,9 @@ import java.util.List;
 @Repository
 public interface PaisRepository extends BaseRepository<Pais, Long> {
 
-    // findAllBy and findBy are
+    // findAllBy and findBy generate the same query: but they differ in their explicitness
     List<Pais> findAllByNombreIsContainingIgnoreCaseOrderByNombre(String nombre);
 
+    List<Pais> findAllByOrderByNombreAsc();
 
 }

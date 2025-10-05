@@ -2,22 +2,25 @@ package com.elva.tp1.controller;
 
 import com.elva.tp1.domain.Pais;
 import com.elva.tp1.service.PaisService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/paises")
+
 public class PaisController {
     private final PaisService paisService;
 
+    @Autowired
     public PaisController(PaisService paisService) {
         this.paisService = paisService;
     }
 
     @GetMapping
     public String listar(Model model) {
-        model.addAttribute("paises", paisService.findAll());
+        model.addAttribute("paises", paisService.findAllByOrderByNombreAsc());
         return "pais/lista";
     }
 
@@ -41,7 +44,7 @@ public class PaisController {
 
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable Long id) {
-        paisService.deleteById(id);
+        paisService.softDeleteById(id);
         return "redirect:/paises";
     }
 }
