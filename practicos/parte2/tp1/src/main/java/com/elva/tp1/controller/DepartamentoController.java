@@ -37,8 +37,8 @@ public class DepartamentoController {
     @GetMapping("/nuevo")
     public String nuevo(Model model) {
         model.addAttribute("departamento", new Departamento());
-        model.addAttribute("provincias", provinciaService.findAllByOrderByNombreAsc());
-        model.addAttribute("paises", paisService.findAllByOrderByNombreAsc());
+        model.addAttribute("provincias", provinciaService.findAllActivasOrderByNombreAsc());
+        model.addAttribute("paises", paisService.findAllActivosOrderByNombreAsc());
         return "departamento/form";
     }
 
@@ -51,8 +51,8 @@ public class DepartamentoController {
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
         model.addAttribute("departamento", departamentoService.findById(id).orElseThrow());
-        model.addAttribute("provincias", provinciaService.findAllByOrderByNombreAsc());
-        model.addAttribute("paises", paisService.findAllByOrderByNombreAsc());
+        model.addAttribute("provincias", provinciaService.findAllActivasOrderByNombreAsc());
+        model.addAttribute("paises", paisService.findAllActivosOrderByNombreAsc());
         return "departamento/form";
     }
 
@@ -62,12 +62,28 @@ public class DepartamentoController {
         return "redirect:/departamentos";
     }
 
-    // Endpoint REST para obtener departamentos por provincia
-    @GetMapping("/api/por-provincia/{nombreProvincia}")
+    // Endpoint REST original por nombre (compatibilidad) filtrando activos
+    @GetMapping("/api/por-provincia/nombre/{nombreProvincia}")
     @ResponseBody
-    public ResponseEntity<List<Map<String, Object>>> obtenerDepartamentosPorProvincia(@PathVariable String nombreProvincia) {
+    public ResponseEntity<List<Map<String, Object>>> obtenerDepartamentosPorProvinciaNombre(@PathVariable String nombreProvincia) {
         return ResponseEntity.ok(
-                departamentoService.findAllByProvincia_NombreOrderByNombre(nombreProvincia).stream()
+                departamentoService.findAllActivosByProvinciaNombreOrderByNombre(nombreProvincia).stream()
+                        .map(p -> {
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("id", p.getId());
+                            map.put("nombre", p.getNombre());
+                            return map;
+                        })
+                        .toList()
+        );
+    }
+
+    // Nuevo endpoint REST por ID de provincia filtrando activos
+    @GetMapping("/api/por-provincia/{provinciaId}")
+    @ResponseBody
+    public ResponseEntity<List<Map<String, Object>>> obtenerDepartamentosPorProvinciaId(@PathVariable Long provinciaId) {
+        return ResponseEntity.ok(
+                departamentoService.findAllActivosByProvinciaIdOrderByNombre(provinciaId).stream()
                         .map(p -> {
                             Map<String, Object> map = new HashMap<>();
                             map.put("id", p.getId());

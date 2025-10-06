@@ -13,4 +13,6 @@ public interface PaisRepository extends BaseRepository<Pais, Long> {
 
     List<Pais> findAllByOrderByNombreAsc();
 
+    // Nuevo: sólo países activos (no eliminados)
+    List<Pais> findAllByEliminadoFalseOrderByNombreAsc();
 }

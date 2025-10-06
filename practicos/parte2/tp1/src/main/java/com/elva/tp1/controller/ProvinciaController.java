@@ -34,7 +34,7 @@ public class ProvinciaController {
     @GetMapping("/nuevo")
     public String nuevo(Model model) {
         model.addAttribute("provincia", new Provincia());
-        model.addAttribute("paises", paisService.findAllByOrderByNombreAsc());
+        model.addAttribute("paises", paisService.findAllActivosOrderByNombreAsc()); // activos
         return "provincia/form";
     }
 
@@ -47,7 +47,7 @@ public class ProvinciaController {
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
         model.addAttribute("provincia", provinciaService.findById(id).orElseThrow());
-        model.addAttribute("paises", paisService.findAllByOrderByNombreAsc());
+        model.addAttribute("paises", paisService.findAllActivosOrderByNombreAsc()); // activos
         return "provincia/form";
     }
 
@@ -57,12 +57,28 @@ public class ProvinciaController {
         return "redirect:/provincias";
     }
 
-    // Endpoint REST para obtener provincias por país
-    @GetMapping("/api/por-pais/{nombrePais}")
+    // Endpoint REST original por nombre (compatibilidad) ahora sólo activos
+    @GetMapping("/api/por-pais/nombre/{nombrePais}")
     @ResponseBody
-    public ResponseEntity<List<Map<String, Object>>> obtenerProvinciasPorPais(@PathVariable String nombrePais) {
+    public ResponseEntity<List<Map<String, Object>>> obtenerProvinciasPorPaisNombre(@PathVariable String nombrePais) {
         return ResponseEntity.ok(
-                provinciaService.findAllByPais_NombreOrderByNombreAsc(nombrePais).stream()
+                provinciaService.findAllActivasByPaisNombreOrderByNombreAsc(nombrePais).stream()
+                        .map(p -> {
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("id", p.getId());
+                            map.put("nombre", p.getNombre());
+                            return map;
+                        })
+                        .toList()
+        );
+    }
+
+    // Nuevo Endpoint REST por ID de país (usado por la UI) ahora sólo activos
+    @GetMapping("/api/por-pais/{paisId}")
+    @ResponseBody
+    public ResponseEntity<List<Map<String, Object>>> obtenerProvinciasPorPaisId(@PathVariable Long paisId) {
+        return ResponseEntity.ok(
+                provinciaService.findAllActivasByPaisIdOrderByNombreAsc(paisId).stream()
                         .map(p -> {
                             Map<String, Object> map = new HashMap<>();
                             map.put("id", p.getId());
@@ -73,4 +89,3 @@ public class ProvinciaController {
         );
     }
 }
-

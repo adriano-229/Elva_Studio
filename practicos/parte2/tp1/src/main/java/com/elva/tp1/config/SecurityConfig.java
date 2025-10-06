@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
 public class SecurityConfig {
 
     private final CustomUserDetailsService userDetailsService;
@@ -50,7 +50,7 @@ public class SecurityConfig {
                         .requestMatchers("/empresas/nueva", "/empresas/eliminar/**").hasRole("ADMIN")
                         .requestMatchers("/proveedores/nuevo", "/proveedores/eliminar/**").hasRole("ADMIN")
 
-                        // USUARIO y ADMIN pueden ver listas y editar empresas y proveedores
+                        // USUARIO y ADMIN pueden ver y editar empresas y proveedores
                         .requestMatchers("/empresas/**", "/proveedores/**").hasAnyRole("ADMIN", "USUARIO")
 
                         // Cambio de clave personal (solo su propia clave)

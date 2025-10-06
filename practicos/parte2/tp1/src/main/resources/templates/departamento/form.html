@@ -15,13 +15,13 @@
       <input id="nombre" required th:field="*{nombre}" type="text"/>
     </div>
 
-    <!-- Selección en cascada: País → Provincia → Departamento -->
+    <!-- Selección en cascada: País → Provincia -->
     <div>
       <label for="pais">País:</label>
       <select id="pais" name="paisId" required>
         <option value="">-- Seleccione un País --</option>
         <option th:each="pais : ${paises}"
-                th:selected="${departamento.provincia != null && departamento.provincia.pais.id == pais.id}"
+                th:selected="${departamento.provincia != null and departamento.provincia.pais.id == pais.id}"
                 th:text="${pais.nombre}"
                 th:value="${pais.id}"></option>
       </select>
@@ -29,6 +29,7 @@
 
     <div>
       <label for="provincia">Provincia:</label>
+      <input type="hidden" id="provinciaActualId" th:value="${departamento.provincia != null ? departamento.provincia.id : ''}">
       <select disabled id="provincia" required th:field="*{provincia.id}">
         <option value="">-- Seleccione una Provincia --</option>
       </select>
@@ -41,10 +42,10 @@
   </form>
 
   <script>
-      // JavaScript para filtrado en cascada: País → Provincia
       document.addEventListener('DOMContentLoaded', function () {
           const paisSelect = document.getElementById('pais');
           const provinciaSelect = document.getElementById('provincia');
+          const provinciaActualId = document.getElementById('provinciaActualId').value;
 
           function limpiarSelect(select, textoOpcionDefault) {
               select.innerHTML = '<option value="">' + textoOpcionDefault + '</option>';
@@ -55,12 +56,9 @@
               select.disabled = false;
           }
 
-          // País → Provincias
           paisSelect.addEventListener('change', function () {
               const paisId = this.value;
-
               limpiarSelect(provinciaSelect, '-- Seleccione una Provincia --');
-
               if (paisId) {
                   fetch('/provincias/api/por-pais/' + paisId)
                       .then(response => response.json())
@@ -69,17 +67,18 @@
                               const option = document.createElement('option');
                               option.value = provincia.id;
                               option.text = provincia.nombre;
+                              if (provinciaActualId && String(provincia.id) === String(provinciaActualId)) {
+                                  option.selected = true;
+                              }
                               provinciaSelect.appendChild(option);
                           });
-                          habilitarSelect(provinciaSelect);
+                          if (provincias.length > 0) habilitarSelect(provinciaSelect);
                       })
                       .catch(error => console.error('Error cargando provincias:', error));
               }
           });
 
-          // Si estamos editando, cargar los datos existentes
-          const paisActual = paisSelect.value;
-          if (paisActual) {
+          if (paisSelect.value) {
               paisSelect.dispatchEvent(new Event('change'));
           }
       });

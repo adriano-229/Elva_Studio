@@ -60,4 +60,20 @@ public class DepartamentoService extends BaseService<Departamento, Long> {
         return departamentoRepository.findAllByProvincia_NombreOrderByNombre(nombre);
     }
 
+    public List<Departamento> findAllByProvincia_IdOrderByNombre(Long provinciaId) {
+        return departamentoRepository.findAllByProvincia_IdOrderByNombre(provinciaId);
+    }
+
+    // --- Nuevos métodos activos ---
+    public List<Departamento> findAllActivosOrderByNombreAsc() {
+        return departamentoRepository.findAllByEliminadoFalseOrderByNombreAsc();
+    }
+
+    public List<Departamento> findAllActivosByProvinciaIdOrderByNombre(Long provinciaId) {
+        return departamentoRepository.findAllByEliminadoFalseAndProvincia_IdOrderByNombre(provinciaId);
+    }
+
+    public List<Departamento> findAllActivosByProvinciaNombreOrderByNombre(String provinciaNombre) {
+        return departamentoRepository.findAllByEliminadoFalseAndProvincia_NombreOrderByNombre(provinciaNombre);
+    }
 }

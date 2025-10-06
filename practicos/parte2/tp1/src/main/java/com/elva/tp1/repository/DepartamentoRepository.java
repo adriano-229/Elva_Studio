@@ -12,6 +12,12 @@ public interface DepartamentoRepository extends BaseRepository<Departamento, Lon
 
     List<Departamento> findAllByProvincia_NombreOrderByNombre(String provinciaNombre);
 
+    List<Departamento> findAllByProvincia_IdOrderByNombre(Long provinciaId);
+
     List<Departamento> findAllByOrderByNombreAsc();
 
+    // Nuevos métodos excluyendo eliminados
+    List<Departamento> findAllByEliminadoFalseOrderByNombreAsc();
+    List<Departamento> findAllByEliminadoFalseAndProvincia_IdOrderByNombre(Long provinciaId);
+    List<Departamento> findAllByEliminadoFalseAndProvincia_NombreOrderByNombre(String provinciaNombre);
 }
