@@ -24,7 +24,7 @@
 
     <div>
       <label for="altura">Altura:</label>
-      <input id="altura" th:field="*{direccion.altura}" type="number"/>
+      <input id="altura" required th:field="*{direccion.altura}" type="number"/>
     </div>
 
     <!-- Selección en cascada -->
@@ -33,7 +33,7 @@
       <select id="pais" name="paisId" required>
         <option value="">-- Seleccione un País --</option>
         <option th:each="pais : ${paises}"
-                th:selected="${empresa.direccion != null && empresa.direccion.departamento != null != null && empresa.direccion.departamento.provincia != null && empresa.direccion.departamento.provincia.pais.id == pais.id}"
+                th:selected="${empresa.direccion != null and empresa.direccion.departamento != null and empresa.direccion.departamento.provincia != null and empresa.direccion.departamento.provincia.pais.id == pais.id}"
                 th:text="${pais.nombre}"
                 th:value="${pais.id}"></option>
       </select>
@@ -41,14 +41,14 @@
 
     <div>
       <label for="provincia">Provincia:</label>
-      <select disabled id="provincia" name="provinciaId" required>
+      <select id="provincia" name="provinciaId" required disabled>
         <option value="">-- Seleccione una Provincia --</option>
       </select>
     </div>
 
     <div>
       <label for="departamento">Departamento:</label>
-      <select disabled id="departamento" name="departamentoId" required>
+      <select id="departamento" name="departamentoId" required disabled>
         <option value="">-- Seleccione un Departamento --</option>
       </select>
     </div>
@@ -59,11 +59,13 @@
   </form>
 
   <script>
-      // JavaScript para filtrado en cascada
       document.addEventListener('DOMContentLoaded', function () {
           const paisSelect = document.getElementById('pais');
           const provinciaSelect = document.getElementById('provincia');
           const departamentoSelect = document.getElementById('departamento');
+
+          const provinciaIdActual = "[[${empresa.direccion?.departamento?.provincia?.id}]]" || null;
+          const departamentoIdActual = "[[${empresa.direccion?.departamento?.id}]]" || null;
 
           function limpiarSelect(select, textoOpcionDefault) {
               select.innerHTML = '<option value="">' + textoOpcionDefault + '</option>';
@@ -74,80 +76,67 @@
               select.disabled = false;
           }
 
-          function cargarOpciones(select, datos, valorSeleccionado = null) {
-              select.innerHTML = '<option value="">-- Seleccione --</option>';
+          function cargarOpciones(select, datos, valorSeleccionado = null, placeholder='-- Seleccione --') {
+              select.innerHTML = '<option value="">' + placeholder + '</option>';
               datos.forEach(item => {
                   const option = document.createElement('option');
                   option.value = item.id;
                   option.text = item.nombre;
-                  if (valorSeleccionado && item.id === valorSeleccionado) {
+                  if (valorSeleccionado && String(item.id) === String(valorSeleccionado)) {
                       option.selected = true;
                   }
                   select.appendChild(option);
               });
-              habilitarSelect(select);
+              if (datos.length > 0) habilitarSelect(select);
           }
 
-          // País → Provincias
           paisSelect.addEventListener('change', function () {
               const paisId = this.value;
-
               limpiarSelect(provinciaSelect, '-- Seleccione una Provincia --');
               limpiarSelect(departamentoSelect, '-- Seleccione un Departamento --');
-
               if (paisId) {
                   fetch('/provincias/api/por-pais/' + paisId)
-                      .then(response => response.json())
+                      .then(r => r.json())
                       .then(provincias => {
-                          cargarOpciones(provinciaSelect, provincias);
+                          cargarOpciones(provinciaSelect, provincias, null, '-- Seleccione una Provincia --');
                       })
-                      .catch(error => console.error('Error cargando provincias:', error));
+                      .catch(err => console.error('Error cargando provincias:', err));
               }
           });
 
-          // Provincia → Departamentos
           provinciaSelect.addEventListener('change', function () {
               const provinciaId = this.value;
-
               limpiarSelect(departamentoSelect, '-- Seleccione un Departamento --');
-
               if (provinciaId) {
                   fetch('/departamentos/api/por-provincia/' + provinciaId)
-                      .then(response => response.json())
-                      .then(departamentos => {
-                          cargarOpciones(departamentoSelect, departamentos);
+                      .then(r => r.json())
+                      .then(deps => {
+                          cargarOpciones(departamentoSelect, deps, null, '-- Seleccione un Departamento --');
                       })
-                      .catch(error => console.error('Error cargando departamentos:', error));
+                      .catch(err => console.error('Error cargando departamentos:', err));
               }
           });
 
-          // --- INICIO: Lógica para el modo de edición ---
-          function inicializarCascada() {
-              const paisId = paisSelect.value;
-              if (!paisId) return; // No hacer nada si no hay país (modo nuevo)
-
-              // IDs de la dirección existente (si los hay)
-              const provinciaIdActual = "[[${empresa.direccion?.departamento?.provincia?.id}]]";
-              const departamentoIdActual = "[[${empresa.direccion?.departamento?.id}]]";
-
-              // 1. Cargar provincias y seleccionar la correcta
-              fetch('/provincias/api/por-pais/' + paisId)
-                  .then(response => response.json())
+          function inicializarEdicion() {
+              if (!paisSelect.value) return; // modo creación
+              // Cargar provincias del país seleccionado y preseleccionar
+              fetch('/provincias/api/por-pais/' + paisSelect.value)
+                  .then(r => r.json())
                   .then(provincias => {
-                      cargarOpciones(provinciaSelect, provincias, provinciaIdActual);
-                      // 2. Si hay provincia, cargar departamentos
+                      cargarOpciones(provinciaSelect, provincias, provinciaIdActual, '-- Seleccione una Provincia --');
                       if (provinciaIdActual) {
                           return fetch('/departamentos/api/por-provincia/' + provinciaIdActual);
                       }
-                      return Promise.reject();
                   })
-                  .catch(error => {
-                      if (error) console.error('Error en la inicialización de la cascada:', error);
-                  });
+                  .then(r => r ? r.json() : null)
+                  .then(deps => {
+                      if (!deps) return;
+                      cargarOpciones(departamentoSelect, deps, departamentoIdActual, '-- Seleccione un Departamento --');
+                  })
+                  .catch(err => console.error('Error inicializando cascada (empresa):', err));
           }
 
-          inicializarCascada();
-          // --- FIN: Lógica para el modo de edición ---
+          inicializarEdicion();
       });
   </script>
 </div>

@@ -12,7 +12,13 @@ public interface ProvinciaRepository extends BaseRepository<Provincia, Long> {
 
     List<Provincia> findAllByPais_NombreOrderByNombreAsc(String paisNombre);
 
+    List<Provincia> findAllByPais_IdOrderByNombreAsc(Long paisId);
+
     List<Provincia> findAllByOrderByNombreAsc();
 
+    // Nuevos métodos excluyendo eliminados
+    List<Provincia> findAllByEliminadoFalseOrderByNombreAsc();
+    List<Provincia> findAllByEliminadoFalseAndPais_IdOrderByNombreAsc(Long paisId);
+    List<Provincia> findAllByEliminadoFalseAndPais_NombreOrderByNombreAsc(String paisNombre);
 
 }

@@ -5,9 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Configuración para recrear la base de datos desde cero en cada ejecución.
- * ADVERTENCIA: Esto eliminará todos los datos cada vez que inicies la aplicación.
- * Solo usar en desarrollo.
+ * Configuración para recrear la base de datos desde cero en cada ejecución. Esto eliminará todos los datos cada vez
+ * se inicie la aplicación.
+ * ADVERTENCIA: Solo usar en desarrollo.
  */
 @Configuration
 public class FlywayConfig {

@@ -1,8 +1,12 @@
 package com.elva.tp1.controller;
 
 import com.elva.tp1.domain.Proveedor;
+import com.elva.tp1.domain.Direccion;
+import com.elva.tp1.domain.Departamento;
 import com.elva.tp1.service.DireccionService;
 import com.elva.tp1.service.ProveedorService;
+import com.elva.tp1.service.PaisService;
+import com.elva.tp1.service.DepartamentoService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,10 +17,17 @@ import org.springframework.web.bind.annotation.*;
 public class ProveedorController {
     private final ProveedorService proveedorService;
     private final DireccionService direccionService;
+    private final PaisService paisService;
+    private final DepartamentoService departamentoService;
 
-    public ProveedorController(ProveedorService proveedorService, DireccionService direccionService) {
+    public ProveedorController(ProveedorService proveedorService,
+                               DireccionService direccionService,
+                               PaisService paisService,
+                               DepartamentoService departamentoService) {
         this.proveedorService = proveedorService;
         this.direccionService = direccionService;
+        this.paisService = paisService;
+        this.departamentoService = departamentoService;
     }
 
     @GetMapping
@@ -29,16 +40,23 @@ public class ProveedorController {
     @PreAuthorize("hasRole('ADMIN')")
     public String nuevo(Model model) {
         model.addAttribute("proveedor", new Proveedor());
+        model.addAttribute("paises", paisService.findAllActivosOrderByNombreAsc());
         return "proveedor/form";
     }
 
     @PostMapping
-    public String guardar(@ModelAttribute Proveedor proveedor) {
-        // Si la dirección no tiene ID, es nueva y se debe persistir automáticamente
-        if (proveedor.getDireccion() != null && proveedor.getDireccion().getId() == null) {
-            proveedor.getDireccion().setEliminado(true);
-            // Guardar la dirección primero
-            proveedor.setDireccion(direccionService.save(proveedor.getDireccion()));
+    public String guardar(@ModelAttribute Proveedor proveedor,
+                          @RequestParam(value = "departamentoId", required = false) Long departamentoId) {
+        Direccion direccion = proveedor.getDireccion();
+        if (direccion != null) {
+            if (departamentoId != null) {
+                Departamento departamento = departamentoService.findById(departamentoId).orElse(null);
+                direccion.setDepartamento(departamento);
+            }
+            if (direccion.getId() == null) {
+                direccion.setEliminado(false);
+                proveedor.setDireccion(direccionService.save(direccion));
+            }
         }
         proveedorService.save(proveedor);
         return "redirect:/proveedores";
@@ -48,6 +66,7 @@ public class ProveedorController {
     public String editar(@PathVariable Long id, Model model) {
         Proveedor proveedor = proveedorService.findById(id).orElseThrow();
         model.addAttribute("proveedor", proveedor);
+        model.addAttribute("paises", paisService.findAllActivosOrderByNombreAsc());
         return "proveedor/form";
     }
 

@@ -35,4 +35,8 @@ public class PaisService extends BaseService<Pais, Long> {
         return paisRepository.findAllByOrderByNombreAsc();
     }
 
+    // Nuevo: sólo países activos (para selects)
+    public List<Pais> findAllActivosOrderByNombreAsc() {
+        return paisRepository.findAllByEliminadoFalseOrderByNombreAsc();
+    }
 }
