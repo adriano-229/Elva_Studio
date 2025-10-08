@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 public class ProvinciaService extends BaseService<Provincia, Long> {
 
     private final ProvinciaRepository provinciaRepository;
@@ -20,6 +19,7 @@ public class ProvinciaService extends BaseService<Provincia, Long> {
         this.departamentoService = departamentoService;
     }
 
+    @Transactional
     @Override
     public void softDeleteById(Long id) {
         provinciaRepository.findById(id).ifPresent(provincia -> {
