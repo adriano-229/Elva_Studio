@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html th:fragment="layout(pageTitle, pageContent)"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <title>Proveedores</title>
 </head>
@@ -24,9 +24,9 @@
       <th>Dirección</th>
       <th>Acciones</th>
       <th>Eliminado</th>
-
     </tr>
     </thead>
+
     <tbody>
     <tr th:each="proveedor : ${proveedores}">
       <td th:text="${proveedor.id}"></td>
@@ -41,7 +41,6 @@
              + ${proveedor.direccion.departamento?.provincia?.pais?.nombre}">
       </td>
       <td th:unless="${proveedor.direccion != null}">Sin dirección</td>
-      proveedor
       <td>
         <!-- Todos pueden editar -->
         <a th:href="@{|/proveedores/editar/${proveedor.id}|}">Editar</a>
