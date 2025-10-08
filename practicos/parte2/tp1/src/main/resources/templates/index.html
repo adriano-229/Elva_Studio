@@ -2,9 +2,11 @@
 <html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <title>Inicio</title>
 </head>
+
 <body>
 <div>
   <h2>Bienvenido al Sistema TP1</h2>
@@ -16,6 +18,42 @@
     <h3>Panel de Usuario</h3>
     <p>Puedes modificar empresas y proveedores existentes.</p>
   </div>
+  <hr>
+
+  <nav sec:authorize="isAuthenticated()">
+    <!-- Solo ADMIN puede ver gestión de usuarios -->
+    <div sec:authorize="hasRole('ADMIN')">
+      <a>Usuarios</a>
+      <ul>
+        <li><a th:href="@{/usuarios}">ABM Usuario</a></li>
+      </ul>
+    </div>
+
+    <!-- Solo ADMIN puede ver gestión de direcciones -->
+    <div sec:authorize="hasRole('ADMIN')">
+      <a>Direcciones</a>
+      <ul>
+        <li><a th:href="@{/paises}">ABM País</a></li>
+        <li><a th:href="@{/provincias}">ABM Provincia</a></li>
+        <li><a th:href="@{/departamentos}">ABM Departamento</a></li>
+      </ul>
+    </div>
+
+    <!-- ADMIN y USUARIO pueden ver empresas y proveedores -->
+    <div sec:authorize="hasAnyRole('ADMIN', 'USUARIO')">
+      <a>Empresas</a>
+      <ul>
+        <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/empresas}">ABM Empresa</a></li>
+        <li sec:authorize="hasRole('USUARIO')"><a th:href="@{/empresas}">M Empresa</a></li>
+      </ul>
+
+      <a>Proveedores</a>
+      <ul>
+        <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/proveedores}">ABM Proveedor</a></li>
+        <li sec:authorize="hasRole('USUARIO')"><a th:href="@{/proveedores}">M Proveedor</a></li>
+      </ul>
+    </div>
+  </nav>
 </div>
 </body>
 </html>

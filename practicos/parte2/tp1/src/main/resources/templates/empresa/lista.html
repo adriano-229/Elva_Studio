@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html th:fragment="layout(pageTitle, pageContent)"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
+      xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <title>Empresas</title>
 </head>
@@ -23,6 +23,7 @@
       <th>Eliminado</th>
     </tr>
     </thead>
+
     <tbody>
     <tr th:each="empresa : ${empresas}">
       <td th:text="${empresa.id}"></td>
