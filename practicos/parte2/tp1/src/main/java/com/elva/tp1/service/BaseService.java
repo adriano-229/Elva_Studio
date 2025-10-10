@@ -41,9 +41,9 @@ public abstract class BaseService<T extends BaseEntity, ID> implements CrudHooks
         });
     }
 
-    public Optional<T> update(ID id, T newEntity) {
+    public void update(ID id, T newEntity) {
         beforeUpdate(id, newEntity);
-        return baseRepository.findById(id).map(existing -> {
+        baseRepository.findById(id).map(existing -> {
             newEntity.setId(existing.getId()); // ensure ID stays the same
             T updated = baseRepository.save(newEntity);
             afterUpdate(updated);

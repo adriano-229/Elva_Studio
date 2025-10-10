@@ -1,7 +1,6 @@
 package com.elva.tp1.controller;
 
 import com.elva.tp1.domain.Empresa;
-import com.elva.tp1.domain.Departamento;
 import com.elva.tp1.service.DireccionService;
 import com.elva.tp1.service.EmpresaService;
 import com.elva.tp1.service.PaisService;
@@ -48,10 +47,7 @@ public class EmpresaController {
                           @RequestParam(value = "departamentoId", required = false) Long departamentoId) {
         if (empresa.getDireccion() != null) {
             if (departamentoId != null) {
-                Departamento dep = departamentoService.findById(departamentoId).orElse(null);
-                if (dep != null) {
-                    empresa.getDireccion().setDepartamento(dep);
-                }
+                departamentoService.findById(departamentoId).ifPresent(dep -> empresa.getDireccion().setDepartamento(dep));
             }
             if (empresa.getDireccion().getId() == null) {
                 empresa.getDireccion().setEliminado(false);
@@ -60,6 +56,16 @@ public class EmpresaController {
         }
         empresaService.save(empresa);
         return "redirect:/empresas";
+    }
+
+    @GetMapping("/mapa/{id}")
+    public String mostrarMapa(@PathVariable Long id){
+        Empresa empresa = empresaService.findById(id).orElseThrow();
+        if (empresa.getDireccion() == null) {
+            return "redirect:/empresas";
+        }
+        String mapsUrl = direccionService.getGoogleMapsUrl(empresa.getDireccion());
+        return "redirect:" + mapsUrl;
     }
 
     @GetMapping("/editar/{id}")

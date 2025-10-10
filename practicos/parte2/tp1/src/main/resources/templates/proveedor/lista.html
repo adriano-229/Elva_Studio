@@ -24,6 +24,7 @@
       <th>Dirección</th>
       <th>Acciones</th>
       <th>Eliminado</th>
+      <th>Mapa</th>
     </tr>
     </thead>
 
@@ -50,6 +51,12 @@
         </span>
       </td>
       <td th:text="${proveedor.eliminado} ? 'Sí' : 'No'"></td>
+      <td>
+        <a th:if="${proveedor.direccion != null}"
+           th:href="@{|/proveedores/mapa/${proveedor.id}|}"
+           target="_blank">Ver</a>
+        <span th:unless="${proveedor.direccion != null}">-</span>
+      </td>
     </tr>
     </tbody>
   </table>

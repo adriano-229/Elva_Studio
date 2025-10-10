@@ -11,5 +11,4 @@ public class ProveedorService extends BaseService<Proveedor, Long> {
         super(repository);
     }
 
-
 }
