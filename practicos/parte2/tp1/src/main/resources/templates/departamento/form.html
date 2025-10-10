@@ -2,43 +2,84 @@
 <html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Formulario Departamento</title>
+  <title th:text="${departamento.id == null} ? 'Nuevo Departamento' : 'Editar Departamento'">Formulario Departamento</title>
 </head>
 <body>
 <div>
-  <h2 th:text="${departamento.id == null} ? 'Nuevo Departamento' : 'Editar Departamento'"></h2>
-  <form method="post" th:action="@{/departamentos}" th:object="${departamento}">
-    <input th:field="*{id}" type="hidden"/>
+  <h1 class="mt-4" th:text="${departamento.id == null} ? 'Nuevo Departamento' : 'Editar Departamento'">Formulario Departamento</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+    <li class="breadcrumb-item"><a th:href="@{/departamentos}">Departamentos</a></li>
+    <li class="breadcrumb-item active" th:text="${departamento.id == null} ? 'Nuevo' : 'Editar'">Formulario</li>
+  </ol>
 
-    <div>
-      <label for="nombre">Nombre:</label>
-      <input id="nombre" required th:field="*{nombre}" type="text"/>
-    </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header bg-secondary text-white">
+          <h4 class="mb-0">
+            <i class="fas fa-map-marker-alt me-2"></i>
+            <span th:text="${departamento.id == null} ? 'Nuevo Departamento' : 'Editar Departamento'"></span>
+          </h4>
+        </div>
+        <div class="card-body">
+          <form method="post" th:action="@{/departamentos}" th:object="${departamento}">
+            <input th:field="*{id}" type="hidden"/>
 
-    <div>
-      <label for="pais">País:</label>
-      <select id="pais" name="paisId" required>
-        <option value="">-- Seleccione un País --</option>
-        <option th:each="pais : ${paises}"
-                th:selected="${departamento.provincia != null and departamento.provincia.pais.id == pais.id}"
-                th:text="${pais.nombre}"
-                th:value="${pais.id}"></option>
-      </select>
-    </div>
+            <div class="mb-3">
+              <label for="nombre" class="form-label fw-bold">
+                <i class="fas fa-location-dot me-2"></i>Nombre del Departamento
+              </label>
+              <input type="text" class="form-control form-control-lg" id="nombre"
+                     th:field="*{nombre}" required
+                     placeholder="Ingrese el nombre del departamento" />
+            </div>
 
-    <div>
-      <label for="provincia">Provincia:</label>
-      <input type="hidden" id="provinciaActualId" th:value="${departamento.provincia != null ? departamento.provincia.id : ''}">
-      <select disabled id="provincia" required th:field="*{provincia.id}">
-        <option value="">-- Seleccione una Provincia --</option>
-      </select>
-    </div>
+            <div class="mb-3">
+              <label for="codigoPostal" class="form-label fw-bold">
+                <i class="fas fa-envelope me-2"></i>Código Postal
+              </label>
+              <input type="number" class="form-control form-control-lg" id="codigoPostal"
+                     th:field="*{codigoPostal}" required
+                     placeholder="Ingrese el código postal" />
+            </div>
 
-    <div>
-      <button type="submit">Guardar</button>
-      <a th:href="@{/departamentos}">Cancelar</a>
+            <div class="mb-3">
+              <label for="pais" class="form-label fw-bold">
+                <i class="fas fa-globe me-2"></i>País
+              </label>
+              <select class="form-select form-select-lg" id="pais" name="paisId" required>
+                <option value="">-- Seleccione un País --</option>
+                <option th:each="pais : ${paises}"
+                        th:selected="${departamento.provincia != null and departamento.provincia.pais.id == pais.id}"
+                        th:text="${pais.nombre}"
+                        th:value="${pais.id}"></option>
+              </select>
+            </div>
+
+            <div class="mb-4">
+              <label for="provincia" class="form-label fw-bold">
+                <i class="fas fa-map me-2"></i>Provincia
+              </label>
+              <input type="hidden" id="provinciaActualId" th:value="${departamento.provincia != null ? departamento.provincia.id : ''}">
+              <select class="form-select form-select-lg" id="provincia" required th:field="*{provincia.id}" disabled>
+                <option value="">-- Seleccione una Provincia --</option>
+              </select>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-secondary btn-lg">
+                <i class="fas fa-save me-2"></i>Guardar
+              </button>
+              <a th:href="@{/departamentos}" class="btn btn-outline-secondary btn-lg">
+                <i class="fas fa-times me-2"></i>Cancelar
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-  </form>
+  </div>
 
   <script>
       document.addEventListener('DOMContentLoaded', function () {
@@ -55,30 +96,35 @@
               select.disabled = false;
           }
 
-          paisSelect.addEventListener('change', function () {
-              const paisId = this.value;
-              limpiarSelect(provinciaSelect, '-- Seleccione una Provincia --');
-              if (paisId) {
-                  fetch('/provincias/api/por-pais/' + paisId)
-                      .then(response => response.json())
-                      .then(provincias => {
-                          provincias.forEach(provincia => {
-                              const option = document.createElement('option');
-                              option.value = provincia.id;
-                              option.text = provincia.nombre;
-                              if (provinciaActualId && String(provincia.id) === String(provinciaActualId)) {
-                                  option.selected = true;
-                              }
-                              provinciaSelect.appendChild(option);
-                          });
-                          if (provincias.length > 0) habilitarSelect(provinciaSelect);
-                      })
-                      .catch(error => console.error('Error cargando provincias:', error));
+          function cargarProvincias(paisId, provinciaPreseleccionada = null) {
+              if (!paisId) {
+                  limpiarSelect(provinciaSelect, '-- Seleccione una Provincia --');
+                  return;
               }
+              fetch('/provincias/api/por-pais/' + paisId)
+                  .then(r => r.json())
+                  .then(provincias => {
+                      provinciaSelect.innerHTML = '<option value="">-- Seleccione una Provincia --</option>';
+                      provincias.forEach(p => {
+                          const opt = document.createElement('option');
+                          opt.value = p.id;
+                          opt.text = p.nombre;
+                          if (provinciaPreseleccionada && String(p.id) === String(provinciaPreseleccionada)) {
+                              opt.selected = true;
+                          }
+                          provinciaSelect.appendChild(opt);
+                      });
+                      if (provincias.length > 0) habilitarSelect(provinciaSelect);
+                  })
+                  .catch(err => console.error('Error cargando provincias:', err));
+          }
+
+          paisSelect.addEventListener('change', function () {
+              cargarProvincias(this.value);
           });
 
           if (paisSelect.value) {
-              paisSelect.dispatchEvent(new Event('change'));
+              cargarProvincias(paisSelect.value, provinciaActualId);
           }
       });
   </script>

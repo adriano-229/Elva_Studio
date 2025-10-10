@@ -2,33 +2,62 @@
 <html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Formulario Provincia</title>
+  <title th:text="${provincia.id == null} ? 'Nueva Provincia' : 'Editar Provincia'">Formulario Provincia</title>
 </head>
 <body>
 <div>
-  <h2 th:text="${provincia.id == null} ? 'Nueva Provincia' : 'Editar Provincia'"></h2>
-  <form method="post" th:action="@{/provincias}" th:object="${provincia}">
-    <input th:field="*{id}" type="hidden"/>
+  <h1 class="mt-4" th:text="${provincia.id == null} ? 'Nueva Provincia' : 'Editar Provincia'">Formulario Provincia</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+    <li class="breadcrumb-item"><a th:href="@{/provincias}">Provincias</a></li>
+    <li class="breadcrumb-item active" th:text="${provincia.id == null} ? 'Nueva' : 'Editar'">Formulario</li>
+  </ol>
 
-    <div>
-      <label for="nombre">Nombre:</label>
-      <input id="nombre" required th:field="*{nombre}" type="text"/>
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header bg-warning text-dark">
+          <h4 class="mb-0">
+            <i class="fas fa-map me-2"></i>
+            <span th:text="${provincia.id == null} ? 'Nueva Provincia' : 'Editar Provincia'"></span>
+          </h4>
+        </div>
+        <div class="card-body">
+          <form method="post" th:action="@{/provincias}" th:object="${provincia}">
+            <input th:field="*{id}" type="hidden"/>
+
+            <div class="mb-3">
+              <label for="nombre" class="form-label fw-bold">
+                <i class="fas fa-map-marked me-2"></i>Nombre de la Provincia
+              </label>
+              <input type="text" class="form-control form-control-lg" id="nombre"
+                     th:field="*{nombre}" required
+                     placeholder="Ingrese el nombre de la provincia" />
+            </div>
+
+            <div class="mb-4">
+              <label for="pais" class="form-label fw-bold">
+                <i class="fas fa-globe me-2"></i>País
+              </label>
+              <select class="form-select form-select-lg" id="pais" required th:field="*{pais.id}">
+                <option value="">-- Seleccione un País --</option>
+                <option th:each="pais : ${paises}" th:text="${pais.nombre}" th:value="${pais.id}"></option>
+              </select>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-warning btn-lg">
+                <i class="fas fa-save me-2"></i>Guardar
+              </button>
+              <a th:href="@{/provincias}" class="btn btn-secondary btn-lg">
+                <i class="fas fa-times me-2"></i>Cancelar
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-
-    <div>
-      <label for="pais">País:</label>
-      <select id="pais" required th:field="*{pais.id}">
-        <option value="">-- Seleccione un País --</option>
-        <option th:each="pais : ${paises}" th:text="${pais.nombre}" th:value="${pais.id}"></option>
-      </select>
-    </div>
-
-
-    <div>
-      <button type="submit">Guardar</button>
-      <a th:href="@{/provincias}">Cancelar</a>
-    </div>
-  </form>
+  </div>
 </div>
 </body>
 </html>

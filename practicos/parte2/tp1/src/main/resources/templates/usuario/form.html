@@ -2,56 +2,112 @@
 <html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Formulario Usuario</title>
+  <title th:text="${usuario.id == null} ? 'Nuevo Usuario' : 'Editar Usuario'">Formulario Usuario</title>
 </head>
 <body>
 <div>
-  <h2 th:text="${usuario.id == null} ? 'Nuevo Usuario' : 'Editar Usuario'"></h2>
-  <form method="post" th:action="@{/usuarios}" th:object="${usuario}">
-    <input th:field="*{id}" type="hidden"/>
+  <h1 class="mt-4" th:text="${usuario.id == null} ? 'Nuevo Usuario' : 'Editar Usuario'">Formulario Usuario</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+    <li class="breadcrumb-item"><a th:href="@{/usuarios}">Usuarios</a></li>
+    <li class="breadcrumb-item active" th:text="${usuario.id == null} ? 'Nuevo' : 'Editar'">Formulario</li>
+  </ol>
 
-    <div>
-      <label for="cuenta">Cuenta:</label>
-      <input id="cuenta" required th:field="*{cuenta}" type="text"/>
-    </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <div class="card shadow-sm">
+        <div class="card-header bg-danger text-white">
+          <h4 class="mb-0">
+            <i class="fas fa-user-plus me-2"></i>
+            <span th:text="${usuario.id == null} ? 'Registrar Nuevo Usuario' : 'Modificar Usuario'"></span>
+          </h4>
+        </div>
+        <div class="card-body">
+          <form method="post" th:action="@{/usuarios}" th:object="${usuario}">
+            <input th:field="*{id}" type="hidden"/>
 
-    <div>
-      <label for="clave">Clave:</label>
-      <input id="clave" th:field="*{clave}"
-             th:placeholder="${usuario.id != null} ? 'Dejar vacío para mantener clave actual' : ''"
-             th:required="${usuario.id == null}"
-             type="password"/>
-    </div>
+            <h5 class="mb-3"><i class="fas fa-user-circle me-2"></i>Credenciales de Acceso</h5>
 
-    <div>
-      <label for="nombre">Nombre:</label>
-      <input id="nombre" required th:field="*{nombre}" type="text"/>
-    </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="cuenta" class="form-label fw-bold">
+                  <i class="fas fa-user me-2"></i>Cuenta de Usuario
+                </label>
+                <input type="text" class="form-control form-control-lg" id="cuenta"
+                       th:field="*{cuenta}" required
+                       placeholder="Nombre de usuario" />
+              </div>
 
-    <div>
-      <label for="apellido">Apellido:</label>
-      <input id="apellido" required th:field="*{apellido}" type="text"/>
-    </div>
+              <div class="col-md-6 mb-3">
+                <label for="clave" class="form-label fw-bold">
+                  <i class="fas fa-key me-2"></i>Contraseña
+                </label>
+                <input type="password" class="form-control form-control-lg" id="clave"
+                       th:field="*{clave}"
+                       th:placeholder="${usuario.id != null} ? 'Dejar vacío para mantener actual' : 'Ingrese contraseña'"
+                       th:required="${usuario.id == null}" />
+                <div class="form-text" th:if="${usuario.id != null}">
+                  Dejar en blanco para no modificar la contraseña
+                </div>
+              </div>
+            </div>
 
-    <div>
-      <label for="email">Email:</label>
-      <input id="email" required th:field="*{email}" type="email"/>
-    </div>
+            <hr class="my-4">
+            <h5 class="mb-3"><i class="fas fa-id-card me-2"></i>Datos Personales</h5>
 
-    <div>
-      <label for="rol">Rol:</label>
-      <select id="rol" required th:field="*{rol}">
-        <option value="">-- Seleccione un Rol --</option>
-        <option th:each="rol : ${T(com.elva.tp1.domain.Usuario.Rol).values()}"
-                th:text="${rol}" th:value="${rol}"></option>
-      </select>
-    </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="nombre" class="form-label fw-bold">
+                  <i class="fas fa-user me-2"></i>Nombre
+                </label>
+                <input type="text" class="form-control form-control-lg" id="nombre"
+                       th:field="*{nombre}" required
+                       placeholder="Nombre" />
+              </div>
 
-    <div>
-      <button type="submit">Guardar</button>
-      <a th:href="@{/usuarios}">Cancelar</a>
+              <div class="col-md-6 mb-3">
+                <label for="apellido" class="form-label fw-bold">
+                  <i class="fas fa-user me-2"></i>Apellido
+                </label>
+                <input type="text" class="form-control form-control-lg" id="apellido"
+                       th:field="*{apellido}" required
+                       placeholder="Apellido" />
+              </div>
+
+              <div class="col-md-8 mb-3">
+                <label for="email" class="form-label fw-bold">
+                  <i class="fas fa-envelope me-2"></i>Email
+                </label>
+                <input type="email" class="form-control form-control-lg" id="email"
+                       th:field="*{email}" required
+                       placeholder="ejemplo@correo.com" />
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label for="rol" class="form-label fw-bold">
+                  <i class="fas fa-user-shield me-2"></i>Rol
+                </label>
+                <select class="form-select form-select-lg" id="rol" required th:field="*{rol}">
+                  <option value="">-- Seleccione --</option>
+                  <option th:each="rol : ${T(com.elva.tp1.domain.Usuario.Rol).values()}"
+                          th:text="${rol}" th:value="${rol}"></option>
+                </select>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+              <button type="submit" class="btn btn-danger btn-lg">
+                <i class="fas fa-save me-2"></i>Guardar Usuario
+              </button>
+              <a th:href="@{/usuarios}" class="btn btn-secondary btn-lg">
+                <i class="fas fa-times me-2"></i>Cancelar
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-  </form>
+  </div>
 </div>
 </body>
 </html>

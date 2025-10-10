@@ -2,33 +2,88 @@
 <html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Países</title>
+  <title>Países - TP1</title>
 </head>
 <body>
 <div>
-  <h2>Listado de Países</h2>
-  <a th:href="@{/paises/nuevo}">Nuevo País</a>
-  <table>
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th>Nombre</th>
-      <th>Acciones</th>
-      <th>Eliminado</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="pais : ${paises}">
-      <td th:text="${pais.id}"></td>
-      <td th:text="${pais.nombre}"></td>
-      <td>
-        <a th:href="@{|/paises/editar/${pais.id}|}">Editar</a> |
-        <a th:href="@{|/paises/eliminar/${pais.id}|}">Eliminar</a>
-      </td>
-      <td th:text="${pais.eliminado} ? 'Sí' : 'No'"></td>
-    </tr>
-    </tbody>
-  </table>
+  <h1 class="mt-4">Gestión de Países</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+    <li class="breadcrumb-item active">Países</li>
+  </ol>
+
+  <!-- Botón Nuevo País -->
+  <div class="mb-4">
+    <a th:href="@{/paises/nuevo}" class="btn btn-info btn-lg">
+      <i class="fas fa-plus-circle me-2"></i>Nuevo País
+    </a>
+  </div>
+
+  <!-- Tabla de Países -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <i class="fas fa-globe me-1"></i>
+      Listado de Países
+    </div>
+    <div class="card-body">
+      <table id="datatablesSimple" class="table table-hover">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th style="text-align: center;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="pais : ${paises}">
+            <td th:text="${pais.nombre}"></td>
+            <td>
+              <span th:if="${pais.eliminado}" class="badge bg-danger">Eliminado</span>
+              <span th:unless="${pais.eliminado}" class="badge bg-success">Activo</span>
+            </td>
+            <td style="text-align: center;">
+              <div class="d-flex justify-content-center gap-1">
+                <a th:href="@{|/paises/editar/${pais.id}|}"
+                   class="btn btn-sm btn-primary"
+                   title="Editar">
+                  <i class="fas fa-edit"></i>
+                </a>
+                <a th:href="@{|/paises/eliminar/${pais.id}|}"
+                   class="btn btn-sm btn-danger"
+                   onclick="return confirm('¿Está seguro de eliminar este país?')"
+                   title="Eliminar">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (document.getElementById('datatablesSimple')) {
+            const dataTable = new simpleDatatables.DataTable("#datatablesSimple", {
+                searchable: true,
+                fixedHeight: false,
+                perPage: 10,
+                labels: {
+                    placeholder: "Buscar país...",
+                    perPage: "Países por página",
+                    noRows: "No se encontraron países",
+                    info: "Mostrando {start} a {end} de {rows} países",
+                },
+                columns: [
+                    { select: 0, sort: "asc" },
+                    { select: 1, sortable: false },
+                    { select: 2, sortable: false }
+                ]
+            });
+        }
+    });
+</script>
 </body>
 </html>

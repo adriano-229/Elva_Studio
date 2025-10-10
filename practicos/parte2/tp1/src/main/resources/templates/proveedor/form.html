@@ -2,74 +2,146 @@
 <html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Formulario Proveedor</title>
+  <title th:text="${proveedor.id == null} ? 'Nuevo Proveedor' : 'Editar Proveedor'">Formulario Proveedor</title>
 </head>
 <body>
 <div>
-  <h2 th:text="${proveedor.id == null} ? 'Nuevo Proveedor' : 'Editar Proveedor'"></h2>
-  <form method="post" th:action="@{/proveedores}" th:object="${proveedor}">
-    <input th:field="*{id}" type="hidden"/>
+  <h1 class="mt-4" th:text="${proveedor.id == null} ? 'Nuevo Proveedor' : 'Editar Proveedor'">Formulario Proveedor</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+    <li class="breadcrumb-item"><a th:href="@{/proveedores}">Proveedores</a></li>
+    <li class="breadcrumb-item active" th:text="${proveedor.id == null} ? 'Nuevo' : 'Editar'">Formulario</li>
+  </ol>
 
-    <div>
-      <label for="cuit">CUIT:</label>
-      <input id="cuit" required th:field="*{cuit}" type="text"/>
-    </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+          <h4 class="mb-0">
+            <i class="fas fa-truck me-2"></i>
+            <span th:text="${proveedor.id == null} ? 'Registrar Nuevo Proveedor' : 'Modificar Proveedor'"></span>
+          </h4>
+        </div>
+        <div class="card-body">
+          <form method="post" th:action="@{/proveedores}" th:object="${proveedor}">
+            <input th:field="*{id}" type="hidden"/>
 
-    <div>
-      <label for="nombre">Nombre:</label>
-      <input id="nombre" required th:field="*{nombre}" type="text"/>
-    </div>
+            <h5 class="mb-3"><i class="fas fa-user me-2"></i>Datos Personales</h5>
 
-    <div>
-      <label for="apellido">Apellido:</label>
-      <input id="apellido" required th:field="*{apellido}" type="text"/>
-    </div>
+            <div class="row">
+              <!-- CUIT -->
+              <div class="col-md-12 mb-3">
+                <label for="cuit" class="form-label fw-bold">
+                  <i class="fas fa-id-card me-2"></i>CUIT
+                </label>
+                <input type="text" class="form-control" id="cuit"
+                       th:field="*{cuit}" required
+                       placeholder="XX-XXXXXXXX-X" />
+              </div>
 
-    <div>
-      <label for="email">Email:</label>
-      <input id="email" required th:field="*{email}" type="email"/>
-    </div>
+              <!-- Nombre -->
+              <div class="col-md-6 mb-3">
+                <label for="nombre" class="form-label fw-bold">
+                  <i class="fas fa-user me-2"></i>Nombre
+                </label>
+                <input type="text" class="form-control" id="nombre"
+                       th:field="*{nombre}" required
+                       placeholder="Nombre del proveedor" />
+              </div>
 
-    <div>
-      <label for="calle">Calle:</label>
-      <input id="calle" required th:field="*{direccion.calle}" type="text"/>
-    </div>
+              <!-- Apellido -->
+              <div class="col-md-6 mb-3">
+                <label for="apellido" class="form-label fw-bold">
+                  <i class="fas fa-user me-2"></i>Apellido
+                </label>
+                <input type="text" class="form-control" id="apellido"
+                       th:field="*{apellido}" required
+                       placeholder="Apellido del proveedor" />
+              </div>
 
-    <div>
-      <label for="altura">Altura:</label>
-      <input id="altura" required th:field="*{direccion.altura}" type="number"/>
-    </div>
+              <!-- Email -->
+              <div class="col-md-12 mb-3">
+                <label for="email" class="form-label fw-bold">
+                  <i class="fas fa-envelope me-2"></i>Email
+                </label>
+                <input type="email" class="form-control" id="email"
+                       th:field="*{email}" required
+                       placeholder="ejemplo@correo.com" />
+              </div>
+            </div>
 
-    <div>
-      <label for="pais">País:</label>
-      <select id="pais" name="paisId" required>
-        <option value="">-- Seleccione un País --</option>
-        <option th:each="pais : ${paises}"
-                th:selected="${proveedor.direccion != null and proveedor.direccion.departamento != null and proveedor.direccion.departamento.provincia != null and proveedor.direccion.departamento.provincia.pais.id == pais.id}"
-                th:text="${pais.nombre}"
-                th:value="${pais.id}"></option>
-      </select>
-    </div>
+            <hr class="my-4">
+            <h5 class="mb-3"><i class="fas fa-map-marked-alt me-2"></i>Dirección</h5>
 
-    <div>
-      <label for="provincia">Provincia:</label>
-      <select disabled id="provincia" name="provinciaId" required>
-        <option value="">-- Seleccione una Provincia --</option>
-      </select>
-    </div>
+            <div class="row">
+              <!-- Calle -->
+              <div class="col-md-8 mb-3">
+                <label for="calle" class="form-label fw-bold">
+                  <i class="fas fa-road me-2"></i>Calle
+                </label>
+                <input type="text" class="form-control" id="calle"
+                       th:field="*{direccion.calle}" required
+                       placeholder="Nombre de la calle" />
+              </div>
 
-    <div>
-      <label for="departamento">Departamento:</label>
-      <select disabled id="departamento" name="departamentoId" required>
-        <option value="">-- Seleccione un Departamento --</option>
-      </select>
-    </div>
+              <!-- Altura -->
+              <div class="col-md-4 mb-3">
+                <label for="altura" class="form-label fw-bold">
+                  <i class="fas fa-hashtag me-2"></i>Altura
+                </label>
+                <input type="number" class="form-control" id="altura"
+                       th:field="*{direccion.altura}" required
+                       placeholder="Número" />
+              </div>
+            </div>
 
-    <div>
-      <button type="submit">Guardar</button>
-      <a th:href="@{/proveedores}">Cancelar</a>
+            <!-- Selección en cascada -->
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label for="pais" class="form-label fw-bold">
+                  <i class="fas fa-globe me-2"></i>País
+                </label>
+                <select class="form-select" id="pais" name="paisId" required>
+                  <option value="">-- Seleccione --</option>
+                  <option th:each="pais : ${paises}"
+                          th:selected="${proveedor.direccion != null and proveedor.direccion.departamento != null and proveedor.direccion.departamento.provincia != null and proveedor.direccion.departamento.provincia.pais.id == pais.id}"
+                          th:text="${pais.nombre}"
+                          th:value="${pais.id}"></option>
+                </select>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label for="provincia" class="form-label fw-bold">
+                  <i class="fas fa-map me-2"></i>Provincia
+                </label>
+                <select class="form-select" id="provincia" name="provinciaId" required disabled>
+                  <option value="">-- Seleccione --</option>
+                </select>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label for="departamento" class="form-label fw-bold">
+                  <i class="fas fa-map-marker-alt me-2"></i>Departamento
+                </label>
+                <select class="form-select" id="departamento" name="departamentoId" required disabled>
+                  <option value="">-- Seleccione --</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+              <button type="submit" class="btn btn-success btn-lg">
+                <i class="fas fa-save me-2"></i>Guardar Proveedor
+              </button>
+              <a th:href="@{/proveedores}" class="btn btn-secondary btn-lg">
+                <i class="fas fa-times me-2"></i>Cancelar
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-  </form>
+  </div>
 
   <script>
       document.addEventListener('DOMContentLoaded', function () {
@@ -131,7 +203,7 @@
           });
 
           function inicializarEdicion() {
-              if (!paisSelect.value) return; // modo creación
+              if (!paisSelect.value) return;
               fetch('/provincias/api/por-pais/' + paisSelect.value)
                   .then(r => r.json())
                   .then(provincias => {
@@ -145,7 +217,7 @@
                       if (!deps) return;
                       cargarOpciones(departamentoSelect, deps, departamentoIdActual, '-- Seleccione un Departamento --');
                   })
-                  .catch(err => console.error('Error inicializando cascada (proveedor):', err));
+                  .catch(err => console.error('Error inicializando cascada:', err));
           }
 
           inicializarEdicion();
