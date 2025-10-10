@@ -2,42 +2,79 @@
 <html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Cambiar Contraseña</title>
+  <title>Cambiar Contraseña - TP1</title>
 </head>
 <body>
 <div>
-  <h2>Cambiar Mi Contraseña</h2>
+  <h1 class="mt-4">Cambiar Contraseña</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+    <li class="breadcrumb-item active">Cambiar Contraseña</li>
+  </ol>
 
-  <div style="color: red; margin-bottom: 15px;" th:if="${error}">
-    <p th:text="${error}"></p>
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0"><i class="fas fa-key me-2"></i>Actualizar Contraseña</h4>
+        </div>
+        <div class="card-body">
+          <!-- Mensaje de Error -->
+          <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${error}">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            <span th:text="${error}">Error</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+
+          <!-- Mensaje de Éxito -->
+          <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success}">
+            <i class="fas fa-check-circle me-2"></i>
+            <span th:text="${success}">Éxito</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+
+          <!-- Formulario de Cambio de Contraseña -->
+          <form method="post" th:action="@{/cambiar-clave}">
+            <div class="mb-3">
+              <label for="claveActual" class="form-label">
+                <i class="fas fa-lock me-2"></i>Contraseña Actual
+              </label>
+              <input type="password" class="form-control form-control-lg" id="claveActual"
+                     name="claveActual" required placeholder="Ingrese su contraseña actual" />
+            </div>
+
+            <div class="mb-3">
+              <label for="claveNueva" class="form-label">
+                <i class="fas fa-key me-2"></i>Nueva Contraseña
+              </label>
+              <input type="password" class="form-control form-control-lg" id="claveNueva"
+                     name="claveNueva" minlength="6" required
+                     placeholder="Mínimo 6 caracteres" />
+              <div class="form-text">La contraseña debe tener al menos 6 caracteres.</div>
+            </div>
+
+            <div class="mb-4">
+              <label for="confirmarClave" class="form-label">
+                <i class="fas fa-check-double me-2"></i>Confirmar Nueva Contraseña
+              </label>
+              <input type="password" class="form-control form-control-lg" id="confirmarClave"
+                     name="confirmarClave" minlength="6" required
+                     placeholder="Repita la nueva contraseña" />
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-save me-2"></i>Cambiar Contraseña
+              </button>
+              <a th:href="@{/}" class="btn btn-secondary btn-lg">
+                <i class="fas fa-times me-2"></i>Cancelar
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div style="color: green; margin-bottom: 15px;" th:if="${success}">
-    <p th:text="${success}"></p>
-  </div>
-
-  <form method="post" th:action="@{/cambiar-clave}">
-    <div>
-      <label for="claveActual">Contraseña Actual:</label>
-      <input id="claveActual" name="claveActual" required type="password"/>
-    </div>
-
-    <div>
-      <label for="claveNueva">Nueva Contraseña:</label>
-      <input id="claveNueva" minlength="6" name="claveNueva" required type="password"/>
-    </div>
-
-    <div>
-      <label for="confirmarClave">Confirmar Nueva Contraseña:</label>
-      <input id="confirmarClave" minlength="6" name="confirmarClave" required type="password"/>
-    </div>
-
-    <div>
-      <button type="submit">Cambiar Contraseña</button>
-      <a th:href="@{/}">Cancelar</a>
-    </div>
-  </form>
 </div>
 </body>
 </html>
-

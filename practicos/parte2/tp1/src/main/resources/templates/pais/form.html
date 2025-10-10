@@ -2,24 +2,52 @@
 <html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Formulario País</title>
+  <title th:text="${pais.id == null} ? 'Nuevo País' : 'Editar País'">Formulario País</title>
 </head>
 <body>
 <div>
-  <h2 th:text="${pais.id == null} ? 'Nuevo País' : 'Editar País'"></h2>
-  <form method="post" th:action="@{/paises}" th:object="${pais}">
-    <input th:field="*{id}" type="hidden"/>
+  <h1 class="mt-4" th:text="${pais.id == null} ? 'Nuevo País' : 'Editar País'">Formulario País</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+    <li class="breadcrumb-item"><a th:href="@{/paises}">Países</a></li>
+    <li class="breadcrumb-item active" th:text="${pais.id == null} ? 'Nuevo' : 'Editar'">Formulario</li>
+  </ol>
 
-    <div>
-      <label for="nombre">Nombre:</label>
-      <input id="nombre" required th:field="*{nombre}" type="text"/>
-    </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header bg-info text-white">
+          <h4 class="mb-0">
+            <i class="fas fa-globe me-2"></i>
+            <span th:text="${pais.id == null} ? 'Nuevo País' : 'Editar País'"></span>
+          </h4>
+        </div>
+        <div class="card-body">
+          <form method="post" th:action="@{/paises}" th:object="${pais}">
+            <input th:field="*{id}" type="hidden"/>
 
-    <div>
-      <button type="submit">Guardar</button>
-      <a th:href="@{/paises}">Cancelar</a>
+            <div class="mb-4">
+              <label for="nombre" class="form-label fw-bold">
+                <i class="fas fa-flag me-2"></i>Nombre del País
+              </label>
+              <input type="text" class="form-control form-control-lg" id="nombre"
+                     th:field="*{nombre}" required
+                     placeholder="Ingrese el nombre del país" />
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-info btn-lg">
+                <i class="fas fa-save me-2"></i>Guardar
+              </button>
+              <a th:href="@{/paises}" class="btn btn-secondary btn-lg">
+                <i class="fas fa-times me-2"></i>Cancelar
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-  </form>
+  </div>
 </div>
 </body>
 </html>

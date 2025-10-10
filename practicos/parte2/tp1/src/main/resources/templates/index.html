@@ -4,56 +4,169 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <title>Inicio</title>
+  <title>Inicio - TP1</title>
 </head>
 
 <body>
 <div>
-  <h2>Bienvenido al Sistema TP1</h2>
-  <div sec:authorize="hasRole('ADMIN')">
-    <h3>Panel de Administrador</h3>
-    <p>Como administrador, tienes acceso completo al sistema.</p>
+  <h1 class="mt-4">Bienvenido al Sistema de Gestión</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Inicio</li>
+  </ol>
+
+  <!-- Mensaje de Bienvenida -->
+  <div class="alert alert-info" role="alert">
+    <h4 class="alert-heading">
+      <i class="fas fa-info-circle me-2"></i>¡Hola, <span sec:authentication="name">Usuario</span>!
+    </h4>
+    <p class="mb-0" sec:authorize="hasRole('ADMIN')">
+      Como administrador, tienes acceso completo a todas las funcionalidades del sistema.
+    </p>
+    <p class="mb-0" sec:authorize="hasRole('USUARIO')">
+      Tienes permisos para consultar y modificar empresas y proveedores existentes.
+    </p>
   </div>
-  <div sec:authorize="hasRole('USUARIO')">
-    <h3>Panel de Usuario</h3>
-    <p>Puedes modificar empresas y proveedores existentes.</p>
+
+  <!-- Cards de Acceso Rápido - Gestión -->
+  <div class="row mt-4">
+    <div class="col-12">
+      <h3 class="mb-3"><i class="fas fa-briefcase me-2"></i>Gestión</h3>
+    </div>
+
+    <div class="col-xl-4 col-md-6 mb-4">
+      <div class="card border-left-primary shadow h-100">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Empresas</div>
+              <div class="h6 mb-0 font-weight-bold text-gray-800">Gestión de Empresas</div>
+              <p class="text-muted small mt-2">Administra la información de empresas registradas</p>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-building fa-3x text-gray-300"></i>
+            </div>
+          </div>
+          <a th:href="@{/empresas}" class="btn btn-primary btn-sm mt-3 w-100">
+            <i class="fas fa-arrow-right me-2"></i>Ir a Empresas
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-4 col-md-6 mb-4">
+      <div class="card border-left-success shadow h-100">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Proveedores</div>
+              <div class="h6 mb-0 font-weight-bold text-gray-800">Gestión de Proveedores</div>
+              <p class="text-muted small mt-2">Administra la información de proveedores</p>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-truck fa-3x text-gray-300"></i>
+            </div>
+          </div>
+          <a th:href="@{/proveedores}" class="btn btn-success btn-sm mt-3 w-100">
+            <i class="fas fa-arrow-right me-2"></i>Ir a Proveedores
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
-  <hr>
 
-  <nav sec:authorize="isAuthenticated()">
-    <!-- Solo ADMIN puede ver gestión de usuarios -->
-    <div sec:authorize="hasRole('ADMIN')">
-      <a>Usuarios</a>
-      <ul>
-        <li><a th:href="@{/usuarios}">ABM Usuario</a></li>
-      </ul>
+  <!-- Cards de Ubicaciones (solo para ADMIN) -->
+  <div class="row mt-4" sec:authorize="hasRole('ADMIN')">
+    <div class="col-12">
+      <h3 class="mb-3"><i class="fas fa-map-marked-alt me-2"></i>Ubicaciones</h3>
     </div>
 
-    <!-- Solo ADMIN puede ver gestión de direcciones -->
-    <div sec:authorize="hasRole('ADMIN')">
-      <a>Direcciones</a>
-      <ul>
-        <li><a th:href="@{/paises}">ABM País</a></li>
-        <li><a th:href="@{/provincias}">ABM Provincia</a></li>
-        <li><a th:href="@{/departamentos}">ABM Departamento</a></li>
-      </ul>
+    <div class="col-xl-4 col-md-6 mb-4">
+      <div class="card border-left-info shadow h-100">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Países</div>
+              <div class="h6 mb-0 font-weight-bold text-gray-800">Gestión de Países</div>
+              <p class="text-muted small mt-2">Administra países del sistema</p>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-globe fa-3x text-gray-300"></i>
+            </div>
+          </div>
+          <a th:href="@{/paises}" class="btn btn-info btn-sm mt-3 w-100">
+            <i class="fas fa-arrow-right me-2"></i>Ir a Países
+          </a>
+        </div>
+      </div>
     </div>
 
-    <!-- ADMIN y USUARIO pueden ver empresas y proveedores -->
-    <div sec:authorize="hasAnyRole('ADMIN', 'USUARIO')">
-      <a>Empresas</a>
-      <ul>
-        <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/empresas}">ABM Empresa</a></li>
-        <li sec:authorize="hasRole('USUARIO')"><a th:href="@{/empresas}">M Empresa</a></li>
-      </ul>
-
-      <a>Proveedores</a>
-      <ul>
-        <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/proveedores}">ABM Proveedor</a></li>
-        <li sec:authorize="hasRole('USUARIO')"><a th:href="@{/proveedores}">M Proveedor</a></li>
-      </ul>
+    <div class="col-xl-4 col-md-6 mb-4">
+      <div class="card border-left-warning shadow h-100">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Provincias</div>
+              <div class="h6 mb-0 font-weight-bold text-gray-800">Gestión de Provincias</div>
+              <p class="text-muted small mt-2">Administra provincias por país</p>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-map fa-3x text-gray-300"></i>
+            </div>
+          </div>
+          <a th:href="@{/provincias}" class="btn btn-warning btn-sm mt-3 w-100">
+            <i class="fas fa-arrow-right me-2"></i>Ir a Provincias
+          </a>
+        </div>
+      </div>
     </div>
-  </nav>
+
+    <div class="col-xl-4 col-md-6 mb-4">
+      <div class="card border-left-secondary shadow h-100">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Departamentos</div>
+              <div class="h6 mb-0 font-weight-bold text-gray-800">Gestión de Departamentos</div>
+              <p class="text-muted small mt-2">Administra departamentos por provincia</p>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-map-marker-alt fa-3x text-gray-300"></i>
+            </div>
+          </div>
+          <a th:href="@{/departamentos}" class="btn btn-secondary btn-sm mt-3 w-100">
+            <i class="fas fa-arrow-right me-2"></i>Ir a Departamentos
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card de Administración (solo ADMIN) -->
+  <div class="row mt-4" sec:authorize="hasRole('ADMIN')">
+    <div class="col-12">
+      <h3 class="mb-3"><i class="fas fa-user-shield me-2"></i>Administración</h3>
+    </div>
+
+    <div class="col-xl-4 col-md-6 mb-4">
+      <div class="card border-left-danger shadow h-100">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Usuarios</div>
+              <div class="h6 mb-0 font-weight-bold text-gray-800">Gestión de Usuarios</div>
+              <p class="text-muted small mt-2">Administra usuarios del sistema</p>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-users fa-3x text-gray-300"></i>
+            </div>
+          </div>
+          <a th:href="@{/usuarios}" class="btn btn-danger btn-sm mt-3 w-100">
+            <i class="fas fa-arrow-right me-2"></i>Ir a Usuarios
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 </body>
 </html>

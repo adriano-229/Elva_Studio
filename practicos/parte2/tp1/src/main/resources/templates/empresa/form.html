@@ -2,59 +2,112 @@
 <html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Formulario Empresa</title>
+  <title th:text="${empresa.id == null} ? 'Nueva Empresa' : 'Editar Empresa'">Formulario Empresa</title>
 </head>
 <body>
 <div>
-  <h2 th:text="${empresa.id == null} ? 'Nueva Empresa' : 'Editar Empresa'"></h2>
-  <form method="post" th:action="@{/empresas}" th:object="${empresa}">
-    <input th:field="*{id}" type="hidden"/>
+  <h1 class="mt-4" th:text="${empresa.id == null} ? 'Nueva Empresa' : 'Editar Empresa'">Formulario Empresa</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+    <li class="breadcrumb-item"><a th:href="@{/empresas}">Empresas</a></li>
+    <li class="breadcrumb-item active" th:text="${empresa.id == null} ? 'Nueva' : 'Editar'">Formulario</li>
+  </ol>
 
-    <div>
-      <label for="razonSocial">Razón Social:</label>
-      <input id="razonSocial" required th:field="*{razonSocial}" type="text"/>
-    </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">
+            <i class="fas fa-building me-2"></i>
+            <span th:text="${empresa.id == null} ? 'Registrar Nueva Empresa' : 'Modificar Empresa'"></span>
+          </h4>
+        </div>
+        <div class="card-body">
+          <form method="post" th:action="@{/empresas}" th:object="${empresa}">
+            <input th:field="*{id}" type="hidden"/>
 
-    <div>
-      <label for="calle">Calle:</label>
-      <input id="calle" required th:field="*{direccion.calle}" type="text"/>
-    </div>
+            <!-- Razón Social -->
+            <div class="mb-4">
+              <label for="razonSocial" class="form-label fw-bold">
+                <i class="fas fa-briefcase me-2"></i>Razón Social
+              </label>
+              <input type="text" class="form-control form-control-lg" id="razonSocial"
+                     th:field="*{razonSocial}" required
+                     placeholder="Ingrese la razón social de la empresa" />
+            </div>
 
-    <div>
-      <label for="altura">Altura:</label>
-      <input id="altura" required th:field="*{direccion.altura}" type="number"/>
-    </div>
+            <hr class="my-4">
+            <h5 class="mb-3"><i class="fas fa-map-marked-alt me-2"></i>Dirección</h5>
 
-    <!-- Selección en cascada -->
-    <div>
-      <label for="pais">País:</label>
-      <select id="pais" name="paisId" required>
-        <option value="">-- Seleccione un País --</option>
-        <option th:each="pais : ${paises}"
-                th:selected="${empresa.direccion != null and empresa.direccion.departamento != null and empresa.direccion.departamento.provincia != null and empresa.direccion.departamento.provincia.pais.id == pais.id}"
-                th:text="${pais.nombre}"
-                th:value="${pais.id}"></option>
-      </select>
-    </div>
+            <div class="row">
+              <!-- Calle -->
+              <div class="col-md-8 mb-3">
+                <label for="calle" class="form-label fw-bold">
+                  <i class="fas fa-road me-2"></i>Calle
+                </label>
+                <input type="text" class="form-control" id="calle"
+                       th:field="*{direccion.calle}" required
+                       placeholder="Nombre de la calle" />
+              </div>
 
-    <div>
-      <label for="provincia">Provincia:</label>
-      <select id="provincia" name="provinciaId" required disabled>
-        <option value="">-- Seleccione una Provincia --</option>
-      </select>
-    </div>
+              <!-- Altura -->
+              <div class="col-md-4 mb-3">
+                <label for="altura" class="form-label fw-bold">
+                  <i class="fas fa-hashtag me-2"></i>Altura
+                </label>
+                <input type="number" class="form-control" id="altura"
+                       th:field="*{direccion.altura}" required
+                       placeholder="Número" />
+              </div>
+            </div>
 
-    <div>
-      <label for="departamento">Departamento:</label>
-      <select id="departamento" name="departamentoId" required disabled>
-        <option value="">-- Seleccione un Departamento --</option>
-      </select>
+            <!-- Selección en cascada -->
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label for="pais" class="form-label fw-bold">
+                  <i class="fas fa-globe me-2"></i>País
+                </label>
+                <select class="form-select" id="pais" name="paisId" required>
+                  <option value="">-- Seleccione --</option>
+                  <option th:each="pais : ${paises}"
+                          th:selected="${empresa.direccion != null and empresa.direccion.departamento != null and empresa.direccion.departamento.provincia != null and empresa.direccion.departamento.provincia.pais.id == pais.id}"
+                          th:text="${pais.nombre}"
+                          th:value="${pais.id}"></option>
+                </select>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label for="provincia" class="form-label fw-bold">
+                  <i class="fas fa-map me-2"></i>Provincia
+                </label>
+                <select class="form-select" id="provincia" name="provinciaId" required disabled>
+                  <option value="">-- Seleccione --</option>
+                </select>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label for="departamento" class="form-label fw-bold">
+                  <i class="fas fa-map-marker-alt me-2"></i>Departamento
+                </label>
+                <select class="form-select" id="departamento" name="departamentoId" required disabled>
+                  <option value="">-- Seleccione --</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+              <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-save me-2"></i>Guardar Empresa
+              </button>
+              <a th:href="@{/empresas}" class="btn btn-secondary btn-lg">
+                <i class="fas fa-times me-2"></i>Cancelar
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    <div>
-      <button type="submit">Guardar</button>
-      <a th:href="@{/empresas}">Cancelar</a>
-    </div>
-  </form>
+  </div>
 
   <script>
       document.addEventListener('DOMContentLoaded', function () {
@@ -116,8 +169,7 @@
           });
 
           function inicializarEdicion() {
-              if (!paisSelect.value) return; // modo creación
-              // Cargar provincias del país seleccionado y preseleccionar
+              if (!paisSelect.value) return;
               fetch('/provincias/api/por-pais/' + paisSelect.value)
                   .then(r => r.json())
                   .then(provincias => {
@@ -131,7 +183,7 @@
                       if (!deps) return;
                       cargarOpciones(departamentoSelect, deps, departamentoIdActual, '-- Seleccione un Departamento --');
                   })
-                  .catch(err => console.error('Error inicializando cascada (empresa):', err));
+                  .catch(err => console.error('Error inicializando cascada:', err));
           }
 
           inicializarEdicion();
