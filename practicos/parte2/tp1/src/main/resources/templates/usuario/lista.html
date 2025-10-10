@@ -43,8 +43,8 @@
             <td th:text="${usuario.nombre} + ' ' + ${usuario.apellido}"></td>
             <td th:text="${usuario.email}"></td>
             <td>
-              <span th:if="${usuario.rol == 'ADMIN'}" class="badge bg-danger">ADMIN</span>
-              <span th:if="${usuario.rol == 'USUARIO'}" class="badge bg-primary">USUARIO</span>
+              <span th:if="${usuario.rol.name == 'ADMIN'}" class="badge bg-danger">ADMIN</span>
+              <span th:if="${usuario.rol.name == 'USUARIO'}" class="badge bg-primary">USUARIO</span>
             </td>
             <td>
               <span th:if="${usuario.eliminado}" class="badge bg-danger">Eliminado</span>
