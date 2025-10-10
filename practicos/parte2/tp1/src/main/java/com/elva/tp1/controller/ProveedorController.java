@@ -76,4 +76,14 @@ public class ProveedorController {
         proveedorService.softDeleteById(id);
         return "redirect:/proveedores";
     }
+
+    @GetMapping("/mapa/{id}")
+    public String mostrarMapa(@PathVariable Long id){
+        Proveedor proveedor = proveedorService.findById(id).orElseThrow();
+        if (proveedor.getDireccion() == null) {
+            return "redirect:/proveedores";
+        }
+        String mapsUrl = direccionService.getGoogleMapsUrl(proveedor.getDireccion());
+        return "redirect:" + mapsUrl;
+    }
 }

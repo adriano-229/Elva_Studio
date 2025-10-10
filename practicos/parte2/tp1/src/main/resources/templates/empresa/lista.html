@@ -21,6 +21,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
       <th>Dirección</th>
       <th>Acciones</th>
       <th>Eliminado</th>
+      <th>Mapa</th>
     </tr>
     </thead>
 
@@ -44,6 +45,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         </span>
       </td>
       <td th:text="${empresa.eliminado} ? 'Sí' : 'No'"></td>
+      <td>
+        <a th:if="${empresa.direccion != null}"
+           th:href="@{|/empresas/mapa/${empresa.id}|}"
+           target="_blank">Ver</a>
+        <span th:unless="${empresa.direccion != null}">-</span>
+      </td>
+
     </tr>
     </tbody>
   </table>

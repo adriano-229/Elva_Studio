@@ -10,6 +10,4 @@ public class EmpresaService extends BaseService<Empresa, Long> {
     public EmpresaService(EmpresaRepository repository) {
         super(repository);
     }
-
-
 }

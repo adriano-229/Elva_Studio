@@ -68,6 +68,14 @@ public class DireccionController {
         return "redirect:/direcciones";
     }
 
+    // Endpoint para abrir Google Maps con la dirección
+    @GetMapping("/ver-mapa/{id}")
+    public String verMapa(@PathVariable Long id) {
+        Direccion direccion = direccionService.findById(id).orElseThrow();
+        String mapsUrl = direccionService.getGoogleMapsUrl(direccion);
+        return "redirect:" + mapsUrl;
+    }
+
     // Endpoint REST para obtener direcciones por departamento
     @GetMapping("/api/por-departamento/{nombreDepartamento}")
     @ResponseBody
