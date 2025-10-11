@@ -19,6 +19,6 @@ public class Persona extends BaseEntity {
     @Column(nullable = false)
     private String apellido;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String email;
 }
