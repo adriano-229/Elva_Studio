@@ -134,7 +134,8 @@ VALUES
 -- PERSONAS (para usuarios del sistema)
 INSERT INTO persona (nombre, apellido, email, eliminado)
 VALUES ('Administrador', 'Sistema', 'admin@tp1.com', 0),
-       ('Usuario', 'Común', 'user@tp1.com', 0);
+       ('Usuario', 'Común', 'user@tp1.com', 0),
+       ('Adriano', 'Fabris', 'adrianosfabris@gmail.com', 0);
 
 -- USUARIOS (credenciales del sistema)
 -- Nota: Las claves están encriptadas con BCrypt strength 12
