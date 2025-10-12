@@ -12,12 +12,15 @@
     <li class="breadcrumb-item active">Empresas</li>
   </ol>
 
+  <div class="mb-4 d-flex gap-2 flex-wrap">
   <!-- Botón Nueva Empresa (solo ADMIN) -->
-  <div class="mb-4" sec:authorize="hasRole('ADMIN')">
-    <a th:href="@{/empresas/nueva}" class="btn btn-primary btn-lg">
+  <a sec:authorize="hasRole('ADMIN')" th:href="@{/empresas/nueva}" class="btn btn-primary btn-lg">
       <i class="fas fa-plus-circle me-2"></i>Nueva Empresa
     </a>
-  </div>
+    <a th:href="@{/export/empresas/excel}" class="btn btn-info btn-lg">
+      <i class="fas fa-file-pdf me-2"></i>Descargar Excel
+    </a>
+</div>
 
   <!-- Tabla de Empresas -->
   <div class="card mb-4">

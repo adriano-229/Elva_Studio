@@ -13,10 +13,13 @@
     <li class="breadcrumb-item active">Proveedores</li>
   </ol>
 
-  <!-- Botón Nuevo Proveedor (solo ADMIN) -->
-  <div class="mb-4" sec:authorize="hasRole('ADMIN')">
-    <a th:href="@{/proveedores/nuevo}" class="btn btn-success btn-lg">
+  <div class="mb-4 d-flex gap-2 flex-wrap">
+    <!-- Botón Nuevo Proveedor (solo ADMIN) -->
+    <a sec:authorize="hasRole('ADMIN')" th:href="@{/proveedores/nuevo}" class="btn btn-success btn-lg">
       <i class="fas fa-plus-circle me-2"></i>Nuevo Proveedor
+    </a>
+    <a th:href="@{/export/proveedores/pdf}" class="btn btn-info btn-lg">
+      <i class="fas fa-file-pdf me-2"></i>Descargar PDF
     </a>
   </div>
 
