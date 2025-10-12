@@ -19,7 +19,7 @@ public class ScheduleTask {
     }
 
 //    @Scheduled(cron = "0 0 15 5 1/1 ?", zone = zone)
-    @Scheduled(fixedRate = 5000)
+/*    @Scheduled(fixedRate = 5000)
     public void schedulePersonasMarketingEmailTask() {
         personaService.findAll().forEach(persona -> {
             try {
@@ -33,6 +33,6 @@ public class ScheduleTask {
                 e.printStackTrace();
             }
         });
-    }
+    }*/
 
 }
