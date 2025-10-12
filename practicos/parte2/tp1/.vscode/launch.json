@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Tp1Application<tp1>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.elva.tp1.Tp1Application",
+            "projectName": "tp1",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
