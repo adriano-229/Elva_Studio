@@ -63,7 +63,8 @@
               <label class="form-label fw-bold" for="provincia">
                 <i class="fas fa-map me-2"></i>Provincia
               </label>
-              <input id="provinciaActualId" th:value="${departamento.provincia != null ? departamento.provincia.id : ''}"
+              <input id="provinciaActualId"
+                     th:value="${departamento.provincia != null ? departamento.provincia.id : ''}"
                      type="hidden">
               <select class="form-select form-select-lg" disabled id="provincia" required th:field="*{provincia.id}">
                 <option value="">-- Seleccione una Provincia --</option>
