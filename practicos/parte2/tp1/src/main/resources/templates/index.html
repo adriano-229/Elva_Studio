@@ -46,7 +46,7 @@
               <i class="fas fa-building fa-3x text-gray-300"></i>
             </div>
           </div>
-          <a th:href="@{/empresas}" class="btn btn-primary btn-sm mt-3 w-100">
+          <a class="btn btn-primary btn-sm mt-3 w-100" th:href="@{/empresas}">
             <i class="fas fa-arrow-right me-2"></i>Ir a Empresas
           </a>
         </div>
@@ -66,7 +66,7 @@
               <i class="fas fa-truck fa-3x text-gray-300"></i>
             </div>
           </div>
-          <a th:href="@{/proveedores}" class="btn btn-success btn-sm mt-3 w-100">
+          <a class="btn btn-success btn-sm mt-3 w-100" th:href="@{/proveedores}">
             <i class="fas fa-arrow-right me-2"></i>Ir a Proveedores
           </a>
         </div>
@@ -93,7 +93,7 @@
               <i class="fas fa-globe fa-3x text-gray-300"></i>
             </div>
           </div>
-          <a th:href="@{/paises}" class="btn btn-info btn-sm mt-3 w-100">
+          <a class="btn btn-info btn-sm mt-3 w-100" th:href="@{/paises}">
             <i class="fas fa-arrow-right me-2"></i>Ir a Países
           </a>
         </div>
@@ -113,7 +113,7 @@
               <i class="fas fa-map fa-3x text-gray-300"></i>
             </div>
           </div>
-          <a th:href="@{/provincias}" class="btn btn-warning btn-sm mt-3 w-100">
+          <a class="btn btn-warning btn-sm mt-3 w-100" th:href="@{/provincias}">
             <i class="fas fa-arrow-right me-2"></i>Ir a Provincias
           </a>
         </div>
@@ -133,7 +133,7 @@
               <i class="fas fa-map-marker-alt fa-3x text-gray-300"></i>
             </div>
           </div>
-          <a th:href="@{/departamentos}" class="btn btn-secondary btn-sm mt-3 w-100">
+          <a class="btn btn-secondary btn-sm mt-3 w-100" th:href="@{/departamentos}">
             <i class="fas fa-arrow-right me-2"></i>Ir a Departamentos
           </a>
         </div>
@@ -160,13 +160,42 @@
               <i class="fas fa-users fa-3x text-gray-300"></i>
             </div>
           </div>
-          <a th:href="@{/usuarios}" class="btn btn-danger btn-sm mt-3 w-100">
+          <a class="btn btn-danger btn-sm mt-3 w-100" th:href="@{/usuarios}">
             <i class="fas fa-arrow-right me-2"></i>Ir a Usuarios
           </a>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Card de Migraciones (solo ADMIN) -->
+  <div class="row mt-4" sec:authorize="hasRole('ADMIN')">
+    <div class="col-12">
+      <h3 class="mb-3"><i class="fas fa-file-import me-2"></i>Migraciones</h3>
+    </div>
+
+    <div class="col-xl-4 col-md-6 mb-4">
+      <div class="card border-left-primary shadow h-100">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Proveedores</div>
+              <div class="h6 mb-0 font-weight-bold text-gray-800">Migración de Proveedores</div>
+              <p class="text-muted small mt-2">Importa proveedores desde archivos de texto</p>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-file-import fa-3x text-gray-300"></i>
+            </div>
+          </div>
+          <a class="btn btn-primary btn-sm mt-3 w-100" th:href="@{/migraciones/proveedores}">
+            <i class="fas fa-arrow-right me-2"></i>Ir a Migración
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 </div>
 </body>
 </html>

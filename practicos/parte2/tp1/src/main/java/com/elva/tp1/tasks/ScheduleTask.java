@@ -2,9 +2,7 @@ package com.elva.tp1.tasks;
 
 import com.elva.tp1.service.EmailService;
 import com.elva.tp1.service.PersonaService;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Component
 public class ScheduleTask {

@@ -211,22 +211,21 @@ VALUES
 
 -- PERSONAS PARA PROVEEDORES
 INSERT INTO persona (nombre, apellido, email, eliminado)
-VALUES
-('Juan', 'González', 'juan.gonzalez@distribuidora.com', 0),
-('María', 'Rodríguez', 'maria.rodriguez@logistica.com', 0),
-('Carlos', 'Fernández', 'carlos.fernandez@materiales.com', 0),
-('Ana', 'Martínez', 'ana.martinez@suministros.com', 0),
-('Pedro', 'López', 'pedro.lopez@insumos.com', 0),
-('Laura', 'García', 'laura.garcia@packaging.com', 0),
-('Roberto', 'Sánchez', 'roberto.sanchez@tecnologia.com', 0),
-('Sofía', 'Pérez', 'sofia.perez@alimentos.com', 0),
-('Diego', 'Torres', 'diego.torres@transportes.com', 0),
-('Valentina', 'Ramírez', 'valentina.ramirez@equipamiento.com', 0),
-('Fernando', 'Silva', 'fernando.silva@industrias.com', 0),
-('Camila', 'Costa', 'camila.costa@comercial.com', 0),
-('Mateo', 'Oliveira', 'mateo.oliveira@soluciones.com', 0),
-('Isabella', 'Santos', 'isabella.santos@servicios.com', 0),
-('Lucas', 'Almeida', 'lucas.almeida@distribuciones.com', 0);
+VALUES ('Juan', 'González', 'juan.gonzalez@distribuidora.com', 0),
+       ('María', 'Rodríguez', 'maria.rodriguez@logistica.com', 0),
+       ('Carlos', 'Fernández', 'carlos.fernandez@materiales.com', 0),
+       ('Ana', 'Martínez', 'ana.martinez@suministros.com', 0),
+       ('Pedro', 'López', 'pedro.lopez@insumos.com', 0),
+       ('Laura', 'García', 'laura.garcia@packaging.com', 0),
+       ('Roberto', 'Sánchez', 'roberto.sanchez@tecnologia.com', 0),
+       ('Sofía', 'Pérez', 'sofia.perez@alimentos.com', 0),
+       ('Diego', 'Torres', 'diego.torres@transportes.com', 0),
+       ('Valentina', 'Ramírez', 'valentina.ramirez@equipamiento.com', 0),
+       ('Fernando', 'Silva', 'fernando.silva@industrias.com', 0),
+       ('Camila', 'Costa', 'camila.costa@comercial.com', 0),
+       ('Mateo', 'Oliveira', 'mateo.oliveira@soluciones.com', 0),
+       ('Isabella', 'Santos', 'isabella.santos@servicios.com', 0),
+       ('Lucas', 'Almeida', 'lucas.almeida@distribuciones.com', 0);
 
 -- PROVEEDORES
 INSERT INTO proveedor (id, cuit, direccion_id)

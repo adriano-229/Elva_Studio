@@ -1,12 +1,12 @@
 package com.elva.tp1.controller;
 
-import com.elva.tp1.domain.Proveedor;
-import com.elva.tp1.domain.Direccion;
 import com.elva.tp1.domain.Departamento;
-import com.elva.tp1.service.DireccionService;
-import com.elva.tp1.service.ProveedorService;
-import com.elva.tp1.service.PaisService;
+import com.elva.tp1.domain.Direccion;
+import com.elva.tp1.domain.Proveedor;
 import com.elva.tp1.service.DepartamentoService;
+import com.elva.tp1.service.DireccionService;
+import com.elva.tp1.service.PaisService;
+import com.elva.tp1.service.ProveedorService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -78,7 +78,7 @@ public class ProveedorController {
     }
 
     @GetMapping("/mapa/{id}")
-    public String mostrarMapa(@PathVariable Long id){
+    public String mostrarMapa(@PathVariable Long id) {
         Proveedor proveedor = proveedorService.findById(id).orElseThrow();
         if (proveedor.getDireccion() == null) {
             return "redirect:/proveedores";

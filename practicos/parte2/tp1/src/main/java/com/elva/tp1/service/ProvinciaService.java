@@ -38,16 +38,6 @@ public class ProvinciaService extends BaseService<Provincia, Long> {
         return provinciaRepository.findAllByOrderByNombreAsc();
     }
 
-    public List<Provincia> findAllByPais_NombreOrderByNombreAsc(String nombre) {
-        return provinciaRepository.findAllByPais_NombreOrderByNombreAsc(nombre);
-    }
-
-    // Nuevo método basado en ID de país (más robusto para la UI)
-    public List<Provincia> findAllByPais_IdOrderByNombreAsc(Long paisId) {
-        return provinciaRepository.findAllByPais_IdOrderByNombreAsc(paisId);
-    }
-
-    // --- Nuevos métodos filtrando eliminado=false ---
     public List<Provincia> findAllActivasOrderByNombreAsc() {
         return provinciaRepository.findAllByEliminadoFalseOrderByNombreAsc();
     }

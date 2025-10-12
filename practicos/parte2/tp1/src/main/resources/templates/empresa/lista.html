@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Empresas - TP1</title>
 <body>
@@ -13,14 +13,14 @@
   </ol>
 
   <div class="mb-4 d-flex gap-2 flex-wrap">
-  <!-- Botón Nueva Empresa (solo ADMIN) -->
-  <a sec:authorize="hasRole('ADMIN')" th:href="@{/empresas/nueva}" class="btn btn-primary btn-lg">
+    <!-- Botón Nueva Empresa (solo ADMIN) -->
+    <a class="btn btn-primary btn-lg" sec:authorize="hasRole('ADMIN')" th:href="@{/empresas/nueva}">
       <i class="fas fa-plus-circle me-2"></i>Nueva Empresa
     </a>
-    <a th:href="@{/export/empresas/excel}" class="btn btn-info btn-lg">
+    <a class="btn btn-info btn-lg" th:href="@{/export/empresas/excel}">
       <i class="fas fa-file-pdf me-2"></i>Descargar Excel
     </a>
-</div>
+  </div>
 
   <!-- Tabla de Empresas -->
   <div class="card mb-4">
@@ -29,58 +29,58 @@
       Listado de Empresas
     </div>
     <div class="card-body">
-      <table id="datatablesSimple" class="table table-hover">
+      <table class="table table-hover" id="datatablesSimple">
         <thead>
-          <tr>
-            <th>Razón Social</th>
-            <th>Dirección</th>
-            <th>Estado</th>
-            <th style="text-align: center;">Acciones</th>
-          </tr>
+        <tr>
+          <th>Razón Social</th>
+          <th>Dirección</th>
+          <th>Estado</th>
+          <th style="text-align: center;">Acciones</th>
+        </tr>
         </thead>
         <tbody>
-          <tr th:each="empresa : ${empresas}">
-            <td th:text="${empresa.razonSocial}"></td>
-            <td>
+        <tr th:each="empresa : ${empresas}">
+          <td th:text="${empresa.razonSocial}"></td>
+          <td>
               <span th:if="${empresa.direccion != null}">
                 <span th:text="${empresa.direccion.calle} + ' ' + ${empresa.direccion.altura}"></span>,
                 <span th:text="${empresa.direccion.departamento?.nombre}"></span>,
                 <span th:text="${empresa.direccion.departamento?.provincia?.nombre}"></span>
               </span>
-              <span th:unless="${empresa.direccion != null}" class="text-muted fst-italic">
+            <span class="text-muted fst-italic" th:unless="${empresa.direccion != null}">
                 Sin dirección
               </span>
-            </td>
-            <td>
-              <span th:if="${empresa.eliminado}" class="badge bg-danger">Eliminado</span>
-              <span th:unless="${empresa.eliminado}" class="badge bg-success">Activo</span>
-            </td>
-            <td style="text-align: center;">
-              <div class="d-flex justify-content-center gap-1">
-                <a th:href="@{|/empresas/editar/${empresa.id}|}"
-                   class="btn btn-sm btn-primary"
-                   title="Editar">
-                  <i class="fas fa-edit"></i>
-                </a>
+          </td>
+          <td>
+            <span class="badge bg-danger" th:if="${empresa.eliminado}">Eliminado</span>
+            <span class="badge bg-success" th:unless="${empresa.eliminado}">Activo</span>
+          </td>
+          <td style="text-align: center;">
+            <div class="d-flex justify-content-center gap-1">
+              <a class="btn btn-sm btn-primary"
+                 th:href="@{|/empresas/editar/${empresa.id}|}"
+                 title="Editar">
+                <i class="fas fa-edit"></i>
+              </a>
 
-                <a th:if="${empresa.direccion != null}"
-                   th:href="@{|/empresas/mapa/${empresa.id}|}"
-                   class="btn btn-sm btn-info"
-                   target="_blank"
-                   title="Ver en Mapa">
-                  <i class="fas fa-map-marked-alt"></i>
-                </a>
+              <a class="btn btn-sm btn-info"
+                 target="_blank"
+                 th:href="@{|/empresas/mapa/${empresa.id}|}"
+                 th:if="${empresa.direccion != null}"
+                 title="Ver en Mapa">
+                <i class="fas fa-map-marked-alt"></i>
+              </a>
 
-                <a sec:authorize="hasRole('ADMIN')"
-                   th:href="@{|/empresas/eliminar/${empresa.id}|}"
-                   class="btn btn-sm btn-danger"
-                   onclick="return confirm('¿Está seguro de eliminar esta empresa?')"
-                   title="Eliminar">
-                  <i class="fas fa-trash"></i>
-                </a>
-              </div>
-            </td>
-          </tr>
+              <a class="btn btn-sm btn-danger"
+                 onclick="return confirm('¿Está seguro de eliminar esta empresa?')"
+                 sec:authorize="hasRole('ADMIN')"
+                 th:href="@{|/empresas/eliminar/${empresa.id}|}"
+                 title="Eliminar">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -88,7 +88,7 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         if (document.getElementById('datatablesSimple')) {
             const dataTable = new simpleDatatables.DataTable("#datatablesSimple", {
                 searchable: true,
@@ -101,9 +101,9 @@
                     info: "Mostrando {start} a {end} de {rows} empresas",
                 },
                 columns: [
-                    { select: 0, sort: "asc" },
-                    { select: 2, sortable: false },
-                    { select: 3, sortable: false }
+                    {select: 0, sort: "asc"},
+                    {select: 2, sortable: false},
+                    {select: 3, sortable: false}
                 ]
             });
         }

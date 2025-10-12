@@ -27,19 +27,19 @@
             <input th:field="*{id}" type="hidden"/>
 
             <div class="mb-4">
-              <label for="nombre" class="form-label fw-bold">
+              <label class="form-label fw-bold" for="nombre">
                 <i class="fas fa-flag me-2"></i>Nombre del País
               </label>
-              <input type="text" class="form-control form-control-lg" id="nombre"
-                     th:field="*{nombre}" required
-                     placeholder="Ingrese el nombre del país" />
+              <input class="form-control form-control-lg" id="nombre" placeholder="Ingrese el nombre del país"
+                     required th:field="*{nombre}"
+                     type="text"/>
             </div>
 
             <div class="d-grid gap-2">
-              <button type="submit" class="btn btn-info btn-lg">
+              <button class="btn btn-info btn-lg" type="submit">
                 <i class="fas fa-save me-2"></i>Guardar
               </button>
-              <a th:href="@{/paises}" class="btn btn-secondary btn-lg">
+              <a class="btn btn-secondary btn-lg" th:href="@{/paises}">
                 <i class="fas fa-times me-2"></i>Cancelar
               </a>
             </div>

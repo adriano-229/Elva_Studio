@@ -14,7 +14,7 @@
 
   <!-- Botón Nuevo País -->
   <div class="mb-4">
-    <a th:href="@{/paises/nuevo}" class="btn btn-info btn-lg">
+    <a class="btn btn-info btn-lg" th:href="@{/paises/nuevo}">
       <i class="fas fa-plus-circle me-2"></i>Nuevo País
     </a>
   </div>
@@ -26,37 +26,37 @@
       Listado de Países
     </div>
     <div class="card-body">
-      <table id="datatablesSimple" class="table table-hover">
+      <table class="table table-hover" id="datatablesSimple">
         <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Estado</th>
-            <th style="text-align: center;">Acciones</th>
-          </tr>
+        <tr>
+          <th>Nombre</th>
+          <th>Estado</th>
+          <th style="text-align: center;">Acciones</th>
+        </tr>
         </thead>
         <tbody>
-          <tr th:each="pais : ${paises}">
-            <td th:text="${pais.nombre}"></td>
-            <td>
-              <span th:if="${pais.eliminado}" class="badge bg-danger">Eliminado</span>
-              <span th:unless="${pais.eliminado}" class="badge bg-success">Activo</span>
-            </td>
-            <td style="text-align: center;">
-              <div class="d-flex justify-content-center gap-1">
-                <a th:href="@{|/paises/editar/${pais.id}|}"
-                   class="btn btn-sm btn-primary"
-                   title="Editar">
-                  <i class="fas fa-edit"></i>
-                </a>
-                <a th:href="@{|/paises/eliminar/${pais.id}|}"
-                   class="btn btn-sm btn-danger"
-                   onclick="return confirm('¿Está seguro de eliminar este país?')"
-                   title="Eliminar">
-                  <i class="fas fa-trash"></i>
-                </a>
-              </div>
-            </td>
-          </tr>
+        <tr th:each="pais : ${paises}">
+          <td th:text="${pais.nombre}"></td>
+          <td>
+            <span class="badge bg-danger" th:if="${pais.eliminado}">Eliminado</span>
+            <span class="badge bg-success" th:unless="${pais.eliminado}">Activo</span>
+          </td>
+          <td style="text-align: center;">
+            <div class="d-flex justify-content-center gap-1">
+              <a class="btn btn-sm btn-primary"
+                 th:href="@{|/paises/editar/${pais.id}|}"
+                 title="Editar">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a class="btn btn-sm btn-danger"
+                 onclick="return confirm('¿Está seguro de eliminar este país?')"
+                 th:href="@{|/paises/eliminar/${pais.id}|}"
+                 title="Eliminar">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -64,7 +64,7 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         if (document.getElementById('datatablesSimple')) {
             const dataTable = new simpleDatatables.DataTable("#datatablesSimple", {
                 searchable: true,
@@ -77,9 +77,9 @@
                     info: "Mostrando {start} a {end} de {rows} países",
                 },
                 columns: [
-                    { select: 0, sort: "asc" },
-                    { select: 1, sortable: false },
-                    { select: 2, sortable: false }
+                    {select: 0, sort: "asc"},
+                    {select: 1, sortable: false},
+                    {select: 2, sortable: false}
                 ]
             });
         }

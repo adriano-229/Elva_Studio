@@ -2,11 +2,13 @@
 <html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title th:text="${departamento.id == null} ? 'Nuevo Departamento' : 'Editar Departamento'">Formulario Departamento</title>
+  <title th:text="${departamento.id == null} ? 'Nuevo Departamento' : 'Editar Departamento'">Formulario
+    Departamento</title>
 </head>
 <body>
 <div>
-  <h1 class="mt-4" th:text="${departamento.id == null} ? 'Nuevo Departamento' : 'Editar Departamento'">Formulario Departamento</h1>
+  <h1 class="mt-4" th:text="${departamento.id == null} ? 'Nuevo Departamento' : 'Editar Departamento'">Formulario
+    Departamento</h1>
   <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
     <li class="breadcrumb-item"><a th:href="@{/departamentos}">Departamentos</a></li>
@@ -27,25 +29,25 @@
             <input th:field="*{id}" type="hidden"/>
 
             <div class="mb-3">
-              <label for="nombre" class="form-label fw-bold">
+              <label class="form-label fw-bold" for="nombre">
                 <i class="fas fa-location-dot me-2"></i>Nombre del Departamento
               </label>
-              <input type="text" class="form-control form-control-lg" id="nombre"
-                     th:field="*{nombre}" required
-                     placeholder="Ingrese el nombre del departamento" />
+              <input class="form-control form-control-lg" id="nombre" placeholder="Ingrese el nombre del departamento"
+                     required th:field="*{nombre}"
+                     type="text"/>
             </div>
 
             <div class="mb-3">
-              <label for="codigoPostal" class="form-label fw-bold">
+              <label class="form-label fw-bold" for="codigoPostal">
                 <i class="fas fa-envelope me-2"></i>Código Postal
               </label>
-              <input type="number" class="form-control form-control-lg" id="codigoPostal"
-                     th:field="*{codigoPostal}" required
-                     placeholder="Ingrese el código postal" />
+              <input class="form-control form-control-lg" id="codigoPostal" placeholder="Ingrese el código postal"
+                     required th:field="*{codigoPostal}"
+                     type="number"/>
             </div>
 
             <div class="mb-3">
-              <label for="pais" class="form-label fw-bold">
+              <label class="form-label fw-bold" for="pais">
                 <i class="fas fa-globe me-2"></i>País
               </label>
               <select class="form-select form-select-lg" id="pais" name="paisId" required>
@@ -58,20 +60,21 @@
             </div>
 
             <div class="mb-4">
-              <label for="provincia" class="form-label fw-bold">
+              <label class="form-label fw-bold" for="provincia">
                 <i class="fas fa-map me-2"></i>Provincia
               </label>
-              <input type="hidden" id="provinciaActualId" th:value="${departamento.provincia != null ? departamento.provincia.id : ''}">
-              <select class="form-select form-select-lg" id="provincia" required th:field="*{provincia.id}" disabled>
+              <input id="provinciaActualId" th:value="${departamento.provincia != null ? departamento.provincia.id : ''}"
+                     type="hidden">
+              <select class="form-select form-select-lg" disabled id="provincia" required th:field="*{provincia.id}">
                 <option value="">-- Seleccione una Provincia --</option>
               </select>
             </div>
 
             <div class="d-grid gap-2">
-              <button type="submit" class="btn btn-secondary btn-lg">
+              <button class="btn btn-secondary btn-lg" type="submit">
                 <i class="fas fa-save me-2"></i>Guardar
               </button>
-              <a th:href="@{/departamentos}" class="btn btn-outline-secondary btn-lg">
+              <a class="btn btn-outline-secondary btn-lg" th:href="@{/departamentos}">
                 <i class="fas fa-times me-2"></i>Cancelar
               </a>
             </div>

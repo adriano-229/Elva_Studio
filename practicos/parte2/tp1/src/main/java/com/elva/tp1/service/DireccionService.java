@@ -7,7 +7,6 @@ import com.elva.tp1.domain.Provincia;
 import com.elva.tp1.repository.DireccionRepository;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -41,13 +40,8 @@ public class DireccionService extends BaseService<Direccion, Long> {
 
     public String getGoogleMapsUrl(Direccion direccion) {
         String direccionCompleta = getDireccionCompleta(direccion);
-        try {
-            String encoded = URLEncoder.encode(direccionCompleta, StandardCharsets.UTF_8.toString());
-            return "https://www.google.com/maps/search/?api=1&query=" + encoded;
-        } catch (UnsupportedEncodingException e) {
-            // UTF-8 siempre está soportado
-            return "https://www.google.com/maps";
-        }
+        String encoded = URLEncoder.encode(direccionCompleta, StandardCharsets.UTF_8);
+        return "https://www.google.com/maps/search/?api=1&query=" + encoded;
 
     }
 }

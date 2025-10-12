@@ -28,12 +28,12 @@
 
             <!-- Razón Social -->
             <div class="mb-4">
-              <label for="razonSocial" class="form-label fw-bold">
+              <label class="form-label fw-bold" for="razonSocial">
                 <i class="fas fa-briefcase me-2"></i>Razón Social
               </label>
-              <input type="text" class="form-control form-control-lg" id="razonSocial"
-                     th:field="*{razonSocial}" required
-                     placeholder="Ingrese la razón social de la empresa" />
+              <input class="form-control form-control-lg" id="razonSocial" placeholder="Ingrese la razón social de la empresa"
+                     required th:field="*{razonSocial}"
+                     type="text"/>
             </div>
 
             <hr class="my-4">
@@ -42,29 +42,29 @@
             <div class="row">
               <!-- Calle -->
               <div class="col-md-8 mb-3">
-                <label for="calle" class="form-label fw-bold">
+                <label class="form-label fw-bold" for="calle">
                   <i class="fas fa-road me-2"></i>Calle
                 </label>
-                <input type="text" class="form-control" id="calle"
-                       th:field="*{direccion.calle}" required
-                       placeholder="Nombre de la calle" />
+                <input class="form-control" id="calle" placeholder="Nombre de la calle"
+                       required th:field="*{direccion.calle}"
+                       type="text"/>
               </div>
 
               <!-- Altura -->
               <div class="col-md-4 mb-3">
-                <label for="altura" class="form-label fw-bold">
+                <label class="form-label fw-bold" for="altura">
                   <i class="fas fa-hashtag me-2"></i>Altura
                 </label>
-                <input type="number" class="form-control" id="altura"
-                       th:field="*{direccion.altura}" required
-                       placeholder="Número" />
+                <input class="form-control" id="altura" placeholder="Número"
+                       required th:field="*{direccion.altura}"
+                       type="number"/>
               </div>
             </div>
 
             <!-- Selección en cascada -->
             <div class="row">
               <div class="col-md-4 mb-3">
-                <label for="pais" class="form-label fw-bold">
+                <label class="form-label fw-bold" for="pais">
                   <i class="fas fa-globe me-2"></i>País
                 </label>
                 <select class="form-select" id="pais" name="paisId" required>
@@ -77,29 +77,29 @@
               </div>
 
               <div class="col-md-4 mb-3">
-                <label for="provincia" class="form-label fw-bold">
+                <label class="form-label fw-bold" for="provincia">
                   <i class="fas fa-map me-2"></i>Provincia
                 </label>
-                <select class="form-select" id="provincia" name="provinciaId" required disabled>
+                <select class="form-select" disabled id="provincia" name="provinciaId" required>
                   <option value="">-- Seleccione --</option>
                 </select>
               </div>
 
               <div class="col-md-4 mb-3">
-                <label for="departamento" class="form-label fw-bold">
+                <label class="form-label fw-bold" for="departamento">
                   <i class="fas fa-map-marker-alt me-2"></i>Departamento
                 </label>
-                <select class="form-select" id="departamento" name="departamentoId" required disabled>
+                <select class="form-select" disabled id="departamento" name="departamentoId" required>
                   <option value="">-- Seleccione --</option>
                 </select>
               </div>
             </div>
 
             <div class="d-grid gap-2 mt-4">
-              <button type="submit" class="btn btn-primary btn-lg">
+              <button class="btn btn-primary btn-lg" type="submit">
                 <i class="fas fa-save me-2"></i>Guardar Empresa
               </button>
-              <a th:href="@{/empresas}" class="btn btn-secondary btn-lg">
+              <a class="btn btn-secondary btn-lg" th:href="@{/empresas}">
                 <i class="fas fa-times me-2"></i>Cancelar
               </a>
             </div>
@@ -127,7 +127,7 @@
               select.disabled = false;
           }
 
-          function cargarOpciones(select, datos, valorSeleccionado = null, placeholder='-- Seleccione --') {
+          function cargarOpciones(select, datos, valorSeleccionado = null, placeholder = '-- Seleccione --') {
               select.innerHTML = '<option value="">' + placeholder + '</option>';
               datos.forEach(item => {
                   const option = document.createElement('option');
