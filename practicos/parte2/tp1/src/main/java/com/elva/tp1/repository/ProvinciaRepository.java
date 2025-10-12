@@ -1,24 +1,25 @@
 package com.elva.tp1.repository;
 
+import com.elva.tp1.domain.Pais;
 import com.elva.tp1.domain.Provincia;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProvinciaRepository extends BaseRepository<Provincia, Long> {
 
-    List<Provincia> findAllByNombreIsContainingIgnoreCaseOrderByNombre(String nombre);
-
-    List<Provincia> findAllByPais_NombreOrderByNombreAsc(String paisNombre);
-
-    List<Provincia> findAllByPais_IdOrderByNombreAsc(Long paisId);
 
     List<Provincia> findAllByOrderByNombreAsc();
 
-    // Nuevos métodos excluyendo eliminados
+    // Excluyendo eliminados
     List<Provincia> findAllByEliminadoFalseOrderByNombreAsc();
+
     List<Provincia> findAllByEliminadoFalseAndPais_IdOrderByNombreAsc(Long paisId);
+
     List<Provincia> findAllByEliminadoFalseAndPais_NombreOrderByNombreAsc(String paisNombre);
 
+    // Para migraciones: buscar por nombre exacto y país
+    Optional<Provincia> findByNombreIgnoreCaseAndPais(String nombre, Pais pais);
 }

@@ -1,10 +1,10 @@
 package com.elva.tp1.controller;
 
 import com.elva.tp1.domain.Empresa;
+import com.elva.tp1.service.DepartamentoService;
 import com.elva.tp1.service.DireccionService;
 import com.elva.tp1.service.EmpresaService;
 import com.elva.tp1.service.PaisService;
-import com.elva.tp1.service.DepartamentoService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,7 +59,7 @@ public class EmpresaController {
     }
 
     @GetMapping("/mapa/{id}")
-    public String mostrarMapa(@PathVariable Long id){
+    public String mostrarMapa(@PathVariable Long id) {
         Empresa empresa = empresaService.findById(id).orElseThrow();
         if (empresa.getDireccion() == null) {
             return "redirect:/empresas";

@@ -27,16 +27,16 @@
             <input th:field="*{id}" type="hidden"/>
 
             <div class="mb-3">
-              <label for="nombre" class="form-label fw-bold">
+              <label class="form-label fw-bold" for="nombre">
                 <i class="fas fa-map-marked me-2"></i>Nombre de la Provincia
               </label>
-              <input type="text" class="form-control form-control-lg" id="nombre"
-                     th:field="*{nombre}" required
-                     placeholder="Ingrese el nombre de la provincia" />
+              <input class="form-control form-control-lg" id="nombre" placeholder="Ingrese el nombre de la provincia"
+                     required th:field="*{nombre}"
+                     type="text"/>
             </div>
 
             <div class="mb-4">
-              <label for="pais" class="form-label fw-bold">
+              <label class="form-label fw-bold" for="pais">
                 <i class="fas fa-globe me-2"></i>País
               </label>
               <select class="form-select form-select-lg" id="pais" required th:field="*{pais.id}">
@@ -46,10 +46,10 @@
             </div>
 
             <div class="d-grid gap-2">
-              <button type="submit" class="btn btn-warning btn-lg">
+              <button class="btn btn-warning btn-lg" type="submit">
                 <i class="fas fa-save me-2"></i>Guardar
               </button>
-              <a th:href="@{/provincias}" class="btn btn-secondary btn-lg">
+              <a class="btn btn-secondary btn-lg" th:href="@{/provincias}">
                 <i class="fas fa-times me-2"></i>Cancelar
               </a>
             </div>

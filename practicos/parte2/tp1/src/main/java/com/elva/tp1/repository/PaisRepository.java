@@ -4,15 +4,14 @@ import com.elva.tp1.domain.Pais;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PaisRepository extends BaseRepository<Pais, Long> {
 
-    // findAllBy and findBy generate the same query: but they differ in their explicitness
-    List<Pais> findAllByNombreIsContainingIgnoreCaseOrderByNombre(String nombre);
-
     List<Pais> findAllByOrderByNombreAsc();
 
-    // Nuevo: sólo países activos (no eliminados)
     List<Pais> findAllByEliminadoFalseOrderByNombreAsc();
+
+    Optional<Pais> findByNombreIgnoreCase(String nombre);
 }
