@@ -25,7 +25,7 @@ import java.util.List;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private static final boolean ENABLE_SECURITY = false;
+    private static final boolean ENABLE_SECURITY = true;
 
     private final CustomUserDetailsService userDetailsService;
 
