@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es"
+      th:replace="~{layout :: layout(~{::content})}">
+
+<body>
+<div th:fragment="content">
+    <div class="cart-view">
+        <div class="cart-wrapper">
+            <section class="cart-panel">
+                <header class="cart-header">
+                    <h1>Tu carrito</h1>
+                </header>
+                <div class="cart-body">
+                    <div th:if="${#lists.isEmpty(carrito.detalles)}" class="cart-empty">
+                        <p>Tu carrito está vacío por ahora.</p>
+                        <a class="btn btn-primary" th:href="@{/}">Ir a la tienda</a>
+                    </div>
+
+                    <div th:if="${!#lists.isEmpty(carrito.detalles)}">
+                        <table class="cart-table">
+                            <thead>
+                            <tr>
+                                <th>Foto</th>
+                                <th>Cant.</th>
+                                <th>Producto</th>
+                                <th>Subtotal</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="detalle : ${carrito.detalles}">
+                                <td>
+                                    <img th:if="${!#lists.isEmpty(detalle.articulo.imagenes)}"
+                                         th:src="@{'/imagen/' + ${detalle.articulo.imagenes[0].id}}"
+                                         th:alt="${detalle.articulo.nombre}"
+                                         class="cart-product-thumb">
+                                    <div th:if="${#lists.isEmpty(detalle.articulo.imagenes)}"
+                                         class="cart-thumb-placeholder">Sin imagen</div>
+                                </td>
+                                <td>
+                                    <span class="cart-qty-badge" th:text="${detalle.cantidad}">1</span>
+                                </td>
+                                <td>
+                                    <div class="cart-product-name" th:text="${detalle.articulo.nombre}">Producto</div>
+                                    <div class="cart-product-meta">
+                                        PU: $ <span th:text="${#numbers.formatDecimal(detalle.precioUnitario,1,2)}">0</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span th:text="${'$ ' + #numbers.formatDecimal(detalle.subtotal,1,2)}">$ 0</span>
+                                </td>
+                                <td>
+                                    <form th:action="@{/carrito/eliminar}" method="post">
+                                        <input type="hidden" name="detalleId" th:value="${detalle.id}">
+                                        <button type="submit" class="cart-remove-btn">
+                                            &#10005; Quitar
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="cart-summary">
+                            <span class="label">Total</span>
+                            <span class="value" th:text="${'$ ' + #numbers.formatDecimal(carrito.total,1,2)}">$ 0</span>
+                        </div>
+
+                        <div class="cart-actions">
+                            <form th:action="@{/checkout}" method="post">
+                                <input type="hidden" name="metodoPago" value="mercadopago">
+                                <button class="btn btn-success w-100" type="submit"
+                                        th:disabled="${carrito.total == 0}">
+                                    Pagar con MercadoPago
+                                </button>
+                            </form>
+                            <form th:action="@{/checkout}" method="post">
+                                <input type="hidden" name="metodoPago" value="efectivo">
+                                <button class="btn btn-secondary w-100" type="submit"
+                                        th:disabled="${carrito.total == 0}">
+                                    Pagar en efectivo
+                                </button>
+                            </form>
+                            <a class="btn btn-outline-dark w-100" th:href="@{/}">
+                                Seguir comprando
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+</body>
+</html>
