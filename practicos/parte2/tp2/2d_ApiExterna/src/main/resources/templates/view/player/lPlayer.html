@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="fragments/head :: head"></th:block>
+<th:block th:replace="fragments/navbar :: navbar"></th:block>
+
+<div class="container py-5">
+    <h2 class="text-center mb-5" th:text="Jugadores">Jugadores</h2>
+
+    <div class="row" th:if="${players}">
+        <div class="col-md-3 mb-4" th:each="player : ${players}">
+            <div class="card shadow-sm h-100 text-center">
+                <!-- Imagen del jugador -->
+                <img th:src="${player.strCutout != null ? player.strCutout : '/images/default-player.png'}"
+                     class="card-img-top mx-auto mt-3" 
+                     alt="Jugador"
+                     style="height:200px; width:200px; object-fit:cover; border-radius:50%;">
+
+                <div class="card-body">
+                    <!-- Nombre del jugador -->
+                    <h5 class="card-title" th:text="${player.strPlayer}">Nombre Jugador</h5>
+
+                    <!-- Posición y número -->
+                    <p class="text-muted mb-1" th:text="${player.strPosition}">Posición</p>
+                    <p class="text-muted mb-0" th:text="${player.strNumber != null ? 'Nº ' + player.strNumber : ''}"></p>
+
+					<!-- Form para ver más info del jugador -->
+					<form th:action="@{/player/detalle/{idPlayer}(idPlayer=${player.idPlayer})}" method="get" 
+					      th:object="${wrapper}">
+					    
+					    <!-- Campos ocultos del wrapper -->
+					    <input type="hidden" th:field="*{idLeague}" />
+					    <input type="hidden" th:field="*{league}" />
+					    <input type="hidden" th:field="*{idTeam}" />
+						
+					    <!-- Botón -->
+					    <button type="submit" class="btn btn-primary btn-sm mt-3">
+					        Ver perfil
+					    </button>
+					</form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensaje si no hay jugadores -->
+    <div th:if="${players == null or #lists.isEmpty(players)}" class="text-center mt-5">
+        <p class="text-muted">No se encontraron jugadores para este equipo.</p>
+    </div>
+</div>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+</html>
