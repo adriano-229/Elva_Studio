@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 @Service
 public class EmailService {
 
-    private final JavaMailSender mailSender;
+    /*private final JavaMailSender mailSender;
 
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
@@ -37,5 +37,5 @@ public class EmailService {
         helper.setSubject(subject);
         helper.setText(htmlBody, isHTML);
         mailSender.send(message);
-    }
+    }*/
 }
