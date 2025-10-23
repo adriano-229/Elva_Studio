@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.entities.Paciente;
-import com.example.demo.services.PacienteService;
+import com.example.demo.serviceImp.PacienteServiceImp;
 import com.example.demo.template.ConsultaPediatria;
 
 
@@ -20,11 +20,12 @@ import com.example.demo.template.ConsultaPediatria;
 public class PacienteController {
 
     @Autowired
-    private PacienteService pacienteService;
+    private PacienteServiceImp pacienteService;
 
     @GetMapping
     public String listarPacientes(ModelMap model) throws Exception {
         model.addAttribute("pacientes", pacienteService.findAll());
+        System.out.println("ESTOY EN PACIENTES");
         return "pacientes";
     }
 
