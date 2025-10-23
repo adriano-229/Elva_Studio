@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: content">
+<body>
+<h2>Historia Clínica</h2>
+<div th:if="${paciente != null}">
+    <h4 th:text="'Paciente: ' + ${paciente.nombre} + ' ' + ${paciente.apellido}"></h4>
+    <ul class="list-group">
+        <li class="list-group-item" th:each="c : ${paciente.consultas}" th:text="${c.fecha} + ' - ' + ${c.diagnostico}"></li>
+    </ul>
+</div>
+</body>
+</html>
