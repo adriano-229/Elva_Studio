@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: content">
+<body>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Lista de Pacientes</h2>
+    <a class="btn btn-success" th:href="@{/pacientes/nuevo}">Nuevo Paciente</a>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>DNI</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="p : ${pacientes}">
+            <td th:text="${p.id}"></td>
+            <td th:text="${p.nombre}"></td>
+            <td th:text="${p.apellido}"></td>
+            <td th:text="${p.dni}"></td>
+            <td>
+                <a class="btn btn-primary btn-sm" th:href="@{'/pacientes/' + ${p.id}}">Ver</a>
+                <a class="btn btn-warning btn-sm" th:href="@{'/pacientes/editar/' + ${p.id}}">Editar</a>
+                <a class="btn btn-danger btn-sm" th:href="@{'/pacientes/eliminar/' + ${p.id}}">Eliminar</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: content">
+<body>
+<h2>Nueva Consulta</h2>
+<form th:action="@{/consultas/guardar}" method="post" th:object="${consulta}">
+    <div class="mb-3">
+        <label>Fecha</label>
+        <input type="date" class="form-control" th:field="*{fecha}" required>
+    </div>
+    <div class="mb-3">
+        <label>Diagnóstico</label>
+        <textarea class="form-control" th:field="*{diagnostico}" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
+</body>
+</html>
