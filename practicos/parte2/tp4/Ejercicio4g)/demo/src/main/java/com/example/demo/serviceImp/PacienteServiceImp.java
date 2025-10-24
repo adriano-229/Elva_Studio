@@ -9,6 +9,7 @@ import com.example.demo.entities.Paciente;
 import com.example.demo.repositories.BaseRepository;
 import com.example.demo.repositories.PacienteRepository;
 import com.example.demo.services.PacienteService;
+import com.example.demo.template.ConsultaPediatria;
 
 @Service
 public class PacienteServiceImp extends BaseServiceImp<Paciente, Long> implements PacienteService{
@@ -19,6 +20,7 @@ public class PacienteServiceImp extends BaseServiceImp<Paciente, Long> implement
 	public PacienteServiceImp(BaseRepository<Paciente, Long> baseRepository) {
 		super(baseRepository);
 	}
+
 
 
 }
