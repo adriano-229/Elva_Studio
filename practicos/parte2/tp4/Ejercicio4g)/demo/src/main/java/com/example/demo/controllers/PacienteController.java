@@ -17,11 +17,62 @@ import com.example.demo.template.ConsultaPediatria;
 
 @Controller
 @RequestMapping("/pacientes")
-public class PacienteController {
+public class PacienteController extends BaseControllerImp<Paciente, PacienteServiceImp> {
 
     @Autowired
     private PacienteServiceImp pacienteService;
 
+	@Override
+	protected String getListView() {
+		return "pacientes";
+	}
+
+	@Override
+	protected String getFormView() {
+		return "paciente_form";
+	}
+
+	@Override
+	protected String getRedirectToList() {
+		return "redirect:/pacientes";
+	}
+
+	@Override
+	protected Paciente createNewEntity() {
+		return new Paciente();
+	}
+	
+	@GetMapping("/{id}")
+    public String verHistoriaClinica(@PathVariable Long id, ModelMap model) throws Exception {
+        Paciente paciente = pacienteService.findByid(id);
+        model.addAttribute("paciente", paciente);
+        return "historia_clinica";
+    }
+	
+	@GetMapping("/{id}/nueva-consulta")
+    public String nuevaConsulta(@PathVariable Long id, ModelMap model) throws Exception {
+        ConsultaPediatria consulta = new ConsultaPediatria();
+        consulta.setPaciente(pacienteService.findByid(id));
+        model.addAttribute("consulta", consulta);
+        return "consulta_form";
+    }
+    
+    
+
+    /*
+
+    @GetMapping("/editar/{id}")
+    public String editarPaciente(@PathVariable Long id, ModelMap model) throws Exception {
+        model.addAttribute("paciente", pacienteService.findByid(id));
+        return "paciente_form";
+    }
+    
+    @PostMapping("/{id}/guardar-consulta")
+    public String guardarConsulta(@PathVariable Long id, @ModelAttribute ConsultaPediatria consulta) {
+        pacienteService.agregarConsulta(id, consulta);
+        return "redirect:/pacientes/" + id;
+    }
+    
     @GetMapping
     public String listarPacientes(ModelMap model) throws Exception {
         model.addAttribute("pacientes", pacienteService.findAll());
@@ -41,11 +92,7 @@ public class PacienteController {
         return "redirect:/pacientes";
     }
 
-    @GetMapping("/editar/{id}")
-    public String editarPaciente(@PathVariable Long id, ModelMap model) throws Exception {
-        model.addAttribute("paciente", pacienteService.findByid(id));
-        return "paciente_form";
-    }
+    
 
     @GetMapping("/eliminar/{id}")
     public String eliminarPaciente(@PathVariable Long id) throws Exception {
@@ -53,24 +100,7 @@ public class PacienteController {
         return "redirect:/pacientes";
     }
 
-    @GetMapping("/{id}")
-    public String verHistoriaClinica(@PathVariable Long id, ModelMap model) throws Exception {
-        Paciente paciente = pacienteService.findByid(id);
-        model.addAttribute("paciente", paciente);
-        return "historia_clinica";
-    }
+    
 
-    @GetMapping("/{id}/nueva-consulta")
-    public String nuevaConsulta(@PathVariable Long id, ModelMap model) throws Exception {
-        ConsultaPediatria consulta = new ConsultaPediatria();
-        consulta.setPaciente(pacienteService.findByid(id));
-        model.addAttribute("consulta", consulta);
-        return "consulta_form";
-    }
-    /*
-    @PostMapping("/{id}/guardar-consulta")
-    public String guardarConsulta(@PathVariable Long id, @ModelAttribute ConsultaPediatria consulta) {
-        pacienteService.agregarConsulta(id, consulta);
-        return "redirect:/pacientes/" + id;
-    }*/
+   */
 }
