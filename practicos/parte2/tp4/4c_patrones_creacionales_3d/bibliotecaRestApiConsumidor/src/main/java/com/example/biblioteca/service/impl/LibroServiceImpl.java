@@ -91,16 +91,19 @@ public class LibroServiceImpl extends BaseServiceImpl<LibroDTO, Long> implements
 	public List<LibroDTO> buscarPorAutor(String nombreAutor) throws Exception {
 		List<LibroDTO> libros = findAll();
 		
+		System.out.println("SERVICIO LIBRO: CANTIDAD LIBROS: " + libros.size());
+		
 		ColeccionLibros coleccion = new ColeccionLibros(libros);
 		LibroIterator iter = coleccion.getIterator(nombreAutor);
 		
 		List<LibroDTO> resultado = new ArrayList<>();
-		
+		System.out.println("has next: " + iter.hasNext());
 		while (iter.hasNext()) {
-			resultado.add(iter.next());
+		    LibroDTO libro = iter.next();  // solo llamamos next una vez
+		    resultado.add(libro);
+		    System.out.println(libro);
 		}
-		
-		
+
 		return resultado;
 	}
 
