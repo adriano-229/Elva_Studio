@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" rel="stylesheet">
+  <title>Game Details</title>
+  <style>
+      body {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          min-height: 100vh;
+      }
+
+      .detail-container {
+          max-width: 900px;
+          margin: 2rem auto;
+      }
+
+      .detail-card {
+          border: none;
+          border-radius: 20px;
+          overflow: hidden;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .game-image {
+          width: 100%;
+          height: 400px;
+          object-fit: cover;
+      }
+
+      .detail-body {
+          padding: 2rem;
+      }
+
+      .game-title {
+          font-size: 2rem;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 1rem;
+      }
+
+      .game-description {
+          color: #666;
+          font-size: 1.1rem;
+          line-height: 1.6;
+          margin-bottom: 1.5rem;
+      }
+
+      .info-badge {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 0.5rem 1rem;
+          border-radius: 20px;
+          font-weight: 600;
+          margin-right: 0.5rem;
+          margin-bottom: 0.5rem;
+          display: inline-block;
+      }
+
+      .price-large {
+          font-size: 2.5rem;
+          font-weight: 700;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+      }
+
+      .stock-info {
+          font-size: 1.1rem;
+          color: #28a745;
+          font-weight: 600;
+      }
+
+      .back-btn {
+          background: white;
+          color: #667eea;
+          border: 2px solid #667eea;
+          border-radius: 25px;
+          padding: 0.75rem 2rem;
+          font-weight: 600;
+          transition: all 0.3s ease;
+      }
+
+      .back-btn:hover {
+          background: #667eea;
+          color: white;
+          transform: scale(1.05);
+      }
+  </style>
+</head>
+<body>
+<nav th:replace="fragments/navbar :: _navbar"></nav>
+
+<div class="container detail-container">
+  <div class="card detail-card" th:object="${videogame}">
+    <img class="game-image"
+         th:alt="${videogame.name}"
+         th:src="@{'/images/' + ${videogame.imageUrl}}"/>
+    <div class="detail-body">
+      <h1 class="game-title" th:text="${videogame.name}">Game Title</h1>
+      <p class="game-description" th:text="${videogame.description}">Game description</p>
+
+      <div class="mb-3">
+        <span class="info-badge" th:text="${videogame.studio.name}">Studio</span>
+        <span class="info-badge" th:text="${videogame.genre.name}">Genre</span>
+        <span class="info-badge" th:text="${#dates.format(videogame.releaseDate, 'MMM dd, yyyy')}">Release Date</span>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="price-large">$<span th:text="${#numbers.formatDecimal(videogame.price,1,2)}">0.00</span></div>
+        <div class="stock-info" th:classappend="${videogame.stock == 0} ? 'out-of-stock' : ''">
+          <span th:if="${videogame.stock > 0}">✓ <span th:text="${videogame.stock}">0</span> in stock</span>
+          <span th:if="${videogame.stock == 0}">✗ Out of stock</span>
+        </div>
+      </div>
+
+      <a class="btn back-btn" th:href="@{/home}">← Back to Home</a>
+    </div>
+  </div>
+</div>
+
+<script crossorigin="anonymous"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

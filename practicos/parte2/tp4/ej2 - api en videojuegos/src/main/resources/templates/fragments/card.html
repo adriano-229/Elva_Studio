@@ -1,0 +1,24 @@
+<div class="col" th:each="videogame : ${videogames}" th:fragment="_card">
+  <div class="card h-100">
+    <img class="card-img-top" style="height: 200px; object-fit: cover"
+         th:alt="${videogame.name}"
+         th:src="@{'/images/' + ${videogame.getImageUrl()}}"/>
+    <div class="card-body">
+      <h5 class="card-title" th:text="${videogame.name}">Card title</h5>
+      <p class="card-text" th:text="${videogame.description}">This is a longer card with supporting text below
+        as a natural lead-in to additional content. This content is a little bit longer.</p>
+      <div class="d-flex flex-column gap-2">
+        <div class="d-flex flex-wrap gap-2">
+                        <span class="badge text-bg-success px-3 py-2"
+                              th:text="'$' + ${#numbers.formatDecimal(videogame.price,1,2)}">Price</span>
+          <span class="text-primary" th:text="${videogame.studio.name}"></span>
+          <span class="text-info" th:text="${videogame.genre.name}"></span>
+        </div>
+        <!-- Button to see details, it uses the videogame id to navigate to the detail page -->
+        <a class="btn btn-sm btn-primary w-100" th:href="@{detail/{id}(id=${videogame.id})}">
+          See Details
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
