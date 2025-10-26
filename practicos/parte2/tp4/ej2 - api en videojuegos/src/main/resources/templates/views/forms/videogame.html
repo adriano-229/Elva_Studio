@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Videogame Form</title>
+</head>
+<body>
+
+<!-- th stands for table header cell, and DOM for Document Object Model -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mt-5">
+        <div class="card-header">
+          <h2>Videogame Form</h2>
+        </div>
+        <div class="card-body">
+
+          <form enctype="multipart/form-data" method="post"
+                th:action="@{/forms/videogame/{id}(id=${videogame.id})}" th:object="${videogame}">
+
+            <div class="mb-3">
+              <!-- the for level is linked to the input id -->
+              <label class="form-label" for="title_id">Title</label>
+              <input class="form-control" id="title_id" placeholder="Enter title" th:field="*{name}" type="text">
+              <div class="text-danger" th:errors="*{name}" th:if="${#fields.hasErrors('name')}">Name Error</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="studio_id">Studio</label>
+              <!-- th:value is linked to the value of the option, th:field is linked to the object property (Videogame beam) -->
+              <select class="form-control" id="studio_id" th:field="*{studio}">
+                <option th:selected="${videogame.genre == null}" value="">Select a genre</option>
+                <option th:each="studio : ${studios}" th:text="${studio.name}" th:value="${studio.id}">Studio Name
+                </option>
+              </select>
+              <div class="text-danger" th:errors="*{studio}" th:if="${#fields.hasErrors('studio')}">Studio Error
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="file">Image URL</label>
+              <input class="form-control" id="file" name="img" placeholder="Enter image URL" type="file">
+              <input th:field="*{imageUrl}" type="hidden">
+              <div class="text-danger" th:errors="*{imageUrl}" th:if="${#fields.hasErrors('imageUrl')}">Image URL
+                Error
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="price_id">Price</label>
+              <input class="form-control" id="price_id" placeholder="Enter price" step="0.01" th:field="*{price}"
+                     type="number">
+              <div class="text-danger" th:errors="*{price}" th:if="${#fields.hasErrors('price')}">Price Error
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="releaseDate_id">Release Date</label>
+              <input class="form-control" id="releaseDate_id" placeholder="Enter release date"
+                     th:field="*{releaseDate}"
+                     type="date">
+              <div class="text-danger" th:errors="*{releaseDate}" th:if="${#fields.hasErrors('releaseDate')}">
+                Release Date Error
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="genres_id">Genres</label>
+              <select class="form-control" id="genres_id" th:field="*{genre}">
+                <option th:selected="${videogame.genre == null}" value="">Select a genre</option>
+                <option th:each="genre : ${genres}" th:text="${genre.name}" th:value="${genre.id}">Genre Name
+                </option>
+              </select>
+              <div class="text-danger" th:errors="*{genre}" th:if="${#fields.hasErrors('genre')}">Genre Error
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="stock_id">Stock</label>
+              <input class="form-control" id="stock_id" placeholder="Enter stock" th:field="*{stock}"
+                     type="number">
+              <div class="text-danger" th:errors="*{stock}" th:if="${#fields.hasErrors('stock')}">Stock Error
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="description_id">Description</label>
+              <textarea class="form-control" id="description_id" placeholder="Enter description"
+                        rows="3" th:field="*{description}"></textarea>
+              <div class="text-danger" th:errors="*{description}" th:if="${#fields.hasErrors('description')}">
+                Description
+                Error
+              </div>
+            </div>
+
+            <div class="row m-3">
+              <div class="col md-6">
+                <button class="btn btn-outline-secondary" type="reset">Reset</button>
+              </div>
+              <div class="col md-6 text-end">
+                <button class="btn btn-success" type="submit">Submit</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script crossorigin="anonymous"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Videogame Delete</title>
+</head>
+<body>
+
+<!-- th stands for table header cell, and DOM for Document Object Model -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mt-5">
+        <div class="card-header">
+          <h2>Videogame Form</h2>
+        </div>
+        <div class="card-body">
+
+          <form method="post" th:action="@{/delete/videogame/{id}(id=${videogame.id})}" th:object="${videogame}">
+
+            <div class="mb-3">
+              <h4>Are you sure you want to delete this videogame?</h4>
+              <p><strong th:text="${videogame.name}">Videogame Name</strong></p>
+            </div>
+
+            <button class="btn btn-danger" type="submit">Delete</button>
+            <a class="btn btn-secondary" th:href="@{/crud}">Cancel</a>
+
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script crossorigin="anonymous"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
