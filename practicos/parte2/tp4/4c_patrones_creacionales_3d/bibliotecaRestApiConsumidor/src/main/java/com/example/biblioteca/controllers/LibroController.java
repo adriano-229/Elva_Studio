@@ -72,7 +72,7 @@ public class LibroController extends BaseControllerImpl<LibroDTO, LibroServiceIm
 		return viewList;
 	}
 	
-	@GetMapping("/search")
+	@GetMapping("/searchByFiltro")
 	public String search(@RequestParam String filtro, Model model) {
 		
 		try {
