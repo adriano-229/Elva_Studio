@@ -5,11 +5,23 @@ import com.adriano.library.business.persistence.repository.AuthorRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class AuthorService extends BaseService<Author, Long> {
 
+    private final AuthorRepository authorRepository;
+
     public AuthorService(AuthorRepository repository) {
         super(repository);
+        this.authorRepository = repository;
+    }
+
+    public Optional<Author> findByName(String name) {
+        List<Author> authors = authorRepository.findAllByNameIgnoreCase(name);
+        return authors.isEmpty() ? Optional.empty() : Optional.of(authors.getFirst());
+
     }
 
     @Override

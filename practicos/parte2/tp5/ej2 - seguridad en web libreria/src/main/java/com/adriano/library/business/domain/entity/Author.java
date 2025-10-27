@@ -1,9 +1,13 @@
 package com.adriano.library.business.domain.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -12,6 +16,6 @@ public class Author extends BaseEntity {
 
     private String name;
 
-    @ManyToOne(optional = false)
-    private Book book;
+    @ManyToMany(mappedBy = "authors")
+    private List<Book> books;
 }

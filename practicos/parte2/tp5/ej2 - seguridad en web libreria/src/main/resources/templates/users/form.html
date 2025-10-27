@@ -64,14 +64,14 @@
           <label class="form-label" for="role">
             <i class="bi bi-shield-check me-1"></i>Role
           </label>
-          <select class="form-select" id="role" required th:field="*{role}">
-            <option value="">Select a role...</option>
-            <option th:each="role : ${T(com.adriano.library.business.domain.enums.Role).values()}"
-                    th:text="${role}"
-                    th:value="${role}">USER
+          <select class="form-select" id="role" required th:field="*{user_role}">
+            <option value="">Select a user_role...</option>
+            <option th:each="user_role : ${T(com.adriano.library.business.domain.enums.Role).values()}"
+                    th:text="${user_role}"
+                    th:value="${user_role}">USER
             </option>
           </select>
-          <div class="invalid-feedback">Please select a role.</div>
+          <div class="invalid-feedback">Please select a user_role.</div>
         </div>
 
         <div class="d-flex gap-2 mt-4">

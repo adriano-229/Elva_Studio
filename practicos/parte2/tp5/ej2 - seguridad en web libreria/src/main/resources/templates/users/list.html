@@ -67,8 +67,8 @@
             <td><strong th:text="${user.email}">user@example.com</strong></td>
             <td>
                                     <span class="badge"
-                                          th:classappend="${user.role == T(com.adriano.library.business.domain.enums.Role).ADMIN} ? 'bg-danger' : 'bg-primary'"
-                                          th:text="${user.role}">USER</span>
+                                          th:classappend="${user.user_role == T(com.adriano.library.business.domain.enums.Role).ADMIN} ? 'bg-danger' : 'bg-primary'"
+                                          th:text="${user.user_role}">USER</span>
             </td>
             <td th:text="${#lists.size(user.loans)}">0</td>
             <td>

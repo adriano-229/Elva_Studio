@@ -40,14 +40,4 @@ public class Loan extends BaseEntity {
             return LoanStatus.ACTIVE;
         }
     }
-
-    @Transient
-    public boolean isActive() {
-        return getStatus() == LoanStatus.ACTIVE;
-    }
-
-    @Transient
-    public boolean isReserved() {
-        return getStatus() == LoanStatus.RESERVED;
-    }
 }

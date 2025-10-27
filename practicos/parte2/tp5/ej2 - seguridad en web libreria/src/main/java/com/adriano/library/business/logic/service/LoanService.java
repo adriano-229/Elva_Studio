@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static com.adriano.library.business.domain.enums.LoanStatus.RETURNED;
+
 @Service
 public class LoanService extends BaseService<Loan, Long> {
 
@@ -140,7 +142,7 @@ public class LoanService extends BaseService<Loan, Long> {
         return (int) loans.stream()
                 .filter(l -> l.getBook().getId().equals(bookId))
                 .filter(l -> !l.getId().equals(excludeLoanId))
-                .filter(l -> l.getStatus() != com.adriano.library.business.domain.enums.LoanStatus.RETURNED)
+                .filter(l -> l.getStatus() != RETURNED)
                 .count();
     }
 

@@ -7,6 +7,8 @@
 
 -- Drop tables if they exist (in correct order due to foreign keys)
 DROP TABLE IF EXISTS loan;
+DROP TABLE IF EXISTS book_authors;
+DROP TABLE IF EXISTS book_publishers;
 DROP TABLE IF EXISTS author;
 DROP TABLE IF EXISTS publisher;
 DROP TABLE IF EXISTS book;
@@ -20,9 +22,9 @@ CREATE TABLE user
     id       BIGINT AUTO_INCREMENT PRIMARY KEY,
     email    VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL COMMENT 'BCrypt encoded password',
-    role     VARCHAR(50)  NOT NULL DEFAULT 'USER' COMMENT 'USER or ADMIN',
+    user_role     VARCHAR(50)  NOT NULL DEFAULT 'USER' COMMENT 'USER or ADMIN',
     INDEX idx_email (email),
-    INDEX idx_role (role)
+    INDEX idx_role (user_role)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -32,14 +34,16 @@ CREATE TABLE user
 -- ================================================
 CREATE TABLE book
 (
-    id            BIGINT AUTO_INCREMENT PRIMARY KEY,
-    title         VARCHAR(255) NOT NULL,
-    isbn          VARCHAR(50)  NOT NULL UNIQUE,
-    total_copies  INT          NOT NULL DEFAULT 0,
-    loaned_copies INT          NOT NULL DEFAULT 0,
-    image_path    VARCHAR(500) COMMENT 'Path to book cover image',
+    id               BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title            VARCHAR(255) NOT NULL,
+    isbn             VARCHAR(50)  NOT NULL UNIQUE,
+    total_copies     INT          NOT NULL DEFAULT 0,
+    loaned_copies    INT          NOT NULL DEFAULT 0,
+    publication_year INT COMMENT 'Year of publication',
+    image_path       VARCHAR(500) COMMENT 'Path to book cover image',
     INDEX idx_isbn (isbn),
     INDEX idx_title (title),
+    INDEX idx_publication_year (publication_year),
     CHECK (total_copies >= 0),
     CHECK (loaned_copies >= 0),
     CHECK (loaned_copies <= total_copies)
@@ -52,12 +56,9 @@ CREATE TABLE book
 -- ================================================
 CREATE TABLE author
 (
-    id      BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name    VARCHAR(255) NOT NULL,
-    book_id BIGINT       NOT NULL,
-    FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE,
-    INDEX idx_name (name),
-    INDEX idx_book_id (book_id)
+    id   BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    INDEX idx_name (name)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -67,12 +68,41 @@ CREATE TABLE author
 -- ================================================
 CREATE TABLE publisher
 (
-    id      BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name    VARCHAR(255) NOT NULL,
-    book_id BIGINT       NOT NULL,
+    id   BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    INDEX idx_name (name)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
+
+-- ================================================
+-- TABLE: book_authors (Many-to-Many junction table)
+-- ================================================
+CREATE TABLE book_authors
+(
+    book_id    BIGINT NOT NULL,
+    authors_id BIGINT NOT NULL,
+    PRIMARY KEY (book_id, authors_id),
     FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE,
-    INDEX idx_name (name),
-    INDEX idx_book_id (book_id)
+    FOREIGN KEY (authors_id) REFERENCES author (id) ON DELETE CASCADE,
+    INDEX idx_book_id (book_id),
+    INDEX idx_authors_id (authors_id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
+
+-- ================================================
+-- TABLE: book_publishers (Many-to-Many junction table)
+-- ================================================
+CREATE TABLE book_publishers
+(
+    book_id        BIGINT NOT NULL,
+    publishers_id BIGINT NOT NULL,
+    PRIMARY KEY (book_id, publishers_id),
+    FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE,
+    FOREIGN KEY (publishers_id) REFERENCES publisher (id) ON DELETE CASCADE,
+    INDEX idx_book_id (book_id),
+    INDEX idx_publishers_id (publishers_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -106,77 +136,101 @@ CREATE TABLE loan
 
 -- Insert Users
 -- Password for all users is: "password123" (BCrypt encoded)
-INSERT INTO user (email, password, role)
-VALUES ('admin@library.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ADMIN'),
-       ('librarian@library.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ADMIN'),
-       ('user1@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'USER'),
-       ('user2@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'USER'),
-       ('john.doe@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'USER'),
-       ('jane.smith@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'USER');
+INSERT INTO user (email, password, user_role)
+VALUES ('admin@library.com', '$2a$12$L40Y7nb0gE1rN5yq9EqsfOyxaahUweuXvyGKqaU37UkjkxhfGym1m', 'ADMIN'),
+       ('librarian@library.com', '$2a$12$L40Y7nb0gE1rN5yq9EqsfOyxaahUweuXvyGKqaU37UkjkxhfGym1m', 'ADMIN'),
+       ('user1@example.com', '$2a$12$L40Y7nb0gE1rN5yq9EqsfOyxaahUweuXvyGKqaU37UkjkxhfGym1m', 'USER'),
+       ('user2@example.com', '$2a$12$L40Y7nb0gE1rN5yq9EqsfOyxaahUweuXvyGKqaU37UkjkxhfGym1m', 'USER'),
+       ('john.doe@example.com', '$2a$12$L40Y7nb0gE1rN5yq9EqsfOyxaahUweuXvyGKqaU37UkjkxhfGym1m', 'USER'),
+       ('jane.smith@example.com', '$2a$12$L40Y7nb0gE1rN5yq9EqsfOyxaahUweuXvyGKqaU37UkjkxhfGym1m', 'USER');
 
 -- Insert Books
-INSERT INTO book (title, isbn, total_copies, loaned_copies, image_path)
-VALUES ('The Great Gatsby', '978-0-7432-7356-5', 5, 2, NULL),
-       ('To Kill a Mockingbird', '978-0-06-112008-4', 3, 1, NULL),
-       ('1984', '978-0-452-28423-4', 4, 0, NULL),
-       ('Pride and Prejudice', '978-0-14-143951-8', 6, 3, NULL),
-       ('The Catcher in the Rye', '978-0-316-76948-0', 2, 2, NULL),
-       ('Animal Farm', '978-0-452-28424-1', 5, 1, NULL),
-       ('Brave New World', '978-0-06-085052-4', 3, 0, NULL),
-       ('The Hobbit', '978-0-547-92822-7', 8, 4, NULL),
-       ('Harry Potter and the Philosopher Stone', '978-0-439-70818-8', 10, 5, NULL),
-       ('The Lord of the Rings', '978-0-544-00341-5', 7, 2, NULL);
+INSERT INTO book (title, isbn, total_copies, loaned_copies, publication_year, image_path)
+VALUES ('The Great Gatsby', '978-0-7432-7356-5', 5, 2, 1925, NULL),
+       ('To Kill a Mockingbird', '978-0-06-112008-4', 3, 1, 1960, NULL),
+       ('1984', '978-0-452-28423-4', 4, 0, 1949, NULL),
+       ('Pride and Prejudice', '978-0-14-143951-8', 6, 3, 1813, NULL),
+       ('The Catcher in the Rye', '978-0-316-76948-0', 2, 2, 1951, NULL),
+       ('Animal Farm', '978-0-452-28424-1', 5, 1, 1945, NULL),
+       ('Brave New World', '978-0-06-085052-4', 3, 0, 1932, NULL),
+       ('The Hobbit', '978-0-547-92822-7', 8, 4, 1937, NULL),
+       ('Harry Potter and the Philosopher Stone', '978-0-439-70818-8', 10, 5, 1997, NULL),
+       ('The Lord of the Rings', '978-0-544-00341-5', 7, 2, 1954, NULL);
 
--- Insert Authors (Many-to-One with Book)
-INSERT INTO author (name, book_id)
-VALUES
--- The Great Gatsby
-('F. Scott Fitzgerald', 1),
--- To Kill a Mockingbird
-('Harper Lee', 2),
--- 1984
-('George Orwell', 3),
--- Pride and Prejudice
-('Jane Austen', 4),
--- The Catcher in the Rye
-('J.D. Salinger', 5),
--- Animal Farm
-('George Orwell', 6),
--- Brave New World
-('Aldous Huxley', 7),
--- The Hobbit
-('J.R.R. Tolkien', 8),
--- Harry Potter
-('J.K. Rowling', 9),
--- The Lord of the Rings
-('J.R.R. Tolkien', 10);
+-- Insert Authors (independent entities for Many-to-Many)
+INSERT INTO author (name)
+VALUES ('F. Scott Fitzgerald'),    -- id: 1
+       ('Harper Lee'),             -- id: 2
+       ('George Orwell'),          -- id: 3
+       ('Jane Austen'),            -- id: 4
+       ('J.D. Salinger'),          -- id: 5
+       ('Aldous Huxley'),          -- id: 6
+       ('J.R.R. Tolkien'),         -- id: 7
+       ('J.K. Rowling');           -- id: 8
 
--- Insert Publishers (Many-to-One with Book)
-INSERT INTO publisher (name, book_id)
+-- Insert Publishers (independent entities for Many-to-Many)
+INSERT INTO publisher (name)
+VALUES ('Scribner'),                   -- id: 1
+       ('J.B. Lippincott & Co.'),      -- id: 2
+       ('Secker & Warburg'),           -- id: 3
+       ('T. Egerton'),                 -- id: 4
+       ('Little, Brown and Company'),  -- id: 5
+       ('Chatto & Windus'),            -- id: 6
+       ('George Allen & Unwin'),       -- id: 7
+       ('HarperCollins'),              -- id: 8
+       ('Bloomsbury'),                 -- id: 9
+       ('Scholastic');                 -- id: 10
+
+-- Insert Book-Author relationships (Many-to-Many junction table)
+INSERT INTO book_authors (book_id, authors_id)
 VALUES
--- The Great Gatsby
-('Scribner', 1),
--- To Kill a Mockingbird
-('J.B. Lippincott & Co.', 2),
--- 1984
-('Secker & Warburg', 3),
--- Pride and Prejudice
-('T. Egerton', 4),
--- The Catcher in the Rye
-('Little, Brown and Company', 5),
--- Animal Farm
-('Secker & Warburg', 6),
--- Brave New World
-('Chatto & Windus', 7),
--- The Hobbit
-('George Allen & Unwin', 8),
-('HarperCollins', 8),
--- Harry Potter
-('Bloomsbury', 9),
-('Scholastic', 9),
--- The Lord of the Rings
-('George Allen & Unwin', 10),
-('HarperCollins', 10);
+-- The Great Gatsby - F. Scott Fitzgerald
+(1, 1),
+-- To Kill a Mockingbird - Harper Lee
+(2, 2),
+-- 1984 - George Orwell
+(3, 3),
+-- Pride and Prejudice - Jane Austen
+(4, 4),
+-- The Catcher in the Rye - J.D. Salinger
+(5, 5),
+-- Animal Farm - George Orwell
+(6, 3),
+-- Brave New World - Aldous Huxley
+(7, 6),
+-- The Hobbit - J.R.R. Tolkien
+(8, 7),
+-- Harry Potter - J.K. Rowling
+(9, 8),
+-- The Lord of the Rings - J.R.R. Tolkien
+(10, 7);
+
+-- Insert Book-Publisher relationships (Many-to-Many junction table)
+INSERT INTO book_publishers (book_id, publishers_id)
+VALUES
+-- The Great Gatsby - Scribner
+(1, 1),
+-- To Kill a Mockingbird - J.B. Lippincott & Co.
+(2, 2),
+-- 1984 - Secker & Warburg
+(3, 3),
+-- Pride and Prejudice - T. Egerton
+(4, 4),
+-- The Catcher in the Rye - Little, Brown and Company
+(5, 5),
+-- Animal Farm - Secker & Warburg
+(6, 3),
+-- Brave New World - Chatto & Windus
+(7, 6),
+-- The Hobbit - George Allen & Unwin, HarperCollins
+(8, 7),
+(8, 8),
+-- Harry Potter - Bloomsbury, Scholastic
+(9, 9),
+(9, 10),
+-- The Lord of the Rings - George Allen & Unwin, HarperCollins
+(10, 7),
+(10, 8);
 
 -- Insert Loans
 INSERT INTO loan (loan_date, return_date, status, book_id, user_id)
@@ -244,15 +298,16 @@ FROM loan;
 SELECT b.id,
        b.title,
        b.isbn,
+       b.publication_year,
        b.total_copies,
        b.loaned_copies,
        (b.total_copies - b.loaned_copies) AS available_copies,
-       COUNT(DISTINCT a.id)               AS num_authors,
-       COUNT(DISTINCT p.id)               AS num_publishers
+       COUNT(DISTINCT ba.authors_id)      AS num_authors,
+       COUNT(DISTINCT bp.publishers_id)   AS num_publishers
 FROM book b
-         LEFT JOIN author a ON b.id = a.book_id
-         LEFT JOIN publisher p ON b.id = p.book_id
-GROUP BY b.id, b.title, b.isbn, b.total_copies, b.loaned_copies
+         LEFT JOIN book_authors ba ON b.id = ba.book_id
+         LEFT JOIN book_publishers bp ON b.id = bp.book_id
+GROUP BY b.id, b.title, b.isbn, b.publication_year, b.total_copies, b.loaned_copies
 ORDER BY b.title;
 
 -- ================================================
@@ -265,15 +320,16 @@ ORDER BY b.title;
 --    - user1@example.com, user2@example.com, etc. (USER)
 --
 -- 3. Relationships:
---    - author.book_id -> book.id (Many-to-One)
---    - publisher.book_id -> book.id (Many-to-One)
+--    - book_authors (Many-to-Many junction table)
+--    - book_publishers (Many-to-Many junction table)
 --    - loan.book_id -> book.id (Many-to-One)
 --    - loan.user_id -> user.id (Many-to-One)
 --
 -- 4. Sample data includes:
 --    - 6 users (2 admins, 4 regular users)
 --    - 10 books (classic literature + fantasy)
---    - Authors and publishers for each book
+--    - 8 authors (some books share authors)
+--    - 10 publishers (some books have multiple publishers)
 --    - 23 loans (active, reserved, and returned)
 --
 -- 5. Book availability is tracked via loaned_copies
