@@ -5,11 +5,20 @@ import com.adriano.library.business.persistence.repository.BookRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BookService extends BaseService<Book, Long> {
 
+    private final BookRepository bookRepository;
+
     public BookService(BookRepository repository) {
         super(repository);
+        this.bookRepository = repository;
+    }
+
+    public List<Book> findAllByPublicationYear(int publicationYear) {
+        return bookRepository.findAllByPublicationYearOrderByPublicationYear(publicationYear);
     }
 
     @Override

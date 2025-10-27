@@ -30,7 +30,7 @@ This document explains the **3-layer security approach** implemented in the Libr
 
 **File:** `SecurityConfig.java`
 
-The **first barrier** - controls which URLs are accessible based on role.
+The **first barrier** - controls which URLs are accessible based on user_role.
 
 ```java
 .authorizeHttpRequests(auth ->auth
@@ -208,7 +208,7 @@ The **third barrier** - hides UI elements users shouldn't see using `sec:authori
 **Why at View level?**
 
 - ✅ **Better UX** - users don't see options they can't use
-- ✅ **Reduces confusion** - cleaner interface tailored to role
+- ✅ **Reduces confusion** - cleaner interface tailored to user_role
 - ✅ **Not a security measure alone** - just UI polish (real security is in Layers 1 & 2)
 
 ---
@@ -277,7 +277,7 @@ Even if an attacker:
 ### Views (UI Security)
 
 - ✅ `home.html` - Role-based card visibility
-- ✅ `loans/form.html` - Dynamic user selector based on role
+- ✅ `loans/form.html` - Dynamic user selector based on user_role
 
 ---
 

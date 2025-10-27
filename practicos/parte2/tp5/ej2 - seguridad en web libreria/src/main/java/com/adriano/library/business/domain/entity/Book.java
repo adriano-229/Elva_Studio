@@ -16,14 +16,16 @@ public class Book extends BaseEntity {
     private String isbn;
     private Integer totalCopies;
     private Integer loanedCopies;
+    private Integer publicationYear;
     private String imagePath;
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany
     private List<Author> authors = new ArrayList<>();
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany
     private List<Publisher> publishers = new ArrayList<>();
 
+    // Transient means not persisted in DB - calculated on the fly
     @Transient
     public Integer getAvailableCopies() {
         return totalCopies - loanedCopies;

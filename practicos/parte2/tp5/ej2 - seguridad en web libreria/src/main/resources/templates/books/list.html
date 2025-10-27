@@ -48,10 +48,58 @@
 
     <!-- Search -->
     <div class="card mb-3">
+      <div class="card-header">
+        <h5 class="mb-0"><i class="bi bi-funnel me-2"></i>Search Books (Strategy Pattern)</h5>
+      </div>
+      <div class="card-body">
+        <form action="/books/search" method="get">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label" for="searchType">Search By</label>
+              <select class="form-select" id="searchType" name="searchType" required>
+                <option value="">-- Select search type --</option>
+                <option th:selected="${searchType == 'author'}" value="author">
+                  <i class="bi bi-person"></i> Author
+                </option>
+                <option th:selected="${searchType == 'publisher'}" value="publisher">
+                  <i class="bi bi-building"></i> Publisher
+                </option>
+                <option th:selected="${searchType == 'year'}" value="year">
+                  <i class="bi bi-calendar"></i> Publication Year
+                </option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="query">Search Query</label>
+              <input class="form-control" id="query" name="query"
+                     placeholder="Enter search term..." required
+                     th:value="${query}" type="text">
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+              <button class="btn btn-primary w-100" type="submit">
+                <i class="bi bi-search me-1"></i>Search
+              </button>
+            </div>
+          </div>
+        </form>
+        <div class="mt-2" th:if="${query != null}">
+          <span class="badge bg-info">
+            <i class="bi bi-info-circle me-1"></i>
+            Showing results for: <strong th:text="${searchType}"></strong> = "<span th:text="${query}"></span>"
+          </span>
+          <a class="btn btn-sm btn-outline-secondary ms-2" href="/books">
+            <i class="bi bi-x-circle me-1"></i>Clear Search
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Table Search -->
+    <div class="card mb-3">
       <div class="card-body">
         <div class="input-group">
-          <span class="input-group-text"><i class="bi bi-search"></i></span>
-          <input class="form-control" id="tableSearch" placeholder="Search books..." type="text">
+          <span class="input-group-text"><i class="bi bi-filter"></i></span>
+          <input class="form-control" id="tableSearch" placeholder="Quick filter table..." type="text">
         </div>
       </div>
     </div>
@@ -65,6 +113,7 @@
             <th><i class="bi bi-hash me-1"></i>ID</th>
             <th><i class="bi bi-book me-1"></i>Title</th>
             <th><i class="bi bi-upc me-1"></i>ISBN</th>
+            <th><i class="bi bi-calendar me-1"></i>Year</th>
             <th><i class="bi bi-stack me-1"></i>Total</th>
             <th><i class="bi bi-arrow-left-right me-1"></i>Loaned</th>
             <th><i class="bi bi-check-circle me-1"></i>Available</th>
@@ -77,6 +126,7 @@
             <td th:text="${book.id}">1</td>
             <td><strong th:text="${book.title}">Book Title</strong></td>
             <td th:text="${book.isbn}">ISBN</td>
+            <td th:text="${book.publicationYear}">1949</td>
             <td th:text="${book.totalCopies}">10</td>
             <td th:text="${book.loanedCopies}">3</td>
             <td>
@@ -113,7 +163,7 @@
             </td>
           </tr>
           <tr th:if="${#lists.isEmpty(items)}">
-            <td class="text-center py-5" colspan="8">
+            <td class="text-center py-5" colspan="9">
               <i class="bi bi-inbox" style="font-size: 3rem; color: #ccc;"></i>
               <p class="mt-3 text-muted">No books found. Add your first book!</p>
               <a class="btn btn-primary" href="/books/create">

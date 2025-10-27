@@ -2,13 +2,13 @@ package com.adriano.library.controller.view;
 
 import com.adriano.library.business.domain.entity.Book;
 import com.adriano.library.business.logic.service.BookService;
+import com.adriano.library.business.logic.strategy.BookSearchContext;
+import com.adriano.library.business.logic.strategy.SearchType;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -25,8 +25,11 @@ import java.util.UUID;
 @PreAuthorize("hasRole('ADMIN')")
 public class BookController extends BaseController<Book> {
 
-    public BookController(BookService service) {
+    private final BookSearchContext searchContext;
+
+    public BookController(BookService service, BookSearchContext searchContext) {
         super(service, "books");
+        this.searchContext = searchContext;
     }
 
     private static String getString(MultipartFile file, String contentType, Set<String> allowedTypes) throws IOException {
@@ -71,10 +74,7 @@ public class BookController extends BaseController<Book> {
 
         // If editing and no new file provided, preserve existing imagePath
         if (book.getId() != null && !hasNewFile) {
-            Book existing = service.findById(book.getId()).orElse(null);
-            if (existing != null) {
-                book.setImagePath(existing.getImagePath());
-            }
+            service.findById(book.getId()).ifPresent(existing -> book.setImagePath(existing.getImagePath()));
         }
 
         if (hasNewFile) {
@@ -108,5 +108,26 @@ public class BookController extends BaseController<Book> {
         }
 
         return super.save(book);
+    }
+
+    @GetMapping("/search")
+    @PreAuthorize("permitAll()")
+    public String search(
+            @RequestParam("searchType") String searchTypeStr,
+            @RequestParam("query") String query,
+            Model model) {
+
+        try {
+            SearchType searchType = SearchType.valueOf(searchTypeStr.toUpperCase());
+            var books = searchContext.search(searchType, query);
+            model.addAttribute("items", books);
+            model.addAttribute("searchType", searchTypeStr);
+            model.addAttribute("query", query);
+            return viewBasePath + "/list";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("items", service.findAll());
+            model.addAttribute("error", "Invalid search type");
+            return viewBasePath + "/list";
+        }
     }
 }
