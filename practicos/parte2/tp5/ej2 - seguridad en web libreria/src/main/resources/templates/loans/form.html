@@ -97,7 +97,8 @@
               </option>
             </select>
             <!-- Hidden field to submit user for non-admin -->
-            <input sec:authorize="hasRole('USER') and !hasRole('ADMIN')" th:field="*{user.id}" th:value="${currentUserId}"
+            <input sec:authorize="hasRole('USER') and !hasRole('ADMIN')" th:field="*{user.id}"
+                   th:value="${currentUserId}"
                    type="hidden"/>
             <div class="invalid-feedback">
               Please select a user.
