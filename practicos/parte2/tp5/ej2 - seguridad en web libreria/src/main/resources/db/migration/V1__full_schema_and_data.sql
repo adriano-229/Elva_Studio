@@ -19,12 +19,12 @@ DROP TABLE IF EXISTS user;
 -- ================================================
 CREATE TABLE user
 (
-    id       BIGINT AUTO_INCREMENT PRIMARY KEY,
-    email    VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL COMMENT 'BCrypt encoded password',
-    user_role     VARCHAR(50)  NOT NULL DEFAULT 'USER' COMMENT 'USER or ADMIN',
-    INDEX idx_email (email),
-    INDEX idx_role (user_role)
+    id        BIGINT AUTO_INCREMENT PRIMARY KEY,
+    email     VARCHAR(255) NOT NULL UNIQUE,
+    password  VARCHAR(255) NOT NULL COMMENT 'BCrypt encoded password',
+    user_role VARCHAR(50)  NOT NULL DEFAULT 'USER' COMMENT 'USER or ADMIN',
+    INDEX     idx_email (email),
+    INDEX     idx_role (user_role)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -41,9 +41,9 @@ CREATE TABLE book
     loaned_copies    INT          NOT NULL DEFAULT 0,
     publication_year INT COMMENT 'Year of publication',
     image_path       VARCHAR(500) COMMENT 'Path to book cover image',
-    INDEX idx_isbn (isbn),
-    INDEX idx_title (title),
-    INDEX idx_publication_year (publication_year),
+    INDEX            idx_isbn (isbn),
+    INDEX            idx_title (title),
+    INDEX            idx_publication_year (publication_year),
     CHECK (total_copies >= 0),
     CHECK (loaned_copies >= 0),
     CHECK (loaned_copies <= total_copies)
@@ -56,8 +56,8 @@ CREATE TABLE book
 -- ================================================
 CREATE TABLE author
 (
-    id   BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    id    BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name  VARCHAR(255) NOT NULL,
     INDEX idx_name (name)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -68,8 +68,8 @@ CREATE TABLE author
 -- ================================================
 CREATE TABLE publisher
 (
-    id   BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    id    BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name  VARCHAR(255) NOT NULL,
     INDEX idx_name (name)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -85,8 +85,8 @@ CREATE TABLE book_authors
     PRIMARY KEY (book_id, authors_id),
     FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE,
     FOREIGN KEY (authors_id) REFERENCES author (id) ON DELETE CASCADE,
-    INDEX idx_book_id (book_id),
-    INDEX idx_authors_id (authors_id)
+    INDEX      idx_book_id (book_id),
+    INDEX      idx_authors_id (authors_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -96,13 +96,13 @@ CREATE TABLE book_authors
 -- ================================================
 CREATE TABLE book_publishers
 (
-    book_id        BIGINT NOT NULL,
+    book_id       BIGINT NOT NULL,
     publishers_id BIGINT NOT NULL,
     PRIMARY KEY (book_id, publishers_id),
     FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE,
     FOREIGN KEY (publishers_id) REFERENCES publisher (id) ON DELETE CASCADE,
-    INDEX idx_book_id (book_id),
-    INDEX idx_publishers_id (publishers_id)
+    INDEX         idx_book_id (book_id),
+    INDEX         idx_publishers_id (publishers_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -120,11 +120,11 @@ CREATE TABLE loan
     user_id     BIGINT      NOT NULL,
     FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE,
-    INDEX idx_loan_date (loan_date),
-    INDEX idx_return_date (return_date),
-    INDEX idx_status (status),
-    INDEX idx_book_id (book_id),
-    INDEX idx_user_id (user_id),
+    INDEX       idx_loan_date (loan_date),
+    INDEX       idx_return_date (return_date),
+    INDEX       idx_status (status),
+    INDEX       idx_book_id (book_id),
+    INDEX       idx_user_id (user_id),
     CHECK (return_date > loan_date)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -159,27 +159,29 @@ VALUES ('The Great Gatsby', '978-0-7432-7356-5', 5, 2, 1925, NULL),
 
 -- Insert Authors (independent entities for Many-to-Many)
 INSERT INTO author (name)
-VALUES ('F. Scott Fitzgerald'),    -- id: 1
-       ('Harper Lee'),             -- id: 2
-       ('George Orwell'),          -- id: 3
-       ('Jane Austen'),            -- id: 4
-       ('J.D. Salinger'),          -- id: 5
-       ('Aldous Huxley'),          -- id: 6
-       ('J.R.R. Tolkien'),         -- id: 7
-       ('J.K. Rowling');           -- id: 8
+VALUES ('F. Scott Fitzgerald'), -- id: 1
+       ('Harper Lee'),          -- id: 2
+       ('George Orwell'),       -- id: 3
+       ('Jane Austen'),         -- id: 4
+       ('J.D. Salinger'),       -- id: 5
+       ('Aldous Huxley'),       -- id: 6
+       ('J.R.R. Tolkien'),      -- id: 7
+       ('J.K. Rowling');
+-- id: 8
 
 -- Insert Publishers (independent entities for Many-to-Many)
 INSERT INTO publisher (name)
-VALUES ('Scribner'),                   -- id: 1
-       ('J.B. Lippincott & Co.'),      -- id: 2
-       ('Secker & Warburg'),           -- id: 3
-       ('T. Egerton'),                 -- id: 4
-       ('Little, Brown and Company'),  -- id: 5
-       ('Chatto & Windus'),            -- id: 6
-       ('George Allen & Unwin'),       -- id: 7
-       ('HarperCollins'),              -- id: 8
-       ('Bloomsbury'),                 -- id: 9
-       ('Scholastic');                 -- id: 10
+VALUES ('Scribner'),                  -- id: 1
+       ('J.B. Lippincott & Co.'),     -- id: 2
+       ('Secker & Warburg'),          -- id: 3
+       ('T. Egerton'),                -- id: 4
+       ('Little, Brown and Company'), -- id: 5
+       ('Chatto & Windus'),           -- id: 6
+       ('George Allen & Unwin'),      -- id: 7
+       ('HarperCollins'),             -- id: 8
+       ('Bloomsbury'),                -- id: 9
+       ('Scholastic');
+-- id: 10
 
 -- Insert Book-Author relationships (Many-to-Many junction table)
 INSERT INTO book_authors (book_id, authors_id)

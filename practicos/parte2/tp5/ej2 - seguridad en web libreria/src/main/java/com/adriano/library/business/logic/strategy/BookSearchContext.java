@@ -21,7 +21,7 @@ public class BookSearchContext {
     }
 
     public List<Book> search(SearchType type, String query) {
-        return switch(type) {
+        return switch (type) {
             case AUTHOR -> authorStrategy.search(query);
             case PUBLISHER -> publisherStrategy.search(query);
             case YEAR -> yearStrategy.search(query);
