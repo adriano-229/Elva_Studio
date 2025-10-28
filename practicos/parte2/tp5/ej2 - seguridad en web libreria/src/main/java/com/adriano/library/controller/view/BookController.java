@@ -1,7 +1,6 @@
 package com.adriano.library.controller.view;
 
 import com.adriano.library.business.domain.entity.Book;
-import com.adriano.library.business.logic.facade.BookDTO;
 import com.adriano.library.business.logic.facade.BookFacade;
 import com.adriano.library.business.logic.service.AuthorService;
 import com.adriano.library.business.logic.service.BookService;
@@ -28,28 +27,11 @@ import java.util.UUID;
 @PreAuthorize("hasRole('ADMIN')")
 public class BookController extends BaseController<Book> {
 
-    private final AuthorService authorService;
     private final BookSearchContext searchContext;
-    private final BookFacade bookFacade;
 
     public BookController(BookService service, AuthorService authorService, BookSearchContext searchContext, BookFacade bookFacade) {
         super(service, "books");
-        this.authorService = authorService;
         this.searchContext = searchContext;
-        this.bookFacade = bookFacade;
-    }
-
-    @GetMapping("/createFacade")
-    public String createFacade(Model model) {
-        model.addAttribute("bookDTO", new BookDTO());
-        model.addAttribute("authors", authorService.findAll());
-        return viewBasePath + "/form";
-    }
-
-    @PostMapping
-    public String createFacade(@ModelAttribute("book") BookDTO dto) {
-        bookFacade.create(dto);
-        return "redirect:/" + viewBasePath;
     }
 
     private static String getString(MultipartFile file, String contentType, Set<String> allowedTypes) throws IOException {
