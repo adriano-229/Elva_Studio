@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="df3c1714-2391-446a-a965-fdb2845e6da8" name="Changes" comment="Remove unused AuthorService and BookFacade dependencies from BookController; clean up createFacade methods">
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/SECURITY_IMPLEMENTATION.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/LibraryApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/domain/entity/Author.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/domain/entity/BaseEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/domain/entity/Book.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/domain/entity/Loan.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/domain/entity/Publisher.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/domain/entity/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/domain/enums/LoanStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/domain/enums/UserRole.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/facade/AuthorDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/facade/AuthorMapperHelper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/facade/BookDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/facade/BookFacade.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/facade/BookMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/service/AuthorService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/service/BaseService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/service/BookService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/service/ChangePasswordService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/service/CrudHooks.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/service/CustomUserDetailsService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/service/LoanService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/service/PublisherService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/service/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/strategy/BookSearchByAuthorStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/strategy/BookSearchByPublicationYearStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/strategy/BookSearchByPublisherStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/strategy/BookSearchContext.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/strategy/BookSearchStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/logic/strategy/SearchType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/persistence/repository/AuthorRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/persistence/repository/BaseRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/persistence/repository/BookRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/persistence/repository/LoanRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/persistence/repository/PublisherRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/business/persistence/repository/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/config/FlywayConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/config/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/config/WebConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/controller/view/AuthorController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/controller/view/BaseController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/controller/view/BookController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/controller/view/ChangePasswordController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/controller/view/HomeController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/controller/view/LoanController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/controller/view/LoginController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/controller/view/PublisherController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/controller/view/UserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/util/DataInitializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/java/com/adriano/library/util/GenHash.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/resources/db/migration/V1__full_schema_and_data.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/resources/static/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/resources/static/js/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/resources/templates/authors/form.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/resources/templates/authors/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/resources/templates/books/form.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/resources/templates/books/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/resources/templates/home.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/resources/templates/loans/form.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/resources/templates/loans/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/resources/templates/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/resources/templates/publishers/form.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/resources/templates/publishers/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/resources/templates/users/change-password.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/resources/templates/users/form.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/resources/templates/users/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/uploads/books/2dfd8c34-41a7-4d3c-bb42-5aad7a773ca4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/uploads/books/406997ea-8ce3-4087-9d5a-52616585ced1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/uploads/books/5feaffee-4c8e-4958-b74f-19c0cc326e2d.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/uploads/books/83bfa471-7abe-4bdf-99ab-05212acd38f6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/uploads/books/8635c560-119b-4964-8404-d384579b6469.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/uploads/books/a8640643-e503-4815-9e74-2e811d874d27.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/uploads/books/ad95b5b6-6229-49df-879e-681ff2e600ec.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/uploads/books/b12bb02d-c06f-4f9a-9c40-15cfc26febd7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/uploads/books/c61dbd2b-1b27-4e59-a37f-e0970f5e540a.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/main/uploads/books/d796ad53-9d51-4a57-9821-1180c50e7b3b.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ej2 - seguridad en web libreria/src/test/java/com/adriano/library/LibraryApplicationTests.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="module" />
+      <option value="repository" />
+    </option>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;adriano-229&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:adriano-229/Elva_Studio.git&quot;,
+    &quot;accountId&quot;: &quot;90582b1b-05dc-4c51-adb1-357f51501044&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="34WxAt6AtCeiF32ZIFcwJu5D7WW" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="openDirectoriesWithSingleClick" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="sortKey" value="BY_TIME_DESCENDING" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.GenHash.executor": "Run",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.LibraryApplication.executor": "Run",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/adriano/repos/Elva_Studio/practicos/parte2/tp5/Ejercicio5f)",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.appearance",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.adriano.library.business.logic.facade" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/src/main/java/com/adriano/library" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/db.migration" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.adriano.library.business.logic.facade" />
+      <recent name="com.adriano.library.business.logic.strategy" />
+      <recent name="com.adriano.library.util" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.LibraryApplication">
+    <configuration name="GenHash" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.adriano.library.util.GenHash" />
+      <module name="library" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.adriano.library.util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LibraryApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="library" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.adriano.library.LibraryApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.GenHash" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="StructureViewState">
+    <option name="selectedTab" value="Physical" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="df3c1714-2391-446a-a965-fdb2845e6da8" name="Changes" comment="" />
+      <created>1736270944021</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1736270944021</updated>
+      <workItem from="1761342989622" duration="3003000" />
+      <workItem from="1761391470584" duration="9643000" />
+      <workItem from="1761401137417" duration="10800000" />
+      <workItem from="1761433683515" duration="23000" />
+      <workItem from="1761433720254" duration="1443000" />
+      <workItem from="1761435259373" duration="20000" />
+      <workItem from="1761447416607" duration="2090000" />
+      <workItem from="1761575390902" duration="21424000" />
+      <workItem from="1761619179274" duration="1637000" />
+    </task>
+    <task id="LOCAL-00001" summary="add domain entities for library management system">
+      <option name="closed" value="true" />
+      <created>1761344899740</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1761344899740</updated>
+    </task>
+    <task id="LOCAL-00002" summary="add services and controllers for author, book, image, loan, and publisher entities">
+      <option name="closed" value="true" />
+      <created>1761345981020</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1761345981020</updated>
+    </task>
+    <task id="LOCAL-00003" summary="add ChangePasswordService and update user password handling">
+      <option name="closed" value="true" />
+      <created>1761396443892</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1761396443892</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add LoanStatus enum, update application properties, and enhance controllers and services for loan management">
+      <option name="closed" value="true" />
+      <created>1761401021391</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1761401021391</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add TODO comments for future enhancements on filters, security, and SQL scripts">
+      <option name="closed" value="true" />
+      <created>1761401392484</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1761401392484</updated>
+    </task>
+    <task id="LOCAL-00006" summary="add image upload functionality for books, update Book and BookController, and modify form to include image input">
+      <option name="closed" value="true" />
+      <created>1761426514521</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1761426514521</updated>
+    </task>
+    <task id="LOCAL-00007" summary="implement role-based access control for services and controllers, ensuring only ADMIN can manage authors, books, publishers, and users, while USERS can create loans for themselves">
+      <option name="closed" value="true" />
+      <created>1761429983371</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1761429983372</updated>
+    </task>
+    <task id="LOCAL-00008" summary="add image display for books and loans, update database migration strategy, and introduce password hashing utility">
+      <option name="closed" value="true" />
+      <created>1761431802557</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1761431802557</updated>
+    </task>
+    <task id="LOCAL-00009" summary="add image display for books and loans, update database migration strategy, and introduce password hashing utility">
+      <option name="closed" value="true" />
+      <created>1761433108575</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1761433108575</updated>
+    </task>
+    <task id="LOCAL-00010" summary="add HELP.md for project setup instructions and database configuration">
+      <option name="closed" value="true" />
+      <created>1761433292010</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1761433292010</updated>
+    </task>
+    <task id="LOCAL-00011" summary="add HELP.md for project setup instructions and database configuration">
+      <option name="closed" value="true" />
+      <created>1761433338141</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1761433338141</updated>
+    </task>
+    <task id="LOCAL-00012" summary="add HELP.md for project setup instructions and database configuration">
+      <option name="closed" value="true" />
+      <created>1761433487598</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1761433487598</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Refactor HTML templates and update EmailService configuration for improved structure and readability">
+      <option name="closed" value="true" />
+      <created>1761434074203</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1761434074203</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Refactor HTML templates and update EmailService configuration for improved structure and readability">
+      <option name="closed" value="true" />
+      <created>1761434086028</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1761434086028</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Add initial project structure and configuration files for Library System">
+      <option name="closed" value="true" />
+      <created>1761434951523</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1761434951523</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Add initial domain entities, repositories, and controllers for Library System">
+      <option name="closed" value="true" />
+      <created>1761435138485</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1761435138485</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Refactor book and author relationships to support many-to-many mapping; add search strategies for books by author, publisher, and publication year">
+      <option name="closed" value="true" />
+      <created>1761603399416</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1761603399416</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Add DTOs and mappers for Book and Author; implement BookFacade backend for business logic">
+      <option name="closed" value="true" />
+      <created>1761613553677</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1761613553677</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Remove unused AuthorService and BookFacade dependencies from BookController; clean up createFacade methods">
+      <option name="closed" value="true" />
+      <created>1761618339876</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1761618339876</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+    <MESSAGE value="add domain entities for library management system" />
+    <MESSAGE value="add services and controllers for author, book, image, loan, and publisher entities" />
+    <MESSAGE value="add ChangePasswordService and update user password handling" />
+    <MESSAGE value="add LoanStatus enum, update application properties, and enhance controllers and services for loan management" />
+    <MESSAGE value="add TODO comments for future enhancements on filters, security, and SQL scripts" />
+    <MESSAGE value="add image upload functionality for books, update Book and BookController, and modify form to include image input" />
+    <MESSAGE value="implement role-based access control for services and controllers, ensuring only ADMIN can manage authors, books, publishers, and users, while USERS can create loans for themselves" />
+    <MESSAGE value="add image display for books and loans, update database migration strategy, and introduce password hashing utility" />
+    <MESSAGE value="add HELP.md for project setup instructions and database configuration" />
+    <MESSAGE value="Revert &quot;Refactor HTML templates and update EmailService configuration for improved structure and readability&quot;&#10;&#10;This reverts commit b2d4b208776a7de5e1edb48bae99b71962d5f3e1." />
+    <MESSAGE value="Add README.md with setup instructions and database configuration" />
+    <MESSAGE value="Refactor HTML templates and update EmailService configuration for improved structure and readability" />
+    <MESSAGE value="Add initial project structure and configuration files for library management system" />
+    <MESSAGE value="Add initial project structure and configuration files for Library System" />
+    <MESSAGE value="Add initial domain entities, repositories, and controllers for Library System" />
+    <MESSAGE value="Refactor book and author relationships to support many-to-many mapping; add search strategies for books by author, publisher, and publication year" />
+    <MESSAGE value="Add DTOs and mappers for Book and Author; implement BookFacade backend for business logic" />
+    <MESSAGE value="Remove unused AuthorService and BookFacade dependencies from BookController; clean up createFacade methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove unused AuthorService and BookFacade dependencies from BookController; clean up createFacade methods" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="((org.springframework.validation.support.BindingAwareModelMap)model).entrySet().toArray()[0]" custom="org.springframework.validation.support.BindingAwareModelMap" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
