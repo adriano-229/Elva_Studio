@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autores Activos</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body { background-color: #f8f9fa; }
+		.content { padding-top: 20px; }
+        .filter-input { max-width: 300px; }
+        .table-actions a { margin-right: 5px; }
+        .bio-preview { max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    </style>
+</head>
+<body>
+<div class="d-flex">
+
+   <!-- Sidebar -->
+   <div th:replace="fragments/sidebar :: sidebar('autores')"></div>
+
+   <!-- Contenido principal -->
+   <div class="content flex-grow-1 p-3">
+		<div class="container">
+		
+		    <!-- Título y Crear Autor -->
+		    <div class="d-flex justify-content-between align-items-center mb-3">
+		        <h2>Autores</h2>
+		        <a th:href="@{/autor/crear}" class="btn btn-success">
+		            <i class="fa fa-plus"></i> Crear Autor
+		        </a>
+		    </div>
+		
+		    <!-- Mensajes de éxito y error -->
+		    <div th:if="${msgExito}" class="alert alert-success" th:text="${msgExito}"></div>
+		    <div th:if="${msgError}" class="alert alert-danger" th:text="${msgError}"></div>
+		
+		    <!-- Filtro por Nombre o Apellido -->
+		    <div class="mb-3">
+		        <form th:action="@{/autor/search}" method="get" class="mb-3 d-flex">
+		            <input type="text" name="filtro" class="form-control filter-input" placeholder="Buscar por nombre o apellido...">
+		            <button type="submit" class="btn btn-primary ms-2">Buscar</button>
+		        </form>
+		    </div>
+		
+		    <!-- Tabla de autores -->
+		    <div class="table-responsive">
+		        <table class="table table-striped table-bordered align-middle">
+		            <thead class="table-dark">
+		                <tr>
+		                    <th>Nombre</th>
+		                    <th>Apellido</th>
+		                    <th>Biografía</th>
+		                    <th>Acciones</th>
+		                </tr>
+		            </thead>
+					<tbody>
+					    <tr th:each="autor, iterStat : ${lista}">
+					        <td th:text="${autor.nombre}"></td>
+					        <td th:text="${autor.apellido}"></td>
+					        <td class="bio-preview" th:text="${autor.biografia}"></td>
+					        <td class="table-actions">
+					            <button type="button" class="btn btn-info btn-sm" 
+					                    data-bs-toggle="modal" 
+					                    th:attr="data-bs-target='#bioModal__${iterStat.index}'">
+					                <i class="fa fa-eye"></i> Ver
+					            </button>
+					            <a th:href="@{'/autor/modificar/' + ${autor.id}}" class="btn btn-primary btn-sm">
+					                <i class="fa fa-edit"></i> Modificar
+					            </a>
+					            <a th:href="@{'/autor/eliminar/' + ${autor.id}}" class="btn btn-danger btn-sm">
+					                <i class="fa fa-trash"></i> Eliminar
+					            </a>
+					        </td>
+					    </tr>
+					    <tr th:if="${#lists.isEmpty(lista)}">
+					        <td colspan="4" class="text-center">No hay autores registrados</td>
+					    </tr>
+					</tbody>
+		
+					<!-- Modales fuera de la tabla 
+					<div th:each="autor, iterStat : ${lista}">
+					    <div class="modal fade" th:id="'bioModal__' + ${iterStat.index}" tabindex="-1" aria-hidden="true">
+					        <div class="modal-dialog">
+					            <div class="modal-content">
+					                <div class="modal-header">
+					                    <h5 class="modal-title" th:text="'Biografía de ' + ${autor.nombre} + ' ' + ${autor.apellido}"></h5>
+					                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+					                </div>
+					                <div class="modal-body" th:text="${autor.biografia}"></div>
+					                <div class="modal-footer">
+					                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+					                </div>
+					            </div>
+					        </div>
+					    </div>
+					</div>-->
+		        </table>
+		    </div>
+			
+			<!-- Modales de autores -->
+			<div th:each="autor, iterStat : ${lista}">
+			    <div class="modal fade" th:id="'bioModal__' + ${iterStat.index}" tabindex="-1" aria-hidden="true">
+			        <div class="modal-dialog">
+			            <div class="modal-content">
+			                <div class="modal-header">
+			                    <h5 class="modal-title" th:text="'Biografía de ' + ${autor.nombre} + ' ' + ${autor.apellido}"></h5>
+			                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+			                </div>
+			                <div class="modal-body" th:text="${autor.biografia}"></div>
+			                <div class="modal-footer">
+			                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		
+		</div>
+   </div>
+</div>
+
+<!-- Bootstrap JS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
