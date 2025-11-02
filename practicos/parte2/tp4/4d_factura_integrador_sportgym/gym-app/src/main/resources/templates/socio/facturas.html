@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layoutSocio :: layout(~{::content})}">
+  <div th:fragment="content">
+    <div class="content-wrapper">
+      <div class="text-center container-fluid py-4">
+        <h2 class="fw-bold">Mis Facturas</h2>
+        <p class="text-muted">Visualice las facturas emitidas por sus pagos</p>
+
+        <!-- Card principal -->
+        <div class="card shadow-sm w-100">
+          <div class="card-body">
+
+            <!-- Tabla de facturas pagadas -->
+            <div class="table-responsive">
+              <table class="table table-hover align-middle w-100">
+                <thead class="table-light">
+                  <tr>
+                    <th>Factura Nº</th>
+                    <th>Fecha</th>
+                    <th>Forma de Pago</th>
+                    <th class="text-center">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="factura : ${listaFacturas}">
+                    <td th:text="${factura.numeroFactura}"></td>
+                    <td th:text="${#temporals.format(factura.fechaFactura, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${factura.formaDePago.tipoPago}"></td>
+                    <td class="text-center">
+                      <a th:href="@{'/report/' + ${factura.id}}" target="_blank"
+                         class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-file-earmark-pdf"></i> Ver PDF
+                      </a>
+                    </td>
+                  </tr>
+                  <tr th:if="${#lists.isEmpty(listaFacturas)}">
+                    <td colspan="4" class="text-center text-muted py-3">
+                      No tiene facturas emitidas todavía.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Botón volver -->
+            <div class="d-flex justify-content-end mt-3">
+              <a th:href="@{/socio/portal}" class="btn btn-secondary btn-sm">Volver al portal</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estilos -->
+    <style>
+      table.table-hover tbody tr:hover {
+        background-color: #f1f5f9;
+      }
+
+      table.table {
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .btn-outline-primary {
+        border-radius: 4px;
+        transition: all 0.2s;
+      }
+
+      .btn-outline-primary:hover {
+        background-color: #0d6efd;
+        color: #fff;
+      }
+
+      .bi-file-earmark-pdf {
+        margin-right: 4px;
+      }
+    </style>
+  </div>
+</html>

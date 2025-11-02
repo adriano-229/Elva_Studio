@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="navbar">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">⚽ Football Explorer</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/league}">Ligas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Equipos</a> <!-- activable más adelante -->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Jugadores</a> <!-- activable más adelante -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</body>
+</html>

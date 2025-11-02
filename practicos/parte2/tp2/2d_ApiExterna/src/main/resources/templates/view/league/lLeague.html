@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{fragments/head :: head}"></th:block>
+<th:block th:replace="~{fragments/navbar :: navbar}"></th:block>
+
+<div class="container py-4">
+    <h2 class="text-center mb-4">Ligas disponibles</h2>
+
+    <div class="row" th:if="${leagues}">
+        <div class="col-md-4 mb-4" th:each="league : ${leagues}">
+			<div class="card shadow-sm h-100 text-center p-3">
+				
+				<div class="card-body">
+                    <h5 th:text="${league.strLeague}"></h5>
+                    <a class="btn btn-primary mt-2" 
+                       th:href="@{/league/detalle/{id}(id=${league.idLeague})}">
+                       Ver detalle
+                    </a>
+                </div>
+			</div>
+		</div>
+    </div>
+</div>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+</html>
