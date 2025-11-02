@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Detalle Persona - Dashtreme Admin</title>
+
+    <!-- loader -->
+    <link th:href="@{/assets/css/pace.min.css}" rel="stylesheet"/>
+    <script th:src="@{/assets/js/pace.min.js}"></script>
+
+    <!-- favicon -->
+    <link rel="icon" th:href="@{/assets/images/favicon.ico}" type="image/x-icon"/>
+
+    <!-- CSS principales -->
+    <link th:href="@{/assets/plugins/simplebar/css/simplebar.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/animate.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/css/icons.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/css/sidebar-menu.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/app-style.css}" rel="stylesheet"/>
+
+    <style>
+        .card-title {
+            font-weight: 500;
+        }
+        .card-body p {
+            margin-bottom: 0.5rem;
+        }
+        .btn-info {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+            color: #fff;
+        }
+        .btn-warning {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: #000;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            color: #fff;
+        }
+        .btn-info:hover, .btn-warning:hover, .btn-secondary:hover {
+            opacity: 0.9;
+            color: #fff;
+        }
+        .card-inner {
+            background-color: #ffffff; /* fondo blanco */
+            color: #212529; /* texto oscuro */
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .card-inner hr {
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-theme bg-theme1">
+
+<!-- loader -->
+<div id="pageloader-overlay" class="visible incoming">
+    <div class="loader-wrapper-outer"><div class="loader-wrapper-inner"><div class="loader"></div></div></div>
+</div>
+
+<!-- wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <!-- Navbar -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <div class="clearfix"></div>
+
+    <!-- Contenido principal -->
+    <div class="content-wrapper">
+        <div class="container-fluid">
+
+            <!-- Card principal -->
+            <div class="card mt-3 shadow bg-theme1 text-white">
+                <div class="card-body">
+
+                    <!-- Cabecera con título y botones -->
+					<div class="d-flex justify-content-between align-items-center mb-4">
+					    <h4>
+					        <i class="fa fa-user-circle mr-2"></i> Detalle de Usuario - Persona
+					    </h4>
+					    <div>
+					        <a th:if="${usuario.rol.name() != 'USER'}"
+							  th:href="@{/usuario/listar}" class="btn btn-secondary btn-sm text-white">
+					            <i class="fa fa-arrow-left"></i> Volver
+					        </a>
+					        <!--<a th:if="${usuario.rol.name() != 'ADMIN'}"
+					           th:href="@{/contactos/persona/{id}(id=${usuario.persona.id})}" 
+					           class="btn btn-info btn-sm text-white">
+					           <i class="fa fa-address-book"></i> Ver Contactos
+					        </a>-->
+					        <!-- Botón Editar eliminado de aquí -->
+					    </div>
+					</div>
+
+					<div class="row">
+
+					    <!-- Card Datos Personales -->
+					    <div class="col-lg-6 mb-3">
+					        <div class="card card-inner shadow-sm h-100">
+					            <div class="card-body">
+					                <h6 class="card-title text-muted d-flex justify-content-between align-items-center">
+					                    Datos personales
+					                    <a th:href="@{/persona/modificar/{id}(id=${usuario.persona.id})}" class="btn btn-warning btn-sm text-dark">
+					                        <i class="fa fa-edit"></i> Editar
+					                    </a>
+					                </h6>
+					                <hr>
+					                <p><strong>Nombre:</strong> <span th:text="${usuario.persona.nombre}">Juan</span></p>
+					                <p><strong>Apellido:</strong> <span th:text="${usuario.persona.apellido}">Pérez</span></p>
+					            </div>
+					        </div>
+					    </div>
+
+					    <!-- Card Datos de Usuario -->
+					    <div class="col-lg-6 mb-3">
+					        <div class="card card-inner shadow-sm h-100">
+					            <div class="card-body">
+					                <h6 class="card-title text-muted d-flex justify-content-between align-items-center">
+					                    Datos de usuario
+										<a sec:authorize="hasRole('ADMIN')"
+										   th:href="@{/usuario/modificar/{id}(id=${usuario.id})}"
+										   class="btn btn-warning btn-sm text-dark">
+										    <i class="fa fa-edit"></i> Editar
+										</a>
+
+					                </h6>
+					                <hr>
+					                <p><strong>Cuenta:</strong> <span th:text="${usuario.cuenta}">j.perez</span></p>
+					                <p><strong>Clave:</strong> 
+					                    <span class="text-muted">********</span>
+					                    <small class="text-secondary ml-2">(no se muestra por seguridad)</small>
+					                </p>
+					            </div>
+					        </div>
+					    </div>
+
+					</div> <!-- End row -->
+					
+
+					<!-- Tabla de Contactos -->
+					<div class="card mt-4 shadow bg-theme1 text-white" th:if="${usuario.rol.name() != 'ADMIN'}">
+					    <div class="card-body">
+					        <div class="d-flex justify-content-between align-items-center mb-3">
+					            <h6 class="card-title">Contactos</h6>
+					            <div>
+									<a th:href="@{/contacto/crear(idPersona=${usuario.persona.id}, clase='correo')}"
+									   class="btn btn-info btn-sm text-white">
+									    <i class="fa fa-envelope"></i> Agregar Correo Electronico
+									</a>
+									<a th:href="@{/contacto/crear(idPersona=${usuario.persona.id}, clase='telefono')}"
+									   class="btn btn-info btn-sm text-white">
+									    <i class="fa fa-envelope"></i> Agregar Telefono
+									</a>
+								</div>
+					        </div>
+
+					        <!-- Buscador -->
+					        <div class="form-group mb-3">
+					            <input type="text" class="form-control" id="searchInput" placeholder="Buscar contacto...">
+					        </div>
+
+					        <!-- Tabla Hover -->
+					        <div class="table-responsive">
+					            <table class="table table-hover text-white">
+					                <thead>
+					                    <tr>
+					                        <th>#</th>
+					                        <th>Tipo</th>
+					                        <th>Observación</th>
+					                        <th>Correo / Teléfono</th>
+					                        <th>Acciones</th>
+					                    </tr>
+					                </thead>
+					                <tbody id="contactosTable">
+					                    <tr th:each="contacto, iterStat : ${listaContactos}">
+					                        <td th:text="${iterStat.index + 1}">1</td>
+					                        <td th:text="${contacto.tipoContacto}">LABORAL / PERSONAL</td>
+					                        <td th:text="${contacto.observacion}">Observación</td>
+					                        <td>
+					                            <span th:if="${contacto.clase == 'ContactoCorreoElectronicoDTO'}" th:text="${contacto.email}">correo@ejemplo.com</span>
+					                            <span th:if="${contacto.clase == 'ContactoTelefonicoDTO'}" th:text="${contacto.telefono}">123456789</span>
+					                        </td>
+					                        <td>
+												<!-- Botón ver detalle para contacto de tipo correo electrónico -->
+												<a th:if="${contacto.clase == 'ContactoCorreoElectronicoDTO'}"
+												   th:href="@{/contacto/detalle/{id}/{clase}(id=${contacto.id}, clase='correo')}"
+												   class="btn btn-info btn-sm">
+												    <i class="fa fa-eye"></i>
+												</a>
+
+												<!-- Botón ver detalle para contacto de tipo telefónico -->
+												<a th:if="${contacto.clase == 'ContactoTelefonicoDTO'}"
+												   th:href="@{/contacto/detalle/{id}/{clase}(id=${contacto.id}, clase='telefono')}"
+												   class="btn btn-info btn-sm">
+												   <i class="fa fa-eye"></i>
+												</a>
+
+												<!-- Botón modificar para contacto de tipo correo electrónico
+												<a th:if="${contacto.clase == 'ContactoCorreoElectronicoDTO'}"
+												   th:href="@{/contacto/modificar/{id}(id=${contacto.id})}"
+												   class="btn btn-warning btn-sm text-dark">
+												   	<i class="fa fa-edit"></i>
+												</a>-->
+
+												<!-- Botón modificar para contacto de tipo telefónico 
+												<a th:if="${contacto.clase == 'ContactoTelefonicoDTO'}"
+												   th:href="@{/contacto/modificar/{id}(id=${contacto.id})}"
+												   class="btn btn-warning btn-sm text-dark">
+												    <i class="fa fa-edit"></i>
+												</a>-->
+												<!-- Botón eliminar para contacto de tipo correo electrónico -->
+												<a th:if="${contacto.clase == 'ContactoCorreoElectronicoDTO'}"
+												   th:href="@{/contacto/eliminar/{id}(id=${contacto.id})}"
+												   class="btn btn-danger btn-sm"
+												   onclick="return confirm('¿Está seguro que desea eliminar este contacto de correo electrónico?');">
+												    <i class="fa fa-trash"></i>
+												</a>
+
+												<!-- Botón eliminar para contacto de tipo telefónico -->
+												<a th:if="${contacto.clase == 'ContactoTelefonicoDTO'}"
+												   th:href="@{/contacto/eliminar/{id}(id=${contacto.id})}"
+												   class="btn btn-danger btn-sm"
+												   onclick="return confirm('¿Está seguro que desea eliminar este contacto telefónico?');">
+												    <i class="fa fa-trash"></i>
+												</a>
+
+					                        </td>
+					                    </tr>
+					                    <tr th:if="${#lists.isEmpty(listaContactos)}">
+					                        <td colspan="5" class="text-center text-muted">No hay contactos registrados</td>
+					                    </tr>
+					                </tbody>
+					            </table>
+					        </div>
+					    </div>
+					</div>
+				</div>
+            </div> <!-- End card principal -->
+
+        </div> <!-- End container-fluid -->
+    </div> <!-- End content-wrapper -->
+
+    <!-- Footer -->
+    <div th:replace="fragments/footer :: footer"></div>
+
+</div><!-- End wrapper -->
+
+<!-- Scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/popper.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/plugins/simplebar/js/simplebar.js}"></script>
+<script th:src="@{/assets/js/sidebar-menu.js}"></script>
+<script th:src="@{/assets/js/app-script.js}"></script>
+
+<!-- Script para filtrado simple -->
+<script>
+    $(document).ready(function(){
+        $("#searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#contactosTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

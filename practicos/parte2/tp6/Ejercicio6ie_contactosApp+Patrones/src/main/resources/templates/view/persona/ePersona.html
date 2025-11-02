@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Modificar Persona</title>
+
+    <!-- CSS -->
+    <link th:href="@{/assets/css/pace.min.css}" rel="stylesheet"/>
+    <script th:src="@{/assets/js/pace.min.js}"></script>
+    <link rel="icon" th:href="@{/assets/images/favicon.ico}" type="image/x-icon"/>
+    <link th:href="@{/assets/plugins/simplebar/css/simplebar.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/animate.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/icons.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/sidebar-menu.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/app-style.css}" rel="stylesheet"/>
+</head>
+
+<body class="bg-theme bg-theme1">
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <!-- Navbar -->
+    <header th:replace="fragments/navbar :: navbar"></header>
+
+    <div class="clearfix"></div>
+
+    <div class="content-wrapper">
+        <div class="container-fluid">
+
+            <div class="row mt-3 justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <!-- Título y Botón Volver alineados -->
+                            <div class="d-flex align-items-center mb-3">
+                                <a th:href="@{/usuario/listar}" class="btn btn-secondary btn-round mr-3">
+                                    <i class="icon-arrow-left"></i> Volver
+                                </a>
+                                <h4 class="card-title mb-0">Modificar Persona</h4>
+                            </div>
+                            <hr>
+
+                            <!-- FORMULARIO -->
+                            <form th:action="@{/persona/modificar}" th:object="${entity}" method="post">
+								
+								<input type="hidden" th:field="*{id}">
+								
+                                <!-- Nombre -->
+                                <div class="form-group">
+                                    <label for="nombre">Nombre</label>
+                                    <input type="text" class="form-control form-control-rounded" id="nombre"
+                                           th:field="*{nombre}" required placeholder="Ingrese nombre">
+                                </div>
+
+                                <!-- Apellido -->
+                                <div class="form-group">
+                                    <label for="apellido">Apellido</label>
+                                    <input type="text" class="form-control form-control-rounded" id="apellido"
+                                           th:field="*{apellido}" required placeholder="Ingrese apellido">
+                                </div>
+
+                                <!-- Botón Guardar -->
+                                <div class="form-group text-center mt-4">
+                                    <button type="submit" class="btn btn-light btn-round px-5">
+                                        <i class="icon-lock"></i> Guardar Cambios
+                                    </button>
+                                </div>
+
+                            </form>
+                            <!-- FIN FORMULARIO -->
+
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Row -->
+
+        </div><!-- End container-fluid -->
+    </div><!-- End content-wrapper -->
+
+    <!-- Footer -->
+    <footer th:replace="fragments/footer :: footer"></footer>
+
+</div><!-- End wrapper -->
+
+<!-- JS -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/popper.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/plugins/simplebar/js/simplebar.js}"></script>
+<script th:src="@{/assets/js/sidebar-menu.js}"></script>
+<script th:src="@{/assets/js/app-script.js}"></script>
+
+</body>
+</html>
