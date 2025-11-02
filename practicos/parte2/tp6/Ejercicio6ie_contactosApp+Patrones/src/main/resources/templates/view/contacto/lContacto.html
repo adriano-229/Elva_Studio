@@ -1,0 +1,71 @@
+<!--<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Mis Contactos</title>
+</head>
+<body>-->
+
+<!-- Se inserta dentro del layout principal -->
+<div th:replace="~{layout :: content}">
+    <div th:fragment="content">
+
+        <div class="row mt-3">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Mis medios de contacto</h5>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tipo</th>
+                                    <th>Medio</th>
+                                    <th>Observación</th>
+                                    <th>Acciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="contacto, iterStat : ${listaContactos}"
+                                    th:classappend="${contacto.tipoContacto == 'LABORAL'} ? 'table-primary' : 'table-success'">
+                                    <th scope="row" th:text="${iterStat.index + 1}">1</th>
+                                    <td th:text="${contacto.tipoContacto}">LABORAL / PERSONAL</td>
+                                    <td>
+                                        <i th:class="${#strings.equals(contacto.getClass().getSimpleName(), 'ContactoCorreoElectronico')} ? 'fa fa-envelope icono-contacto' : 'fa fa-phone icono-contacto'"></i>
+                                        <span th:if="${#strings.equals(contacto.getClass().getSimpleName(), 'ContactoCorreoElectronico')}" 
+                                              th:text="${contacto.email}">correo@ejemplo.com</span>
+                                        <span th:if="${#strings.equals(contacto.getClass().getSimpleName(), 'ContactoTelefonico')}" 
+                                              th:text="${contacto.telefono}">123456789</span>
+                                    </td>
+                                    <td th:text="${contacto.observacion}">Observación aquí</td>
+                                    <td>
+                                        <a th:href="@{/contactos/editar/{id}(id=${contacto.id})}" 
+                                           class="btn btn-sm btn-outline-primary" 
+                                           data-toggle="tooltip" title="Editar">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a th:href="@{/contactos/eliminar/{id}(id=${contacto.id})}" 
+                                           class="btn btn-sm btn-outline-danger" 
+                                           data-toggle="tooltip" title="Eliminar"
+                                           onclick="return confirm('¿Estás seguro de eliminar este contacto?');">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(listaContactos)}">
+                                    <td colspan="5" class="text-center">No hay contactos disponibles</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- fin del fragment content -->
+</div>
+
+<!--</body>
+</html>-->

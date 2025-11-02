@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="description" content="Formulario para crear usuario y persona"/>
+  <meta name="author" content=""/>
+  <title>Crear Usuario</title>
+
+  <!-- loader-->
+  <link th:href="@{/assets/css/pace.min.css}" rel="stylesheet"/>
+  <script th:src="@{/assets/js/pace.min.js}"></script>
+
+  <!-- favicon -->
+  <link rel="icon" th:href="@{/assets/images/favicon.ico}" type="image/x-icon"/>
+
+  <!-- simplebar CSS -->
+  <link th:href="@{/assets/plugins/simplebar/css/simplebar.css}" rel="stylesheet"/>
+  <!-- Bootstrap core CSS -->
+  <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet"/>
+  <!-- animate CSS -->
+  <link th:href="@{/assets/css/animate.css}" rel="stylesheet" type="text/css"/>
+  <!-- Icons CSS -->
+  <link th:href="@{/assets/css/icons.css}" rel="stylesheet" type="text/css"/>
+  <!-- Sidebar CSS -->
+  <link th:href="@{/assets/css/sidebar-menu.css}" rel="stylesheet"/>
+  <!-- Custom Style -->
+  <link th:href="@{/assets/css/app-style.css}" rel="stylesheet"/>
+</head>
+
+<body class="bg-theme bg-theme1">
+
+<div id="wrapper">
+
+  <!-- Sidebar -->
+  <div th:replace="fragments/sidebar :: sidebar"></div>
+
+  <!-- Navbar -->
+  <div th:replace="fragments/navbar :: navbar"></div>
+
+  <div class="content-wrapper">
+    <div class="container-fluid">
+
+      <div class="row mt-5 justify-content-center">
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title text-center">Crear Nuevo Usuario</div>
+              <hr>
+
+              <!-- BOTÓN VOLVER -->
+              <div class="mb-3">
+                <a th:href="@{/usuario/listar}" class="btn btn-warning btn-sm">
+                  <i class="zmdi zmdi-arrow-left"></i> Volver
+                </a>
+              </div>
+
+              <!-- FORMULARIO PRINCIPAL -->
+              <form th:action="@{/usuario/crear}" th:object="${usuario}" method="post">
+
+                <!-- ====================== -->
+                <!-- SECCIÓN DATOS PERSONA -->
+                <!-- ====================== -->
+                <h5 class="mb-3">Datos de la Persona</h5>
+
+                <div class="form-group">
+                  <label for="nombre">Nombre</label>
+                  <input type="text" id="nombre"
+                         th:field="*{persona.nombre}"
+                         class="form-control form-control-rounded"
+                         placeholder="Ingrese nombre" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="apellido">Apellido</label>
+                  <input type="text" id="apellido"
+                         th:field="*{persona.apellido}"
+                         class="form-control form-control-rounded"
+                         placeholder="Ingrese apellido" required>
+                </div>
+
+                <hr class="my-4">
+
+                <!-- ========================== -->
+                <!-- SECCIÓN CREDENCIALES USUARIO -->
+                <!-- ========================== -->
+                <h5 class="mb-3">Credenciales de Usuario</h5>
+
+                <div class="form-group">
+                  <label for="cuenta">Cuenta</label>
+                  <input type="text" id="cuenta"
+                         th:field="*{cuenta}"
+                         class="form-control form-control-rounded"
+                         placeholder="Ingrese nombre de usuario" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="clave">Clave</label>
+                  <input type="password" id="clave"
+                         th:field="*{clave}"
+                         class="form-control form-control-rounded"
+                         placeholder="Ingrese clave" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="rol">Rol</label>
+                  <select id="rol" th:field="*{rol}" class="form-control form-control-rounded" required>
+                    <option th:each="r : ${T(com.example.contactosApp.domain.enums.Rol).values()}"
+                            th:value="${r}" th:text="${r}">Rol</option>
+                  </select>
+                </div>
+
+                <div class="form-group text-center mt-4">
+                  <button type="submit" class="btn btn-light btn-round px-5">
+                    <i class="icon-lock"></i> Crear Usuario
+                  </button>
+                </div>
+
+              </form>
+              <!-- FIN FORMULARIO -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div th:replace="fragments/footer :: footer"></div>
+
+</div><!-- End wrapper -->
+
+<!-- JS scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/popper.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/plugins/simplebar/js/simplebar.js}"></script>
+<script th:src="@{/assets/js/sidebar-menu.js}"></script>
+<script th:src="@{/assets/js/app-script.js}"></script>
+
+</body>
+</html>

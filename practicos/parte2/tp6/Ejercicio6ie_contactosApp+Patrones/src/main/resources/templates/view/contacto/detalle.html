@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="Detalle de Contacto"/>
+    <meta name="author" content=""/>
+    <title>Detalle de Contacto</title>
+
+    <!-- Estilos -->
+    <link th:href="@{/assets/css/pace.min.css}" rel="stylesheet"/>
+    <script th:src="@{/assets/js/pace.min.js}"></script>
+    <link rel="icon" th:href="@{/assets/images/favicon.ico}" type="image/x-icon">
+    <link th:href="@{/assets/plugins/simplebar/css/simplebar.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/animate.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/css/icons.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/css/sidebar-menu.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/app-style.css}" rel="stylesheet"/>
+</head>
+
+<body class="bg-theme bg-theme1">
+
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <!-- Navbar -->
+    <header th:replace="fragments/navbar :: navbar"></header>
+
+    <!-- Contenido principal -->
+    <div class="content-wrapper">
+		<div class="container-fluid">
+		    <div class="row mt-5 justify-content-center">
+		        <div class="col-lg-6">
+		            <div class="card" 
+		                 th:classappend="${contacto.tipoContacto.name() == 'LABORAL'} ? ' border-primary' : ' border-success'"
+		                 style="background-color: rgba(255,255,255,0.05);">
+		                 
+		                <div class="card-body text-white">
+
+		                    <!-- Título -->
+		                    <h5 class="card-title d-flex align-items-center justify-content-center mb-3">
+		                        <i th:class="${contacto.clase == 'ContactoCorreoElectronicoDTO'} ? 
+		                            'fa fa-envelope mr-2' : 'fa fa-phone mr-2'"></i>
+		                        <span th:text="${contacto.clase == 'ContactoTelefonicoDTO'} ? 
+		                            'Detalle Teléfono' : 'Detalle Correo Electrónico'">Detalle Contacto</span>
+		                    </h5>
+
+		                    <hr style="border-color: rgba(255,255,255,0.1);">
+
+		                    <!-- Tipo de contacto -->
+		                    <div class="mb-3">
+		                        <strong>Tipo:</strong>
+		                        <span th:text="${contacto.tipoContacto}">LABORAL / PERSONAL</span>
+		                    </div>
+							
+							<div class="row mb-2">
+						        <div class="col-4 font-weight-bold">Tipo de Teléfono:</div>
+						        <div class="col-8" th:text="${contacto.tipoTelefono}">FIJO / CELULAR</div>
+						    </div>
+
+		                    <!-- Campos según clase -->
+							<div th:if="${contacto.clase.equals('ContactoTelefonicoDTO')}">
+							    <div class="row mb-2 align-items-center">
+							        <div class="col-4 font-weight-bold">Teléfono:</div>
+							        <div class="col-8 d-flex align-items-center">
+							            <span th:text="${contacto.telefono}">123456789</span>
+							            
+							            <!-- Botón WhatsApp al lado del número -->
+							            <a th:if="${contacto.tipoTelefono.name() == 'CELULAR'}"
+							               th:href="@{'https://wa.me/54' + ${contacto.telefono}}" 
+							               target="_blank" 
+							               class="btn btn-success btn-sm ml-2 p-1 d-flex align-items-center justify-content-center"
+							               style="width: 30px; height: 30px; border-radius: 50%;">
+							                <i class="fa fa-whatsapp"></i>
+							            </a>
+							        </div>
+							    </div>
+							</div>
+
+
+		                    <div th:if="${contacto.clase.equals('ContactoCorreoElectronicoDTO')}">
+		                        <div class="row mb-2">
+		                            <div class="col-4 font-weight-bold">Correo Electrónico:</div>
+		                            <div class="col-8" th:text="${contacto.email}">correo@ejemplo.com</div>
+		                        </div>
+		                    </div>
+
+		                    <!-- Observación -->
+		                    <div class="row mb-2">
+		                        <div class="col-4 font-weight-bold">Observación:</div>
+		                        <div class="col-8" th:text="${contacto.observacion}">Observación aquí</div>
+		                    </div>
+
+		                    <!-- Botones -->
+		                    <div class="text-center mt-4">
+		                        <a th:href="@{/usuario/listar}" 
+		                           class="btn btn-outline-secondary btn-round px-4 mx-1">
+		                            <i class="fa fa-arrow-left mr-1"></i> Volver
+		                        </a>
+
+		                        <a th:href="@{${contacto.clase == 'ContactoTelefonicoDTO'} ?
+		                                '/telefono/modificar/' + ${contacto.id} :
+		                                '/correo/modificar/' + ${contacto.id}}"
+		                           class="btn btn-light btn-round px-4 mx-1">
+		                            <i class="fa fa-edit mr-1"></i> Editar
+		                        </a>
+		                    </div>
+
+		                </div> <!-- card-body -->
+		            </div> <!-- card -->
+		        </div> <!-- col -->
+		    </div> <!-- row -->
+		</div> <!-- container-fluid -->
+
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer th:replace="fragments/footer :: footer"></footer>
+
+</div>
+
+<!-- JS Scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/popper.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/plugins/simplebar/js/simplebar.js}"></script>
+<script th:src="@{/assets/js/sidebar-menu.js}"></script>
+<script th:src="@{/assets/js/app-script.js}"></script>
+
+</body>
+</html>

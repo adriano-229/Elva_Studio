@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="Detalle de Empresa"/>
+    <meta name="author" content=""/>
+    <title>Detalle de Empresa</title>
+
+    <!-- Estilos -->
+    <link th:href="@{/assets/css/pace.min.css}" rel="stylesheet"/>
+    <script th:src="@{/assets/js/pace.min.js}"></script>
+    <link rel="icon" th:href="@{/assets/images/favicon.ico}" type="image/x-icon">
+    <link th:href="@{/assets/plugins/simplebar/css/simplebar.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/animate.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/css/icons.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/assets/css/sidebar-menu.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/css/app-style.css}" rel="stylesheet"/>
+</head>
+
+<body class="bg-theme bg-theme1">
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <!-- Navbar -->
+    <header th:replace="fragments/navbar :: navbar"></header>
+
+    <!-- Contenido principal -->
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <div class="row mt-5 justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+							 <!-- Encabezado del card con botón y título centrado -->
+							    <div class="d-flex justify-content-between align-items-center mb-3">
+							        <a th:href="@{/empresa/listar}" class="btn btn-secondary btn-round px-4">
+							            <i class="fa fa-arrow-left"></i> Volver
+							        </a>
+							        <h5 class="card-title text-center flex-grow-1 mb-0">Detalle de Empresa</h5>
+							        <div style="width: 90px;"></div> <!-- Espaciador para mantener el título centrado -->
+							    </div>
+
+							    <hr>
+
+							    <!-- Nombre de la empresa -->
+							    <div class="form-group">
+							        <label>Nombre de la Empresa:</label>
+							        <p class="form-control form-control-rounded" 
+							           th:text="${empresa.nombre}">Nombre Empresa</p>
+							    </div>
+
+								<!-- Contacto de la empresa -->
+								<div class="form-group mt-4">
+
+								    <div class="card" style="background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15);">
+								        <div class="card-header text-center">
+								            <h6 class="mb-0 text-white"><i class="fa fa-address-book"></i> Contacto</h6>
+								        </div>
+
+								        <div class="card-body text-white">
+								            <!-- Si hay contacto -->
+								            <div th:if="${contacto != null}">
+								                <p><strong>Tipo de Contacto:</strong>
+								                    <span th:text="${contacto.tipoContacto}">LABORAL / PERSONAL</span>
+								                </p>
+
+								                <p><strong>Observación:</strong>
+								                    <span th:text="${contacto.observacion}">Observación aquí</span>
+								                </p>
+
+								                <!-- Mostrar correo o teléfono según el tipo -->
+								                <div>
+								                    <p th:if="${contacto.clase == 'ContactoCorreoElectronicoDTO'}">
+								                        <strong>Correo electrónico:</strong>
+								                        <span th:text="${contacto.email}">correo@ejemplo.com</span>
+								                    </p>
+
+								                    <p th:if="${contacto.clase == 'ContactoTelefonicoDTO'}">
+								                        <strong>Teléfono:</strong>
+								                        <span th:text="${contacto.telefono}">123456789</span>
+								                    </p>
+								                </div>
+
+												<!-- Botones para contacto de correo electrónico -->
+												<div th:if="${contacto.clase == 'ContactoCorreoElectronicoDTO'}" class="text-center mt-3">
+												    <a th:href="@{/correo/modificar/{id}(id=${contacto.id})}" 
+												       class="btn btn-light btn-round px-4 mx-1">
+												        <i class="fa fa-edit"></i> Editar
+												    </a>
+
+												    <form th:action="@{/correo/eliminar/{id}(id=${contacto.id})}" 
+												          method="get" style="display:inline;">
+												        <button type="submit" 
+												                class="btn btn-danger btn-round px-4 mx-1"
+												                onclick="return confirm('¿Seguro que desea eliminar este contacto de correo electrónico?');">
+												            <i class="fa fa-trash"></i> Eliminar
+												        </button>
+												    </form>
+												</div>
+
+												<!-- Botones para contacto telefónico -->
+												<div th:if="${contacto.clase == 'ContactoTelefonicoDTO'}" class="text-center mt-3">
+												    <a th:href="@{/telefono/modificar/{id}(id=${contacto.id})}" 
+												       class="btn btn-light btn-round px-4 mx-1">
+												        <i class="fa fa-edit"></i> Editar
+												    </a>
+
+												    <form th:action="@{/telefono/eliminar/{id}(id=${contacto.id})}" 
+												          method="get" style="display:inline;">
+												        <button type="submit" 
+												                class="btn btn-danger btn-round px-4 mx-1"
+												                onclick="return confirm('¿Seguro que desea eliminar este contacto telefónico?');">
+												            <i class="fa fa-trash"></i> Eliminar
+												        </button>
+												    </form>
+												</div>
+
+								            </div>
+
+								            <!-- Si no hay contacto -->
+								            <div th:if="${contacto == null}" class="text-center p-3"
+								                 style="color:#ccc; background-color:rgba(255,255,255,0.07); border-radius:8px;">
+								                <i class="fa fa-info-circle"></i> Sin contacto registrado
+
+								                <!-- Botones para agregar contacto -->
+												<div>
+									                <a th:href="@{/telefono/crearContactoEmpresa/{idEmpresa}(idEmpresa=${empresa.id})}" class="btn btn-info btn-sm text-white">
+									                    <i class="fa fa-plus"></i> Agregar Contacto Telefonico
+									                </a>
+													<a th:href="@{/correo/crearContactoEmpresa/{idEmpresa}(idEmpresa=${empresa.id})}" class="btn btn-info btn-sm text-white">
+									                    <i class="fa fa-plus"></i> Agregar Correo Electronico
+									                </a>
+									            </div>
+								            </div>
+								        </div>
+								    </div>
+								</div>
+
+							</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer th:replace="fragments/footer :: footer"></footer>
+
+</div>
+
+<!-- JS Scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/popper.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/plugins/simplebar/js/simplebar.js}"></script>
+<script th:src="@{/assets/js/sidebar-menu.js}"></script>
+<script th:src="@{/assets/js/app-script.js}"></script>
+
+</body>
+</html>
