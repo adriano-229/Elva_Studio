@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layoutSocio :: layout(~{::content})}">
+
+  <div th:fragment="content" class="text-center py-5">
+    <h1 class="display-5 fw-bold mb-3">
+      ¡Muchas Gracias, <span th:text="${socio.nombre}">Nombre</span>!
+    </h1>
+    <p class="lead text-muted mb-4">
+      Tu pago está siendo procesado. Podrás ver la factura en tu cuenta una vez aprobado.
+    </p>
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-center my-3">
+              <i class="ti-check icon-lg text-success me-3"></i>
+              <div>
+                <p class="card-text">
+                  <strong>Monto Abonado:</strong> <span th:text="${monto}">Monto</span> ARS
+                </p>
+              </div>
+            </div>
+            <a class="btn btn-success mt-3" th:href="@{/cuotas/adeudadas}">Aceptar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+</html>

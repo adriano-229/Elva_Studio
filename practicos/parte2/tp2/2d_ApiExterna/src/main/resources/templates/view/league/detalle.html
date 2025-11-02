@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{fragments/head :: head}"></th:block>
+<th:block th:replace="~{fragments/navbar :: navbar}"></th:block>
+
+<body class="bg-light">
+<div class="container py-5">
+
+    <!-- Encabezado de la liga -->
+    <div class="card shadow-lg border-0 mb-4">
+        <div class="row g-0 align-items-center">
+            <div class="col-md-4 text-center p-4">
+                <img th:src="${league.strBadge}" alt="Logo de la liga" 
+                     class="img-fluid" style="max-height: 150px;">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h2 th:text="${league.strLeague}" class="card-title mb-3 fw-bold"></h2>
+					<p class="text-muted mb-1" th:if="${league.strLeagueAlternate}">
+					    <strong>Nombre alternativo:</strong> <span th:text="${league.strLeagueAlternate}"></span>
+					</p>
+					<p class="text-muted mb-1" th:if="${league.strCurrentSeason}">
+                        <strong>Temporada actual:</strong> <span th:text="${league.strCurrentSeason}"></span>
+                    </p>
+                    <p class="text-muted mb-1" th:if="${league.intFormedYear}">
+                        <strong>Año de fundación:</strong> <span th:text="${league.intFormedYear}"></span>
+                    </p>
+                    <p class="text-muted" if="${league.dateFirstEvent}">
+                        <strong>Primer evento:</strong> <span th:text="${league.dateFirstEvent}"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Imagen promocional
+    <div th:if="${league.strPoster != null}" class="text-center mb-5">
+        <img th:src="${league.strPoster}" alt="Poster de la liga" 
+             class="img-fluid rounded shadow-sm" style="max-height: 400px;">
+    </div>-->
+
+    <!-- Botón para ver equipos -->
+	<form th:action="@{/team}" method="get" th:object="${wrapper}" class="text-center">
+	    <input type="hidden" th:field="*{idLeague}" />
+	    <input type="hidden" th:field="*{league}" />
+	    <button type="submit" class="btn btn-success btn-lg">Ver equipos</button>
+	</form>
+</div>
+
+<th:block th:replace="~{fragments/footer :: footer}"></th:block>
+</body>
+</html>

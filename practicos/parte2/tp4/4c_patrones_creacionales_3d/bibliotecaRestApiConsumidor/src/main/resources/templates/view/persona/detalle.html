@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle Persona</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .content { padding: 20px; }
+        .card { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="d-flex">
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: sidebar('personas')"></div>
+
+    <!-- Contenido principal -->
+    <div class="content flex-grow-1">
+        <div class="container">
+
+            <!-- Mensajes -->
+            <div th:if="${msgExito}" class="alert alert-success" th:text="${msgExito}"></div>
+            <div th:if="${msgError}" class="alert alert-danger" th:text="${msgError}"></div>
+
+            <h2 class="mb-4">Detalle de Persona</h2>
+
+            <!-- Datos personales -->
+            <div class="card">
+                <div class="card-body">
+                    <h4 th:text="${persona.nombre + ' ' + persona.apellido}"></h4>
+                    <p><strong>DNI:</strong> <span th:text="${persona.dni}"></span></p>
+                    <p><strong>Domicilio:</strong> <span th:text="${persona.domicilio.calle + ' ' + persona.domicilio.numero + ', ' + persona.domicilio.localidad.denominacion}"></span></p>
+                </div>
+            </div>
+
+            <!-- Libros asociados -->
+            <div class="card">
+                <div class="card-header bg-light text-secondary fw-semibold">
+                    Libros asignados
+                </div>
+                <div class="card-body">
+                    <ul th:if="${!#lists.isEmpty(persona.libros)}">
+                        <li th:each="libro : ${persona.libros}" 
+                            th:text="${libro.titulo + ' (' + libro.genero + ')'}"></li>
+                    </ul>
+                    <p th:if="${#lists.isEmpty(persona.libros)}">Esta persona no tiene libros asignados.</p>
+                </div>
+            </div>
+
+            <!-- Asignar nuevo libro -->
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    Asignar nuevo libro
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/persona/asignarLibro}" method="post">
+                        <input type="hidden" name="idPersona" th:value="${persona.id}"/>
+
+                        <div class="mb-3">
+                            <label for="idLibro" class="form-label">Seleccionar libro disponible</label>
+                            <select class="form-select" name="idLibro" id="idLibro" required>
+                                <option value="" disabled selected>Seleccione un libro...</option>
+                                <option th:each="libro : ${librosDisponibles}" 
+										th:if="${libro.estado.name() == 'DISPONIBLE' and libro.tipo.name() == 'FISICO'}"
+                                        th:value="${libro.id}" 
+                                        th:text="${libro.titulo}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-plus"></i> Asignar Libro
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <a th:href="@{/persona/listar}" class="btn btn-secondary mt-3">Volver al listado</a>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

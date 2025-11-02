@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${entity.id} != null ? 'Modificar Localidad' : 'Crear Localidad'"></title>
+    <!-- Bootstrap y FontAwesome desde CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="bg-light">
+<div class="d-flex">
+
+       <!-- Sidebar -->
+       <div th:replace="fragments/sidebar :: sidebar('localidades')"></div>
+
+       <!-- Contenido principal -->
+       <div class="content flex-grow-1 p-3">
+		<div class="container mt-4">
+		
+		    <div class="row">
+		        <!-- Sidebar -->
+		        <div class="col-md-3">
+		            <div class="list-group">
+		                <a th:href="@{/localidad/listar}" class="list-group-item list-group-item-action">
+		                    <i class="fa fa-map-marker-alt"></i> Localidades
+		                </a>
+		                <a th:href="@{/persona/listar}" class="list-group-item list-group-item-action">
+		                    <i class="fa fa-users"></i> Personas
+		                </a>
+		            </div>
+		        </div>
+		
+		        <!-- Formulario -->
+		        <div class="col-md-9">
+		            <div class="card shadow-sm">
+		                <div class="card-header bg-primary text-white">
+		                    <h4 class="mb-0" th:text="${entity.id} != null ? 'Modificar Localidad' : 'Crear Localidad'"></h4>
+		                </div>
+		                <div class="card-body">
+		                    <form th:action="@{${entity.id} != null ? '/localidad/modificar' : '/localidad/crear'}"
+		                          th:object="${entity}" method="post">
+		
+		                        <!-- Campo oculto para ID -->
+		                        <input type="hidden" th:if="${entity.id}" th:field="*{id}"/>
+		
+		                        <div class="mb-3">
+		                            <label class="form-label">Denominacion</label>
+		                            <input type="text" th:field="*{denominacion}" class="form-control" placeholder="Ingrese denominacion" required>
+		                        </div>
+		
+		                        <div class="d-flex justify-content-between">
+		                            <a th:href="@{/localidad/listar}" class="btn btn-secondary">
+		                                <i class="fa fa-arrow-left"></i> Volver
+		                            </a>
+		                            <button type="submit" class="btn btn-success">
+		                                <i class="fa fa-save"></i>
+		                                <span th:text="${entity.id} != null ? 'Actualizar' : 'Guardar'"></span>
+		                            </button>
+		                        </div>
+		                    </form>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+       </div>
+</div>
+
+</body>
+</html>
