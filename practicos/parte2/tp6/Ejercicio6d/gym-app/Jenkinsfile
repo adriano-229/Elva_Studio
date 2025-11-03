@@ -56,15 +56,19 @@ pipeline {
         dir("${SUBDIR}") {
           sh '''
             set -e
-            echo "Esperando a que la app responda en http://localhost:9000/actuator/health ..."
-            for i in $(seq 1 60); do           # ← antes era {1..40} (solo Bash)
-              if curl -fsS http://localhost:9000/actuator/health >/dev/null 2>&1; then
+            HOST_IP=$(ip -4 route list default | awk \'{print $3}\')
+            APP_URL="http://${HOST_IP}:9000/actuator/health"
+            echo "Chequeando app en: $APP_URL"
+
+            for i in $(seq 1 60); do
+              if curl -fsS "$APP_URL" >/dev/null 2>&1; then
                 echo "App UP ✅"
                 exit 0
               fi
               echo "Esperando app... ($i/60)"
               sleep 3
             done
+
             echo "Healthcheck de la app FALLÓ ❌"
             docker compose logs app || true
             exit 1
@@ -72,7 +76,6 @@ pipeline {
         }
       }
     }
-  }
 
   post {
     always {
