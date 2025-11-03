@@ -57,7 +57,7 @@ pipeline {
           sh '''
             set -e
             HOST_IP=$(ip -4 route list default | awk \'{print $3}\')
-            APP_URL="http://${HOST_IP}:9000/actuator/health"
+            APP_URL="http://${APP_IP}:9000/actuator/health"
             echo "Chequeando app en: $APP_URL"
 
             for i in $(seq 1 60); do
