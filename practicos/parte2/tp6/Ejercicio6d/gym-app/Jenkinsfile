@@ -1,0 +1,59 @@
+pipeline {
+  agent any
+  options { timestamps(); ansiColor('xterm') }
+
+  environment {
+    SUBDIR = 'practicos/parte2/tp6/Ejercicio6d/gym-app'
+  }
+
+  stages {
+    stage('Checkout') {
+      steps { checkout scm }
+    }
+
+    stage('Build & Up (Docker Compose)') {
+      steps {
+        dir("${SUBDIR}") {
+          sh '''
+            set -e
+            docker compose down || true
+            docker compose up -d --build
+            docker compose ps
+          '''
+        }
+      }
+    }
+
+    stage('Healthcheck') {
+      steps {
+        dir("${SUBDIR}") {
+          sh '''
+            for i in {1..20}; do
+              if curl -fsS http://localhost:9000/actuator/health >/dev/null 2>&1; then
+                echo "App UP"
+                exit 0
+              fi
+              echo "Esperando app... ($i)"
+              sleep 3
+            done
+            echo "Healthcheck FALLÓ"
+            docker compose logs app || true
+            exit 1
+          '''
+        }
+      }
+    }
+  }
+
+  post {
+    always {
+      dir("${SUBDIR}") {
+        sh 'docker compose logs --no-color > compose.logs || true'
+      }
+      archiveArtifacts artifacts: '*/**/compose.logs', allowEmptyArchive: true
+    }
+    success { echo '✅ Deploy OK' }
+    failure { echo '❌ Deploy fallido' }
+  }
+}
+

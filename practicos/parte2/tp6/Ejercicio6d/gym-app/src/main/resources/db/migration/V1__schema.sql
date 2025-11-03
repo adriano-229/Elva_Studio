@@ -1,0 +1,124 @@
+-- src/main/resources/db/migration/V1__schema.sql
+-- Esquema base para ubicaciones, personas y facturación
+
+create table if not exists pais (
+  id        varchar(16) primary key,
+  nombre    varchar(120) not null,
+  eliminado boolean not null
+);
+
+create table if not exists provincia (
+  id        varchar(16) primary key,
+  nombre    varchar(120) not null,
+  eliminado boolean not null,
+  pais_id   varchar(16) not null,
+  constraint fk_provincia_pais foreign key (pais_id) references pais(id)
+);
+
+create table if not exists departamento (
+  id           varchar(16) primary key,
+  nombre       varchar(120) not null,
+  eliminado    boolean not null,
+  provincia_id varchar(16) not null,
+  constraint fk_departamento_provincia foreign key (provincia_id) references provincia(id)
+);
+
+create table if not exists localidad (
+  id              varchar(16) primary key,
+  nombre          varchar(120) not null,
+  codigo_postal   varchar(16),
+  eliminado       boolean not null,
+  departamento_id varchar(16) not null,
+  constraint fk_localidad_departamento foreign key (departamento_id) references departamento(id)
+);
+
+create table if not exists direccion (
+  id                  varchar(36) primary key,
+  calle               varchar(150) not null,
+  numeracion          varchar(20),
+  barrio              varchar(120),
+  manzana_piso        varchar(120),
+  casa_departamento   varchar(120),
+  referencia          varchar(255),
+  eliminado           boolean not null,
+  localidad_id        varchar(16) not null,
+  constraint fk_direccion_localidad foreign key (localidad_id) references localidad(id)
+);
+
+create table if not exists usuario (
+  id              varchar(36) primary key,
+  nombre_usuario  varchar(50) not null unique,
+  clave           varchar(255) not null,
+  rol             varchar(20) not null,
+  eliminado       boolean not null
+);
+
+create table if not exists persona (
+  id                 bigint not null auto_increment primary key,
+  nombre             varchar(120) not null,
+  apellido           varchar(120) not null,
+  fecha_nacimiento   date,
+  tipo_documento     varchar(20),
+  numero_documento   varchar(50),
+  telefono           varchar(30),
+  correo_electronico varchar(120),
+  eliminado          boolean not null
+);
+
+create table if not exists socio (
+  persona_id   bigint primary key,
+  numero_socio bigint not null unique,
+  direccion_id varchar(36) not null,
+  usuario_id   varchar(36) not null,
+  constraint fk_socio_persona foreign key (persona_id) references persona(id),
+  constraint fk_socio_direccion foreign key (direccion_id) references direccion(id),
+  constraint fk_socio_usuario foreign key (usuario_id) references usuario(id)
+);
+
+create table if not exists forma_de_pago (
+  id          varchar(36) primary key,
+  tipo_pago   varchar(30) not null,
+  observacion varchar(255),
+  eliminado   boolean not null
+);
+
+create table if not exists cuota_mensual (
+  id               varchar(36) primary key,
+  mes              varchar(20) not null,
+  anio             integer not null,
+  estado           varchar(20) not null,
+  fecha_vencimiento date,
+  valor_cuota_id   varchar(36) not null,
+  eliminado        boolean not null,
+  socio_id         bigint not null,
+  version          bigint,
+  constraint fk_cuota_socio foreign key (socio_id) references socio(persona_id)
+);
+
+create table if not exists factura (
+  id                   varchar(36) primary key,
+  numero_factura       bigint not null,
+  fecha_factura        date not null,
+  total_pagado         decimal(12,2) not null,
+  estado               varchar(20) not null,
+  eliminado            boolean not null,
+  socio_id             bigint not null,
+  forma_pago_id        varchar(36),
+  observacion_pago     varchar(255),
+  observacion_anulacion varchar(255),
+  version              bigint,
+  constraint fk_factura_socio foreign key (socio_id) references socio(persona_id),
+  constraint fk_factura_fp foreign key (forma_pago_id) references forma_de_pago(id)
+);
+
+create index idx_factura_num on factura(numero_factura);
+
+create table if not exists detalle_factura (
+  id               varchar(36) primary key,
+  factura_id       varchar(36) not null,
+  cuota_mensual_id varchar(36) not null,
+  importe          decimal(12,2) not null,
+  eliminado        boolean not null,
+  constraint fk_df_factura foreign key (factura_id) references factura(id),
+  constraint fk_df_cuota foreign key (cuota_mensual_id) references cuota_mensual(id)
+);

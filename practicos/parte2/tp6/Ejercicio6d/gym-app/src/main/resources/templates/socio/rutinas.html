@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layoutSocio :: layout(~{::content})}">
+<div th:fragment="content" class="py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-1">Mis rutinas</h1>
+      <p class="text-muted mb-0">Consultá tu plan de entrenamiento asignado por el profesor.</p>
+    </div>
+  </div>
+
+  <div th:if="${rutinaNoEncontrada}" class="alert alert-info" role="alert">
+    <i class="bi bi-info-circle me-2"></i>No tenés una rutina activa en este momento. Consultá con tu profesor para obtener una nueva.
+  </div>
+
+  <div th:if="${rutina}">
+    <div class="card shadow-sm mb-4">
+      <div class="card-body row g-3">
+        <div class="col-md-4">
+          <h2 class="h5 mb-1">Rutina vigente</h2>
+          <p class="mb-0"><strong>Profesor:</strong> <span th:text="${rutina.profesor.apellido}"></span>, <span th:text="${rutina.profesor.nombre}"></span></p>
+          <p class="mb-0"><strong>Objetivo:</strong> <span th:text="${rutina.objetivo}"></span></p>
+        </div>
+        <div class="col-md-4">
+          <p class="mb-0"><strong>Fecha de inicio:</strong> <span th:text="${rutina.fechaInicia}"></span></p>
+          <p class="mb-0"><strong>Fecha de finalización:</strong> <span th:text="${rutina.fechaFinaliza}"></span></p>
+        </div>
+        <div class="col-md-4">
+          <p class="mb-0"><strong>Estado:</strong>
+            <span class="badge"
+                  th:classappend="${rutina.estadoRutina}=='FINALIZADA' ? ' text-bg-success' : (${rutina.estadoRutina}=='ANULADA' ? ' text-bg-secondary' : ' text-bg-primary')"
+                  th:text="${rutina.estadoRutina}"></span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-header">
+        <h2 class="h5 mb-0">Plan semanal</h2>
+      </div>
+      <div class="card-body">
+        <div th:if="${#lists.isEmpty(detalles)}" class="alert alert-info" role="alert">
+          <i class="bi bi-info-circle me-2"></i>Tu profesor todavía no cargó actividades para esta rutina.
+        </div>
+
+        <div th:each="detalle : ${detalles}" class="mb-4">
+          <h3 class="h6">
+            <span th:text="${detalle.diaSemana != null ? 'Día ' + detalle.diaSemana.displayName : 'Día'}"></span>
+            <span class="badge ms-2" th:classappend="${detalle.activo} ? ' text-bg-success' : ' text-bg-secondary'" th:text="${detalle.activo} ? 'Activo' : 'Inactivo'"></span>
+          </h3>
+
+          <div class="table-responsive">
+            <table class="table table-sm table-striped">
+              <thead class="table-light">
+              <tr>
+                <th>Actividad</th>
+                <th>Grupo muscular</th>
+                <th>Series</th>
+                <th>Repeticiones</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="ejercicio : ${detalle.detalleEjercicios}">
+                <td th:text="${ejercicio.actividad}"></td>
+                <td th:text="${ejercicio.grupoMuscular}"></td>
+                <td th:text="${ejercicio.series}"></td>
+                <td th:text="${ejercicio.repeticiones}"></td>
+              </tr>
+              <tr th:if="${detalle.detalleEjercicios == null || #lists.isEmpty(detalle.detalleEjercicios)}">
+                <td colspan="4" class="text-center text-muted">Todavía no se asignaron ejercicios para este día.</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mt-4" th:if="${rutinasFinalizadas != null && !#lists.isEmpty(rutinasFinalizadas)}">
+    <div class="card-header">
+      <h2 class="h5 mb-0">Rutinas finalizadas</h2>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-sm table-striped align-middle">
+          <thead class="table-light">
+          <tr>
+            <th>Período</th>
+            <th>Profesor</th>
+            <th>Objetivo</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="item : ${rutinasFinalizadas}">
+            <td><span th:text="${item.fechaInicia}"></span> - <span th:text="${item.fechaFinaliza}"></span></td>
+            <td th:text="${item.profesor.apellido + ', ' + item.profesor.nombre}"></td>
+            <td th:text="${item.objetivo}"></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</html>
