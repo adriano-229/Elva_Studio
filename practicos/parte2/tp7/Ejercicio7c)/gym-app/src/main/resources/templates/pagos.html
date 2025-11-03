@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::content})}">
+<div th:fragment="content">
+  <!-- Encabezado -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-0"><i class="bi bi-wallet2 me-2"></i>Pagos</h1>
+      <small class="text-muted">Registro y conciliación de pagos</small>
+    </div>
+    <a class="btn btn-outline-secondary" th:href="@{/admin/pagos/export?fmt=xlsx}">
+      <i class="bi bi-file-earmark-spreadsheet me-1"></i>Exportar XLSX
+    </a>
+  </div>
+
+  <!-- Filtros -->
+  <form class="row g-2 mb-3" th:action="@{/admin/pagos}" method="get">
+    <div class="col-md-3">
+      <input type="text" name="factura" class="form-control" placeholder="Nº factura o socio" th:value="${filtroFactura}">
+    </div>
+    <div class="col-md-2">
+      <select name="metodo" class="form-select">
+        <option value="" th:selected="${metodo == null}">Todos los métodos</option>
+        <option th:value="EFECTIVO" th:selected="${metodo=='EFECTIVO'}">Efectivo</option>
+        <option th:value="TRANSFERENCIA" th:selected="${metodo=='TRANSFERENCIA'}">Transferencia</option>
+        <option th:value="ONLINE" th:selected="${metodo=='ONLINE'}">Online</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <input type="date" name="desde" class="form-control" th:value="${desde}">
+    </div>
+    <div class="col-md-2">
+      <input type="date" name="hasta" class="form-control" th:value="${hasta}">
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-outline-secondary"><i class="bi bi-search"></i> Buscar</button>
+    </div>
+  </form>
+
+  <!-- Tabs de registro -->
+  <ul class="nav nav-tabs" id="tabPagos" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="efectivo-tab" data-bs-toggle="tab" data-bs-target="#efectivo" type="button" role="tab">
+        <i class="bi bi-cash-coin me-1"></i>Efectivo
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="transferencia-tab" data-bs-toggle="tab" data-bs-target="#transferencia" type="button" role="tab">
+        <i class="bi bi-bank me-1"></i>Transferencia
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="online-tab" data-bs-toggle="tab" data-bs-target="#online" type="button" role="tab">
+        <i class="bi bi-globe2 me-1"></i>Online
+      </button>
+    </li>
+  </ul>
+
+  <div class="tab-content border border-top-0 p-3 rounded-bottom">
+    <!-- EFECTIVO -->
+    <div class="tab-pane fade show active" id="efectivo" role="tabpanel" aria-labelledby="efectivo-tab">
+      <form th:action="@{/admin/pagos/efectivo}" method="post" class="row g-3">
+        <div class="col-md-3">
+          <label class="form-label">Nº Factura</label>
+          <input type="text" name="facturaNumero" class="form-control" placeholder="A-0001-00001234" required>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Importe</label>
+          <input type="number" name="importe" class="form-control" min="0" step="0.01" required>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Fecha de pago</label>
+          <input type="date" name="fechaPago" class="form-control" required>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+          <button class="btn btn-success w-100"><i class="bi bi-check2-circle me-1"></i>Registrar</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- TRANSFERENCIA -->
+    <div class="tab-pane fade" id="transferencia" role="tabpanel" aria-labelledby="transferencia-tab">
+      <form th:action="@{/admin/pagos/transferencia}" method="post" class="row g-3">
+        <div class="col-md-3">
+          <label class="form-label">Nº Factura</label>
+          <input type="text" name="facturaNumero" class="form-control" required>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Importe</label>
+          <input type="number" name="importe" class="form-control" min="0" step="0.01" required>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Nº Operación / Comprobante</label>
+          <input type="text" name="nroOperacion" class="form-control" required>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+          <button class="btn btn-primary w-100"><i class="bi bi-arrow-left-right me-1"></i>Registrar</button>
+        </div>
+        <div class="col-12">
+          <label class="form-label">Observaciones</label>
+          <textarea name="obs" class="form-control" rows="2" placeholder="Banco origen, alias/CBU, etc."></textarea>
+        </div>
+      </form>
+    </div>
+
+    <!-- ONLINE (ej. Mercado Pago) -->
+    <div class="tab-pane fade" id="online" role="tabpanel" aria-labelledby="online-tab">
+      <form th:action="@{/admin/pagos/online}" method="post" class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">Nº Factura</label>
+          <input type="text" name="facturaNumero" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Importe</label>
+          <input type="number" name="importe" class="form-control" min="0" step="0.01" required>
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+          <button class="btn btn-dark w-100"><i class="bi bi-lightning-charge me-1"></i>Generar link</button>
+        </div>
+        <div class="col-12">
+          <div class="alert alert-info mb-0">
+            Al generar el link, se creará una <strong>preferencia de pago</strong> y se actualizará el estado al
+            <em>Pendiente de acreditación</em> hasta recibir confirmación del proveedor (webhook/return).
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Listado de pagos -->
+  <div class="card shadow-sm mt-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <span><i class="bi bi-list-task me-2"></i>Pagos registrados</span>
+      <a th:href="@{/admin/pagos}" class="btn btn-sm btn-outline-primary"><i class="bi bi-arrow-repeat me-1"></i>Actualizar</a>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>#</th>
+              <th>Fecha</th>
+              <th>Nº Factura</th>
+              <th>Socio</th>
+              <th>Método</th>
+              <th>Importe</th>
+              <th>Estado</th>
+              <th class="text-nowrap">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="p, idx : ${pagos}">
+              <td th:text="${idx.index + 1}">1</td>
+              <td th:text="${#temporals.format(p.fecha, 'dd/MM/yyyy HH:mm')}">01/09/2025 12:00</td>
+              <td>
+                <a th:href="@{'/facturas/' + ${p.facturaId}}" th:text="${p.facturaNumero}">A-0001-00001234</a>
+              </td>
+              <td>
+                <a th:href="@{'/socios/' + ${p.socioId}}" th:text="${p.socioNombre}">Juan Pérez</a>
+              </td>
+              <td>
+                <span th:text="${p.metodo}">EFECTIVO</span>
+                <small class="text-muted d-block" th:if="${p.metodo=='TRANSFERENCIA'}"
+                      th:text="'Op: ' + ${p.nroOperacion}">Op: 123</small>
+              </td>
+              <td th:text="${#numbers.formatDecimal(p.importe,1,'POINT',2,'COMMA')}">$ 10.000,00</td>
+              <td>
+                <span class="badge text-bg-success" th:if="${p.estado=='ACREDITADO'}">Acreditado</span>
+                <span class="badge text-bg-warning" th:if="${p.estado=='PENDIENTE'}">Pendiente</span>
+                <span class="badge text-bg-secondary" th:if="${p.estado=='ANULADO'}">Anulado</span>
+              </td>
+              <td class="text-nowrap">
+                <a th:href="@{'/pagos/' + ${p.id}}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a>
+                <a th:if="${p.estado=='PENDIENTE'}"
+                   th:href="@{'/pagos/anular/' + ${p.id}}"
+                   class="btn btn-sm btn-outline-danger"
+                   onclick="return confirm('¿Anular el pago?')"><i class="bi bi-x-circle"></i></a>
+              </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(pagos)}">
+              <td colspan="8" class="text-center text-muted py-4">No hay pagos registrados.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paginación -->
+  <nav th:if="${totalPaginas > 1}" aria-label="Paginación" class="mt-3">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:classappend="${paginaActual == 1} ? 'disabled'">
+        <a class="page-link" th:href="@{'/pagos?page=' + ${paginaActual - 1}}">Anterior</a>
+      </li>
+      <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPaginas)}"
+          th:classappend="${i == paginaActual} ? 'active'">
+        <a class="page-link" th:text="${i}" th:href="@{'/pagos?page=' + ${i}}">1</a>
+      </li>
+      <li class="page-item" th:classappend="${paginaActual == totalPaginas} ? 'disabled'">
+        <a class="page-link" th:href="@{'/pagos?page=' + ${paginaActual + 1}}">Siguiente</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+</html>
