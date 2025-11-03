@@ -16,41 +16,24 @@ pipeline {
         dir("${SUBDIR}") {
           sh '''
             set -e
-
-            # Limpieza suave por si quedó algo anterior
             docker compose down || true
-
-            # Construimos imágenes (respeta tu Dockerfile multi-stage)
             docker compose build
 
-            # Levantamos SOLO MySQL primero
+            # Levantar solo MySQL y esperar HEALTHY
             docker compose up -d mysql
-
             echo "Esperando a que MySQL quede healthy..."
             MYSQL_CID="$(docker compose ps -q mysql || true)"
-            if [ -z "$MYSQL_CID" ]; then
-              echo "No se encontró el contenedor de MySQL"
-              docker compose logs mysql || true
-              exit 1
-            fi
+            [ -n "$MYSQL_CID" ] || { echo "No se encontró el contenedor mysql"; exit 1; }
 
-            # Ventana de espera ~3 min (60 * 3s)
             for i in $(seq 1 60); do
-              STATUS="$(docker inspect -f '{{.State.Health.Status}}' "$MYSQL_CID" 2>/dev/null || echo 'missing')"
-              if [ "$STATUS" = "healthy" ]; then
-                echo "MySQL está healthy ✅"
-                break
-              fi
+              STATUS="$(docker inspect -f '{{.State.Health.Status}}' "$MYSQL_CID" 2>/dev/null || echo missing)"
+              [ "$STATUS" = healthy ] && { echo "MySQL healthy ✅"; break; }
               echo "MySQL status: $STATUS (intento $i/60)"
               sleep 3
             done
 
-            STATUS="$(docker inspect -f '{{.State.Health.Status}}' "$MYSQL_CID" 2>/dev/null || echo 'missing')"
-            if [ "$STATUS" != "healthy" ]; then
-              echo "MySQL NO llegó a healthy a tiempo ❌"
-              docker compose logs mysql || true
-              exit 1
-            fi
+            STATUS="$(docker inspect -f '{{.State.Health.Status}}' "$MYSQL_CID" 2>/dev/null || echo missing)"
+            [ "$STATUS" = healthy ] || { echo "MySQL no llegó a healthy ❌"; docker compose logs mysql || true; exit 1; }
           '''
         }
       }
@@ -61,7 +44,6 @@ pipeline {
         dir("${SUBDIR}") {
           sh '''
             set -e
-            # Ahora sí, levantamos la app
             docker compose up -d app
             docker compose ps
           '''
@@ -74,12 +56,13 @@ pipeline {
         dir("${SUBDIR}") {
           sh '''
             set -e
-            for i in {1..40}; do
+            echo "Esperando a que la app responda en http://localhost:9000/actuator/health ..."
+            for i in $(seq 1 60); do           # ← antes era {1..40} (solo Bash)
               if curl -fsS http://localhost:9000/actuator/health >/dev/null 2>&1; then
                 echo "App UP ✅"
                 exit 0
               fi
-              echo "Esperando app... ($i/40)"
+              echo "Esperando app... ($i/60)"
               sleep 3
             done
             echo "Healthcheck de la app FALLÓ ❌"
