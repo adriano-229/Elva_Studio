@@ -11,32 +11,78 @@ pipeline {
       steps { checkout scm }
     }
 
-    stage('Build & Up (Docker Compose)') {
+    stage('Build image & start DB') {
       steps {
         dir("${SUBDIR}") {
           sh '''
             set -e
+
+            # Limpieza suave por si quedó algo anterior
             docker compose down || true
-            docker compose up -d --build
+
+            # Construimos imágenes (respeta tu Dockerfile multi-stage)
+            docker compose build
+
+            # Levantamos SOLO MySQL primero
+            docker compose up -d mysql
+
+            echo "Esperando a que MySQL quede healthy..."
+            MYSQL_CID="$(docker compose ps -q mysql || true)"
+            if [ -z "$MYSQL_CID" ]; then
+              echo "No se encontró el contenedor de MySQL"
+              docker compose logs mysql || true
+              exit 1
+            fi
+
+            # Ventana de espera ~3 min (60 * 3s)
+            for i in $(seq 1 60); do
+              STATUS="$(docker inspect -f '{{.State.Health.Status}}' "$MYSQL_CID" 2>/dev/null || echo 'missing')"
+              if [ "$STATUS" = "healthy" ]; then
+                echo "MySQL está healthy ✅"
+                break
+              fi
+              echo "MySQL status: $STATUS (intento $i/60)"
+              sleep 3
+            done
+
+            STATUS="$(docker inspect -f '{{.State.Health.Status}}' "$MYSQL_CID" 2>/dev/null || echo 'missing')"
+            if [ "$STATUS" != "healthy" ]; then
+              echo "MySQL NO llegó a healthy a tiempo ❌"
+              docker compose logs mysql || true
+              exit 1
+            fi
+          '''
+        }
+      }
+    }
+
+    stage('Start app') {
+      steps {
+        dir("${SUBDIR}") {
+          sh '''
+            set -e
+            # Ahora sí, levantamos la app
+            docker compose up -d app
             docker compose ps
           '''
         }
       }
     }
 
-    stage('Healthcheck') {
+    stage('Healthcheck app') {
       steps {
         dir("${SUBDIR}") {
           sh '''
-            for i in {1..20}; do
+            set -e
+            for i in {1..40}; do
               if curl -fsS http://localhost:9000/actuator/health >/dev/null 2>&1; then
-                echo "App UP"
+                echo "App UP ✅"
                 exit 0
               fi
-              echo "Esperando app... ($i)"
+              echo "Esperando app... ($i/40)"
               sleep 3
             done
-            echo "Healthcheck FALLÓ"
+            echo "Healthcheck de la app FALLÓ ❌"
             docker compose logs app || true
             exit 1
           '''
@@ -48,12 +94,15 @@ pipeline {
   post {
     always {
       dir("${SUBDIR}") {
-        sh 'docker compose logs --no-color > compose.logs || true'
+        sh '''
+          docker compose logs --no-color > compose.logs || true
+          docker compose logs mysql --no-color > mysql.logs || true
+          docker compose logs app --no-color > app.logs || true
+        '''
       }
-      archiveArtifacts artifacts: '*/**/compose.logs', allowEmptyArchive: true
+      archiveArtifacts artifacts: '*/**/*.logs, *.logs, **/*.logs', allowEmptyArchive: true
     }
     success { echo '✅ Deploy OK' }
     failure { echo '❌ Deploy fallido' }
   }
 }
-
