@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(${accion == 'editar'} ? 'Editar mecánico' : 'Nuevo mecánico', ~{::section})}">
+<section class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="h4 mb-0" th:text="${accion == 'editar'} ? 'Editar mecánico' : 'Nuevo mecánico'">Mecánico</h1>
+            <a class="btn btn-outline-secondary" th:href="@{/mecanicos}">Volver</a>
+        </div>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form th:action="${accion == 'editar'} ? @{|/mecanicos/${mecanicoForm.id}|} : @{/mecanicos}"
+                      th:object="${mecanicoForm}" method="post" novalidate>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <div th:if="${accion == 'editar'}">
+                        <input type="hidden" name="_method" value="put">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input id="nombre" type="text" class="form-control" th:field="*{nombre}"
+                               th:classappend="${#fields.hasErrors('nombre')}? 'is-invalid'">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
+                             th:errors="*{nombre}">Ingrese el nombre</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input id="apellido" type="text" class="form-control" th:field="*{apellido}"
+                               th:classappend="${#fields.hasErrors('apellido')}? 'is-invalid'">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('apellido')}"
+                             th:errors="*{apellido}">Ingrese el apellido</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="legajo" class="form-label">Legajo</label>
+                        <input id="legajo" type="text" class="form-control" th:field="*{legajo}"
+                               th:classappend="${#fields.hasErrors('legajo')}? 'is-invalid'">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('legajo')}"
+                             th:errors="*{legajo}">Ingrese el legajo</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="usuario" class="form-label">Usuario de acceso</label>
+                        <input id="usuario" type="text" class="form-control" th:field="*{usuario}"
+                               th:classappend="${#fields.hasErrors('usuario')}? 'is-invalid'"
+                               th:readonly="${accion == 'editar' && !#strings.isEmpty(mecanicoForm.usuario)}"/>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('usuario')}"
+                             th:errors="*{usuario}">Ingrese el usuario</div>
+                        <div class="form-text" th:if="${accion == 'editar'}">
+                            El usuario solo puede cambiarse si se deja el campo editable. Si está bloqueado, contacte al administrador para cambios mayores.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input id="password" type="password" class="form-control" th:field="*{password}"
+                               th:classappend="${#fields.hasErrors('password')}? 'is-invalid'">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}"
+                             th:errors="*{password}">Ingrese la contraseña</div>
+                        <div class="form-text" th:if="${accion == 'editar'}">
+                            Deje la contraseña vacía para mantener la existente.
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end gap-2">
+                        <a class="btn btn-outline-secondary" th:href="@{/mecanicos}">Cancelar</a>
+                        <button class="btn btn-primary" type="submit"
+                                th:text="${accion == 'editar'} ? 'Guardar cambios' : 'Guardar mecánico'">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</html>

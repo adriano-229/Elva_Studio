@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(${accion == 'editar'} ? 'Editar cliente' : 'Nuevo cliente', ~{::section})}">
+<section class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="h4 mb-0" th:text="${accion == 'editar'} ? 'Editar cliente' : 'Nuevo cliente'">Cliente</h1>
+            <a class="btn btn-outline-secondary" th:href="@{/clientes}">Volver</a>
+        </div>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form th:action="${accion == 'editar'} ? @{|/clientes/${clienteForm.id}|} : @{/clientes}"
+                      th:object="${clienteForm}" method="post" novalidate>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <div th:if="${accion == 'editar'}">
+                        <input type="hidden" name="_method" value="put">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input id="nombre" type="text" class="form-control" th:field="*{nombre}"
+                               th:classappend="${#fields.hasErrors('nombre')}? 'is-invalid'">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}"
+                             th:errors="*{nombre}">Ingrese el nombre</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="apellido" class="form-label">Apellido</label>
+                        <input id="apellido" type="text" class="form-control" th:field="*{apellido}"
+                               th:classappend="${#fields.hasErrors('apellido')}? 'is-invalid'">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('apellido')}"
+                             th:errors="*{apellido}">Ingrese el apellido</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="documento" class="form-label">Documento</label>
+                        <input id="documento" type="text" class="form-control" th:field="*{documento}"
+                               th:classappend="${#fields.hasErrors('documento')}? 'is-invalid'">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('documento')}"
+                             th:errors="*{documento}">Ingrese el documento</div>
+                    </div>
+                    <div class="d-flex justify-content-end gap-2">
+                        <a class="btn btn-outline-secondary" th:href="@{/clientes}">Cancelar</a>
+                        <button class="btn btn-primary" type="submit"
+                                th:text="${accion == 'editar'} ? 'Guardar cambios' : 'Guardar cliente'">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</html>

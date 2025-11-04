@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('Clientes', ~{::section})}">
+<section>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-0">Clientes</h1>
+            <p class="text-muted mb-0">Gestione los datos de los clientes del taller</p>
+        </div>
+        <a class="btn btn-primary" th:href="@{/clientes/nuevo}">Nuevo cliente</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div th:if="${#lists.isEmpty(clientes)}" class="text-center text-muted py-4">
+                No hay clientes cargados.
+            </div>
+            <div th:if="${!#lists.isEmpty(clientes)}" class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Documento</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="cliente : ${clientes}">
+                        <td th:text="${cliente.nombre + ' ' + cliente.apellido}">Nombre Apellido</td>
+                        <td th:text="${cliente.documento}">30123456</td>
+                        <td class="text-end">
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-sm btn-outline-primary"
+                                   th:href="@{|/clientes/${cliente.id}/editar|}">Editar</a>
+                                <form th:action="@{|/clientes/${cliente.id}|}" method="post"
+                                      onsubmit="return confirm('¿Eliminar cliente?');">
+                                    <input type="hidden" name="_method" value="delete">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+</html>
