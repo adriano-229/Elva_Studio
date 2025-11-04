@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('Panel general', ~{::section})}">
+<section>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h1 class="h3 mb-0">Panel de reparaciones</h1>
+            <p class="text-muted mb-0">Seguimiento de vehículos y trabajos recientes</p>
+        </div>
+        <a class="btn btn-primary" th:href="@{/vehiculos/nuevo}">Registrar nuevo vehículo</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div th:if="${#lists.isEmpty(vehiculos)}" class="text-center text-muted py-5">
+                <p>No hay vehículos registrados aún.</p>
+                <a th:href="@{/vehiculos/nuevo}" class="btn btn-outline-primary">Cargar el primero</a>
+            </div>
+            <div th:if="${!#lists.isEmpty(vehiculos)}" class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                    <tr>
+                        <th>Patente</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Cliente</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="vehiculo : ${vehiculos}">
+                        <td th:text="${vehiculo.patente}">AA123BB</td>
+                        <td th:text="${vehiculo.marca}">Toyota</td>
+                        <td th:text="${vehiculo.modelo}">Corolla</td>
+                        <td th:text="${vehiculo.cliente.nombre + ' ' + vehiculo.cliente.apellido}">Juan Pérez</td>
+                        <td class="text-end">
+                            <a th:href="@{|/vehiculos/${vehiculo.id}|}" class="btn btn-sm btn-outline-primary">Ver detalle</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+</html>

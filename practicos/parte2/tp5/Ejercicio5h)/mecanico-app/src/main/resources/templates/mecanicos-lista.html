@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('Mecánicos', ~{::section})}">
+<section>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-0">Mecánicos</h1>
+            <p class="text-muted mb-0">Administre el equipo de mecánicos del taller</p>
+        </div>
+        <a class="btn btn-primary" th:href="@{/mecanicos/nuevo}">Nuevo mecánico</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div th:if="${#lists.isEmpty(mecanicos)}" class="text-center text-muted py-4">
+                No hay mecánicos cargados.
+            </div>
+            <div th:if="${!#lists.isEmpty(mecanicos)}" class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Legajo</th>
+                        <th>Usuario</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="mecanico : ${mecanicos}">
+                        <td th:text="${mecanico.nombre + ' ' + mecanico.apellido}">Nombre Apellido</td>
+                        <td th:text="${mecanico.legajo}">MEC-001</td>
+                        <td th:text="${mecanico.usuario != null ? mecanico.usuario.nombre : '—'}">usuario</td>
+                        <td class="text-end">
+                            <div class="btn-group">
+                                <a class="btn btn-sm btn-outline-primary"
+                                   th:href="@{|/mecanicos/${mecanico.id}/editar|}">Editar</a>
+                                <form th:action="@{|/mecanicos/${mecanico.id}|}" method="post"
+                                      onsubmit="return confirm('¿Eliminar mecánico?');">
+                                    <input type="hidden" name="_method" value="delete">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+</html>
