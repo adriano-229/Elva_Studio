@@ -13,6 +13,8 @@ import com.example.mycar.dto.BaseDTO;
 import com.example.mycar.entities.Base;
 import com.example.mycar.services.impl.BaseServiceImpl;
 
+import jakarta.validation.Valid;
+
 public abstract class BaseControllerImpl<E extends Base, D extends BaseDTO, S extends BaseServiceImpl<E, D, Long>> implements BaseController<D, Long>{
 	
 	@Autowired
@@ -50,12 +52,13 @@ public abstract class BaseControllerImpl<E extends Base, D extends BaseDTO, S ex
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(servicio.save(dto));
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"Error. por favor intente más tarde.\"}");
 		}
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable Long id,@RequestBody D dto){
+	public ResponseEntity<?> update(@PathVariable Long id,@Valid @RequestBody D dto){
 		try {
 			return ResponseEntity.status(HttpStatus.OK).body(servicio.update(id, dto));
 		} catch (Exception e) {
@@ -68,6 +71,7 @@ public abstract class BaseControllerImpl<E extends Base, D extends BaseDTO, S ex
 		try {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(servicio.delete(id));
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"Error. por favor intente más tarde.\"}");
 		}
 		

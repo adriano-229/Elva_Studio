@@ -1,5 +1,6 @@
 package com.example.mycar.entities;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.example.mycar.enums.TipoTelefono;
@@ -25,5 +26,5 @@ public class CostoVehiculo extends Base {
 	private Date fechaHasta;
 	
 	@Column(name = "costo", nullable = false)
-	private double costo;
+	private BigDecimal costo;
 }
