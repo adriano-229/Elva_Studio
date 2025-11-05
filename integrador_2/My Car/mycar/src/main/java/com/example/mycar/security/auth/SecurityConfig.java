@@ -29,6 +29,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
@@ -56,15 +57,31 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**").permitAll() // login y register públicos
+                .requestMatchers("/api/auth/login").permitAll()
+                .requestMatchers("/api/auth/cambiar-clave/**").authenticated()
                 .anyRequest().authenticated()
+            )
+            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .oauth2ResourceServer(oauth2 -> oauth2.jwt()) // 🔥 necesario para JWT tipo Bearer
+            .httpBasic(Customizer.withDefaults());
+
+        return http.build();
+    }
+    /*
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+            		.requestMatchers("/api/auth/login").permitAll()
+            	    .requestMatchers("/api/auth/cambiar-clave/**").authenticated().
+            	    anyRequest().authenticated()
             )
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .httpBasic(Customizer.withDefaults()); // opcional, para pruebas API
 
             //.formLogin(Customizer.withDefaults());
         return http.build();
-    }
+    }*/
 
     // 3️⃣ AuthenticationManager para AuthController
     @Bean
@@ -79,10 +96,11 @@ public class SecurityConfig {
     }
 
     // 4️⃣ UserDetailsService usando tu CustomUserDetailsService
+    /*
     @Bean
     public CustomUserDetailsService userDetailsService() {
         return new CustomUserDetailsService();
-    }
+    }*/
 
     // 5️⃣ PasswordEncoder
     @Bean
@@ -134,14 +152,24 @@ public class SecurityConfig {
 	    return new InMemoryRegisteredClientRepository(client);
 	}
 
+	/*
     @Bean
     public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
         return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
-    }
+    }*/
 
     // 7️⃣ Configuración del Authorization Server
     @Bean
     public AuthorizationServerSettings authorizationServerSettings() {
         return AuthorizationServerSettings.builder().build();
+    }
+    
+    @Bean
+    public JwtDecoder jwtDecoder() {
+        // Debe ser la misma clave secreta que usás en JwtUtil
+        String secretKey = "claveSecretaMuySegura123456789012345678901234567890"; 
+        return NimbusJwtDecoder.withSecretKey(
+                new javax.crypto.spec.SecretKeySpec(secretKey.getBytes(), "HmacSHA256")
+        ).build();
     }
 }

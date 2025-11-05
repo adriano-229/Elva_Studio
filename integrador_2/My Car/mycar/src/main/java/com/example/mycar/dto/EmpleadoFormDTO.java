@@ -36,16 +36,10 @@ public class EmpleadoFormDTO {
     @Email
     private String correoElectronico;
 
-    @NotBlank
-    private String sucursalId;
-
-    private String sucursalNombre;
-
     @NotNull
     private TipoEmpleado tipo;
 
-    @NotBlank private String rol;            // Enum en String
-
+    @NotBlank private String rol;  
     private boolean activo = true;
 
     private String usuarioId;
