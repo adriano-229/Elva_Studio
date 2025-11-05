@@ -1,4 +1,4 @@
-package com.example.mycar.controllers;
+package com.example.mycar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.mycar.dto.CambiarClaveDTO;
 import com.example.mycar.dto.LoginRequestDTO;
 import com.example.mycar.dto.LoginResponseDTO;
+import com.example.mycar.dto.UsuarioDTO;
 import com.example.mycar.entities.Usuario;
 import com.example.mycar.security.CustomUserDetailsService;
 import com.example.mycar.security.JwtUtil;
@@ -49,9 +50,9 @@ public class AuthController {
 		
 		String token = jwtUtil.generateToken(userDetails);
 		
-		Usuario usuario = svcUsuario.buscarUsuarioPorNombre(request.getNombreUsuario());
+		UsuarioDTO usuarioDTO = svcUsuario.buscarUsuarioPorNombre(request.getNombreUsuario());
 		
-		boolean requiereCambioClave = passwordEncoder.matches("mycar", usuario.getClave());
+		boolean requiereCambioClave = passwordEncoder.matches("mycar", usuarioDTO.getClave());
 		//boolean requiereCambioClave = usuario.getClave().equals("mycar");
 		return ResponseEntity.ok(new LoginResponseDTO(token,requiereCambioClave));
 	}
