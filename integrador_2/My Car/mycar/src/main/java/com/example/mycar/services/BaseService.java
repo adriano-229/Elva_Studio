@@ -19,6 +19,6 @@ public interface BaseService<D extends BaseDTO, ID extends Serializable> {
 	
 	public D update(ID id, D entityDTO) throws Exception;
 	
-	public void delete(ID id) throws Exception;
+	public boolean delete(ID id) throws Exception;
 
 }
