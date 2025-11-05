@@ -5,7 +5,7 @@ import com.example.mycar.enums.RolUsuario;
 
 public interface UsuarioService extends BaseService<UsuarioDTO, Long> {
 	
-	void crearUsuario(String nombre, String clave, RolUsuario rol);
+	UsuarioDTO crearUsuario(String nombre, String clave, RolUsuario rol);
 	void modificarUsuario(Long id, String nombre, String clave, RolUsuario rol);
 	void validar(String nombreUsuario, String clave, RolUsuario rol);
 	UsuarioDTO buscarUsuarioPorNombre(String nombre);
