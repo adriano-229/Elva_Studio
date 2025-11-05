@@ -2,12 +2,19 @@ package com.example.mycar.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Data
-public class DireccionDTO {
-    private String id;
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
+public class DireccionDTO extends BaseDTO{
+	
     @NotBlank @Size(max = 120)
     private String calle;
 
@@ -18,10 +25,10 @@ public class DireccionDTO {
     private String barrio;
 
     @Size(max = 30)
-    private String manzanaPiso;
+    private String manzana_piso;
 
     @Size(max = 30)
-    private String casaDepartamento;
+    private String casa_departamento;
 
     @Size(max = 255)
     private String referencia;
@@ -29,5 +36,4 @@ public class DireccionDTO {
     @NotBlank
     private String localidadId; // relación
 
-    private boolean eliminado;
 }

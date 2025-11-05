@@ -158,7 +158,7 @@ public class DataInitializer implements CommandLineRunner {
         entityManager.persist(costoVehiculo);
 
         Vehiculo vehiculoCorolla = new Vehiculo();
-        vehiculoCorolla.setEstadovehiculo(EstadoVehiculo.Alquilado);
+        vehiculoCorolla.setEstadoVehiculo(EstadoVehiculo.Alquilado);
         vehiculoCorolla.setPatente("AE123BC");
         entityManager.persist(vehiculoCorolla);
 
