@@ -59,10 +59,11 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/login").permitAll()
                 .requestMatchers("/api/auth/cambiar-clave/**").authenticated()
+                .requestMatchers("/api/auth/alta").hasRole("Jefe")
                 .anyRequest().authenticated()
             )
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .oauth2ResourceServer(oauth2 -> oauth2.jwt()) // 🔥 necesario para JWT tipo Bearer
+            .oauth2ResourceServer(oauth2 -> oauth2.jwt()) 
             .httpBasic(Customizer.withDefaults());
 
         return http.build();
