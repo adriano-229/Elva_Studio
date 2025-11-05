@@ -30,7 +30,7 @@ public class Imagen extends Base {
 	private String mime;
 	
 	@Column(name = "contenido", nullable = false)
-	private byte contenido;
+	private byte[] contenido;
 	
 	@Enumerated(EnumType.STRING)
 	private TipoImagen tipoImagen;

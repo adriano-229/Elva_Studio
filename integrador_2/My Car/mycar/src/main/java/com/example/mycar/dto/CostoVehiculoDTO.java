@@ -1,5 +1,6 @@
 package com.example.mycar.dto;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import jakarta.validation.constraints.Future;
@@ -28,6 +29,6 @@ public class CostoVehiculoDTO extends BaseDTO{
     private Date fechaHasta;
 
     @Positive(message = "El costo debe ser un valor positivo")
-    private double costo;
+    private BigDecimal costo;
 
 }

@@ -1,5 +1,9 @@
 package com.example.mycar.dto;
 
+import com.example.mycar.enums.EstadoVehiculo;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +17,13 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class VehiculoDTO extends BaseDTO{
 	
-	private Long estadoVehiculoId;
+	@NotNull(message = "El estado del vehiculo es obligatorio")
+	private EstadoVehiculo estadoVehiculo;
+	
+	@Pattern(
+	    regexp = "^[A-Z]{3}\\d{3}$|^[A-Z]{2}\\d{3}[A-Z]{2}$",
+	    message = "La patente no es válida. Formato permitido: ABC123 o AB123CD"
+	)
 	private String patente;
 
 }

@@ -113,7 +113,7 @@ public class DataInitializer implements CommandLineRunner {
         Imagen imagenCliente = Imagen.builder()
                 .nombre("cliente-demo.png")
                 .mime("image/png")
-                .contenido((byte) 0)
+                .contenido(new byte[0])
                 .tipoImagen(TipoImagen.Persona)
                 .build();
         entityManager.persist(imagenCliente);
@@ -121,7 +121,7 @@ public class DataInitializer implements CommandLineRunner {
         Imagen imagenEmpleado = Imagen.builder()
                 .nombre("empleado-demo.png")
                 .mime("image/png")
-                .contenido((byte) 0)
+                .contenido(new byte[0])
                 .tipoImagen(TipoImagen.Persona)
                 .build();
         entityManager.persist(imagenEmpleado);
@@ -129,7 +129,7 @@ public class DataInitializer implements CommandLineRunner {
         Imagen imagenVehiculo = Imagen.builder()
                 .nombre("vehiculo-sedan.png")
                 .mime("image/png")
-                .contenido((byte) 0)
+                .contenido(new byte[0])
                 .tipoImagen(TipoImagen.Vehiculo)
                 .build();
         entityManager.persist(imagenVehiculo);
@@ -154,11 +154,11 @@ public class DataInitializer implements CommandLineRunner {
         CostoVehiculo costoVehiculo = new CostoVehiculo();
         costoVehiculo.setFechaDesde(Date.valueOf(LocalDate.of(2024, 1, 1)));
         costoVehiculo.setFechaHasta(Date.valueOf(LocalDate.of(2024, 12, 31)));
-        costoVehiculo.setCosto(15000.0);
+        costoVehiculo.setCosto(new BigDecimal("15000.0"));
         entityManager.persist(costoVehiculo);
 
         Vehiculo vehiculoCorolla = new Vehiculo();
-        vehiculoCorolla.setEstadovehiculo(EstadoVehiculo.Alquilado);
+        vehiculoCorolla.setEstadoVehiculo(EstadoVehiculo.Alquilado);
         vehiculoCorolla.setPatente("AE123BC");
         entityManager.persist(vehiculoCorolla);
 

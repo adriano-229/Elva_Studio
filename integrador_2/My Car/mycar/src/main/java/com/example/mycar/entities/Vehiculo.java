@@ -21,7 +21,7 @@ public class Vehiculo extends Base{
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado_vehiculo",nullable = false)
-	private EstadoVehiculo estadovehiculo;
+	private EstadoVehiculo estadoVehiculo;
 	
     @Column(name = "patente",nullable = false)
 	private String patente;
