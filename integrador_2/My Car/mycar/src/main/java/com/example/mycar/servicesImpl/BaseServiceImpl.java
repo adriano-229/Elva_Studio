@@ -10,6 +10,7 @@ import com.example.mycar.services.BaseService;
 
 import jakarta.transaction.Transactional;
 
+
 public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> implements BaseService<E, ID> {
 	
 	protected BaseRepository<E, ID> baseRepository;
@@ -19,7 +20,7 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
 	}
 	
 	@Override
-	@Transactional //hacen transacciones con la base de datos
+	@Transactional 
 	public List<E> findAll() throws Exception {
 		try {
 			List<E> entities = baseRepository.findByActivoTrue();
@@ -40,4 +41,32 @@ public abstract class BaseServiceImpl<E extends Base, ID extends Serializable> i
 		}
 	}
 	
+	@Override
+	@Transactional 
+	public List<E> findAllByIds(Iterable<ID> ids) throws Exception {
+		try {
+			List<E> entities = baseRepository.findAllById(ids);
+			return entities;
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+	}
+	
+	@Override
+	@Transactional
+	public boolean delete(ID id) throws Exception{
+		try {
+			if (baseRepository.existsById(id)) {
+				Optional<E> opt = baseRepository.findById(id);
+				E entity = opt.get();
+				
+				entity.setActivo(false);
+				return true;
+			} else {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+	}
 }
