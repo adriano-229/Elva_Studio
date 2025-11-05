@@ -79,7 +79,7 @@ public abstract class BaseServiceImpl<E extends Base, D extends BaseDTO, ID exte
 	
 	@Override
 	@Transactional
-	public void delete(ID id) throws Exception {
+	public boolean delete(ID id) throws Exception {
 		D dto = findById(id);
 		
 		if (dto == null) {
@@ -91,6 +91,7 @@ public abstract class BaseServiceImpl<E extends Base, D extends BaseDTO, ID exte
 		entity.setActivo(false);
 		saveToRepository(entity);
         afterDelete(entity);
+        return true;
         
     }
 	
