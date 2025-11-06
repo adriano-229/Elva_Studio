@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "pais")
-public class Pais extends Base{
-	
-	@Column(name = "nombre", nullable = false)
-	private String nombre;
+public class Pais extends Base {
+
+    @Column(name = "nombre", nullable = false)
+    private String nombre;
 }

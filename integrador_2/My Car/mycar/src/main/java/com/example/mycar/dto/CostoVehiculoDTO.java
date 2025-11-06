@@ -1,7 +1,5 @@
 package com.example.mycar.dto;
 
-import java.util.Date;
-
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -12,14 +10,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class CostoVehiculoDTO extends BaseDTO{
-	
-	@NotNull(message = "La fecha desde no puede ser nula")
+public class CostoVehiculoDTO extends BaseDTO {
+
+    @NotNull(message = "La fecha desde no puede ser nula")
     @PastOrPresent(message = "La fecha desde no puede ser futura")
     private Date fechaDesde;
 

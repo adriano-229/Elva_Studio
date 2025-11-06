@@ -22,6 +22,12 @@ public class Alquiler extends Base {
     @Column(name = "fecha_hasta", nullable = false)
     private Date fechaHasta;
 
+    @Column(name = "costo_calculado")
+    private Double costoCalculado; // Costo total del alquiler
+
+    @Column(name = "cantidad_dias")
+    private Integer cantidadDias; // Duración en días
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "documentacion_id")
     private Documentacion documentacion;
@@ -30,7 +36,6 @@ public class Alquiler extends Base {
     @JoinColumn(name = "vehiculo_id")
     private Vehiculo vehiculo;
 
-    @OneToOne
-    @JoinColumn(name = "detalle_factura_id")
+    @OneToOne(mappedBy = "alquiler")
     private DetalleFactura detalleFactura;
 }

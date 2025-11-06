@@ -1,6 +1,5 @@
 package com.example.mycar.dto;
 
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 public class PagoTransferencia extends Pago {
-	
-	private String dirDocumentoPago;
+
+    private String dirDocumentoPago;
 
 }

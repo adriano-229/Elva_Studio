@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "nacionalidad")
 public class Nacionalidad extends Base {
 
-	@Column(name = "nombre", nullable = false)
-	private String nombre;
+    @Column(name = "nombre", nullable = false)
+    private String nombre;
 }

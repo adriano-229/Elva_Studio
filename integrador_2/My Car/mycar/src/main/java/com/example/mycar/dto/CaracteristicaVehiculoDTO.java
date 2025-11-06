@@ -1,10 +1,6 @@
 package com.example.mycar.dto;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,9 +12,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class CaracteristicaVehiculoDTO extends BaseDTO{
-	
-	@NotBlank(message = "La marca no puede estar vacía")
+public class CaracteristicaVehiculoDTO extends BaseDTO {
+
+    @NotBlank(message = "La marca no puede estar vacía")
     private String marca;
 
     @NotBlank(message = "El modelo no puede estar vacío")

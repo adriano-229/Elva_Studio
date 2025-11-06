@@ -1,10 +1,10 @@
 package com.example.mycar.dto;
 
 import com.example.mycar.enums.TipoImagen;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-import jakarta.validation.constraints.*;
-
-public class ImagenDTO extends BaseDTO{
+public class ImagenDTO extends BaseDTO {
 
     @NotBlank(message = "El nombre no puede estar vacío")
     private String nombre;

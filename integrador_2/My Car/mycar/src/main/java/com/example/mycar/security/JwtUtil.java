@@ -1,9 +1,14 @@
 package com.example.mycar.security;
 
-import javax.crypto.SecretKey;
-
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,24 +16,13 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import javax.crypto.SecretKey;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
-
 @Component
 public class JwtUtil {
 
     //private final String SECRET_KEY = "claveSecretaMuySegura123";
-	private final SecretKey SECRET_KEY = Keys.hmacShaKeyFor(
-	        "claveSecretaMuySegura123456789012345678901234567890".getBytes(StandardCharsets.UTF_8)
-	    );
+    private final SecretKey SECRET_KEY = Keys.hmacShaKeyFor(
+            "claveSecretaMuySegura123456789012345678901234567890".getBytes(StandardCharsets.UTF_8)
+    );
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -53,7 +47,7 @@ public class JwtUtil {
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
-    
+
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
 
@@ -64,7 +58,7 @@ public class JwtUtil {
 
         return createToken(claims, userDetails.getUsername());
     }
-    
+
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)

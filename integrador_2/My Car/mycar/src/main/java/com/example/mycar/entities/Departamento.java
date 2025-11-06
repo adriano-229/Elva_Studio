@@ -18,9 +18,9 @@ import lombok.Setter;
 @Table(name = "departamento")
 public class Departamento extends Base {
 
-	@Column(name = "nombre", nullable = false)
+    @Column(name = "nombre", nullable = false)
     private String nombre;
-    
+
     @ManyToOne
     private Provincia provincia;
 

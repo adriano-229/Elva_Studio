@@ -1,16 +1,19 @@
 package com.example.mycar.repositories;
 
-import java.util.List;
-
+import com.example.mycar.entities.CaracteristicaVehiculo;
 import org.springframework.stereotype.Repository;
 
-import com.example.mycar.entities.CaracteristicaVehiculo;
+import java.util.List;
 
 @Repository
-public interface CaracteristicaVehiculoRepository extends BaseRepository<CaracteristicaVehiculo, Long>{
-	List<CaracteristicaVehiculo> findByMarcaAndActivoTrue(String marca);
-	List<CaracteristicaVehiculo> findByMarcaAndModeloAndActivoTrue(String marca, String modelo);
-	List<CaracteristicaVehiculo> findByAnioAndActivoTrue(int anio);
-	List<CaracteristicaVehiculo> findByCantidadPuertaAndActivoTrue(int cant);
-	List<CaracteristicaVehiculo> findByCantidadAsientoAndActivoTrue(int cant);
+public interface CaracteristicaVehiculoRepository extends BaseRepository<CaracteristicaVehiculo, Long> {
+    List<CaracteristicaVehiculo> findByMarcaAndActivoTrue(String marca);
+
+    List<CaracteristicaVehiculo> findByMarcaAndModeloAndActivoTrue(String marca, String modelo);
+
+    List<CaracteristicaVehiculo> findByAnioAndActivoTrue(int anio);
+
+    List<CaracteristicaVehiculo> findByCantidadPuertaAndActivoTrue(int cant);
+
+    List<CaracteristicaVehiculo> findByCantidadAsientoAndActivoTrue(int cant);
 }
