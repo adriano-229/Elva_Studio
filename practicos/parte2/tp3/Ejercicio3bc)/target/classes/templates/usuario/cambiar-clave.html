@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}">
+<head>
+  <title>Cambiar Clave</title>
+</head>
+<body>
+<div>
+  <h2>Cambiar Clave de Usuario</h2>
+  <p>Usuario: <strong th:text="${usuario.cuenta}"></strong></p>
+
+  <form th:action="@{/usuarios/cambiar-clave}" th:object="${usuario}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <input type="hidden" th:field="*{cuenta}"/>
+    <input type="hidden" th:field="*{nombre}"/>
+    <input type="hidden" th:field="*{apellido}"/>
+    <input type="hidden" th:field="*{email}"/>
+    <input type="hidden" th:field="*{activo}"/>
+
+    <div>
+      <label for="clave">Nueva Clave:</label>
+      <input type="password" id="clave" th:field="*{clave}" required/>
+    </div>
+
+    <div>
+      <button type="submit">Cambiar Clave</button>
+      <a th:href="@{/usuarios}">Cancelar</a>
+    </div>
+  </form>
+</div>
+</body>
+</html>
