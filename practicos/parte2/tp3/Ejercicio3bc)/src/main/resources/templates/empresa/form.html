@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="${empresa.id == null} ? 'Nueva Empresa' : 'Editar Empresa'">Formulario Empresa</title>
+</head>
+<body>
+<div>
+  <h1 class="mt-4" th:text="${empresa.id == null} ? 'Nueva Empresa' : 'Editar Empresa'">Formulario Empresa</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+    <li class="breadcrumb-item"><a th:href="@{/empresas}">Empresas</a></li>
+    <li class="breadcrumb-item active" th:text="${empresa.id == null} ? 'Nueva' : 'Editar'">Formulario</li>
+  </ol>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">
+            <i class="fas fa-building me-2"></i>
+            <span th:text="${empresa.id == null} ? 'Registrar Nueva Empresa' : 'Modificar Empresa'"></span>
+          </h4>
+        </div>
+        <div class="card-body">
+          <form method="post" th:action="@{/empresas}" th:object="${empresa}">
+            <input th:field="*{id}" type="hidden"/>
+
+            <!-- Razón Social -->
+            <div class="mb-4">
+              <label class="form-label fw-bold" for="razonSocial">
+                <i class="fas fa-briefcase me-2"></i>Razón Social
+              </label>
+              <input class="form-control form-control-lg" id="razonSocial"
+                     placeholder="Ingrese la razón social de la empresa"
+                     required th:field="*{razonSocial}"
+                     type="text"/>
+            </div>
+
+            <hr class="my-4">
+            <h5 class="mb-3"><i class="fas fa-map-marked-alt me-2"></i>Dirección</h5>
+
+            <div class="row">
+              <!-- Calle -->
+              <div class="col-md-8 mb-3">
+                <label class="form-label fw-bold" for="calle">
+                  <i class="fas fa-road me-2"></i>Calle
+                </label>
+                <input class="form-control" id="calle" placeholder="Nombre de la calle"
+                       required th:field="*{direccion.calle}"
+                       type="text"/>
+              </div>
+
+              <!-- Altura -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold" for="altura">
+                  <i class="fas fa-hashtag me-2"></i>Altura
+                </label>
+                <input class="form-control" id="altura" placeholder="Número"
+                       required th:field="*{direccion.altura}"
+                       type="number"/>
+              </div>
+            </div>
+
+            <!-- Selección en cascada -->
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold" for="pais">
+                  <i class="fas fa-globe me-2"></i>País
+                </label>
+                <select class="form-select" id="pais" name="paisId" required>
+                  <option value="">-- Seleccione --</option>
+                  <option th:each="pais : ${paises}"
+                          th:selected="${empresa.direccion != null and empresa.direccion.departamento != null and empresa.direccion.departamento.provincia != null and empresa.direccion.departamento.provincia.pais.id == pais.id}"
+                          th:text="${pais.nombre}"
+                          th:value="${pais.id}"></option>
+                </select>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold" for="provincia">
+                  <i class="fas fa-map me-2"></i>Provincia
+                </label>
+                <select class="form-select" disabled id="provincia" name="provinciaId" required>
+                  <option value="">-- Seleccione --</option>
+                </select>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold" for="departamento">
+                  <i class="fas fa-map-marker-alt me-2"></i>Departamento
+                </label>
+                <select class="form-select" disabled id="departamento" name="departamentoId" required>
+                  <option value="">-- Seleccione --</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+              <button class="btn btn-primary btn-lg" type="submit">
+                <i class="fas fa-save me-2"></i>Guardar Empresa
+              </button>
+              <a class="btn btn-secondary btn-lg" th:href="@{/empresas}">
+                <i class="fas fa-times me-2"></i>Cancelar
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          const paisSelect = document.getElementById('pais');
+          const provinciaSelect = document.getElementById('provincia');
+          const departamentoSelect = document.getElementById('departamento');
+
+          const provinciaIdActual = "[[${empresa.direccion?.departamento?.provincia?.id}]]" || null;
+          const departamentoIdActual = "[[${empresa.direccion?.departamento?.id}]]" || null;
+
+          function limpiarSelect(select, textoOpcionDefault) {
+              select.innerHTML = '<option value="">' + textoOpcionDefault + '</option>';
+              select.disabled = true;
+          }
+
+          function habilitarSelect(select) {
+              select.disabled = false;
+          }
+
+          function cargarOpciones(select, datos, valorSeleccionado = null, placeholder = '-- Seleccione --') {
+              select.innerHTML = '<option value="">' + placeholder + '</option>';
+              datos.forEach(item => {
+                  const option = document.createElement('option');
+                  option.value = item.id;
+                  option.text = item.nombre;
+                  if (valorSeleccionado && String(item.id) === String(valorSeleccionado)) {
+                      option.selected = true;
+                  }
+                  select.appendChild(option);
+              });
+              if (datos.length > 0) habilitarSelect(select);
+          }
+
+          paisSelect.addEventListener('change', function () {
+              const paisId = this.value;
+              limpiarSelect(provinciaSelect, '-- Seleccione una Provincia --');
+              limpiarSelect(departamentoSelect, '-- Seleccione un Departamento --');
+              if (paisId) {
+                  fetch('/provincias/api/por-pais/' + paisId)
+                      .then(r => r.json())
+                      .then(provincias => {
+                          cargarOpciones(provinciaSelect, provincias, null, '-- Seleccione una Provincia --');
+                      })
+                      .catch(err => console.error('Error cargando provincias:', err));
+              }
+          });
+
+          provinciaSelect.addEventListener('change', function () {
+              const provinciaId = this.value;
+              limpiarSelect(departamentoSelect, '-- Seleccione un Departamento --');
+              if (provinciaId) {
+                  fetch('/departamentos/api/por-provincia/' + provinciaId)
+                      .then(r => r.json())
+                      .then(deps => {
+                          cargarOpciones(departamentoSelect, deps, null, '-- Seleccione un Departamento --');
+                      })
+                      .catch(err => console.error('Error cargando departamentos:', err));
+              }
+          });
+
+          function inicializarEdicion() {
+              if (!paisSelect.value) return;
+              fetch('/provincias/api/por-pais/' + paisSelect.value)
+                  .then(r => r.json())
+                  .then(provincias => {
+                      cargarOpciones(provinciaSelect, provincias, provinciaIdActual, '-- Seleccione una Provincia --');
+                      if (provinciaIdActual) {
+                          return fetch('/departamentos/api/por-provincia/' + provinciaIdActual);
+                      }
+                  })
+                  .then(r => r ? r.json() : null)
+                  .then(deps => {
+                      if (!deps) return;
+                      cargarOpciones(departamentoSelect, deps, departamentoIdActual, '-- Seleccione un Departamento --');
+                  })
+                  .catch(err => console.error('Error inicializando cascada:', err));
+          }
+
+          inicializarEdicion();
+      });
+  </script>
+</div>
+</body>
+</html>
