@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::content})}">
+<div th:fragment="content">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-1">Empresas</h1>
+      <p class="text-muted mb-0">Administrá las empresas del grupo.</p>
+    </div>
+    <a class="btn btn-primary" th:href="@{/admin/empresas/nuevo}"><i class="bi bi-plus-circle me-1"></i>Nueva empresa</a>
+  </div>
+
+  <div th:if="${creado}" class="alert alert-success" role="alert">
+    <i class="bi bi-check-circle me-2"></i>La empresa se creó correctamente.
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Nombre</th>
+          <th>Teléfono</th>
+          <th>Correo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="item : ${empresas}">
+          <td th:text="${item.nombre}"></td>
+          <td th:text="${item.telefono}"></td>
+          <td th:text="${item.correoElectronico}"></td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(empresas)}">
+          <td colspan="3" class="text-center text-muted">Aún no se registraron empresas.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</html>

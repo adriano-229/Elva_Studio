@@ -1,0 +1,13 @@
+Juan,Pérez,juan@mail.com,20-12345678-9,Av Siempre Viva,742,Springfield,1900,Buenos Aires,Argentina
+,González,maria@mail.com,27-98765432-1,San Martín,1234,Córdoba Capital,5000,Córdoba,Argentina
+Pedro,,pedro@mail.com,20-99887766-3,Mitre,321,La Plata,1900,Buenos Aires,Argentina
+Ana,Martínez,ana@mail.com,27-55667788-9,Belgrano,ABC,Rosario,XYZ,Santa Fe,Argentina
+Diego,Silva,diego@mail.com,20-66554433-8,9 de Julio,987,Salta Capital,4400,Salta,Argentina
+Diego,Silva,diego@mail.com,20-66554433-8,9 de Julio,987,Salta Capital,4400,Salta,Argentina
+Sofía,Torres,sofia@mail.com,27-22114455-2,,159,Posadas,3300,Misiones,Argentina
+Laura,Fernández,laura@mail.com,27-44332211-7
+Carlos,Rodríguez,carlos@mail.com,20-11223344-5,Rivadavia,567,Mendoza Capital,5500,Mendoza,Argentina,EXTRA,DATOS
+Roberto,Gómez,roberto@mail.com,20-55443322-1,Corrientes,456,Resistencia,3500,Chaco,Argentina
+Lucía,Fernández,lucia@mail.com,27-88776655-4,Moreno,789,Santa Fe Capital,3000,Santa Fe,Argentina
+Martín,Ruiz,martin@mail.com,20-22334455-6,Pellegrini,123,Mar del Plata,7600,Buenos Aires,Argentina
+
