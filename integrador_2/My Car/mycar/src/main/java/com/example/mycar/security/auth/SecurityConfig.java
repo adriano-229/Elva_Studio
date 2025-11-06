@@ -1,19 +1,12 @@
 package com.example.mycar.security.auth;
 
 
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
-import java.util.UUID;
-
 import com.example.mycar.security.CustomUserDetailsService;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -38,9 +31,25 @@ import org.springframework.security.oauth2.server.authorization.settings.Authori
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.util.UUID;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    private static KeyPair generateRsaKey() {
+        try {
+            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+            keyPairGenerator.initialize(2048);
+            return keyPairGenerator.generateKeyPair();
+        } catch (Exception ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
 
     // 1️⃣ Authorization Server (endpoints OAuth2, JWT)
     @Bean
@@ -48,25 +57,6 @@ public class SecurityConfig {
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
         return http.formLogin(Customizer.withDefaults()).build();
-    }
-
-    // 2️⃣ Resource Server (endpoints protegidos)
-    @Bean
-    @Order(2)
-    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/login").permitAll()
-                .requestMatchers("/api/auth/cambiar-clave/**").authenticated()
-                .requestMatchers("/api/auth/alta").hasRole("Jefe")
-                .anyRequest().authenticated()
-            )
-            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .oauth2ResourceServer(oauth2 -> oauth2.jwt()) 
-            .httpBasic(Customizer.withDefaults());
-
-        return http.build();
     }
     /*
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -84,16 +74,23 @@ public class SecurityConfig {
         return http.build();
     }*/
 
-    // 3️⃣ AuthenticationManager para AuthController
+    // 2️⃣ Resource Server (endpoints protegidos)
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http,
-                                                       CustomUserDetailsService userDetailsService,
-                                                       PasswordEncoder passwordEncoder) throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                   .userDetailsService(userDetailsService)
-                   .passwordEncoder(passwordEncoder)
-                   .and()
-                   .build();
+    @Order(2)
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers("/api/auth/cambiar-clave/**").authenticated()
+                        .requestMatchers("/api/auth/alta").hasRole("Jefe")
+                        .anyRequest().authenticated()
+                )
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt())
+                .httpBasic(Customizer.withDefaults());
+
+        return http.build();
     }
 
     // 4️⃣ UserDetailsService usando tu CustomUserDetailsService
@@ -102,6 +99,18 @@ public class SecurityConfig {
     public CustomUserDetailsService userDetailsService() {
         return new CustomUserDetailsService();
     }*/
+
+    // 3️⃣ AuthenticationManager para AuthController
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http,
+                                                       CustomUserDetailsService userDetailsService,
+                                                       PasswordEncoder passwordEncoder) throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder)
+                .and()
+                .build();
+    }
 
     // 5️⃣ PasswordEncoder
     @Bean
@@ -123,35 +132,25 @@ public class SecurityConfig {
         return new ImmutableJWKSet<>(jwkSet);
     }
 
-    private static KeyPair generateRsaKey() {
-        try {
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-            keyPairGenerator.initialize(2048);
-            return keyPairGenerator.generateKeyPair();
-        } catch (Exception ex) {
-            throw new IllegalStateException(ex);
-        }
-    }
+    @Bean
+    public RegisteredClientRepository registeredClientRepository() {
+        RegisteredClient client = RegisteredClient.withId(UUID.randomUUID().toString())
+                .clientId("client-app")
+                .clientSecret("{noop}secret")
+                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+                .redirectUri("http://127.0.0.1:8080/login/oauth2/code/client-app")
+                .postLogoutRedirectUri("http://127.0.0.1:8080/")
+                .scope(OidcScopes.OPENID)
+                .scope(OidcScopes.PROFILE)
+                .clientSettings(ClientSettings.builder()
+                        .requireAuthorizationConsent(true)
+                        .build())
+                .build();
 
-	@Bean
-	public RegisteredClientRepository registeredClientRepository() {
-	    RegisteredClient client = RegisteredClient.withId(UUID.randomUUID().toString())
-	            .clientId("client-app")
-	            .clientSecret("{noop}secret")
-	            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-	            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-	            .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-	            .redirectUri("http://127.0.0.1:8080/login/oauth2/code/client-app")
-	            .postLogoutRedirectUri("http://127.0.0.1:8080/")
-	            .scope(OidcScopes.OPENID)
-	            .scope(OidcScopes.PROFILE)
-	            .clientSettings(ClientSettings.builder()
-	                    .requireAuthorizationConsent(true)
-	                    .build())
-	            .build();
-	
-	    return new InMemoryRegisteredClientRepository(client);
-	}
+        return new InMemoryRegisteredClientRepository(client);
+    }
 
 	/*
     @Bean
@@ -164,11 +163,11 @@ public class SecurityConfig {
     public AuthorizationServerSettings authorizationServerSettings() {
         return AuthorizationServerSettings.builder().build();
     }
-    
+
     @Bean
     public JwtDecoder jwtDecoder() {
         // Debe ser la misma clave secreta que usás en JwtUtil
-        String secretKey = "claveSecretaMuySegura123456789012345678901234567890"; 
+        String secretKey = "claveSecretaMuySegura123456789012345678901234567890";
         return NimbusJwtDecoder.withSecretKey(
                 new javax.crypto.spec.SecretKeySpec(secretKey.getBytes(), "HmacSHA256")
         ).build();

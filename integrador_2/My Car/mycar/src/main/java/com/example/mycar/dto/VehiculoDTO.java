@@ -11,9 +11,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class VehiculoDTO extends BaseDTO{
-	
-	private Long estadoVehiculoId;
-	private String patente;
+public class VehiculoDTO extends BaseDTO {
+
+    private Long estadoVehiculoId;
+    private String patente;
 
 }

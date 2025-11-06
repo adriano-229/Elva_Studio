@@ -9,6 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LoginResponseDTO {
 
-	private String token;
-	private boolean requiereCambioClave;
+    private String token;
+    private boolean requiereCambioClave;
 }

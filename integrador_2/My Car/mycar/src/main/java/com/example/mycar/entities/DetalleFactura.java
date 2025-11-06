@@ -12,17 +12,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "detalle_factura")
-public class DetalleFactura extends Base{
-	
-	@Column(name = "cantidad", nullable = false)
-	private int cantidad;
-	
-	@Column(name = "subtotal", nullable = false)
-	private double subtotal;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
+public class DetalleFactura extends Base {
+
+    @Column(name = "cantidad", nullable = false)
+    private int cantidad;
+
+    @Column(name = "subtotal", nullable = false)
+    private double subtotal;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "factura_id")
-	private Factura factura;
+    private Factura factura;
 
     @OneToOne
     @JoinColumn(name = "alquiler_id")

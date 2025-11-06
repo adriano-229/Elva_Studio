@@ -1,14 +1,13 @@
 package com.example.mycar.repositories;
 
-import java.util.Optional;
-
+import com.example.mycar.entities.Usuario;
 import org.springframework.stereotype.Repository;
 
-import com.example.mycar.entities.Usuario;
+import java.util.Optional;
 
 @Repository
-public interface UsuarioRepository extends BaseRepository<Usuario, Long>{
+public interface UsuarioRepository extends BaseRepository<Usuario, Long> {
 
-	Optional<Usuario> findByNombreUsuario(String nombreUsuario);
+    Optional<Usuario> findByNombreUsuario(String nombreUsuario);
 
 }

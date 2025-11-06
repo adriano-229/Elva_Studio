@@ -1,21 +1,21 @@
 package com.projects.mycar.mycar_cliente.domain;
 
-import java.time.LocalDate;
-
-import org.springframework.web.multipart.MultipartFile;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
+import org.springframework.web.multipart.MultipartFile;
 
-@SuperBuilder @Data
+import java.time.LocalDate;
+
+@SuperBuilder
+@Data
 @EqualsAndHashCode(callSuper = true)
-public class ClienteFormDTO extends BaseDTO{
-	
-	// usuario
+public class ClienteFormDTO extends BaseDTO {
+
+    // usuario
     private Long id; // opcional para edición
 
     @NotBlank(message = "El nombre de usuario es obligatorio")
@@ -29,7 +29,7 @@ public class ClienteFormDTO extends BaseDTO{
     private boolean eliminado;
 
     // persona
-    
+
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
 
@@ -49,11 +49,11 @@ public class ClienteFormDTO extends BaseDTO{
     private String direccionEstadia;
 
     // cliente 
-    
+
     private Long imagenId;  // referencia a la foto del cliente
     private Long alquilerId; // último alquiler o actual
 
     private MultipartFile foto; // opcional, si se sube desde el formulario
-	
+
 
 }

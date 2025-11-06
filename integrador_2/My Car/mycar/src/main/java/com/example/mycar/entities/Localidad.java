@@ -3,7 +3,6 @@ package com.example.mycar.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -16,14 +15,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "localidad")
-public class Localidad extends Base{
- 
-	@Column(name = "nombre", nullable = false)
+public class Localidad extends Base {
+
+    @Column(name = "nombre", nullable = false)
     private String nombre;
-	
-	@Column(name = "codigo_postal", nullable = false)
+
+    @Column(name = "codigo_postal", nullable = false)
     private String codigoPostal;
-    
+
     @ManyToOne
     private Departamento departamento;
 

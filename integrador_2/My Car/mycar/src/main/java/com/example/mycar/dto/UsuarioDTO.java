@@ -1,7 +1,6 @@
 package com.example.mycar.dto;
 
 import com.example.mycar.enums.RolUsuario;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
