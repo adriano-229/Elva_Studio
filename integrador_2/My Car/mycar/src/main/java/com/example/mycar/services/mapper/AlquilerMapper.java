@@ -13,5 +13,6 @@ public interface AlquilerMapper extends BaseMapper<Alquiler, AlquilerDTO> {
 
     @Mapping(source = "documentacionId", target = "documentacion.id")
     @Mapping(source = "vehiculoId", target = "vehiculo.id")
+    @Mapping(target = "detalleFactura", ignore = true)
     Alquiler toEntity(AlquilerDTO dto);
 }

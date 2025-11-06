@@ -12,8 +12,8 @@ public interface DetalleFacturaMapper extends BaseMapper<DetalleFactura, Detalle
     @Mapping(source = "alquiler.id", target = "alquilerId")
     DetalleFacturaDTO toDto(DetalleFactura entity);
 
-    @Mapping(source = "facturaId", target = "factura.id")
-    @Mapping(source = "alquilerId", target = "alquiler.id")
+    @Mapping(target = "factura", ignore = true)
+    @Mapping(target = "alquiler", ignore = true)
     DetalleFactura toEntity(DetalleFacturaDTO dto);
 }
 
