@@ -11,7 +11,7 @@ public interface CaracteristicaVehiculoRepository extends BaseRepository<Caracte
 
     List<CaracteristicaVehiculo> findByMarcaAndModeloAndActivoTrue(String marca, String modelo);
 
-    List<CaracteristicaVehiculo> findByAnioAndActivoTrue(int anio);
+    List<CaracteristicaVehiculo> findByAnioAndActivoTrue(long anio);
 
     List<CaracteristicaVehiculo> findByCantidadPuertaAndActivoTrue(int cant);
 

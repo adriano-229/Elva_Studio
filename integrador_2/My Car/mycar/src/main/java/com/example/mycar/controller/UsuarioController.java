@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/usuarios")
 public class UsuarioController extends BaseControllerImpl<Usuario, UsuarioDTO, UsuarioServiceImpl> {
 
-    @Autowired
-    private UsuarioService svcUsuario;
+    private final UsuarioService svcUsuario;
+
+    public UsuarioController(UsuarioService svcUsuario) {
+        this.svcUsuario = svcUsuario;
+    }
 
     @PostMapping("/alta")
     public ResponseEntity<?> crearUsuarioClavePorDefecto(@RequestBody UsuarioDTO dto) {
