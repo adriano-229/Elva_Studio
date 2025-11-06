@@ -7,7 +7,6 @@ import com.example.mycar.dto.UsuarioDTO;
 import com.example.mycar.security.CustomUserDetailsService;
 import com.example.mycar.security.JwtUtil;
 import com.example.mycar.services.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,20 +18,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/auth")
 public class AuthController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
+    private final  AuthenticationManager authenticationManager;
+    private  final JwtUtil jwtUtil;
+    private final  CustomUserDetailsService svcUserDetails;
+    private final  UsuarioService svcUsuario;
 
-    @Autowired
-    private JwtUtil jwtUtil;
+    public AuthController(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtUtil jwtUtil, CustomUserDetailsService svcUserDetails, UsuarioService svcUsuario) {
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.jwtUtil = jwtUtil;
+        this.svcUserDetails = svcUserDetails;
+        this.svcUsuario = svcUsuario;
+    }
 
-    @Autowired
-    private CustomUserDetailsService svcUserDetails;
-
-    @Autowired
-    private UsuarioService svcUsuario;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO request) throws Exception {

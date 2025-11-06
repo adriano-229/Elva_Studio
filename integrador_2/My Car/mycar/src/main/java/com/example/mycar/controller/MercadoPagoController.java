@@ -29,7 +29,7 @@ public class MercadoPagoController {
                         .id("12345")
                         .title("Games")
                         .description("PS5")
-                        .pictureUrl("http://picture.com/PS5")
+                        .pictureUrl("https://picture.com/PS5")
                         .categoryId("games")
                         .quantity(2)
                         .currencyId("BRL")

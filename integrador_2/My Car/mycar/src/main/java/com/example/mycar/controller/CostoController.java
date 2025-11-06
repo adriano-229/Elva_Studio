@@ -16,8 +16,11 @@ import java.util.List;
 @RequestMapping("/api/costos")
 public class CostoController {
 
-    @Autowired
-    private CostoService costoService;
+    private final CostoService costoService;
+
+    public CostoController(CostoService costoService) {
+        this.costoService = costoService;
+    }
 
     /**
      * Calcula los costos de múltiples alquileres y genera un "pagaré" temporal.

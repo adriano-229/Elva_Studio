@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 public abstract class BaseControllerImpl<E extends Base, D extends BaseDTO, S extends BaseServiceImpl<E, D, Long>> implements BaseController<D, Long> {
 
-    @Autowired
     protected S servicio;
 
     @GetMapping("")

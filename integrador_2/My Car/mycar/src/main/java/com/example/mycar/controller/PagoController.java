@@ -15,8 +15,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/pagos")
 public class PagoController {
-    @Autowired
-    private PagoService pagoService;
+    private final PagoService pagoService;
+
+    public PagoController(PagoService pagoService) {
+        this.pagoService = pagoService;
+    }
 
     @PostMapping("/procesar")
     public ResponseEntity<?> procesarPago(@Valid @RequestBody SolicitudPagoDTO solicitud) {
