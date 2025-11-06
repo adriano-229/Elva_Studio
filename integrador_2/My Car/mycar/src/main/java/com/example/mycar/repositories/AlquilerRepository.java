@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface AlquilerRepository extends BaseRepository<Alquiler, Long> {
+
     List<Alquiler> findByDetalleFacturaIsNullAndActivoTrue();
 
     List<Alquiler> findByIdInAndActivoTrue(List<Long> ids);

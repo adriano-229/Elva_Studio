@@ -8,6 +8,7 @@ import com.example.mycar.services.mapper.FacturaMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -64,6 +65,11 @@ public class FacturaServiceImpl extends BaseServiceImpl<Factura, FacturaDTO, Lon
 
     @Override
     protected void afterDelete(Factura entity) throws Exception {
+    }
+
+    @Override
+    public List<FacturaDTO> findAllByIds(Iterable<Long> longs) throws Exception {
+        return List.of();
     }
 }
 

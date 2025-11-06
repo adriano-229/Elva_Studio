@@ -8,6 +8,7 @@ import com.example.mycar.services.mapper.AlquilerMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -72,5 +73,10 @@ public class AlquilerServiceImpl extends BaseServiceImpl<Alquiler, AlquilerDTO, 
 
     @Override
     protected void afterDelete(Alquiler entity) throws Exception {
+    }
+
+    @Override
+    public List<AlquilerDTO> findAllByIds(Iterable<Long> longs) throws Exception {
+        return List.of();
     }
 }
