@@ -2,6 +2,7 @@ package com.example.mycar.security.auth;
 
 
 import com.example.mycar.security.CustomUserDetailsService;
+import com.example.mycar.security.JwtRequestFilter;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
@@ -15,6 +16,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,10 +28,13 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
-import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -51,35 +56,36 @@ public class SecurityConfig {
         }
     }
 
-    // 1️⃣ Authorization Server (endpoints OAuth2, JWT)
+    // 1️⃣ Authorization Server (endpoints OAuth2, JWT) - updated to use OAuth2AuthorizationServerConfigurer
     @Bean
     @Order(1)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
-        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
-        return http.formLogin(Customizer.withDefaults()).build();
-    }
-    /*
-    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-            		.requestMatchers("/api/auth/login").permitAll()
-            	    .requestMatchers("/api/auth/cambiar-clave/**").authenticated().
-            	    anyRequest().authenticated()
-            )
-            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .httpBasic(Customizer.withDefaults()); // opcional, para pruebas API
+        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
+        RequestMatcher endpointsMatcher = authorizationServerConfigurer.getEndpointsMatcher();
 
-            //.formLogin(Customizer.withDefaults());
+        http
+                .securityMatcher(endpointsMatcher)
+                .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
+                .csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher))
+                .formLogin(Customizer.withDefaults());
+
+        // Use non-deprecated with(...) instead of apply(...)
+        http.with(authorizationServerConfigurer, (config) -> {
+        });
         return http.build();
-    }*/
+    }
 
     // 2️⃣ Resource Server (endpoints protegidos)
     @Bean
     @Order(2)
-    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, JwtRequestFilter jwtRequestFilter) throws Exception {
+        AuthenticationEntryPoint apiEntryPoint = (request, response, authException) -> {
+            response.setStatus(401);
+            response.setContentType("application/json");
+            response.getWriter().write("{\"error\":\"Unauthorized\"}");
+        };
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/auth/cambiar-clave/**").authenticated()
@@ -87,29 +93,23 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt())
-                .httpBasic(Customizer.withDefaults());
+                .exceptionHandling(e -> e.authenticationEntryPoint(apiEntryPoint))
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
+
+        // Registrar filtro JWT
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
-    // 4️⃣ UserDetailsService usando tu CustomUserDetailsService
-    /*
-    @Bean
-    public CustomUserDetailsService userDetailsService() {
-        return new CustomUserDetailsService();
-    }*/
-
-    // 3️⃣ AuthenticationManager para AuthController
+    // 3️⃣ AuthenticationManager para AuthController - remove deprecated and()
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http,
                                                        CustomUserDetailsService userDetailsService,
                                                        PasswordEncoder passwordEncoder) throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder)
-                .and()
-                .build();
+        AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        builder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        return builder.build();
     }
 
     // 5️⃣ PasswordEncoder
@@ -152,12 +152,6 @@ public class SecurityConfig {
         return new InMemoryRegisteredClientRepository(client);
     }
 
-	/*
-    @Bean
-    public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
-        return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
-    }*/
-
     // 7️⃣ Configuración del Authorization Server
     @Bean
     public AuthorizationServerSettings authorizationServerSettings() {
@@ -166,10 +160,42 @@ public class SecurityConfig {
 
     @Bean
     public JwtDecoder jwtDecoder() {
-        // Debe ser la misma clave secreta que usás en JwtUtil
+        // Debe ser la misma clave secreta que usas en JwtUtil
         String secretKey = "claveSecretaMuySegura123456789012345678901234567890";
         return NimbusJwtDecoder.withSecretKey(
                 new javax.crypto.spec.SecretKeySpec(secretKey.getBytes(), "HmacSHA256")
         ).build();
     }
+
+        /*
+            // 1️⃣ Authorization Server (endpoints OAuth2, JWT)
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+            		.requestMatchers("/api/auth/login").permitAll()
+            	    .requestMatchers("/api/auth/cambiar-clave/**").authenticated().
+            	    anyRequest().authenticated()
+            )
+            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .httpBasic(Customizer.withDefaults()); // opcional, para pruebas API
+
+            //.formLogin(Customizer.withDefaults());
+        return http.build();
+    }*/
+
+
+    // 4️⃣ UserDetailsService usando tu CustomUserDetailsService
+ /*
+ @Bean
+ public CustomUserDetailsService userDetailsService() {
+     return new CustomUserDetailsService();
+ }*/
+	/*
+  @Bean
+  public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
+      return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
+  }*/
+
+
 }

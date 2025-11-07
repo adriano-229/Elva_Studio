@@ -4,12 +4,13 @@ import com.example.mycar.dto.CambiarClaveDTO;
 import com.example.mycar.dto.LoginRequestDTO;
 import com.example.mycar.dto.LoginResponseDTO;
 import com.example.mycar.dto.UsuarioDTO;
-import com.example.mycar.security.CustomUserDetailsService;
 import com.example.mycar.security.JwtUtil;
 import com.example.mycar.services.UsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -21,30 +22,33 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
-    private final CustomUserDetailsService svcUserDetails;
     private final UsuarioService svcUsuario;
 
-    public AuthController(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtUtil jwtUtil, CustomUserDetailsService svcUserDetails, UsuarioService svcUsuario) {
+    public AuthController(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtUtil jwtUtil, UsuarioService svcUsuario) {
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
-        this.svcUserDetails = svcUserDetails;
         this.svcUsuario = svcUsuario;
     }
 
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getNombreUsuario(), request.getClave())
-        );
+        String username = request.getNombreUsuario();
+        String clave = request.getClave();
 
-        UserDetails userDetails = svcUserDetails.loadUserByUsername(request.getNombreUsuario());
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, clave);
+        Authentication authentication;
+        try {
+            authentication = authenticationManager.authenticate(authToken);
+        } catch (AuthenticationException ex) {
+            // Devuelve 401 evitando ciclo de desafíos Basic Auth en algunos clientes
+            return ResponseEntity.status(401).build();
+        }
 
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String token = jwtUtil.generateToken(userDetails);
-
-        UsuarioDTO usuarioDTO = svcUsuario.buscarUsuarioPorNombre(request.getNombreUsuario());
-
+        UsuarioDTO usuarioDTO = svcUsuario.buscarUsuarioPorNombre(username);
         boolean requiereCambioClave = passwordEncoder.matches("mycar", usuarioDTO.getClave());
         //boolean requiereCambioClave = usuario.getClave().equals("mycar");
         return ResponseEntity.ok(new LoginResponseDTO(token, requiereCambioClave));
@@ -57,3 +61,4 @@ public class AuthController {
     }
 
 }
+
