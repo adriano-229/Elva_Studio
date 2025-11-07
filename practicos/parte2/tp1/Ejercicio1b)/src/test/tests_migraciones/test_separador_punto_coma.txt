@@ -1,3 +1,0 @@
-Roberto;Gómez;roberto@mail.com;20-55443322-1;Corrientes;456;Resistencia;3500;Chaco;Argentina
-Lucía;Fernández;lucia@mail.com;27-88776655-4;Moreno;789;Santa Fe Capital;3000;Santa Fe;Argentina
-
