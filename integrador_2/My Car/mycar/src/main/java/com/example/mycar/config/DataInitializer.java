@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -122,7 +121,7 @@ public class DataInitializer implements CommandLineRunner {
         CostoVehiculo costoVehiculo = new CostoVehiculo();
         costoVehiculo.setFechaDesde(Date.valueOf(LocalDate.of(2024, 1, 1)));
         costoVehiculo.setFechaHasta(Date.valueOf(LocalDate.of(2024, 12, 31)));
-        costoVehiculo.setCosto(new BigDecimal("15000.00"));
+        costoVehiculo.setCosto(15000.0);
         entityManager.persist(costoVehiculo);
 
         Vehiculo vehiculoCorolla = new Vehiculo();
@@ -202,6 +201,7 @@ public class DataInitializer implements CommandLineRunner {
                 .tipoPago(TipoPago.Efectivo)
                 .observacion("Pago en efectivo en sucursal")
                 .build();
+        pagoEfectivo.setActivo(true);
         entityManager.persist(pagoEfectivo);
 
         FormaDePago pagoTransferencia = FormaDePago.builder()
@@ -213,23 +213,24 @@ public class DataInitializer implements CommandLineRunner {
         Factura factura = Factura.builder()
                 .numeroFactura(1001L)
                 .fechaFactura(LocalDate.now())
-                .totalPagado(new BigDecimal("30000"))
+                .totalPagado(30000.0)
                 .estado(EstadoFactura.Pagada)
                 .observacionPago("Pago recibido en mostrador")
                 .formaDePago(pagoEfectivo)
                 .build();
+        factura.setActivo(true);
 
         DetalleFactura detalleVehiculo = new DetalleFactura();
         detalleVehiculo.setCantidad(1);
-        detalleVehiculo.setSubtotal(new BigDecimal("15000.00"));
+        detalleVehiculo.setSubtotal(15000.0);
         detalleVehiculo.setFactura(factura);
 
         DetalleFactura detalleSeguro = new DetalleFactura();
         detalleSeguro.setCantidad(1);
-        detalleSeguro.setSubtotal(new BigDecimal("15000.00"));
+        detalleSeguro.setSubtotal(15000.0);
         detalleSeguro.setFactura(factura);
 
-        factura.getDetalles().addAll(List.of(detalleVehiculo, detalleSeguro));
+        factura.setDetalles(new java.util.ArrayList<>(List.of(detalleVehiculo, detalleSeguro)));
         entityManager.persist(factura);
 
         Usuario usuarioAdmin = new Usuario();

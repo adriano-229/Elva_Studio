@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final PasswordEncoder passwordEncoder;
-    private final  AuthenticationManager authenticationManager;
-    private  final JwtUtil jwtUtil;
-    private final  CustomUserDetailsService svcUserDetails;
-    private final  UsuarioService svcUsuario;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
+    private final CustomUserDetailsService svcUserDetails;
+    private final UsuarioService svcUsuario;
 
     public AuthController(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtUtil jwtUtil, CustomUserDetailsService svcUserDetails, UsuarioService svcUsuario) {
         this.passwordEncoder = passwordEncoder;

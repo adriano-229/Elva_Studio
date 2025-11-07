@@ -4,7 +4,6 @@ import com.example.mycar.enums.EstadoFactura;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +23,8 @@ public class Factura extends Base {
     @Column(name = "fecha_factura", nullable = false)
     private LocalDate fechaFactura;
 
-    @Column(name = "total_pagado", nullable = false, precision = 12, scale = 2)
-    private BigDecimal totalPagado = BigDecimal.ZERO;
+    @Column(name = "total_pagado", nullable = false)
+    private Double totalPagado = 0.0;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)

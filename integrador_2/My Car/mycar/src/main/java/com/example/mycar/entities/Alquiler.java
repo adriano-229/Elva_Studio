@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
@@ -23,8 +22,8 @@ public class Alquiler extends Base {
     @Column(name = "fecha_hasta", nullable = false)
     private Date fechaHasta;
 
-    @Column(name = "costo_calculado", precision = 12, scale = 2)
-    private BigDecimal costoCalculado; // Costo total del alquiler
+    @Column(name = "costo_calculado")
+    private Double costoCalculado; // Costo total del alquiler
 
     @Column(name = "cantidad_dias")
     private Integer cantidadDias; // Duración en días

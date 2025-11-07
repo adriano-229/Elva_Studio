@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public abstract class Pago {
 
     private Long idSocio;
 
-    private BigDecimal totalAPagar;
+    private Double totalAPagar;
 
     private List<String> idCuotas;
 

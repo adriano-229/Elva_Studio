@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,9 +19,8 @@ import java.util.List;
 public class PagareDTO {
 
     private List<AlquilerConCostoDTO> alquileres;
-    private BigDecimal totalAPagar;
+    private Double totalAPagar;
     private LocalDateTime fechaEmision;
     private String clienteNombre;
     private Long clienteId;
 }
-

@@ -5,7 +5,6 @@ import com.example.mycar.dto.RespuestaPagoDTO;
 import com.example.mycar.dto.SolicitudPagoDTO;
 import com.example.mycar.services.PagoService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

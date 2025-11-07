@@ -6,6 +6,7 @@ import com.example.mycar.dto.SolicitudPagoDTO;
 import com.example.mycar.entities.*;
 import com.example.mycar.enums.EstadoFactura;
 import com.example.mycar.enums.TipoPago;
+import com.example.mycar.error.*;
 import com.example.mycar.repositories.AlquilerRepository;
 import com.example.mycar.repositories.DetalleFacturaRepository;
 import com.example.mycar.repositories.FacturaRepository;
@@ -13,13 +14,10 @@ import com.example.mycar.repositories.FormaDePagoRepository;
 import com.example.mycar.services.FacturaService;
 import com.example.mycar.services.PagoService;
 import com.example.mycar.services.mapper.FacturaMapper;
-import com.example.mycar.error.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +88,7 @@ public class PagoServiceImpl implements PagoService {
                 });
 
         // Calcular costos y actualizar alquileres
-        BigDecimal totalAPagar = BigDecimal.ZERO;
+        double totalAPagar = 0.0;
         List<DetalleFactura> detalles = new ArrayList<>();
 
         for (Alquiler alquiler : alquileres) {
@@ -106,17 +104,15 @@ public class PagoServiceImpl implements PagoService {
             }
 
             // Validar que el costo sea válido
-            if (vehiculo.getCostoVehiculo().getCosto() == null ||
-                vehiculo.getCostoVehiculo().getCosto().compareTo(BigDecimal.ZERO) <= 0) {
+            if (vehiculo.getCostoVehiculo().getCosto() <= 0) {
                 throw new VehiculoSinCostoException(vehiculo.getId());
             }
 
             // Calcular subtotal
-            BigDecimal costoPorDia = vehiculo.getCostoVehiculo().getCosto();
-            BigDecimal subtotal = costoPorDia.multiply(BigDecimal.valueOf(dias))
-                    .setScale(2, RoundingMode.HALF_UP);
+            double costoPorDia = vehiculo.getCostoVehiculo().getCosto();
+            double subtotal = Math.round(costoPorDia * dias * 100.0) / 100.0;
 
-            totalAPagar = totalAPagar.add(subtotal);
+            totalAPagar = Math.round((totalAPagar + subtotal) * 100.0) / 100.0;
 
             // Actualizar alquiler con el costo calculado
             alquiler.setCostoCalculado(subtotal);
@@ -167,8 +163,6 @@ public class PagoServiceImpl implements PagoService {
 
         if (solicitud.getTipoPago() == TipoPago.Billetera_virtual) {
             mensaje = "Pago pendiente de aprobación. Redirigir a Mercado Pago para completar el pago.";
-            // Aquí se integraría con Mercado Pago para generar el link de pago
-            // Por ahora retornamos un mensaje
             urlMercadoPago = "https://www.mercadopago.com/checkout/v1/redirect?preference-id=EXAMPLE";
         } else {
             mensaje = "Pago registrado. Pendiente de aprobación por un administrador.";

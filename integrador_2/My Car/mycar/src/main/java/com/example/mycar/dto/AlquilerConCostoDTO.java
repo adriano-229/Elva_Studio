@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 /**
  * DTO que representa un alquiler con su costo calculado.
  * Se usa para el "pagaré" temporal antes de persistir el pago.
@@ -22,7 +20,6 @@ public class AlquilerConCostoDTO {
     private String fechaDesde;
     private String fechaHasta;
     private Integer cantidadDias;
-    private BigDecimal costoPorDia;
-    private BigDecimal subtotal;
+    private Double costoPorDia;
+    private Double subtotal;
 }
-
