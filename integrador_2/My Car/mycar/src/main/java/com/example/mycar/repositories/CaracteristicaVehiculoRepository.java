@@ -1,13 +1,13 @@
 package com.example.mycar.repositories;
 
+import com.example.mycar.entities.CaracteristicaVehiculo;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-
-import com.example.mycar.entities.CaracteristicaVehiculo;
 import com.example.mycar.enums.EstadoVehiculo;
 
 @Repository
@@ -36,6 +36,5 @@ public interface CaracteristicaVehiculoRepository extends BaseRepository<Caracte
 		      AND v.estadoVehiculo = :estadoVehiculo
 		""")
 		List<CaracteristicaVehiculo> findByEstadoAndActivoTrue(@Param("estadoVehiculo") EstadoVehiculo estadoVehiculo);
-
 
 }

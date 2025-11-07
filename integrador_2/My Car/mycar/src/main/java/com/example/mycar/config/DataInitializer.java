@@ -1,55 +1,22 @@
 package com.example.mycar.config;
 
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.List;
-
+import com.example.mycar.entities.*;
+import com.example.mycar.enums.*;
+import com.example.mycar.repositories.UsuarioRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.example.mycar.entities.Alquiler;
-import com.example.mycar.entities.CaracteristicaVehiculo;
-import com.example.mycar.entities.Cliente;
-import com.example.mycar.entities.ConfiguracionCorreoAutomatico;
-import com.example.mycar.entities.ContactoCorreoElectronico;
-import com.example.mycar.entities.ContactoTelefonico;
-import com.example.mycar.entities.CostoVehiculo;
-import com.example.mycar.entities.Departamento;
-import com.example.mycar.entities.DetalleFactura;
-import com.example.mycar.entities.Direccion;
-import com.example.mycar.entities.Documentacion;
-import com.example.mycar.entities.Empleado;
-import com.example.mycar.entities.Empresa;
-import com.example.mycar.entities.Factura;
-import com.example.mycar.entities.FormaDePago;
-import com.example.mycar.entities.Imagen;
-import com.example.mycar.entities.Localidad;
-import com.example.mycar.entities.Nacionalidad;
-import com.example.mycar.entities.Pais;
-import com.example.mycar.entities.Provincia;
-import com.example.mycar.entities.Usuario;
-import com.example.mycar.entities.Vehiculo;
-import com.example.mycar.enums.EstadoFactura;
-import com.example.mycar.enums.EstadoVehiculo;
-import com.example.mycar.enums.RolUsuario;
-import com.example.mycar.enums.TipoContacto;
-import com.example.mycar.enums.TipoDocumentacion;
-import com.example.mycar.enums.TipoDocumento;
-import com.example.mycar.enums.TipoEmpleado;
-import com.example.mycar.enums.TipoImagen;
-import com.example.mycar.enums.TipoPago;
-import com.example.mycar.enums.TipoTelefono;
-import com.example.mycar.repositories.UsuarioRepository;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
 
 @Configuration
-@Profile({"dev", "test"})
+@Profile("dev")
 public class DataInitializer implements CommandLineRunner {
 
     private final UsuarioRepository usuarioRepository;
@@ -154,7 +121,7 @@ public class DataInitializer implements CommandLineRunner {
         CostoVehiculo costoVehiculo = new CostoVehiculo();
         costoVehiculo.setFechaDesde(Date.valueOf(LocalDate.of(2024, 1, 1)));
         costoVehiculo.setFechaHasta(Date.valueOf(LocalDate.of(2024, 12, 31)));
-        costoVehiculo.setCosto(new BigDecimal("15000.0"));
+        costoVehiculo.setCosto(15000.0);
         entityManager.persist(costoVehiculo);
 
         Vehiculo vehiculoCorolla = new Vehiculo();
@@ -234,6 +201,7 @@ public class DataInitializer implements CommandLineRunner {
                 .tipoPago(TipoPago.Efectivo)
                 .observacion("Pago en efectivo en sucursal")
                 .build();
+        pagoEfectivo.setActivo(true);
         entityManager.persist(pagoEfectivo);
 
         FormaDePago pagoTransferencia = FormaDePago.builder()
@@ -245,11 +213,12 @@ public class DataInitializer implements CommandLineRunner {
         Factura factura = Factura.builder()
                 .numeroFactura(1001L)
                 .fechaFactura(LocalDate.now())
-                .totalPagado(new BigDecimal("30000"))
+                .totalPagado(30000.0)
                 .estado(EstadoFactura.Pagada)
                 .observacionPago("Pago recibido en mostrador")
                 .formaDePago(pagoEfectivo)
                 .build();
+        factura.setActivo(true);
 
         DetalleFactura detalleVehiculo = new DetalleFactura();
         detalleVehiculo.setCantidad(1);
@@ -261,12 +230,12 @@ public class DataInitializer implements CommandLineRunner {
         detalleSeguro.setSubtotal(15000.0);
         detalleSeguro.setFactura(factura);
 
-        factura.getDetalles().addAll(List.of(detalleVehiculo, detalleSeguro));
+        factura.setDetalles(new java.util.ArrayList<>(List.of(detalleVehiculo, detalleSeguro)));
         entityManager.persist(factura);
 
         Usuario usuarioAdmin = new Usuario();
         usuarioAdmin.setNombreUsuario("admin");
-        usuarioAdmin.setClave(passwordEncoder.encode("admin123"));
+        usuarioAdmin.setClave(passwordEncoder.encode("mycar"));
         usuarioAdmin.setRol(RolUsuario.Jefe);
         usuarioAdmin.setPersona(empleadoDemo);
 

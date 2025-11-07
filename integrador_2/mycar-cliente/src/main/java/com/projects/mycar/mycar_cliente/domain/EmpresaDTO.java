@@ -4,12 +4,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-@SuperBuilder @Data
+@SuperBuilder
+@Data
 @EqualsAndHashCode(callSuper = true)
-public class EmpresaDTO extends BaseDTO{
-    
+public class EmpresaDTO extends BaseDTO {
+
     String nombre;
     String telefono;
     String correoElectronico;
-    
+
 }

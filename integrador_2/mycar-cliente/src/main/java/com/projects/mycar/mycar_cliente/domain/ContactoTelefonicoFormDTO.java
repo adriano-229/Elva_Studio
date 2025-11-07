@@ -2,7 +2,6 @@ package com.projects.mycar.mycar_cliente.domain;
 
 import com.projects.mycar.mycar_cliente.domain.enums.TipoContacto;
 import com.projects.mycar.mycar_cliente.domain.enums.TipoTelefono;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -10,11 +9,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-@SuperBuilder @Data
+@SuperBuilder
+@Data
 @EqualsAndHashCode(callSuper = true)
-public class ContactoTelefonicoFormDTO extends BaseDTO{
-	
-	 // contacto
+public class ContactoTelefonicoFormDTO extends BaseDTO {
+
+    // contacto
     private Long id; // opcional para creación
 
     @NotNull(message = "El tipo de contacto es obligatorio")

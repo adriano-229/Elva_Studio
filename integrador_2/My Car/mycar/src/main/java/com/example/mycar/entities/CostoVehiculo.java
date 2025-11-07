@@ -1,23 +1,24 @@
 package com.example.mycar.entities;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
-import com.example.mycar.enums.TipoTelefono;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "costo_vehiculo")
 public class CostoVehiculo extends Base {
+
 	
 	@Column(name = "fecha_desde", nullable = false)
 	private Date fechaDesde;
@@ -26,5 +27,6 @@ public class CostoVehiculo extends Base {
 	private Date fechaHasta;
 	
 	@Column(name = "costo", nullable = false)
-	private BigDecimal costo;
+    private double costo;
+
 }

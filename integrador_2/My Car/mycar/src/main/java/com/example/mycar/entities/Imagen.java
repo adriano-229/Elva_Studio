@@ -1,25 +1,15 @@
 package com.example.mycar.entities;
 
 import com.example.mycar.enums.TipoImagen;
-import com.example.mycar.enums.TipoPago;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity 
+@Entity
 @Table(name = "imagen")
 public class Imagen extends Base {
 	
@@ -34,6 +24,5 @@ public class Imagen extends Base {
 	
 	@Enumerated(EnumType.STRING)
 	private TipoImagen tipoImagen;
-	
-	
+
 }

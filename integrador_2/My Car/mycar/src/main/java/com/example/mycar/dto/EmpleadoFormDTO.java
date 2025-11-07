@@ -1,5 +1,7 @@
 package com.example.mycar.dto;
 
+import com.example.mycar.enums.TipoDocumento;
+import com.example.mycar.enums.TipoEmpleado;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,9 +9,6 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 import java.time.LocalDate;
-
-import com.example.mycar.enums.TipoDocumento;
-import com.example.mycar.enums.TipoEmpleado;
 
 @Data
 public class EmpleadoFormDTO {
@@ -36,16 +35,11 @@ public class EmpleadoFormDTO {
     @Email
     private String correoElectronico;
 
-    @NotBlank
-    private String sucursalId;
-
-    private String sucursalNombre;
-
     @NotNull
     private TipoEmpleado tipo;
 
-    @NotBlank private String rol;            // Enum en String
-
+    @NotBlank
+    private String rol;
     private boolean activo = true;
 
     private String usuarioId;
@@ -57,11 +51,14 @@ public class EmpleadoFormDTO {
 
     // Direccion (usamos creación inline)
     private String direccionId;              // opcional: seleccionar existente
-    @NotBlank private String calle;
-    @NotBlank private String numeracion;
+    @NotBlank
+    private String calle;
+    @NotBlank
+    private String numeracion;
     private String barrio;
     private String manzanaPiso;
     private String casaDepartamento;
     private String referencia;
-    @NotBlank private String localidadId;    // select en cascada
+    @NotBlank
+    private String localidadId;    // select en cascada
 }

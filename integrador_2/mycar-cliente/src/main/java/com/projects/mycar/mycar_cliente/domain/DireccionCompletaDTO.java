@@ -5,6 +5,6 @@ import lombok.Builder;
 @Builder
 public class DireccionCompletaDTO {
 
-	private String nombre;
-	
+    private String nombre;
+
 }

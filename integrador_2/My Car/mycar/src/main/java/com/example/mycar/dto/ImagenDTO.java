@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class ImagenDTO extends BaseDTO{
+public class ImagenDTO extends BaseDTO {
 
     @NotBlank(message = "El nombre no puede estar vacío")
     private String nombre;

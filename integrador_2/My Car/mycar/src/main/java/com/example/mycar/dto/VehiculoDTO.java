@@ -25,5 +25,8 @@ public class VehiculoDTO extends BaseDTO{
 	    message = "La patente no es válida. Formato permitido: ABC123 o AB123CD"
 	)
 	private String patente;
+	
+	//LO AGREO POR QUE SINO ME TIRA ERROR EL MAPPER - PERO VERIFICAR ESTE ATRIBUTO
+	private CostoVehiculoDTO costoVehiculo;
 
 }
