@@ -40,7 +40,7 @@ public abstract class BaseControllerImpl<E extends Base, D extends BaseDTO, S ex
         }
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<?> save(@RequestBody D dto) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(servicio.save(dto));
