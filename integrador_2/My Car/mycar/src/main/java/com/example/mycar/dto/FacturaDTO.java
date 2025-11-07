@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class FacturaDTO extends BaseDTO {
 
     private Long numeroFactura;
     private LocalDate fechaFactura;
-    private BigDecimal totalPagado;
+    private Double totalPagado;
     private EstadoFactura estado;
     private Long formaDePagoId;
     private String formaDePagoTexto;
@@ -28,4 +27,3 @@ public class FacturaDTO extends BaseDTO {
     private String observacionAnulacion;
     private List<DetalleFacturaDTO> detalles;
 }
-

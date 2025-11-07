@@ -12,8 +12,7 @@ import com.example.mycar.services.CostoService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -53,9 +52,10 @@ public class CostoServiceImpl implements CostoService {
         }
 
         List<AlquilerConCostoDTO> alquileresConCosto = new ArrayList<>();
-        BigDecimal totalAPagar = BigDecimal.ZERO;
+        double totalAPagar = 0.0;
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        DecimalFormat df = new DecimalFormat("0.00");
 
         // Calcular costo de cada alquiler
         for (Alquiler alquiler : alquileres) {
@@ -76,11 +76,13 @@ public class CostoServiceImpl implements CostoService {
             }
 
             // Calcular subtotal
-            BigDecimal costoPorDia = BigDecimal.valueOf(costoVehiculo.getCosto());
-            BigDecimal subtotal = costoPorDia.multiply(BigDecimal.valueOf(dias))
-                    .setScale(2, RoundingMode.HALF_UP);
+            double costoPorDia = costoVehiculo.getCosto();
+            if (costoPorDia <= 0) {
+                throw new Exception("Costo del vehículo inválido");
+            }
+            double subtotal = Math.round(costoPorDia * dias * 100.0) / 100.0;
 
-            totalAPagar = totalAPagar.add(subtotal);
+            totalAPagar = Math.round((totalAPagar + subtotal) * 100.0) / 100.0;
 
             // CrearDTO
             AlquilerConCostoDTO alquilerConCosto = AlquilerConCostoDTO.builder()
@@ -136,4 +138,3 @@ public class CostoServiceImpl implements CostoService {
         return vehiculo.getCostoVehiculo().getCosto() * dias;
     }
 }
-
