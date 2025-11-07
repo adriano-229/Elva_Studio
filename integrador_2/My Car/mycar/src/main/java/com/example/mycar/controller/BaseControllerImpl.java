@@ -3,12 +3,14 @@ package com.example.mycar.controller;
 import com.example.mycar.dto.BaseDTO;
 import com.example.mycar.entities.Base;
 import com.example.mycar.services.impl.BaseServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 public abstract class BaseControllerImpl<E extends Base, D extends BaseDTO, S extends BaseServiceImpl<E, D, Long>> implements BaseController<D, Long> {
 
+    @Autowired
     protected S servicio;
 
     @GetMapping("")
