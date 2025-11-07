@@ -1,5 +1,0 @@
-Juan,Pérez,juan@mail.com,20-12345678-9,Av Siempre Viva,ABC,Springfield,1900,Buenos Aires,Argentina
-María,González,maria@mail.com,27-98765432-1,San Martín,1234,Córdoba Capital,XYZ,Córdoba,Argentina
-Pedro,López,pedro@mail.com,20-99887766-3,Mitre,321.5,La Plata,1900,Buenos Aires,Argentina
-Ana,Martínez,ana@mail.com,27-55667788-9,Belgrano,890,Rosario,ABC123,Santa Fe,Argentina
-
