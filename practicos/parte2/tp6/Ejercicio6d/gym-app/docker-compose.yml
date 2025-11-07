@@ -7,7 +7,7 @@ services:
       MYSQL_PASSWORD: gym_pass
       MYSQL_ROOT_PASSWORD: rootpassword
     ports:
-      - "3310:3306"
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
