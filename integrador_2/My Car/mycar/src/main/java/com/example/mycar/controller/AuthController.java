@@ -34,7 +34,7 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO request) throws Exception {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getNombreUsuario(), request.getClave())
         );
@@ -51,7 +51,7 @@ public class AuthController {
     }
 
     @PostMapping("/cambiar-clave/{id}")
-    public ResponseEntity<String> cambiarClave(@PathVariable Long id, @RequestBody CambiarClaveDTO dto) throws Exception {
+    public ResponseEntity<String> cambiarClave(@PathVariable Long id, @RequestBody CambiarClaveDTO dto) {
         svcUsuario.modificarClave(id, dto.getClaveActual(), dto.getClaveNueva(), dto.getConfirmarClave());
         return ResponseEntity.ok("Clave actualizada correctamente");
     }
