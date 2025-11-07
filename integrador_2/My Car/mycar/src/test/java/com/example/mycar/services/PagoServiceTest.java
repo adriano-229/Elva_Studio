@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -31,7 +30,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @SpringBootTest
 @ActiveProfiles("test")
-@Transactional
 class PagoServiceTest {
 
     @Autowired
@@ -52,17 +50,22 @@ class PagoServiceTest {
     @Autowired
     private FormaDePagoRepository formaDePagoRepository;
 
+    @Autowired
+    private DetalleFacturaRepository detalleFacturaRepository;
+
     private Vehiculo vehiculoTest;
     private Alquiler alquiler1;
     private Alquiler alquiler2;
 
     @BeforeEach
     void setUp() {
-        // Limpiar datos
-        alquilerRepository.deleteAll();
-        vehiculoRepository.deleteAll();
-        costoVehiculoRepository.deleteAll();
-        facturaRepository.deleteAll();
+        // Limpiar datos en orden seguro por FK y en batch para evitar flush en orden incorrecto
+        detalleFacturaRepository.deleteAllInBatch();
+        facturaRepository.deleteAllInBatch();
+        alquilerRepository.deleteAllInBatch();
+        vehiculoRepository.deleteAllInBatch();
+        costoVehiculoRepository.deleteAllInBatch();
+        // formas de pago se mantienen si existen; no obstaculizan otras FK
 
         // Crear costo de vehículo
         CostoVehiculo costoTest = new CostoVehiculo();
@@ -162,9 +165,7 @@ class PagoServiceTest {
                 .build();
 
         // When & Then
-        assertThrows(IllegalArgumentException.class, () -> {
-            pagoService.procesarPago(solicitud);
-        });
+        assertThrows(IllegalArgumentException.class, () -> pagoService.procesarPago(solicitud));
     }
 
     @Test
@@ -176,9 +177,7 @@ class PagoServiceTest {
                 .build();
 
         // When & Then
-        assertThrows(Exception.class, () -> {
-            pagoService.procesarPago(solicitud);
-        });
+        assertThrows(Exception.class, () -> pagoService.procesarPago(solicitud));
     }
 
     @Test
@@ -197,9 +196,8 @@ class PagoServiceTest {
                 .build();
 
         // Then
-        assertThrows(RuntimeException.class, () -> {
-            pagoService.procesarPago(solicitud2);
-        });
+        assertThrows(RuntimeException.class, () -> pagoService.procesarPago(solicitud2));
+
     }
 
     @Test
@@ -224,9 +222,7 @@ class PagoServiceTest {
                 .build();
 
         // When & Then
-        assertThrows(RuntimeException.class, () -> {
-            pagoService.procesarPago(solicitud);
-        });
+        assertThrows(RuntimeException.class, () -> pagoService.procesarPago(solicitud));
     }
 
     @Test
@@ -250,9 +246,7 @@ class PagoServiceTest {
         // Then
         assertNotNull(pendientes);
         assertEquals(2, pendientes.size());
-        pendientes.forEach(factura -> {
-            assertEquals(EstadoFactura.Sin_definir, factura.getEstado());
-        });
+        pendientes.forEach(factura -> assertEquals(EstadoFactura.Sin_definir, factura.getEstado()));
     }
 
     @Test
@@ -283,17 +277,13 @@ class PagoServiceTest {
         pagoService.aprobarFactura(respuesta.getFacturaId());
 
         // When & Then
-        assertThrows(RuntimeException.class, () -> {
-            pagoService.aprobarFactura(respuesta.getFacturaId());
-        });
+        assertThrows(RuntimeException.class, () -> pagoService.aprobarFactura(respuesta.getFacturaId()));
     }
 
     @Test
     void testAprobarFactura_FacturaInexistente_LanzaExcepcion() {
         // When & Then
-        assertThrows(RuntimeException.class, () -> {
-            pagoService.aprobarFactura(99999L);
-        });
+        assertThrows(RuntimeException.class, () -> pagoService.aprobarFactura(99999L));
     }
 
     @Test
@@ -329,9 +319,7 @@ class PagoServiceTest {
         pagoService.anularFactura(respuesta.getFacturaId(), "Primera anulación");
 
         // When & Then
-        assertThrows(RuntimeException.class, () -> {
-            pagoService.anularFactura(respuesta.getFacturaId(), "Segunda anulación");
-        });
+        assertThrows(RuntimeException.class, () -> pagoService.anularFactura(respuesta.getFacturaId(), "Segunda anulación"));
     }
 
     @Test
@@ -410,4 +398,3 @@ class PagoServiceTest {
         assertEquals(8641.92, respuesta.getTotalPagado());
     }
 }
-
