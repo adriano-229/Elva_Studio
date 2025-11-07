@@ -1,8 +1,8 @@
 package com.example.mycar.security.auth;
 
 
-import com.example.mycar.security.CustomUserDetailsService;
 import com.example.mycar.security.JwtRequestFilter;
+import com.example.mycar.security.UserDetailsServiceImpl;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
@@ -120,7 +120,7 @@ public class SecurityConfig {
     // 3️⃣ AuthenticationManager para AuthController - remove deprecated and()
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http,
-                                                       CustomUserDetailsService userDetailsService,
+                                                       UserDetailsServiceImpl userDetailsService,
                                                        PasswordEncoder passwordEncoder) throws Exception {
         AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
         builder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
