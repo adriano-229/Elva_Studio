@@ -6,14 +6,17 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-@SuperBuilder @Data
+@SuperBuilder
+@Data
 @EqualsAndHashCode(callSuper = true)
-public class DireccionDTO extends BaseDTO{
-    
-    @NotBlank @Size(max = 120)
+public class DireccionDTO extends BaseDTO {
+
+    @NotBlank
+    @Size(max = 120)
     private String calle;
 
-    @NotBlank @Size(max = 20)
+    @NotBlank
+    @Size(max = 20)
     private String numeracion;
 
     @Size(max = 120)
@@ -30,13 +33,13 @@ public class DireccionDTO extends BaseDTO{
 
     @NotBlank
     private String localidadId; // relación
-    
+
     @NotBlank
     private String departamentoId;
-    
+
     @NotBlank
     private String provinciaId;
-    
+
     @NotBlank
     private String paisId;
 }

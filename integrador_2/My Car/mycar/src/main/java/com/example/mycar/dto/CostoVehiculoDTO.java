@@ -1,6 +1,5 @@
 package com.example.mycar.dto;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import jakarta.validation.constraints.Future;
@@ -18,9 +17,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class CostoVehiculoDTO extends BaseDTO{
-	
-	@NotNull(message = "La fecha desde no puede ser nula")
+public class CostoVehiculoDTO extends BaseDTO {
+
+    @NotNull(message = "La fecha desde no puede ser nula")
     @PastOrPresent(message = "La fecha desde no puede ser futura")
     private Date fechaDesde;
 
@@ -29,6 +28,6 @@ public class CostoVehiculoDTO extends BaseDTO{
     private Date fechaHasta;
 
     @Positive(message = "El costo debe ser un valor positivo")
-    private BigDecimal costo;
+    private double costo;
 
 }

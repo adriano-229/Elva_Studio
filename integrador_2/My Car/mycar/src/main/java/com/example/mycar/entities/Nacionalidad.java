@@ -5,8 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,6 +16,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "nacionalidad")
 public class Nacionalidad extends Base {
 
-	@Column(name = "nombre", nullable = false)
-	private String nombre;
+    @Column(name = "nombre", nullable = false)
+    private String nombre;
 }
