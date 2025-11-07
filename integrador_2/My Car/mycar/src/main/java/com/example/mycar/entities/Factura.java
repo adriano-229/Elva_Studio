@@ -31,10 +31,10 @@ public class Factura extends Base {
     private EstadoFactura estado = EstadoFactura.Sin_definir;
 
     // Opcional: observaciones
-    @Column(name = "observacion_pago", length = 255)
+    @Column(name = "observacion_pago")
     private String observacionPago;
 
-    @Column(name = "observacion_anulacion", length = 255)
+    @Column(name = "observacion_anulacion")
     private String observacionAnulacion;
 
     @ManyToOne(fetch = FetchType.LAZY)
