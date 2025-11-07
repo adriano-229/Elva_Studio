@@ -18,11 +18,7 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
-    private CustomUserDetailsService userDetailsService;
-
-    public JwtRequestFilter(JwtUtil jwtUtil) {
-        this.jwtUtil = jwtUtil;
-    }
+    private final CustomUserDetailsService userDetailsService;
 
     @Autowired
     public JwtRequestFilter(CustomUserDetailsService userDetailsService, JwtUtil jwtUtil) {
@@ -37,7 +33,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         final String path = request.getRequestURI();
-        if (path.startsWith("/auth")) {
+        if (path.startsWith("/api/auth")) { // excluir endpoints de autenticación
             chain.doFilter(request, response);
             return;
         }
