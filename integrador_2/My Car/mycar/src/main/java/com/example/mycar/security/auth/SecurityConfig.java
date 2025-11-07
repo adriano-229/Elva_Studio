@@ -77,9 +77,10 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // 2️⃣ Resource Server (endpoints protegidos)
+    // 2️⃣ Resource Server (endpoints protegidos) - PROD/TEST (no dev)
     @Bean
     @Order(2)
+    @Profile("!dev")
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, JwtRequestFilter jwtRequestFilter) throws Exception {
         AuthenticationEntryPoint apiEntryPoint = (request, response, authException) -> {
             response.setStatus(401);
@@ -96,11 +97,24 @@ public class SecurityConfig {
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(e -> e.authenticationEntryPoint(apiEntryPoint))
+                // Keep explicit jwt configuration; future upgrade: replace with non-deprecated form when available
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
         // Registrar filtro JWT
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
+        return http.build();
+    }
+
+    // 2️⃣ Resource Server (DEV) - permite todo para evitar enviar Authorization: Bearer en desarrollo
+    @Bean
+    @Order(2)
+    @Profile("dev")
+    public SecurityFilterChain devSecurityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
     }
 
