@@ -122,7 +122,7 @@ public class DataInitializer implements CommandLineRunner {
         CostoVehiculo costoVehiculo = new CostoVehiculo();
         costoVehiculo.setFechaDesde(Date.valueOf(LocalDate.of(2024, 1, 1)));
         costoVehiculo.setFechaHasta(Date.valueOf(LocalDate.of(2024, 12, 31)));
-        costoVehiculo.setCosto(15000.0);
+        costoVehiculo.setCosto(new BigDecimal("15000.00"));
         entityManager.persist(costoVehiculo);
 
         Vehiculo vehiculoCorolla = new Vehiculo();
@@ -221,12 +221,12 @@ public class DataInitializer implements CommandLineRunner {
 
         DetalleFactura detalleVehiculo = new DetalleFactura();
         detalleVehiculo.setCantidad(1);
-        detalleVehiculo.setSubtotal(15000.0);
+        detalleVehiculo.setSubtotal(new BigDecimal("15000.00"));
         detalleVehiculo.setFactura(factura);
 
         DetalleFactura detalleSeguro = new DetalleFactura();
         detalleSeguro.setCantidad(1);
-        detalleSeguro.setSubtotal(15000.0);
+        detalleSeguro.setSubtotal(new BigDecimal("15000.00"));
         detalleSeguro.setFactura(factura);
 
         factura.getDetalles().addAll(List.of(detalleVehiculo, detalleSeguro));

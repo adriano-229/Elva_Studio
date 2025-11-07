@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
@@ -24,6 +25,6 @@ public class CostoVehiculo extends Base {
     @Column(name = "fecha_hasta", nullable = false)
     private Date fechaHasta;
 
-    @Column(name = "costo", nullable = false)
-    private double costo;
+    @Column(name = "costo", nullable = false, precision = 12, scale = 2)
+    private BigDecimal costo;
 }

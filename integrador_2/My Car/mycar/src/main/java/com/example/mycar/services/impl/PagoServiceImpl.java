@@ -13,6 +13,8 @@ import com.example.mycar.repositories.FormaDePagoRepository;
 import com.example.mycar.services.FacturaService;
 import com.example.mycar.services.PagoService;
 import com.example.mycar.services.mapper.FacturaMapper;
+import com.example.mycar.error.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Service
 public class PagoServiceImpl implements PagoService {
 
@@ -52,22 +55,24 @@ public class PagoServiceImpl implements PagoService {
     @Override
     @Transactional
     public RespuestaPagoDTO procesarPago(SolicitudPagoDTO solicitud) throws Exception {
+        log.info("Procesando pago para alquileres: {}", solicitud.getAlquilerIds());
+
         // Validar solicitud
         if (solicitud.getAlquilerIds() == null || solicitud.getAlquilerIds().isEmpty()) {
-            throw new Exception("Debe proporcionar al menos un alquiler para pagar");
+            throw new IllegalArgumentException("Debe proporcionar al menos un alquiler para pagar");
         }
 
         // Obtener alquileres
         List<Alquiler> alquileres = alquilerRepository.findByIdInAndActivoTrue(solicitud.getAlquilerIds());
 
         if (alquileres.isEmpty()) {
-            throw new Exception("No se encontraron alquileres válidos");
+            throw new AlquilerNoEncontradoException("No se encontraron alquileres válidos");
         }
 
         // Validar que no tengan factura
         for (Alquiler alquiler : alquileres) {
             if (alquiler.getDetalleFactura() != null) {
-                throw new Exception("El alquiler con ID " + alquiler.getId() + " ya tiene factura asociada");
+                throw new AlquilerYaFacturadoException(alquiler.getId());
             }
         }
 
@@ -75,6 +80,7 @@ public class PagoServiceImpl implements PagoService {
         FormaDePago formaDePago = formaDePagoRepository.findByTipoPagoAndActivoTrue(solicitud.getTipoPago())
                 .orElseGet(() -> {
                     // Si no existe, crear una nueva
+                    log.info("Creando forma de pago automáticamente: {}", solicitud.getTipoPago());
                     FormaDePago nuevaFormaDePago = FormaDePago.builder()
                             .tipoPago(solicitud.getTipoPago())
                             .observacion("Forma de pago creada automáticamente")
@@ -96,24 +102,30 @@ public class PagoServiceImpl implements PagoService {
             // Obtener costo del vehículo
             Vehiculo vehiculo = alquiler.getVehiculo();
             if (vehiculo == null || vehiculo.getCostoVehiculo() == null) {
-                throw new Exception("El alquiler " + alquiler.getId() + " no tiene vehículo con costo definido");
+                throw new VehiculoSinCostoException(vehiculo != null ? vehiculo.getId() : null);
+            }
+
+            // Validar que el costo sea válido
+            if (vehiculo.getCostoVehiculo().getCosto() == null ||
+                vehiculo.getCostoVehiculo().getCosto().compareTo(BigDecimal.ZERO) <= 0) {
+                throw new VehiculoSinCostoException(vehiculo.getId());
             }
 
             // Calcular subtotal
-            BigDecimal costoPorDia = BigDecimal.valueOf(vehiculo.getCostoVehiculo().getCosto());
+            BigDecimal costoPorDia = vehiculo.getCostoVehiculo().getCosto();
             BigDecimal subtotal = costoPorDia.multiply(BigDecimal.valueOf(dias))
                     .setScale(2, RoundingMode.HALF_UP);
 
             totalAPagar = totalAPagar.add(subtotal);
 
-            // Actualizar alquiler con el costo calculado (aún no se persiste)
-            alquiler.setCostoCalculado(subtotal.doubleValue());
+            // Actualizar alquiler con el costo calculado
+            alquiler.setCostoCalculado(subtotal);
             alquiler.setCantidadDias(dias);
 
             // Crear detalle de factura
             DetalleFactura detalle = new DetalleFactura();
             detalle.setCantidad(dias);
-            detalle.setSubtotal(subtotal.doubleValue());
+            detalle.setSubtotal(subtotal);
             detalle.setAlquiler(alquiler);
             detalle.setActivo(true);
 
@@ -162,6 +174,8 @@ public class PagoServiceImpl implements PagoService {
             mensaje = "Pago registrado. Pendiente de aprobación por un administrador.";
         }
 
+        log.info("Factura {} creada exitosamente. Total: {}", factura.getNumeroFactura(), totalAPagar);
+
         return RespuestaPagoDTO.builder()
                 .facturaId(factura.getId())
                 .numeroFactura(String.format("%08d", factura.getNumeroFactura()))
@@ -184,18 +198,20 @@ public class PagoServiceImpl implements PagoService {
     @Transactional
     public FacturaDTO aprobarFactura(Long facturaId) throws Exception {
         Factura factura = facturaRepository.findByIdAndActivoTrue(facturaId)
-                .orElseThrow(() -> new Exception("No se encontró la factura con ID " + facturaId));
+                .orElseThrow(() -> new FacturaNoEncontradaException(facturaId));
 
         if (factura.getEstado() == EstadoFactura.Pagada) {
-            throw new Exception("La factura ya está aprobada");
+            throw new FacturaYaAprobadaException(facturaId);
         }
 
         if (factura.getEstado() == EstadoFactura.Anulada) {
-            throw new Exception("No se puede aprobar una factura anulada");
+            throw new FacturaYaAnuladaException(facturaId);
         }
 
         factura.setEstado(EstadoFactura.Pagada);
         factura = facturaRepository.save(factura);
+
+        log.info("Factura {} aprobada exitosamente", facturaId);
 
         return facturaMapper.toDto(factura);
     }
@@ -204,10 +220,10 @@ public class PagoServiceImpl implements PagoService {
     @Transactional
     public FacturaDTO anularFactura(Long facturaId, String motivo) throws Exception {
         Factura factura = facturaRepository.findByIdAndActivoTrue(facturaId)
-                .orElseThrow(() -> new Exception("No se encontró la factura con ID " + facturaId));
+                .orElseThrow(() -> new FacturaNoEncontradaException(facturaId));
 
         if (factura.getEstado() == EstadoFactura.Anulada) {
-            throw new Exception("La factura ya está anulada");
+            throw new FacturaYaAnuladaException(facturaId);
         }
 
         factura.setEstado(EstadoFactura.Anulada);
@@ -223,6 +239,8 @@ public class PagoServiceImpl implements PagoService {
                 alquilerRepository.save(alquiler);
             }
         }
+
+        log.info("Factura {} anulada. Motivo: {}", facturaId, motivo);
 
         return facturaMapper.toDto(factura);
     }
