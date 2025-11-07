@@ -55,7 +55,6 @@ public class CostoServiceImpl implements CostoService {
         double totalAPagar = 0.0;
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        DecimalFormat df = new DecimalFormat("0.00");
 
         // Calcular costo de cada alquiler
         for (Alquiler alquiler : alquileres) {

@@ -183,14 +183,14 @@ public class PagoServiceImpl implements PagoService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<FacturaDTO> obtenerFacturasPendientes() throws Exception {
+    public List<FacturaDTO> obtenerFacturasPendientes() {
         List<Factura> facturas = facturaRepository.findByEstadoAndActivoTrue(EstadoFactura.Sin_definir);
         return facturaMapper.toDtoList(facturas);
     }
 
     @Override
     @Transactional
-    public FacturaDTO aprobarFactura(Long facturaId) throws Exception {
+    public FacturaDTO aprobarFactura(Long facturaId) {
         Factura factura = facturaRepository.findByIdAndActivoTrue(facturaId)
                 .orElseThrow(() -> new FacturaNoEncontradaException(facturaId));
 
@@ -212,7 +212,7 @@ public class PagoServiceImpl implements PagoService {
 
     @Override
     @Transactional
-    public FacturaDTO anularFactura(Long facturaId, String motivo) throws Exception {
+    public FacturaDTO anularFactura(Long facturaId, String motivo) {
         Factura factura = facturaRepository.findByIdAndActivoTrue(facturaId)
                 .orElseThrow(() -> new FacturaNoEncontradaException(facturaId));
 
