@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Configuration
-@Profile({"dev", "test"})
+@Profile("dev")
 public class DataInitializer implements CommandLineRunner {
 
     private final UsuarioRepository usuarioRepository;
