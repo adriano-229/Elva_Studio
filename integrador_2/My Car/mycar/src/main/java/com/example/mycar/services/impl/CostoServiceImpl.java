@@ -14,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class CostoServiceImpl implements CostoService {
@@ -57,10 +57,15 @@ public class CostoServiceImpl implements CostoService {
 
         // Calcular costo de cada alquiler
         for (Alquiler alquiler : alquileres) {
-            // Calcular días
+            /* Calcular días
             long diffInMillies = Math.abs(alquiler.getFechaHasta().getTime() - alquiler.getFechaDesde().getTime());
             int dias = (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-            if (dias == 0) dias = 1; // Mínimo 1 día
+            if (dias == 0) dias = 1; // Mínimo 1 día*/
+        	
+        	//Calcular dias entre fechas
+        	long diasLong = ChronoUnit.DAYS.between(alquiler.getFechaDesde(), alquiler.getFechaHasta());
+            if (diasLong == 0) diasLong = 1; // Mínimo 1 día
+            int dias = (int) diasLong;
 
             // Obtener costo del vehículo
             Vehiculo vehiculo = alquiler.getVehiculo();
@@ -122,10 +127,16 @@ public class CostoServiceImpl implements CostoService {
         Alquiler alquiler = alquilerRepository.findByIdAndActivoTrue(alquilerId)
                 .orElseThrow(() -> new Exception("No se encontró el alquiler con ID " + alquilerId));
 
-        // Calcular días
+        /* Calcular días
         long diffInMillies = Math.abs(alquiler.getFechaHasta().getTime() - alquiler.getFechaDesde().getTime());
         int dias = (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-        if (dias == 0) dias = 1;
+        if (dias == 0) dias = 1;*/
+        
+        // Calcular días entre fechas
+        long diasLong = ChronoUnit.DAYS.between(alquiler.getFechaDesde(), alquiler.getFechaHasta());
+        if (diasLong == 0) diasLong = 1; // Mínimo 1 día
+        int dias = (int) diasLong;
+        
 
         // Obtener costo del vehículo
         Vehiculo vehiculo = alquiler.getVehiculo();

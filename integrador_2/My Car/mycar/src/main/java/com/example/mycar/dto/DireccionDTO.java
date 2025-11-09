@@ -21,7 +21,7 @@ public class DireccionDTO extends BaseDTO {
 
     @NotBlank
     @Size(max = 20)
-    private String numeracion;
+    private Integer numeracion;
 
     @Size(max = 120)
     private String barrio;
@@ -36,6 +36,6 @@ public class DireccionDTO extends BaseDTO {
     private String referencia;
 
     @NotBlank
-    private LocalidadDTO localidad;
+    private Long localidadId;
 
 }

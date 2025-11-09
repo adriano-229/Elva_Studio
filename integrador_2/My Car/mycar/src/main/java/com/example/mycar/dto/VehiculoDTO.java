@@ -1,5 +1,6 @@
 package com.example.mycar.dto;
 
+import com.example.mycar.entities.CaracteristicaVehiculo;
 import com.example.mycar.enums.EstadoVehiculo;
 
 import jakarta.validation.constraints.NotNull;
@@ -25,6 +26,11 @@ public class VehiculoDTO extends BaseDTO{
 	    message = "La patente no es válida. Formato permitido: ABC123 o AB123CD"
 	)
 	private String patente;
+	
+	@NotNull(message = "La caracteristica del vehiculo es obligatoria")
+	private Long caracteristicaVehiculoId;
+	
+	private CaracteristicaVehiculoDTO caracteristicaVehiculo;
 	
 	//LO AGREO POR QUE SINO ME TIRA ERROR EL MAPPER - PERO VERIFICAR ESTE ATRIBUTO
 	private CostoVehiculoDTO costoVehiculo;

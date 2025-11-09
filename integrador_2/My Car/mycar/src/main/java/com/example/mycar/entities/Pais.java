@@ -1,7 +1,9 @@
 package com.example.mycar.entities;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -26,5 +28,5 @@ public class Pais extends Base {
     private String nombre;
 
     @OneToMany(mappedBy = "pais", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Provincia> provincias = new ArrayList<>();
+    private Set<Provincia> provincias = new HashSet<>();
 }

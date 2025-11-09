@@ -1,6 +1,8 @@
 package com.example.mycar.entities;
 
 import com.example.mycar.enums.EstadoVehiculo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +23,10 @@ public class Vehiculo extends Base {
 	
     @Column(name = "patente",nullable = false)
 	private String patente;
+    
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "caracteristicaVehiculo_id")
+    private CaracteristicaVehiculo caracteristicaVehiculo;
     
     //VERIFICAR ATRIBUTO 
     @ManyToOne(fetch = FetchType.LAZY)

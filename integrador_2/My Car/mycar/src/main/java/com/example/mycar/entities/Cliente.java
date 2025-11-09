@@ -19,7 +19,7 @@ public class Cliente extends Persona {
     @JoinColumn(name = "nacionalidad_id")
     private Nacionalidad nacionalidad;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "alquiler_id")
-    private Alquiler alquiler;
+    private Alquiler alquiler;*/
 }

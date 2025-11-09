@@ -1,8 +1,11 @@
 package com.example.mycar.dto;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,9 +20,12 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class PaisDTO extends BaseDTO{
 	
-	private String nombre;
-	
-	@Builder.Default
-	private List<ProvinciaDTO> provincias = new ArrayList<>();
+	@NotBlank(message = "El nombre del país no puede estar vacío")
+    @Size(min = 3, max = 100, message = "El nombre del país debe tener entre 3 y 100 caracteres")
+    private String nombre;
+
+    @Builder.Default
+    @Valid
+    private Set<ProvinciaDTO> provincias = new HashSet<>();
 
 }

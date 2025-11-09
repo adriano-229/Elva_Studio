@@ -35,15 +35,11 @@ public class CaracteristicaVehiculo extends Base{
 	@Column(name = "cantidad_vehiculo_alquilado", nullable = false)
 	private int cantidadVehiculoAlquilado;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "vehiculo_id")
-	private Vehiculo vehiculo;
-	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "imagen_id")
 	private Imagen imagen;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "costo_vehiculo_id")
     private CostoVehiculo costoVehiculo;
 }

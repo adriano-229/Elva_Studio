@@ -1,16 +1,11 @@
 package com.example.mycar.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.mycar.dto.CaracteristicaVehiculoDTO;
 import com.example.mycar.entities.CaracteristicaVehiculo;
-import com.example.mycar.enums.EstadoVehiculo;
 import com.example.mycar.services.impl.CaracteristicaVehiculoServiceImpl;
 
 @RestController
@@ -18,7 +13,7 @@ import com.example.mycar.services.impl.CaracteristicaVehiculoServiceImpl;
 @RequestMapping(path = "/api/v1/caracteristicaVehiculo")
 public class CaracteristicaVehiculoController extends BaseControllerImpl<CaracteristicaVehiculo, CaracteristicaVehiculoDTO, CaracteristicaVehiculoServiceImpl>{
 
-	@GetMapping("searchDisponible")
+	/*@GetMapping("searchDisponible")
 	public ResponseEntity<?> searchByEstadoVehiculo(@RequestParam EstadoVehiculo estado) {
 	    try {
 	        
@@ -28,6 +23,6 @@ public class CaracteristicaVehiculoController extends BaseControllerImpl<Caracte
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
 	            .body("{\"error\":\"Error. Por favor intente más tarde.\"}");
 	    }
-	}
+	}*/
 	
 }

@@ -1,6 +1,5 @@
 package com.example.mycar.services.impl;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.example.mycar.dto.CaracteristicaVehiculoDTO;
 import com.example.mycar.entities.CaracteristicaVehiculo;
-import com.example.mycar.enums.EstadoVehiculo;
 import com.example.mycar.error.EntidadRelacionadaException;
 import com.example.mycar.repositories.BaseRepository;
 import com.example.mycar.repositories.CaracteristicaVehiculoRepository;
+import com.example.mycar.repositories.VehiculoRepository;
 import com.example.mycar.services.CaracteristicaVehiculoService;
 import com.example.mycar.services.mapper.BaseMapper;
 
@@ -21,6 +20,9 @@ public class CaracteristicaVehiculoServiceImpl extends BaseServiceImpl<Caracteri
 
 	@Autowired
 	private CaracteristicaVehiculoRepository repository;
+	
+	@Autowired
+	private VehiculoRepository vehiculoRepository;
 		
 	public CaracteristicaVehiculoServiceImpl(BaseRepository<CaracteristicaVehiculo, Long> baseRepository,
 			BaseMapper<CaracteristicaVehiculo, CaracteristicaVehiculoDTO> baseMapper) {
@@ -87,12 +89,11 @@ public class CaracteristicaVehiculoServiceImpl extends BaseServiceImpl<Caracteri
 	protected void beforeDelete(CaracteristicaVehiculo entity) throws Exception {
 		try {
 			
-			if (entity.getVehiculo().isActivo()) {
-				throw new EntidadRelacionadaException("No se puede eliminar la caracteristica pq hay vehiculos asociado");
+			if (vehiculoRepository
+					.existeVehiculoActivoPorCaracteristica(entity.getId())) {
+				throw new EntidadRelacionadaException("No se puede eliminar la caracteristica pq hay vehiculos asociados");
 			}
 			
-			
-		
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
@@ -105,7 +106,7 @@ public class CaracteristicaVehiculoServiceImpl extends BaseServiceImpl<Caracteri
 		
 	}
 
-	@Override
+	/*@Override
 	public List<CaracteristicaVehiculoDTO> findByEstadoVehiculo(EstadoVehiculo estado) throws Exception {
 		try {
 	        List<CaracteristicaVehiculo> entities = Optional.ofNullable(repository.findByEstadoAndActivoTrue(estado))
@@ -114,7 +115,7 @@ public class CaracteristicaVehiculoServiceImpl extends BaseServiceImpl<Caracteri
 	    } catch (Exception e) {
 	        throw new Exception("Error al obtener entidades", e);
 	    }
-	}
+	}*/
 	
 	
 
