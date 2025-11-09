@@ -59,20 +59,20 @@ public class DataInitializer implements CommandLineRunner {
 
         Direccion direccionCliente = new Direccion();
         direccionCliente.setCalle("Av. San Martín");
-        direccionCliente.setNumeracion("123");
+        direccionCliente.setNumeracion(123);
         direccionCliente.setBarrio("Centro");
-        direccionCliente.setManzanaPiso("2");
-        direccionCliente.setCasaDepartamento("B");
+        direccionCliente.setManzana_piso("2");
+        direccionCliente.setCasa_departamento("B");
         direccionCliente.setReferencia("Frente a la plaza principal");
         direccionCliente.setLocalidad(ciudadMendoza);
         entityManager.persist(direccionCliente);
 
         Direccion direccionEmpleado = new Direccion();
         direccionEmpleado.setCalle("25 de Mayo");
-        direccionEmpleado.setNumeracion("456");
+        direccionEmpleado.setNumeracion(456);
         direccionEmpleado.setBarrio("Villa Nueva");
-        direccionEmpleado.setManzanaPiso("1");
-        direccionEmpleado.setCasaDepartamento("A");
+        direccionEmpleado.setManzana_piso("1");
+        direccionEmpleado.setCasa_departamento("A");
         direccionEmpleado.setReferencia("A dos cuadras del parque");
         direccionEmpleado.setLocalidad(ciudadMendoza);
         entityManager.persist(direccionEmpleado);
@@ -123,12 +123,7 @@ public class DataInitializer implements CommandLineRunner {
         costoVehiculo.setFechaHasta(Date.valueOf(LocalDate.of(2024, 12, 31)));
         costoVehiculo.setCosto(15000.0);
         entityManager.persist(costoVehiculo);
-
-        Vehiculo vehiculoCorolla = new Vehiculo();
-        vehiculoCorolla.setEstadoVehiculo(EstadoVehiculo.Alquilado);
-        vehiculoCorolla.setPatente("AE123BC");
-        entityManager.persist(vehiculoCorolla);
-
+        
         CaracteristicaVehiculo caracteristicaVehiculo = new CaracteristicaVehiculo();
         caracteristicaVehiculo.setMarca("Toyota");
         caracteristicaVehiculo.setModelo("Corolla");
@@ -137,25 +132,24 @@ public class DataInitializer implements CommandLineRunner {
         caracteristicaVehiculo.setAnio(2022);
         caracteristicaVehiculo.setCantidadTotalVehiculo(10);
         caracteristicaVehiculo.setCantidadVehiculoAlquilado(3);
-        caracteristicaVehiculo.setVehiculo(vehiculoCorolla);
+        //caracteristicaVehiculo.setVehiculo(vehiculoCorolla);
         caracteristicaVehiculo.setImagen(imagenVehiculo);
         caracteristicaVehiculo.setCostoVehiculo(costoVehiculo);
         entityManager.persist(caracteristicaVehiculo);
-
+        
+        Vehiculo vehiculoCorolla = new Vehiculo();
+        vehiculoCorolla.setEstadoVehiculo(EstadoVehiculo.Alquilado);
+        vehiculoCorolla.setPatente("AE123BC");
+        vehiculoCorolla.setCaracteristicaVehiculo(caracteristicaVehiculo);
+        entityManager.persist(vehiculoCorolla);
+        
         Documentacion documentacionCliente = new Documentacion();
         documentacionCliente.setTipoDocumentacion(TipoDocumentacion.Documento_identidad);
         documentacionCliente.setNombreArchivo("dni-cliente.pdf");
         documentacionCliente.setPathArchivo("/docs/dni-cliente.pdf");
         documentacionCliente.setObservacion("Documento válido hasta 2028");
         entityManager.persist(documentacionCliente);
-
-        Alquiler alquilerCliente = new Alquiler();
-        alquilerCliente.setFechaDesde(Date.valueOf(LocalDate.of(2024, 3, 1)));
-        alquilerCliente.setFechaHasta(Date.valueOf(LocalDate.of(2024, 3, 15)));
-        alquilerCliente.setDocumentacion(documentacionCliente);
-        alquilerCliente.setVehiculo(vehiculoCorolla);
-        entityManager.persist(alquilerCliente);
-
+        
         Cliente clienteDemo = new Cliente();
         clienteDemo.setNombre("María");
         clienteDemo.setApellido("Gómez");
@@ -167,8 +161,16 @@ public class DataInitializer implements CommandLineRunner {
         clienteDemo.setDireccion(direccionCliente);
         clienteDemo.setDireccionEstadia("Hotel Central, Av. Las Heras 789");
         clienteDemo.setNacionalidad(nacionalidadArgentina);
-        clienteDemo.setAlquiler(alquilerCliente);
+        //clienteDemo.setAlquiler(alquilerCliente);
         entityManager.persist(clienteDemo);
+        
+        Alquiler alquilerCliente = new Alquiler();
+        alquilerCliente.setFechaDesde(LocalDate.of(2024, 3, 1));
+        alquilerCliente.setFechaHasta(LocalDate.of(2024, 3, 15));
+        alquilerCliente.setDocumentacion(documentacionCliente);
+        alquilerCliente.setVehiculo(vehiculoCorolla);
+        alquilerCliente.setCliente(clienteDemo);
+        entityManager.persist(alquilerCliente);
 
         Empleado empleadoDemo = new Empleado();
         empleadoDemo.setNombre("Lucía");

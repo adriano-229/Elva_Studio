@@ -36,10 +36,7 @@ public class CaracteristicaVehiculoDTO extends BaseDTO {
 
     @PositiveOrZero(message = "La cantidad de vehículos alquilados no puede ser negativa")
     private int cantidadVehiculoAlquilado;
-
-    @NotNull(message = "El vehículo no puede ser nulo")
-    private VehiculoDTO vehiculo;
-
+    
     @NotNull(message = "La imagen no puede ser nulo")
     private ImagenDTO imagen;
 

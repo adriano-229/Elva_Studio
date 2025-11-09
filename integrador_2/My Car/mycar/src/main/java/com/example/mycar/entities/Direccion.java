@@ -22,16 +22,16 @@ public class Direccion extends Base {
     private String calle;
 
     @Column(name = "numeracion", nullable = false)
-    private String numeracion;
+    private Integer numeracion;
 
     @Column(name = "barrio", nullable = false)
     private String barrio;
 
     @Column(name = "manzana_piso", nullable = false)
-    private String manzanaPiso;
+    private String manzana_piso;
 
     @Column(name = "casa_departamento", nullable = false)
-    private String casaDepartamento;
+    private String casa_departamento;
 
     @Column(name = "referencia", nullable = false)
     private String referencia;

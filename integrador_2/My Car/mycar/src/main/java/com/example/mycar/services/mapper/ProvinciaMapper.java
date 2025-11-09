@@ -1,11 +1,20 @@
 package com.example.mycar.services.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import com.example.mycar.dto.ProvinciaDTO;
 import com.example.mycar.entities.Provincia;
 
-@Mapper(componentModel = "spring", uses = {PaisMapper.class})
+@Mapper(componentModel = "spring", uses = {PaisMapper.class, DepartamentoMapper.class})
 public interface ProvinciaMapper extends BaseMapper<Provincia, ProvinciaDTO>{
+	
+	@Override
+    @Mapping(source = "pais.id", target = "paisId")
+    ProvinciaDTO toDto(Provincia entity);
 
+    @Override
+    @Mapping(source = "paisId", target = "pais.id")
+    Provincia toEntity(ProvinciaDTO dto);
+	
 }

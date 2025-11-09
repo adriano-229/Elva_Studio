@@ -1,6 +1,7 @@
 package com.example.mycar.entities;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -36,6 +37,6 @@ public class Localidad extends Base {
     private Departamento departamento;
     
     @OneToMany(mappedBy = "localidad", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Direccion> direcciones;
+    private List<Direccion> direcciones = new ArrayList<>();
 
 }

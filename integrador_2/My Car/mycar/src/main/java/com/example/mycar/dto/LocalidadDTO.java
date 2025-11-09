@@ -1,12 +1,17 @@
 package com.example.mycar.dto;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import com.example.mycar.entities.Departamento;
-import com.example.mycar.entities.Direccion;
-
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,10 +24,19 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class LocalidadDTO extends BaseDTO{
 	
-	private String nombre;
-	private String codigoPostal;
-	@NotBlank
-	private DepartamentoDTO departamento;
-	private List<Direccion> direcciones;
+	@NotBlank(message = "El nombre de la dirección no puede estar vacío")
+    @Size(min = 3, max = 50, message = "El nombre de la localidad debe tener entre 3 y 50 caracteres")
+    private String nombre;
+
+    @NotBlank(message = "El código postal no puede estar vacío")
+    @Pattern(regexp = "\\d{4,10}", message = "El código postal debe contener solo números y tener entre 4 y 10 dígitos")
+    private String codigoPostal;
+
+    @NotNull(message = "El departamento es obligatorio")
+    private Long departamentoId;
+    
+    @Builder.Default
+    @Valid
+    private List<DireccionDTO> direcciones = new ArrayList<>();
 
 }

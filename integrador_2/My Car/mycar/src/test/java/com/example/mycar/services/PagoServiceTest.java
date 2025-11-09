@@ -85,15 +85,15 @@ class PagoServiceTest {
 
         // Crear alquileres de prueba
         alquiler1 = new Alquiler();
-        alquiler1.setFechaDesde(Date.valueOf(LocalDate.of(2024, 11, 1)));
-        alquiler1.setFechaHasta(Date.valueOf(LocalDate.of(2024, 11, 5))); // 4 días
+        alquiler1.setFechaDesde(LocalDate.of(2024, 11, 1));
+        alquiler1.setFechaHasta(LocalDate.of(2024, 11, 5)); // 4 días
         alquiler1.setVehiculo(vehiculoTest);
         alquiler1.setActivo(true);
         alquiler1 = alquilerRepository.save(alquiler1);
 
         alquiler2 = new Alquiler();
-        alquiler2.setFechaDesde(Date.valueOf(LocalDate.of(2024, 11, 6)));
-        alquiler2.setFechaHasta(Date.valueOf(LocalDate.of(2024, 11, 9))); // 3 días
+        alquiler2.setFechaDesde(LocalDate.of(2024, 11, 6));
+        alquiler2.setFechaHasta(LocalDate.of(2024, 11, 9)); // 3 días
         alquiler2.setVehiculo(vehiculoTest);
         alquiler2.setActivo(true);
         alquiler2 = alquilerRepository.save(alquiler2);
@@ -210,8 +210,8 @@ class PagoServiceTest {
         vehiculoSinCosto = vehiculoRepository.save(vehiculoSinCosto);
 
         Alquiler alquilerSinCosto = new Alquiler();
-        alquilerSinCosto.setFechaDesde(Date.valueOf(LocalDate.of(2024, 11, 1)));
-        alquilerSinCosto.setFechaHasta(Date.valueOf(LocalDate.of(2024, 11, 5)));
+        alquilerSinCosto.setFechaDesde(LocalDate.of(2024, 11, 1));
+        alquilerSinCosto.setFechaHasta(LocalDate.of(2024, 11, 5));
         alquilerSinCosto.setVehiculo(vehiculoSinCosto);
         alquilerSinCosto.setActivo(true);
         alquilerSinCosto = alquilerRepository.save(alquilerSinCosto);
@@ -344,8 +344,8 @@ class PagoServiceTest {
     void testProcesarPago_AlquilerUnDia_CalculaCorrectamente() throws Exception {
         // Given - Alquiler del mismo día
         Alquiler alquilerUnDia = new Alquiler();
-        alquilerUnDia.setFechaDesde(Date.valueOf(LocalDate.of(2024, 11, 10)));
-        alquilerUnDia.setFechaHasta(Date.valueOf(LocalDate.of(2024, 11, 10)));
+        alquilerUnDia.setFechaDesde(LocalDate.of(2024, 11, 10));
+        alquilerUnDia.setFechaHasta(LocalDate.of(2024, 11, 10));
         alquilerUnDia.setVehiculo(vehiculoTest);
         alquilerUnDia.setActivo(true);
         alquilerUnDia = alquilerRepository.save(alquilerUnDia);
@@ -380,8 +380,8 @@ class PagoServiceTest {
         vehiculoDecimal = vehiculoRepository.save(vehiculoDecimal);
 
         Alquiler alquilerDecimal = new Alquiler();
-        alquilerDecimal.setFechaDesde(Date.valueOf(LocalDate.of(2024, 11, 1)));
-        alquilerDecimal.setFechaHasta(Date.valueOf(LocalDate.of(2024, 11, 8))); // 7 días
+        alquilerDecimal.setFechaDesde(LocalDate.of(2024, 11, 1));
+        alquilerDecimal.setFechaHasta(LocalDate.of(2024, 11, 8)); // 7 días
         alquilerDecimal.setVehiculo(vehiculoDecimal);
         alquilerDecimal.setActivo(true);
         alquilerDecimal = alquilerRepository.save(alquilerDecimal);

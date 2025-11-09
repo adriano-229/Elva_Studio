@@ -1,14 +1,16 @@
 package com.example.mycar.repositories;
 
 import com.example.mycar.entities.CaracteristicaVehiculo;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import com.example.mycar.enums.EstadoVehiculo;
 
 @Repository
 public interface CaracteristicaVehiculoRepository extends BaseRepository<CaracteristicaVehiculo, Long>{
@@ -23,7 +25,7 @@ public interface CaracteristicaVehiculoRepository extends BaseRepository<Caracte
 																							int cantPuerta,
 																							int cantAsiento);
 	
-	@Query("""
+	/*@Query("""
 		    SELECT cv
 		    FROM CaracteristicaVehiculo cv
 		    JOIN cv.vehiculo v
@@ -35,6 +37,30 @@ public interface CaracteristicaVehiculoRepository extends BaseRepository<Caracte
 		      AND i.activo = true
 		      AND v.estadoVehiculo = :estadoVehiculo
 		""")
-		List<CaracteristicaVehiculo> findByEstadoAndActivoTrue(@Param("estadoVehiculo") EstadoVehiculo estadoVehiculo);
+		List<CaracteristicaVehiculo> findByEstadoAndActivoTrue(@Param("estadoVehiculo") EstadoVehiculo estadoVehiculo);*/
+	
+	
+	@Modifying
+	@Transactional
+	@Query("""
+	    UPDATE CaracteristicaVehiculo c
+	    SET 
+	        c.cantidadTotalVehiculo = (
+	            SELECT COUNT(v) 
+	            FROM Vehiculo v 
+	            WHERE v.caracteristicaVehiculo = c 
+	              AND v.activo = true
+	        ),
+	        c.cantidadVehiculoAlquilado = (
+	            SELECT COUNT(v) 
+	            FROM Vehiculo v 
+	            WHERE v.caracteristicaVehiculo = c 
+	              AND v.estadoVehiculo = 'Alquilado'
+	              AND v.activo = true
+	        )
+	    WHERE c.activo = true
+	    """)
+	void actualizarTotales();
+
 
 }

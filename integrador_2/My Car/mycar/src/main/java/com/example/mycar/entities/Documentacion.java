@@ -19,13 +19,13 @@ public class Documentacion extends Base {
     @Enumerated(EnumType.STRING)
     private TipoDocumentacion tipoDocumentacion;
 
-    @Column(name = "path_archivo", nullable = false)
+    @Column(name = "path_archivo", nullable = true)
     private String pathArchivo;
 
     @Column(name = "observacion", nullable = false)
     private String observacion;
 
-    @Column(name = "nombre_archivo", nullable = false)
+    @Column(name = "nombre_archivo", nullable = true)
     private String nombreArchivo;
 
 }

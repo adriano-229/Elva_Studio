@@ -1,6 +1,7 @@
 package com.example.mycar.entities;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -32,6 +33,6 @@ public class Departamento extends Base {
     private Provincia provincia;
 
     @OneToMany(mappedBy = "departamento", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Localidad> localidades;
+    private Set<Localidad> localidades = new HashSet<>();
 
 }

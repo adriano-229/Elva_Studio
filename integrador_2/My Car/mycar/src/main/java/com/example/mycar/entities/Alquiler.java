@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -17,18 +17,20 @@ import java.util.Date;
 public class Alquiler extends Base {
 
     @Column(name = "fecha_desde", nullable = false)
-    private Date fechaDesde;
+    private LocalDate fechaDesde;
 
     @Column(name = "fecha_hasta", nullable = false)
-    private Date fechaHasta;
-
+    private LocalDate fechaHasta;
+    
+    //agregado
     @Column(name = "costo_calculado")
     private Double costoCalculado; // Costo total del alquiler
-
+    
+    //agregado
     @Column(name = "cantidad_dias")
     private Integer cantidadDias; // Duración en días
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "documentacion_id")
     private Documentacion documentacion;
 
@@ -38,7 +40,12 @@ public class Alquiler extends Base {
 
     @OneToOne(mappedBy = "alquiler")
     private DetalleFactura detalleFactura;
-
+    
+    //agregado
     @Version
     private Long version;  // Control de concurrencia optimista
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id", nullable = false)
+    private Cliente cliente;
 }

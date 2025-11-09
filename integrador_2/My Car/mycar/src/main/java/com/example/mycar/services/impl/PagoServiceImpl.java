@@ -19,9 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
@@ -92,10 +92,14 @@ public class PagoServiceImpl implements PagoService {
         List<DetalleFactura> detalles = new ArrayList<>();
 
         for (Alquiler alquiler : alquileres) {
-            // Calcular días
+            /*Calcular días
             long diffInMillies = Math.abs(alquiler.getFechaHasta().getTime() - alquiler.getFechaDesde().getTime());
             int dias = (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-            if (dias == 0) dias = 1;
+            if (dias == 0) dias = 1;*/
+        	
+        	long diasLong = ChronoUnit.DAYS.between(alquiler.getFechaDesde(), alquiler.getFechaHasta());
+            if (diasLong == 0) diasLong = 1; // Mínimo 1 día
+            int dias = (int) diasLong;
 
             // Obtener costo del vehículo
             Vehiculo vehiculo = alquiler.getVehiculo();
