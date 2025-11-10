@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CambiarClaveDTO {
 
-	private String claveActual;
-	private String claveNueva;
-	private String confirmarClave;
+    private String claveActual;
+    private String claveNueva;
+    private String confirmarClave;
 }

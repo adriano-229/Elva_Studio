@@ -1,11 +1,6 @@
 package com.example.mycar.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,15 +12,21 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "detalle_factura")
-public class DetalleFactura extends Base{
-	
-	@Column(name = "cantidad", nullable = false)
-	private int cantidad;
-	
-	@Column(name = "subtotal", nullable = false)
-	private double subtotal;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
+public class DetalleFactura extends Base {
+
+    @Column(name = "cantidad", nullable = false)
+    private int cantidad;
+
+    @Column(name = "subtotal", nullable = false)
+    private double subtotal;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "factura_id")
-	private Factura factura;
+    private Factura factura;
+
+    @OneToOne
+    @JoinColumn(name = "alquiler_id")
+    private Alquiler alquiler;
+
+
 }

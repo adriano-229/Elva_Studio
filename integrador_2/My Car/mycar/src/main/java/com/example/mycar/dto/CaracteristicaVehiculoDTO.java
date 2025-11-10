@@ -1,10 +1,6 @@
 package com.example.mycar.dto;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,9 +12,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class CaracteristicaVehiculoDTO extends BaseDTO{
-	
-	@NotBlank(message = "La marca no puede estar vacía")
+public class CaracteristicaVehiculoDTO extends BaseDTO {
+
+    @NotBlank(message = "La marca no puede estar vacía")
     private String marca;
 
     @NotBlank(message = "El modelo no puede estar vacío")
@@ -41,13 +37,10 @@ public class CaracteristicaVehiculoDTO extends BaseDTO{
     @PositiveOrZero(message = "La cantidad de vehículos alquilados no puede ser negativa")
     private int cantidadVehiculoAlquilado;
 
-    @NotNull(message = "El ID del vehículo no puede ser nulo")
-    private Long vehiculoId;
+    @NotNull(message = "La imagen no puede ser nulo")
+    private ImagenDTO imagen;
 
-    @NotNull(message = "El ID de la imagen no puede ser nulo")
-    private Long imagenId;
-
-    @NotNull(message = "El ID del costo del vehículo no puede ser nulo")
-    private Long costoVehiculoId;
+    @NotNull(message = "El costo del vehículo no puede ser nulo")
+    private CostoVehiculoDTO costoVehiculo;
 
 }

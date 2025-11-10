@@ -1,22 +1,15 @@
 package com.example.mycar.security;
 
 
-import java.util.Collection;
-import java.util.List;
-
+import com.example.mycar.entities.Usuario;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.example.mycar.entities.Usuario;
+import java.util.Collection;
+import java.util.List;
 
-public class UserDetailsImpl implements UserDetails {
-
-    private final Usuario usuario;
-
-    public UserDetailsImpl(Usuario usuario) {
-        this.usuario = usuario;
-    }
+public record UserDetailsImpl(Usuario usuario) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -25,7 +18,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        return usuario.getClave(); 
+        return usuario.getClave();
     }
 
     @Override
@@ -34,14 +27,22 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     @Override
-    public boolean isAccountNonExpired() { return true; }
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
     @Override
-    public boolean isAccountNonLocked() { return true; }
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
     @Override
-    public boolean isCredentialsNonExpired() { return true; }
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
     @Override
-    public boolean isEnabled() { return true; }
+    public boolean isEnabled() {
+        return true;
+    }
 }

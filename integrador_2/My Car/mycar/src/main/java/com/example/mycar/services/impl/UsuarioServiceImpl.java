@@ -1,33 +1,31 @@
 package com.example.mycar.services.impl;
 
-import java.util.List;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import com.example.mycar.dto.UsuarioDTO;
 import com.example.mycar.entities.Usuario;
 import com.example.mycar.enums.RolUsuario;
 import com.example.mycar.repositories.UsuarioRepository;
 import com.example.mycar.services.UsuarioService;
 import com.example.mycar.services.mapper.UsuarioMapper;
-
 import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, UsuarioDTO, Long> implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
-    private UsuarioMapper mapperUsuario;
+    private final UsuarioMapper mapperUsuario;
 
     public UsuarioServiceImpl(UsuarioRepository usuarioRepository,
-            UsuarioMapper usuarioMapper,
-            PasswordEncoder passwordEncoder) {
-		super(usuarioRepository, usuarioMapper);
-		this.usuarioRepository = usuarioRepository;
-		this.passwordEncoder = passwordEncoder;
-		this.mapperUsuario = usuarioMapper; 
+                              UsuarioMapper usuarioMapper,
+                              PasswordEncoder passwordEncoder) {
+        super(usuarioRepository, usuarioMapper);
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.mapperUsuario = usuarioMapper;
     }
 
     @Override
@@ -75,7 +73,7 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, UsuarioDTO, Lon
             throw new RuntimeException("El rol no coincide");
         }
     }
- 
+
 
     @Override
     @Transactional
@@ -84,7 +82,7 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, UsuarioDTO, Lon
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         return baseMapper.toDto(usuario);
     }
-    
+
     @Override
     @Transactional
     public void modificarClave(Long id, String claveActual, String claveNueva, String confirmarClave) {
@@ -145,7 +143,7 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, UsuarioDTO, Lon
 
     @Override
     protected void afterSave(Usuario entity) throws Exception {
-        
+
     }
 
     @Override
@@ -163,9 +161,9 @@ public class UsuarioServiceImpl extends BaseServiceImpl<Usuario, UsuarioDTO, Lon
 
     }
 
-	@Override
-	public List<UsuarioDTO> findAllByIds(Iterable<Long> ids) throws Exception {
-		return null;
-	}
+    @Override
+    public List<UsuarioDTO> findAllByIds(Iterable<Long> ids) throws Exception {
+        return null;
+    }
 }
 

@@ -7,9 +7,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Data
 public abstract class BaseDTO {
-	private Long id;
-	
-	@Builder.Default
-	private boolean eliminado = false;
+    private Long id;
+
+    @Builder.Default
+    private boolean eliminado = false;
 
 }

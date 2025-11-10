@@ -1,7 +1,6 @@
 package com.example.mycar.dto;
 
 import com.example.mycar.enums.TipoEmpleado;
-
 import lombok.Builder;
 import lombok.Value;
 

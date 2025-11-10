@@ -1,12 +1,21 @@
 package com.example.mycar.dto;
 
-import java.math.BigDecimal;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-import com.example.mycar.enums.Mes;
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
+public class DetalleFacturaDTO extends BaseDTO {
 
-public record DetalleFacturaDTO(
-    String cuotaId,
-    Mes mes,       // o Enum/number, ajusta a tu modelo
-    Integer anio,
-    BigDecimal importe
-) {}
+    private Long alquilerId;
+    private Long facturaId;
+    private Integer cantidad;
+    private Double subtotal;
+}
+
