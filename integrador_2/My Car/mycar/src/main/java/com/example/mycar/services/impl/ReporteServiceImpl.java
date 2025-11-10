@@ -1,6 +1,5 @@
 package com.example.mycar.services.impl;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -28,9 +27,9 @@ public class ReporteServiceImpl implements ReporteService {
 
     @Override
     public List<AlquilerReporteDTO> obtenerAlquileresPorPeriodo(LocalDate desde, LocalDate hasta) {
-        Date desdeDate = desde == null ? null : Date.valueOf(desde);
-        Date hastaDate = hasta == null ? null : Date.valueOf(hasta);
-        return alquilerRepository.findAlquileresPorPeriodo(desdeDate, hastaDate);
+        /*Date desdeDate = desde == null ? null : Date.valueOf(desde);
+        Date hastaDate = hasta == null ? null : Date.valueOf(hasta);*/
+        return alquilerRepository.findAlquileresPorPeriodo(desde, hasta);
     }
 
     @Override

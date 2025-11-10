@@ -14,7 +14,7 @@ import com.example.mycar.entities.Cliente;
 @Repository
 public interface ClienteRepository extends BaseRepository<Cliente, Long> {
 
-    @Query("""
+    /*@Query("""
         select new com.example.mycar.dto.recordatorios.RecordatorioDevolucionDTO(
             cli.id,
             concat(coalesce(cli.nombre, ''), ' ', coalesce(cli.apellido, '')),
@@ -34,9 +34,32 @@ public interface ClienteRepository extends BaseRepository<Cliente, Long> {
           and cli.activo = true
           and a.activo = true
         """)
-    List<RecordatorioDevolucionDTO> findClientesConAlquilerActivo(@Param("clienteId") Long clienteId);
+    List<RecordatorioDevolucionDTO> findClientesConAlquilerActivo(@Param("clienteId") Long clienteId);*/
+	
+	@Query("""
+		    select new com.example.mycar.dto.recordatorios.RecordatorioDevolucionDTO(
+		        cli.id,
+		        concat(coalesce(cli.nombre, ''), ' ', coalesce(cli.apellido, '')),
+		        contactoCorreo.email,
+		        a.fechaDesde,
+		        a.fechaHasta,
+		        cv.marca,
+		        cv.modelo,
+		        v.patente
+		    )
+		    from Alquiler a
+		    join a.cliente cli
+		    left join cli.contactoCorreo contactoCorreo
+		    left join a.vehiculo v
+		    left join v.caracteristicaVehiculo cv
+		    where (:clienteId is null or cli.id = :clienteId)
+		      and cli.activo = true
+		      and a.activo = true
+		""")
+		List<RecordatorioDevolucionDTO> findClientesConAlquilerActivo(@Param("clienteId") Long clienteId);
 
-    @Query("""
+
+    /*@Query("""
         select new com.example.mycar.dto.recordatorios.RecordatorioDevolucionDTO(
             cli.id,
             concat(coalesce(cli.nombre, ''), ' ', coalesce(cli.apellido, '')),
@@ -56,7 +79,30 @@ public interface ClienteRepository extends BaseRepository<Cliente, Long> {
           and cli.activo = true
           and a.activo = true
         """)
-    List<RecordatorioDevolucionDTO> findClientesConDevolucionEn(@Param("fecha") Date fecha);
+    List<RecordatorioDevolucionDTO> findClientesConDevolucionEn(@Param("fecha") Date fecha);*/
+    
+    @Query("""
+    	    select new com.example.mycar.dto.recordatorios.RecordatorioDevolucionDTO(
+    	        cli.id,
+    	        concat(coalesce(cli.nombre, ''), ' ', coalesce(cli.apellido, '')),
+    	        contactoCorreo.email,
+    	        a.fechaDesde,
+    	        a.fechaHasta,
+    	        cv.marca,
+    	        cv.modelo,
+    	        v.patente
+    	    )
+    	    from Alquiler a
+    	    join a.cliente cli
+    	    left join cli.contactoCorreo contactoCorreo
+    	    left join a.vehiculo v
+    	    left join v.caracteristicaVehiculo cv
+    	    where a.fechaHasta = :fecha
+    	      and cli.activo = true
+    	      and a.activo = true
+    	    """)
+    	List<RecordatorioDevolucionDTO> findClientesConDevolucionEn(@Param("fecha") Date fecha);
+
 
     @Query("""
         select ct.telefono
