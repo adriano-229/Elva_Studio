@@ -4,13 +4,11 @@ import com.example.mycar.dto.FacturaDTO;
 import com.example.mycar.dto.RespuestaPagoDTO;
 import com.example.mycar.dto.SolicitudPagoDTO;
 import com.example.mycar.entities.*;
+import com.example.mycar.entities.CodigoDescuento;
 import com.example.mycar.enums.EstadoFactura;
 import com.example.mycar.enums.TipoPago;
 import com.example.mycar.error.*;
-import com.example.mycar.repositories.AlquilerRepository;
-import com.example.mycar.repositories.DetalleFacturaRepository;
-import com.example.mycar.repositories.FacturaRepository;
-import com.example.mycar.repositories.FormaDePagoRepository;
+import com.example.mycar.repositories.*;
 import com.example.mycar.services.FacturaService;
 import com.example.mycar.services.PagoService;
 import com.example.mycar.services.mapper.FacturaMapper;
@@ -22,6 +20,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -33,6 +32,7 @@ public class PagoServiceImpl implements PagoService {
     private final DetalleFacturaRepository detalleFacturaRepository;
     private final FacturaService facturaService;
     private final FacturaMapper facturaMapper;
+    private final CodigoDescuentoRepository codigoDescuentoRepository;
 
     public PagoServiceImpl(
             FacturaRepository facturaRepository,
@@ -40,7 +40,8 @@ public class PagoServiceImpl implements PagoService {
             FormaDePagoRepository formaDePagoRepository,
             DetalleFacturaRepository detalleFacturaRepository,
             FacturaService facturaService,
-            FacturaMapper facturaMapper
+            FacturaMapper facturaMapper,
+            CodigoDescuentoRepository codigoDescuentoRepository
     ) {
         this.facturaRepository = facturaRepository;
         this.alquilerRepository = alquilerRepository;
@@ -48,6 +49,7 @@ public class PagoServiceImpl implements PagoService {
         this.detalleFacturaRepository = detalleFacturaRepository;
         this.facturaService = facturaService;
         this.facturaMapper = facturaMapper;
+        this.codigoDescuentoRepository = codigoDescuentoRepository;
     }
 
     @Override
@@ -88,7 +90,7 @@ public class PagoServiceImpl implements PagoService {
                 });
 
         // Calcular costos y actualizar alquileres
-        double totalAPagar = 0.0;
+        double subtotalFactura = 0.0;
         List<DetalleFactura> detalles = new ArrayList<>();
 
         for (Alquiler alquiler : alquileres) {
@@ -102,24 +104,8 @@ public class PagoServiceImpl implements PagoService {
             int dias = (int) diasLong;
 
             // Obtener costo del vehículo
-            Vehiculo vehiculo = alquiler.getVehiculo();
-            if (vehiculo == null) {
-                throw new VehiculoSinCostoException(null);
-            }
-
-            // Nuevo origen del costo: caracteristicaVehiculo -> costoVehiculo
-            CaracteristicaVehiculo caracteristica = vehiculo.getCaracteristicaVehiculo();
-            if (caracteristica == null || caracteristica.getCostoVehiculo() == null) {
-                throw new VehiculoSinCostoException(vehiculo.getId());
-            }
-
-            double costoPorDia = caracteristica.getCostoVehiculo().getCosto();
-            if (costoPorDia <= 0) {
-                throw new VehiculoSinCostoException(vehiculo.getId());
-            }
-
-            double subtotal = Math.round(costoPorDia * dias * 100.0) / 100.0;
-            totalAPagar = Math.round((totalAPagar + subtotal) * 100.0) / 100.0;
+            double subtotal = getSubtotal(alquiler, dias);
+            subtotalFactura = Math.round((subtotalFactura + subtotal) * 100.0) / 100.0;
 
             // Actualizar alquiler con el costo calculado
             alquiler.setCostoCalculado(subtotal);
@@ -135,6 +121,39 @@ public class PagoServiceImpl implements PagoService {
             detalles.add(detalle);
         }
 
+        // Buscar y aplicar código de descuento si existe
+        CodigoDescuento codigoDescuento = null;
+        double descuento = 0.0;
+        double porcentajeDescuento = 0.0;
+
+        if (!alquileres.isEmpty()) {
+            Long clienteId = alquileres.getFirst().getCliente().getId();
+            Optional<CodigoDescuento> codigoOpt =
+                    codigoDescuentoRepository.findByClienteIdAndUtilizadoFalseAndActivoTrue(clienteId);
+
+            if (codigoOpt.isPresent()) {
+                codigoDescuento = codigoOpt.get();
+
+                // Verificar que no esté expirado
+                if (codigoDescuento.getFechaExpiracion() == null ||
+                        !LocalDate.now().isAfter(codigoDescuento.getFechaExpiracion())) {
+
+                    porcentajeDescuento = codigoDescuento.getPorcentajeDescuento();
+                    descuento = Math.round(subtotalFactura * porcentajeDescuento / 100.0 * 100.0) / 100.0;
+
+                    // Marcar el código como utilizado
+                    codigoDescuento.setUtilizado(true);
+                    codigoDescuento.setFechaUtilizacion(LocalDate.now());
+                    codigoDescuentoRepository.save(codigoDescuento);
+
+                    log.info("Descuento aplicado: {}% (${}) con código {} para cliente {}",
+                            porcentajeDescuento, descuento, codigoDescuento.getCodigo(), clienteId);
+                }
+            }
+        }
+
+        double totalAPagar = Math.round((subtotalFactura - descuento) * 100.0) / 100.0;
+
         // Generar número de factura
         Long numeroFactura = facturaService.generarNumeroFactura();
 
@@ -142,6 +161,10 @@ public class PagoServiceImpl implements PagoService {
         Factura factura = Factura.builder()
                 .numeroFactura(numeroFactura)
                 .fechaFactura(LocalDate.now())
+                .subtotal(subtotalFactura)
+                .descuento(descuento)
+                .porcentajeDescuento(porcentajeDescuento)
+                .codigoDescuento(codigoDescuento)
                 .totalPagado(totalAPagar)
                 .estado(EstadoFactura.Sin_definir) // Pendiente de aprobación
                 .formaDePago(formaDePago)
@@ -186,6 +209,26 @@ public class PagoServiceImpl implements PagoService {
                 .mensaje(mensaje)
                 .urlPagoMercadoPago(urlMercadoPago)
                 .build();
+    }
+
+    private static double getSubtotal(Alquiler alquiler, int dias) {
+        Vehiculo vehiculo = alquiler.getVehiculo();
+        if (vehiculo == null) {
+            throw new VehiculoSinCostoException(null);
+        }
+
+        // Nuevo origen del costo: caracteristicaVehiculo -> costoVehiculo
+        CaracteristicaVehiculo caracteristica = vehiculo.getCaracteristicaVehiculo();
+        if (caracteristica == null || caracteristica.getCostoVehiculo() == null) {
+            throw new VehiculoSinCostoException(vehiculo.getId());
+        }
+
+        double costoPorDia = caracteristica.getCostoVehiculo().getCosto();
+        if (costoPorDia <= 0) {
+            throw new VehiculoSinCostoException(vehiculo.getId());
+        }
+
+        return Math.round(costoPorDia * dias * 100.0) / 100.0;
     }
 
     @Override
@@ -246,4 +289,3 @@ public class PagoServiceImpl implements PagoService {
         return facturaMapper.toDto(factura);
     }
 }
-

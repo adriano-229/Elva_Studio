@@ -9,11 +9,12 @@ import org.mapstruct.Mapping;
 public interface FacturaMapper extends BaseMapper<Factura, FacturaDTO> {
 
     @Mapping(source = "formaDePago.id", target = "formaDePagoId")
+    @Mapping(source = "codigoDescuento.codigo", target = "codigoDescuentoCodigo")
     @Mapping(target = "formaDePagoTexto", ignore = true)
     FacturaDTO toDto(Factura entity);
 
     @Mapping(target = "formaDePago", ignore = true)
     @Mapping(target = "detalles", ignore = true)
+    @Mapping(target = "codigoDescuento", ignore = true)
     Factura toEntity(FacturaDTO dto);
 }
-

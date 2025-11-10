@@ -19,6 +19,10 @@ import java.util.List;
 public class PagareDTO {
 
     private List<AlquilerConCostoDTO> alquileres;
+    private Double subtotal;
+    private Double descuento;
+    private Double porcentajeDescuento;
+    private String codigoDescuento;
     private Double totalAPagar;
     private LocalDateTime fechaEmision;
     private String clienteNombre;

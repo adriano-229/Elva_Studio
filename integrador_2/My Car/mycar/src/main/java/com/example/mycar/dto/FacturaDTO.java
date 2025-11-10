@@ -19,6 +19,10 @@ public class FacturaDTO extends BaseDTO {
 
     private Long numeroFactura;
     private LocalDate fechaFactura;
+    private Double subtotal;
+    private Double descuento;
+    private Double porcentajeDescuento;
+    private String codigoDescuentoCodigo;
     private Double totalPagado;
     private EstadoFactura estado;
     private Long formaDePagoId;

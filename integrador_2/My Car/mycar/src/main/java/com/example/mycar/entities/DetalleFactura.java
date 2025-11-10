@@ -27,4 +27,6 @@ public class DetalleFactura extends Base {
     @OneToOne
     @JoinColumn(name = "alquiler_id")
     private Alquiler alquiler;
+
+
 }

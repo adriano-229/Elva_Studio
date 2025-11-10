@@ -3,27 +3,38 @@ package com.example.mycar.services.impl;
 import com.example.mycar.dto.AlquilerConCostoDTO;
 import com.example.mycar.dto.PagareDTO;
 import com.example.mycar.entities.*;
+import com.example.mycar.entities.CodigoDescuento;
 import com.example.mycar.repositories.AlquilerRepository;
 import com.example.mycar.repositories.ClienteRepository;
+import com.example.mycar.repositories.CodigoDescuentoRepository;
 import com.example.mycar.services.CostoService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+@Slf4j
 @Service
 public class CostoServiceImpl implements CostoService {
 
     private final AlquilerRepository alquilerRepository;
     private final ClienteRepository clienteRepository;
+    private final CodigoDescuentoRepository codigoDescuentoRepository;
 
-    public CostoServiceImpl(AlquilerRepository alquilerRepository, ClienteRepository clienteRepository) {
+    public CostoServiceImpl(
+            AlquilerRepository alquilerRepository,
+            ClienteRepository clienteRepository,
+            CodigoDescuentoRepository codigoDescuentoRepository) {
         this.alquilerRepository = alquilerRepository;
         this.clienteRepository = clienteRepository;
+        this.codigoDescuentoRepository = codigoDescuentoRepository;
     }
 
     @Override
@@ -78,14 +89,48 @@ public class CostoServiceImpl implements CostoService {
             alquileresConCosto.add(alquilerConCosto);
         }
         String clienteNombre = "Cliente sin especificar";
+        double descuento = 0.0;
+        Double porcentajeDescuento = 0.0;
+        String codigoDescuentoStr = null;
+
         if (clienteId != null) {
             Cliente cliente = clienteRepository.findByIdAndActivoTrue(clienteId).orElse(null);
             if (cliente != null) {
                 clienteNombre = cliente.getNombre() + " " + cliente.getApellido();
+
+                // Buscar código de descuento válido para el cliente
+                Optional<CodigoDescuento> codigoDescuentoOpt =
+                        codigoDescuentoRepository.findByClienteIdAndUtilizadoFalseAndActivoTrue(clienteId);
+
+                if (codigoDescuentoOpt.isPresent()) {
+                    CodigoDescuento codigoDescuento = codigoDescuentoOpt.get();
+
+                    // Verificar si no está expirado
+                    if (codigoDescuento.getFechaExpiracion() == null ||
+                            !LocalDate.now().isAfter(codigoDescuento.getFechaExpiracion())) {
+
+                        porcentajeDescuento = codigoDescuento.getPorcentajeDescuento();
+                        descuento = Math.round(totalAPagar * porcentajeDescuento / 100.0 * 100.0) / 100.0;
+                        codigoDescuentoStr = codigoDescuento.getCodigo();
+
+                        log.info("Descuento aplicado: {}% (${}) con código {} para cliente {}",
+                                porcentajeDescuento, descuento, codigoDescuentoStr, clienteId);
+                    } else {
+                        log.info("Cliente {} tiene código expirado", clienteId);
+                    }
+                }
             }
         }
+
+        Double subtotal = totalAPagar;
+        totalAPagar = Math.round((totalAPagar - descuento) * 100.0) / 100.0;
+
         return PagareDTO.builder()
                 .alquileres(alquileresConCosto)
+                .subtotal(subtotal)
+                .descuento(descuento)
+                .porcentajeDescuento(porcentajeDescuento)
+                .codigoDescuento(codigoDescuentoStr)
                 .totalAPagar(totalAPagar)
                 .fechaEmision(LocalDateTime.now())
                 .clienteNombre(clienteNombre)
@@ -97,7 +142,7 @@ public class CostoServiceImpl implements CostoService {
     @Transactional(readOnly = true)
     public Double calcularCostoAlquiler(Long alquilerId) throws Exception {
         Alquiler alquiler = alquilerRepository.findByIdAndActivoTrue(alquilerId)
-                .orElseThrow(() -> new Exception("No se encontro el alquiler con ID " + alquilerId));
+                .orElseThrow(() -> new Exception(STR."No se encontro el alquiler con ID \{alquilerId}"));
         long diasLong = ChronoUnit.DAYS.between(alquiler.getFechaDesde(), alquiler.getFechaHasta());
         if (diasLong == 0) diasLong = 1;
         int dias = (int) diasLong;
