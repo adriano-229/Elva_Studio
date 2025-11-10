@@ -185,9 +185,14 @@ public class PromocionServiceImpl implements PromocionService {
     }
 
     private String obtenerEmailCliente(Cliente cliente) {
-        Contacto contacto = cliente.getContacto();
+        /*Contacto contacto = cliente.getContacto;
         if (contacto instanceof ContactoCorreoElectronico) {
             return ((ContactoCorreoElectronico) contacto).getEmail();
+        }
+        return null;*/
+    	ContactoCorreoElectronico contacto = cliente.getContactoCorreo();
+        if (contacto != null) {
+            return contacto.getEmail();
         }
         return null;
     }

@@ -88,7 +88,7 @@ public class PromocionServiceTest {
         clienteTest.setTipoDocumento(TipoDocumento.Dni);
         clienteTest.setNumeroDocumento("12345678");
         clienteTest.setDireccionEstadia("Calle Falsa 123");
-        clienteTest.setContacto(contacto);
+        clienteTest.setContactoCorreo(contacto);
         clienteTest.setActivo(true);
         clienteTest = clienteRepository.save(clienteTest);
 
