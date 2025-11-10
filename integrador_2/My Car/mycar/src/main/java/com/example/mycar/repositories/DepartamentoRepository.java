@@ -1,10 +1,10 @@
 package com.example.mycar.repositories;
 
+import com.example.mycar.entities.Departamento;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.stereotype.Repository;
-import com.example.mycar.entities.Departamento;
 
 @Repository
 public interface DepartamentoRepository extends BaseRepository<Departamento, Long> {

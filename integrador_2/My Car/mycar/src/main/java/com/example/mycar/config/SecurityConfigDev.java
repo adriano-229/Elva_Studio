@@ -16,22 +16,22 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfigDev {
 
-	 @Bean
-	 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf().disable()
-            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+                .csrf().disable()
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
         return http.build();
-	 }
-	 
-	 @Bean
-	 public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
-	 }
-	 
-	 @Bean
-	 public PasswordEncoder passwordEncoder() {
-	     return NoOpPasswordEncoder.getInstance();
-	 }
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
 
 }

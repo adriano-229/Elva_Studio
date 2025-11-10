@@ -11,7 +11,6 @@ import com.example.mycar.services.AlquilerService;
 import com.example.mycar.services.mapper.AlquilerMapper;
 import com.example.mycar.services.mapper.ClienteMapper;
 import com.example.mycar.services.mapper.VehiculoMapper;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,26 +21,19 @@ import java.util.Optional;
 
 @Service
 public class AlquilerServiceImpl extends BaseServiceImpl<Alquiler, AlquilerDTO, Long> implements AlquilerService {
-    
-	@Autowired
-	private CaracteristicaVehiculoRepository caracteristicaVehiculoRepository;
-	
-	@Autowired
-	private ClienteServiceImpl clienteService;
-	
-	@Autowired
-	private VehiculoServiceImpl vehiculoService;
-	
-	@Autowired
-	private VehiculoMapper vehiculoMapper;
-	
-	@Autowired
-	private ClienteMapper clienteMapper;
-	
-	
-	private final AlquilerRepository alquilerRepository;
-	
-	private final AlquilerMapper alquilerMapper;
+
+    private final AlquilerRepository alquilerRepository;
+    private final AlquilerMapper alquilerMapper;
+    @Autowired
+    private CaracteristicaVehiculoRepository caracteristicaVehiculoRepository;
+    @Autowired
+    private ClienteServiceImpl clienteService;
+    @Autowired
+    private VehiculoServiceImpl vehiculoService;
+    @Autowired
+    private VehiculoMapper vehiculoMapper;
+    @Autowired
+    private ClienteMapper clienteMapper;
 
     public AlquilerServiceImpl(AlquilerRepository alquilerRepository, AlquilerMapper alquilerMapper) {
         super(alquilerRepository, alquilerMapper);
@@ -65,17 +57,17 @@ public class AlquilerServiceImpl extends BaseServiceImpl<Alquiler, AlquilerDTO, 
         entity.setFechaHasta(entityDto.getFechaHasta());
         entity.setCostoCalculado(entityDto.getCostoCalculado());
         entity.setCantidadDias(entityDto.getCantidadDias());
-        
+
         if (entityDto.getVehiculoId() != null) {
-        	VehiculoDTO vehiculo = vehiculoService.findById(entityDto.getVehiculoId());
-        	entity.setVehiculo(vehiculoMapper.toEntity(vehiculo));
+            VehiculoDTO vehiculo = vehiculoService.findById(entityDto.getVehiculoId());
+            entity.setVehiculo(vehiculoMapper.toEntity(vehiculo));
         }
-        
-        if (entityDto.getClienteId()!= null) {
-        	ClienteDTO cliente = clienteService.findById(entityDto.getClienteId());
-        	entity.setCliente(clienteMapper.toEntity(cliente));
+
+        if (entityDto.getClienteId() != null) {
+            ClienteDTO cliente = clienteService.findById(entityDto.getClienteId());
+            entity.setCliente(clienteMapper.toEntity(cliente));
         }
-        
+
         return entity;
     }
 
@@ -94,24 +86,24 @@ public class AlquilerServiceImpl extends BaseServiceImpl<Alquiler, AlquilerDTO, 
 
     @Override
     protected void beforeSave(AlquilerDTO entity) throws Exception {
-    	LocalDate hoy = LocalDate.now();
-    	
-    	ClienteDTO cliente = clienteService.findById(entity.getClienteId());
-    	entity.setCliente(cliente);
-    	
-    	VehiculoDTO vehiculo = vehiculoService.findById(entity.getVehiculoId());
-    	entity.setVehiculo(vehiculo);
-    	    	
-    	if (entity.getFechaDesde().equals(hoy)) {
-    		entity.getVehiculo().setEstadoVehiculo(EstadoVehiculo.Alquilado);
-    		caracteristicaVehiculoRepository.actualizarTotales();
-    	}
-    	
+        LocalDate hoy = LocalDate.now();
+
+        ClienteDTO cliente = clienteService.findById(entity.getClienteId());
+        entity.setCliente(cliente);
+
+        VehiculoDTO vehiculo = vehiculoService.findById(entity.getVehiculoId());
+        entity.setVehiculo(vehiculo);
+
+        if (entity.getFechaDesde().equals(hoy)) {
+            entity.getVehiculo().setEstadoVehiculo(EstadoVehiculo.Alquilado);
+            caracteristicaVehiculoRepository.actualizarTotales();
+        }
+
     }
 
     @Override
     protected void afterSave(Alquiler entity) throws Exception {
-    	 
+
     }
 
     @Override
@@ -134,29 +126,29 @@ public class AlquilerServiceImpl extends BaseServiceImpl<Alquiler, AlquilerDTO, 
         return List.of();
     }
 
-	@Override
-	public List<AlquilerDTO> searchPorPeriodo(LocalDate desde, LocalDate hasta) throws Exception {
-		
-		try {
-			
-			List<Alquiler> alquileres = alquilerRepository.findAlquileresEnPeriodo(desde, hasta);
-			return alquilerMapper.toDtoList(alquileres);
-			
-		} catch (Exception e) {
-			throw new Exception("Error al buscar alquiler por periodo");
-		}
-	}
+    @Override
+    public List<AlquilerDTO> searchPorPeriodo(LocalDate desde, LocalDate hasta) throws Exception {
 
-	@Override
-	public List<AlquilerDTO> searchByCliente(Long idCliente) throws Exception{
-		try {
-			
-			List<Alquiler> alquileres = alquilerRepository.findByActivoTrueAndCliente_ActivoTrueAndCliente_Id(idCliente);
-			return alquilerMapper.toDtoList(alquileres);
-		
-		} catch (Exception e) {
-			throw new Exception("Error al listar por cliente");
-		}
-		
-	}
+        try {
+
+            List<Alquiler> alquileres = alquilerRepository.findAlquileresEnPeriodo(desde, hasta);
+            return alquilerMapper.toDtoList(alquileres);
+
+        } catch (Exception e) {
+            throw new Exception("Error al buscar alquiler por periodo");
+        }
+    }
+
+    @Override
+    public List<AlquilerDTO> searchByCliente(Long idCliente) throws Exception {
+        try {
+
+            List<Alquiler> alquileres = alquilerRepository.findByActivoTrueAndCliente_ActivoTrueAndCliente_Id(idCliente);
+            return alquilerMapper.toDtoList(alquileres);
+
+        } catch (Exception e) {
+            throw new Exception("Error al listar por cliente");
+        }
+
+    }
 }

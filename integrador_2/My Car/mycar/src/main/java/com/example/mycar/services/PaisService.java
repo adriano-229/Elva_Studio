@@ -1,11 +1,12 @@
 package com.example.mycar.services;
 
-import java.util.List;
-
 import com.example.mycar.dto.PaisDTO;
 
+import java.util.List;
+
 public interface PaisService extends BaseService<PaisDTO, Long> {
-	List<PaisDTO> findAllByOrderByNombreAsc();
-	List<PaisDTO> findAllActivosOrderByNombreAsc();
-	
+    List<PaisDTO> findAllByOrderByNombreAsc();
+
+    List<PaisDTO> findAllActivosOrderByNombreAsc();
+
 }

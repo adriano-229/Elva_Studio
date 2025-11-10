@@ -1,28 +1,23 @@
 package com.example.mycar.dto;
 
-import java.time.LocalDate;
-
 import com.example.mycar.enums.TipoDocumento;
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class PersonaDTO extends BaseDTO{
-	
-	@NotBlank(message = "El nombre no puede estar vacío")
+public class PersonaDTO extends BaseDTO {
+
+    @NotBlank(message = "El nombre no puede estar vacío")
     @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
     private String nombre;
 
@@ -50,5 +45,5 @@ public class PersonaDTO extends BaseDTO{
 
     @NotNull(message = "La dirección no puede ser nula")
     private DireccionDTO direccion;
-	
+
 }

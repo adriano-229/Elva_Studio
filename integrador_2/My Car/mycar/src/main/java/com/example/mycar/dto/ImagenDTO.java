@@ -1,8 +1,8 @@
 package com.example.mycar.dto;
 
 import com.example.mycar.enums.TipoImagen;
-
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +24,7 @@ public class ImagenDTO extends BaseDTO {
 
     @NotNull(message = "El contenido no puede ser nulo")
     private byte[] contenido;
-    
+
     private String ruta;
 
     @NotNull(message = "El tipo de imagen es obligatorio")

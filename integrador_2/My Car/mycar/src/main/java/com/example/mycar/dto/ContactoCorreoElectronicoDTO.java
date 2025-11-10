@@ -14,9 +14,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class ContactoCorreoElectronicoDTO extends ContactoDTO{
-	
-	@NotBlank(message = "El email no puede estar vacío")
+public class ContactoCorreoElectronicoDTO extends ContactoDTO {
+
+    @NotBlank(message = "El email no puede estar vacío")
     @Email(message = "Debe ingresar un correo electrónico válido")
     @Size(max = 100, message = "El email no puede tener más de 100 caracteres")
     private String email;

@@ -1,8 +1,6 @@
 package com.example.mycar.entities;
 
 import com.example.mycar.enums.EstadoVehiculo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,19 +16,15 @@ import lombok.NoArgsConstructor;
 public class Vehiculo extends Base {
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "estado_vehiculo",nullable = false)
-	private EstadoVehiculo estadoVehiculo;
-	
-    @Column(name = "patente",nullable = false)
-	private String patente;
-    
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Column(name = "estado_vehiculo", nullable = false)
+    private EstadoVehiculo estadoVehiculo;
+
+    @Column(name = "patente", nullable = false)
+    private String patente;
+
+    @ManyToOne(fetch = FetchType.EAGER) // removed cascade to avoid persisting parent from child
     @JoinColumn(name = "caracteristicaVehiculo_id")
     private CaracteristicaVehiculo caracteristicaVehiculo;
-    
-    //VERIFICAR ATRIBUTO 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "costo_vehiculo_id")
-    private CostoVehiculo costoVehiculo; // Relación con el costo actual del vehículo
 
+    // Eliminado campo costoVehiculo: el costo se obtiene desde caracteristicaVehiculo.getCostoVehiculo()
 }

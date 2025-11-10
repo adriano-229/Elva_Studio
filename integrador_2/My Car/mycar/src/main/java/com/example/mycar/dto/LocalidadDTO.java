@@ -1,30 +1,24 @@
 package com.example.mycar.dto;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class LocalidadDTO extends BaseDTO{
-	
-	@NotBlank(message = "El nombre de la dirección no puede estar vacío")
+public class LocalidadDTO extends BaseDTO {
+
+    @NotBlank(message = "El nombre de la dirección no puede estar vacío")
     @Size(min = 3, max = 50, message = "El nombre de la localidad debe tener entre 3 y 50 caracteres")
     private String nombre;
 
@@ -34,7 +28,7 @@ public class LocalidadDTO extends BaseDTO{
 
     @NotNull(message = "El departamento es obligatorio")
     private Long departamentoId;
-    
+
     @Builder.Default
     @Valid
     private List<DireccionDTO> direcciones = new ArrayList<>();

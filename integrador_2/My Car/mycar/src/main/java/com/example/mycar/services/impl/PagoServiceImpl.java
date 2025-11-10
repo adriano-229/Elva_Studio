@@ -96,26 +96,29 @@ public class PagoServiceImpl implements PagoService {
             long diffInMillies = Math.abs(alquiler.getFechaHasta().getTime() - alquiler.getFechaDesde().getTime());
             int dias = (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
             if (dias == 0) dias = 1;*/
-        	
-        	long diasLong = ChronoUnit.DAYS.between(alquiler.getFechaDesde(), alquiler.getFechaHasta());
+
+            long diasLong = ChronoUnit.DAYS.between(alquiler.getFechaDesde(), alquiler.getFechaHasta());
             if (diasLong == 0) diasLong = 1; // Mínimo 1 día
             int dias = (int) diasLong;
 
             // Obtener costo del vehículo
             Vehiculo vehiculo = alquiler.getVehiculo();
-            if (vehiculo == null || vehiculo.getCostoVehiculo() == null) {
-                throw new VehiculoSinCostoException(vehiculo != null ? vehiculo.getId() : null);
+            if (vehiculo == null) {
+                throw new VehiculoSinCostoException(null);
             }
 
-            // Validar que el costo sea válido
-            if (vehiculo.getCostoVehiculo().getCosto() <= 0) {
+            // Nuevo origen del costo: caracteristicaVehiculo -> costoVehiculo
+            CaracteristicaVehiculo caracteristica = vehiculo.getCaracteristicaVehiculo();
+            if (caracteristica == null || caracteristica.getCostoVehiculo() == null) {
                 throw new VehiculoSinCostoException(vehiculo.getId());
             }
 
-            // Calcular subtotal
-            double costoPorDia = vehiculo.getCostoVehiculo().getCosto();
-            double subtotal = Math.round(costoPorDia * dias * 100.0) / 100.0;
+            double costoPorDia = caracteristica.getCostoVehiculo().getCosto();
+            if (costoPorDia <= 0) {
+                throw new VehiculoSinCostoException(vehiculo.getId());
+            }
 
+            double subtotal = Math.round(costoPorDia * dias * 100.0) / 100.0;
             totalAPagar = Math.round((totalAPagar + subtotal) * 100.0) / 100.0;
 
             // Actualizar alquiler con el costo calculado

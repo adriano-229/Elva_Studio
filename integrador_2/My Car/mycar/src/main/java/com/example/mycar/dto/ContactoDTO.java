@@ -1,7 +1,6 @@
 package com.example.mycar.dto;
 
 import com.example.mycar.enums.TipoContacto;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -16,9 +15,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class ContactoDTO extends BaseDTO{
-	
-	@NotNull(message = "El tipo de contacto es obligatorio")
+public class ContactoDTO extends BaseDTO {
+
+    @NotNull(message = "El tipo de contacto es obligatorio")
     private TipoContacto tipoContacto;
 
     @NotBlank(message = "La observación no puede estar vacía")

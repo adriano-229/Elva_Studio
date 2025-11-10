@@ -1,17 +1,16 @@
 package com.example.mycar.controller;
 
+import com.example.mycar.dto.CaracteristicaVehiculoDTO;
+import com.example.mycar.entities.CaracteristicaVehiculo;
+import com.example.mycar.services.impl.CaracteristicaVehiculoServiceImpl;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.mycar.dto.CaracteristicaVehiculoDTO;
-import com.example.mycar.entities.CaracteristicaVehiculo;
-import com.example.mycar.services.impl.CaracteristicaVehiculoServiceImpl;
-
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(path = "/api/v1/caracteristicaVehiculo")
-public class CaracteristicaVehiculoController extends BaseControllerImpl<CaracteristicaVehiculo, CaracteristicaVehiculoDTO, CaracteristicaVehiculoServiceImpl>{
+public class CaracteristicaVehiculoController extends BaseControllerImpl<CaracteristicaVehiculo, CaracteristicaVehiculoDTO, CaracteristicaVehiculoServiceImpl> {
 
 	/*@GetMapping("searchDisponible")
 	public ResponseEntity<?> searchByEstadoVehiculo(@RequestParam EstadoVehiculo estado) {
@@ -24,5 +23,5 @@ public class CaracteristicaVehiculoController extends BaseControllerImpl<Caracte
 	            .body("{\"error\":\"Error. Por favor intente más tarde.\"}");
 	    }
 	}*/
-	
+
 }
