@@ -23,6 +23,19 @@ public class Factura extends Base {
     @Column(name = "fecha_factura", nullable = false)
     private LocalDate fechaFactura;
 
+    @Column(name = "subtotal")
+    private Double subtotal;
+
+    @Column(name = "descuento")
+    private Double descuento;
+
+    @Column(name = "porcentaje_descuento")
+    private Double porcentajeDescuento;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "codigo_descuento_id")
+    private CodigoDescuento codigoDescuento;
+
     @Column(name = "total_pagado", nullable = false)
     private Double totalPagado = 0.0;
 

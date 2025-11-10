@@ -76,7 +76,7 @@ class PagoServiceTest {
         clienteTest.setApellido("Cliente");
         clienteTest.setTipoDocumento(com.example.mycar.enums.TipoDocumento.Dni);
         clienteTest.setNumeroDocumento("12345678");
-        clienteTest.setFechaNacimiento(LocalDate.of(1990,1,1));
+        clienteTest.setFechaNacimiento(LocalDate.of(1990, 1, 1));
         clienteTest.setActivo(true);
         clienteTest.setDireccionEstadia("Hotel Test");
         clienteTest = clienteRepository.save(clienteTest);
