@@ -1,7 +1,16 @@
 package com.example.mycar.entities;
 
 import com.example.mycar.enums.TipoDocumento;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,8 +46,12 @@ public class Persona extends Base {
     private Imagen imagen;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "contacto_id")
-    private Contacto contacto;
+    @JoinColumn(name = "contacto_correo_id")
+    private ContactoCorreoElectronico contactoCorreo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "contacto_telefono_id")
+    private ContactoTelefonico contactoTelefonico;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "direccion_id")
