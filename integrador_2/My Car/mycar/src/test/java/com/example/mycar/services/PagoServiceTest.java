@@ -3,10 +3,7 @@ package com.example.mycar.services;
 import com.example.mycar.dto.FacturaDTO;
 import com.example.mycar.dto.RespuestaPagoDTO;
 import com.example.mycar.dto.SolicitudPagoDTO;
-import com.example.mycar.entities.Alquiler;
-import com.example.mycar.entities.CostoVehiculo;
-import com.example.mycar.entities.FormaDePago;
-import com.example.mycar.entities.Vehiculo;
+import com.example.mycar.entities.*;
 import com.example.mycar.enums.EstadoFactura;
 import com.example.mycar.enums.EstadoVehiculo;
 import com.example.mycar.enums.TipoPago;
@@ -53,21 +50,37 @@ class PagoServiceTest {
     @Autowired
     private DetalleFacturaRepository detalleFacturaRepository;
 
+    @Autowired
+    private CaracteristicaVehiculoRepository caracteristicaVehiculoRepository;
+
+    @Autowired
+    private ClienteRepository clienteRepository;
+
     private Vehiculo vehiculoTest;
     private Alquiler alquiler1;
     private Alquiler alquiler2;
+    private Cliente clienteTest;
 
     @BeforeEach
     void setUp() {
-        // Limpiar datos en orden seguro por FK y en batch para evitar flush en orden incorrecto
+        // Limpiar datos
         detalleFacturaRepository.deleteAllInBatch();
         facturaRepository.deleteAllInBatch();
         alquilerRepository.deleteAllInBatch();
         vehiculoRepository.deleteAllInBatch();
+        caracteristicaVehiculoRepository.deleteAllInBatch();
         costoVehiculoRepository.deleteAllInBatch();
-        // formas de pago se mantienen si existen; no obstaculizan otras FK
-
-        // Crear costo de vehículo
+        // Crear cliente mínimo
+        clienteTest = new Cliente();
+        clienteTest.setNombre("Test");
+        clienteTest.setApellido("Cliente");
+        clienteTest.setTipoDocumento(com.example.mycar.enums.TipoDocumento.Dni);
+        clienteTest.setNumeroDocumento("12345678");
+        clienteTest.setFechaNacimiento(LocalDate.of(1990,1,1));
+        clienteTest.setActivo(true);
+        clienteTest.setDireccionEstadia("Hotel Test");
+        clienteTest = clienteRepository.save(clienteTest);
+        // Crear costo
         CostoVehiculo costoTest = new CostoVehiculo();
         costoTest.setFechaDesde(Date.valueOf(LocalDate.of(2024, 1, 1)));
         costoTest.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
@@ -75,26 +88,41 @@ class PagoServiceTest {
         costoTest.setActivo(true);
         costoTest = costoVehiculoRepository.save(costoTest);
 
-        // Crear vehículo
+        // Crear caracteristica y asociar costo
+        CaracteristicaVehiculo caracteristica = new CaracteristicaVehiculo();
+        caracteristica.setMarca("TestMarca");
+        caracteristica.setModelo("TestModelo");
+        caracteristica.setCantidadPuerta(4);
+        caracteristica.setCantidadAsiento(5);
+        caracteristica.setAnio(2024);
+        caracteristica.setCantidadTotalVehiculo(1);
+        caracteristica.setCantidadVehiculoAlquilado(0);
+        caracteristica.setCostoVehiculo(costoTest);
+        caracteristica.setActivo(true);
+        caracteristica = caracteristicaVehiculoRepository.save(caracteristica);
+
+        // Crear vehículo usando caracteristica (ya trae costo)
         vehiculoTest = new Vehiculo();
         vehiculoTest.setEstadoVehiculo(EstadoVehiculo.Disponible);
         vehiculoTest.setPatente("TEST123");
-        vehiculoTest.setCostoVehiculo(costoTest);
+        vehiculoTest.setCaracteristicaVehiculo(caracteristica);
         vehiculoTest.setActivo(true);
         vehiculoTest = vehiculoRepository.save(vehiculoTest);
 
-        // Crear alquileres de prueba
+        // Crear alquileres
         alquiler1 = new Alquiler();
         alquiler1.setFechaDesde(LocalDate.of(2024, 11, 1));
-        alquiler1.setFechaHasta(LocalDate.of(2024, 11, 5)); // 4 días
+        alquiler1.setFechaHasta(LocalDate.of(2024, 11, 5));
         alquiler1.setVehiculo(vehiculoTest);
+        alquiler1.setCliente(clienteTest);
         alquiler1.setActivo(true);
         alquiler1 = alquilerRepository.save(alquiler1);
 
         alquiler2 = new Alquiler();
         alquiler2.setFechaDesde(LocalDate.of(2024, 11, 6));
-        alquiler2.setFechaHasta(LocalDate.of(2024, 11, 9)); // 3 días
+        alquiler2.setFechaHasta(LocalDate.of(2024, 11, 9));
         alquiler2.setVehiculo(vehiculoTest);
+        alquiler2.setCliente(clienteTest);
         alquiler2.setActivo(true);
         alquiler2 = alquilerRepository.save(alquiler2);
 
@@ -214,6 +242,7 @@ class PagoServiceTest {
         alquilerSinCosto.setFechaHasta(LocalDate.of(2024, 11, 5));
         alquilerSinCosto.setVehiculo(vehiculoSinCosto);
         alquilerSinCosto.setActivo(true);
+        alquilerSinCosto.setCliente(clienteTest);
         alquilerSinCosto = alquilerRepository.save(alquilerSinCosto);
 
         SolicitudPagoDTO solicitud = SolicitudPagoDTO.builder()
@@ -348,6 +377,7 @@ class PagoServiceTest {
         alquilerUnDia.setFechaHasta(LocalDate.of(2024, 11, 10));
         alquilerUnDia.setVehiculo(vehiculoTest);
         alquilerUnDia.setActivo(true);
+        alquilerUnDia.setCliente(clienteTest);
         alquilerUnDia = alquilerRepository.save(alquilerUnDia);
 
         SolicitudPagoDTO solicitud = SolicitudPagoDTO.builder()
@@ -372,10 +402,22 @@ class PagoServiceTest {
         costoDecimal.setActivo(true);
         costoDecimal = costoVehiculoRepository.save(costoDecimal);
 
+        CaracteristicaVehiculo caracteristicaDecimal = new CaracteristicaVehiculo();
+        caracteristicaDecimal.setMarca("MarcaDec");
+        caracteristicaDecimal.setModelo("ModeloDec");
+        caracteristicaDecimal.setCantidadPuerta(4);
+        caracteristicaDecimal.setCantidadAsiento(5);
+        caracteristicaDecimal.setAnio(2024);
+        caracteristicaDecimal.setCantidadTotalVehiculo(1);
+        caracteristicaDecimal.setCantidadVehiculoAlquilado(0);
+        caracteristicaDecimal.setCostoVehiculo(costoDecimal);
+        caracteristicaDecimal.setActivo(true);
+        caracteristicaDecimal = caracteristicaVehiculoRepository.save(caracteristicaDecimal);
+
         Vehiculo vehiculoDecimal = new Vehiculo();
         vehiculoDecimal.setEstadoVehiculo(EstadoVehiculo.Disponible);
         vehiculoDecimal.setPatente("DECIMAL");
-        vehiculoDecimal.setCostoVehiculo(costoDecimal);
+        vehiculoDecimal.setCaracteristicaVehiculo(caracteristicaDecimal);
         vehiculoDecimal.setActivo(true);
         vehiculoDecimal = vehiculoRepository.save(vehiculoDecimal);
 
@@ -384,6 +426,7 @@ class PagoServiceTest {
         alquilerDecimal.setFechaHasta(LocalDate.of(2024, 11, 8)); // 7 días
         alquilerDecimal.setVehiculo(vehiculoDecimal);
         alquilerDecimal.setActivo(true);
+        alquilerDecimal.setCliente(clienteTest);
         alquilerDecimal = alquilerRepository.save(alquilerDecimal);
 
         SolicitudPagoDTO solicitud = SolicitudPagoDTO.builder()

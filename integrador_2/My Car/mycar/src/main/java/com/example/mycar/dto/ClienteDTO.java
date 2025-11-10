@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class ClienteDTO extends PersonaDTO{
-	private String direccionEstadia;
-	private NacionalidadDTO nacionalidad;
+public class ClienteDTO extends PersonaDTO {
+    private String direccionEstadia;
+    private NacionalidadDTO nacionalidad;
 }

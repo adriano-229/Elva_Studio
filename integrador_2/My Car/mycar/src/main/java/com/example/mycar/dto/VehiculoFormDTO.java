@@ -1,45 +1,36 @@
 package com.example.mycar.dto;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 import com.example.mycar.enums.EstadoVehiculo;
 import com.example.mycar.enums.TipoImagen;
-
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class VehiculoFormDTO extends BaseDTO{
-	
-	//vehiculo
-	@NotNull(message = "El estado del vehiculo es obligatorio")
-	private EstadoVehiculo estadoVehiculo;
-	
-	@Pattern(
-	    regexp = "^[A-Z]{3}\\d{3}$|^[A-Z]{2}\\d{3}[A-Z]{2}$",
-	    message = "La patente no es válida. Formato permitido: ABC123 o AB123CD"
-	)
-	private String patente;
-	
-	//caracteristicas vehiculo
-	@NotBlank(message = "La marca no puede estar vacía")
+public class VehiculoFormDTO extends BaseDTO {
+
+    //vehiculo
+    @NotNull(message = "El estado del vehiculo es obligatorio")
+    private EstadoVehiculo estadoVehiculo;
+
+    @Pattern(
+            regexp = "^[A-Z]{3}\\d{3}$|^[A-Z]{2}\\d{3}[A-Z]{2}$",
+            message = "La patente no es válida. Formato permitido: ABC123 o AB123CD"
+    )
+    private String patente;
+
+    //caracteristicas vehiculo
+    @NotBlank(message = "La marca no puede estar vacía")
     private String marca;
 
     @NotBlank(message = "El modelo no puede estar vacío")
@@ -73,17 +64,17 @@ public class VehiculoFormDTO extends BaseDTO{
 
     @Positive(message = "El costo debe ser un valor positivo")
     private BigDecimal costo;
-    
+
     //imagen
-    
+
     //@NotBlank(message = "El tipo MIME de la imagen no puede estar vacío")
     private String mime;
 
     @NotNull(message = "Debe ingresar una imagen")
     private byte[] contenido;
-    
+
     @NotNull(message = "El tipo de imagen es obligatorio")
     private TipoImagen tipoImagen;
-	
+
 
 }

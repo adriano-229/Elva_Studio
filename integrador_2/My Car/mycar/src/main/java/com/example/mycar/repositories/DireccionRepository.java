@@ -1,15 +1,15 @@
 package com.example.mycar.repositories;
 
+import com.example.mycar.entities.Direccion;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Repository;
-import com.example.mycar.entities.Direccion;
-
 @Repository
-public interface DireccionRepository extends BaseRepository<Direccion, Long>{
-	
-	List<Direccion> findAllByActivoTrueAndLocalidad_NombreAndLocalidad_ActivoTrueOrderByCalleAsc(String departamentoNombre);
+public interface DireccionRepository extends BaseRepository<Direccion, Long> {
+
+    List<Direccion> findAllByActivoTrueAndLocalidad_NombreAndLocalidad_ActivoTrueOrderByCalleAsc(String departamentoNombre);
 
     List<Direccion> findAllByActivoTrueOrderByCalleAsc();
 

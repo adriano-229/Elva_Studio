@@ -2,10 +2,7 @@ package com.example.mycar.services.impl;
 
 import com.example.mycar.dto.AlquilerConCostoDTO;
 import com.example.mycar.dto.PagareDTO;
-import com.example.mycar.entities.Alquiler;
-import com.example.mycar.entities.Cliente;
-import com.example.mycar.entities.CostoVehiculo;
-import com.example.mycar.entities.Vehiculo;
+import com.example.mycar.entities.*;
 import com.example.mycar.repositories.AlquilerRepository;
 import com.example.mycar.repositories.ClienteRepository;
 import com.example.mycar.services.CostoService;
@@ -35,59 +32,40 @@ public class CostoServiceImpl implements CostoService {
         if (alquilerIds == null || alquilerIds.isEmpty()) {
             throw new Exception("Debe proporcionar al menos un alquiler");
         }
-
-        // Obtener alquileres
         List<Alquiler> alquileres = alquilerRepository.findByIdInAndActivoTrue(alquilerIds);
-
         if (alquileres.isEmpty()) {
-            throw new Exception("No se encontraron alquileres válidos");
+            throw new Exception("No se encontraron alquileres validos");
         }
-
-        // Validar que los alquileres no tengan factura
         for (Alquiler alquiler : alquileres) {
             if (alquiler.getDetalleFactura() != null) {
                 throw new Exception("El alquiler con ID " + alquiler.getId() + " ya tiene factura asociada");
             }
         }
-
         List<AlquilerConCostoDTO> alquileresConCosto = new ArrayList<>();
         double totalAPagar = 0.0;
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-        // Calcular costo de cada alquiler
         for (Alquiler alquiler : alquileres) {
-            /* Calcular días
-            long diffInMillies = Math.abs(alquiler.getFechaHasta().getTime() - alquiler.getFechaDesde().getTime());
-            int dias = (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-            if (dias == 0) dias = 1; // Mínimo 1 día*/
-        	
-        	//Calcular dias entre fechas
-        	long diasLong = ChronoUnit.DAYS.between(alquiler.getFechaDesde(), alquiler.getFechaHasta());
-            if (diasLong == 0) diasLong = 1; // Mínimo 1 día
+            long diasLong = ChronoUnit.DAYS.between(alquiler.getFechaDesde(), alquiler.getFechaHasta());
+            if (diasLong == 0) diasLong = 1;
             int dias = (int) diasLong;
-
-            // Obtener costo del vehículo
             Vehiculo vehiculo = alquiler.getVehiculo();
             if (vehiculo == null) {
-                throw new Exception("El alquiler con ID " + alquiler.getId() + " no tiene vehículo asociado");
+                throw new Exception("El alquiler con ID " + alquiler.getId() + " no tiene vehiculo asociado");
             }
-
-            CostoVehiculo costoVehiculo = vehiculo.getCostoVehiculo();
+            CaracteristicaVehiculo caracteristica = vehiculo.getCaracteristicaVehiculo();
+            if (caracteristica == null) {
+                throw new Exception("El vehiculo " + vehiculo.getPatente() + " no tiene caracteristicas asociadas");
+            }
+            CostoVehiculo costoVehiculo = caracteristica.getCostoVehiculo();
             if (costoVehiculo == null) {
-                throw new Exception("El vehículo " + vehiculo.getPatente() + " no tiene costo asociado");
+                throw new Exception("El vehiculo " + vehiculo.getPatente() + " no tiene costo asociado");
             }
-
-            // Calcular subtotal
             double costoPorDia = costoVehiculo.getCosto();
             if (costoPorDia <= 0) {
-                throw new Exception("Costo del vehículo inválido");
+                throw new Exception("Costo del vehiculo invalido");
             }
             double subtotal = Math.round(costoPorDia * dias * 100.0) / 100.0;
-
             totalAPagar = Math.round((totalAPagar + subtotal) * 100.0) / 100.0;
-
-            // CrearDTO
             AlquilerConCostoDTO alquilerConCosto = AlquilerConCostoDTO.builder()
                     .alquilerId(alquiler.getId())
                     .vehiculoPatente(vehiculo.getPatente())
@@ -97,21 +75,15 @@ public class CostoServiceImpl implements CostoService {
                     .costoPorDia(costoPorDia)
                     .subtotal(subtotal)
                     .build();
-
             alquileresConCosto.add(alquilerConCosto);
         }
-
-        // Obtener información del cliente si se proporcionó
         String clienteNombre = "Cliente sin especificar";
         if (clienteId != null) {
-            Cliente cliente = clienteRepository.findByIdAndActivoTrue(clienteId)
-                    .orElse(null);
+            Cliente cliente = clienteRepository.findByIdAndActivoTrue(clienteId).orElse(null);
             if (cliente != null) {
                 clienteNombre = cliente.getNombre() + " " + cliente.getApellido();
             }
         }
-
-        // Generar pagaré
         return PagareDTO.builder()
                 .alquileres(alquileresConCosto)
                 .totalAPagar(totalAPagar)
@@ -125,25 +97,18 @@ public class CostoServiceImpl implements CostoService {
     @Transactional(readOnly = true)
     public Double calcularCostoAlquiler(Long alquilerId) throws Exception {
         Alquiler alquiler = alquilerRepository.findByIdAndActivoTrue(alquilerId)
-                .orElseThrow(() -> new Exception("No se encontró el alquiler con ID " + alquilerId));
-
-        /* Calcular días
-        long diffInMillies = Math.abs(alquiler.getFechaHasta().getTime() - alquiler.getFechaDesde().getTime());
-        int dias = (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-        if (dias == 0) dias = 1;*/
-        
-        // Calcular días entre fechas
+                .orElseThrow(() -> new Exception("No se encontro el alquiler con ID " + alquilerId));
         long diasLong = ChronoUnit.DAYS.between(alquiler.getFechaDesde(), alquiler.getFechaHasta());
-        if (diasLong == 0) diasLong = 1; // Mínimo 1 día
+        if (diasLong == 0) diasLong = 1;
         int dias = (int) diasLong;
-        
-
-        // Obtener costo del vehículo
         Vehiculo vehiculo = alquiler.getVehiculo();
-        if (vehiculo == null || vehiculo.getCostoVehiculo() == null) {
-            throw new Exception("No se puede calcular el costo. Vehículo sin costo definido.");
+        if (vehiculo == null) {
+            throw new Exception("No se puede calcular el costo. Vehiculo no asociado");
         }
-
-        return vehiculo.getCostoVehiculo().getCosto() * dias;
+        CaracteristicaVehiculo caracteristica = vehiculo.getCaracteristicaVehiculo();
+        if (caracteristica == null || caracteristica.getCostoVehiculo() == null) {
+            throw new Exception("No se puede calcular el costo. Vehiculo sin costo definido.");
+        }
+        return caracteristica.getCostoVehiculo().getCosto() * dias;
     }
 }

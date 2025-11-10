@@ -1,7 +1,6 @@
 package com.example.mycar.dto;
 
 import com.example.mycar.enums.TipoDocumentacion;
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -15,9 +14,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class DocumentacionDTO extends BaseDTO{
-	
-	@NotNull(message = "El tipo de documentación es obligatorio")
+public class DocumentacionDTO extends BaseDTO {
+
+    @NotNull(message = "El tipo de documentación es obligatorio")
     private TipoDocumentacion tipoDocumentacion;
 
     // Puede ser null porque se define al guardar el archivo en el backend

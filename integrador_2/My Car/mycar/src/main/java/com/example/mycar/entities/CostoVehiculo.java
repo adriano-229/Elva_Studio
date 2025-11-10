@@ -19,14 +19,14 @@ import java.util.Date;
 @Table(name = "costo_vehiculo")
 public class CostoVehiculo extends Base {
 
-	
-	@Column(name = "fecha_desde", nullable = false)
-	private Date fechaDesde;
-	
-	@Column(name = "fecha_hasta", nullable = false)
-	private Date fechaHasta;
-	
-	@Column(name = "costo", nullable = false)
+
+    @Column(name = "fecha_desde", nullable = false)
+    private Date fechaDesde;
+
+    @Column(name = "fecha_hasta", nullable = false)
+    private Date fechaHasta;
+
+    @Column(name = "costo", nullable = false)
     private double costo;
 
 }

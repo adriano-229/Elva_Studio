@@ -1,7 +1,6 @@
 package com.example.mycar.dto;
 
 import com.example.mycar.enums.RolUsuario;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -30,7 +29,8 @@ public class UsuarioDTO extends BaseDTO {
     private RolUsuario rol;
 
     @NotNull(message = "Debe haber una persona asociada al usuario")
-    private PersonaDTO persona;;
-    
+    private PersonaDTO persona;
+    ;
+
 
 }

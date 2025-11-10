@@ -1,10 +1,6 @@
 package com.example.mycar.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,8 +32,8 @@ public class Direccion extends Base {
     @Column(name = "referencia", nullable = false)
     private String referencia;
 
-    @ManyToOne(optional=false)
-    @JoinColumn(name="localidad_id", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "localidad_id", nullable = false)
     private Localidad localidad;
-    
+
 }	

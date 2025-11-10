@@ -11,8 +11,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class NacionalidadDTO extends BaseDTO{
-	
-	private String nombre;
+public class NacionalidadDTO extends BaseDTO {
+
+    private String nombre;
 
 }

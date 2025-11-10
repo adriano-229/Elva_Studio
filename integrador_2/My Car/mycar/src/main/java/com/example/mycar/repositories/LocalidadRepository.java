@@ -1,7 +1,7 @@
 package com.example.mycar.repositories;
 
-import org.springframework.stereotype.Repository;
 import com.example.mycar.entities.Localidad;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,16 +1,16 @@
 package com.example.mycar.services.impl;
 
-import java.time.LocalDate;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
-
 import com.example.mycar.entities.Vehiculo;
 import com.example.mycar.enums.EstadoVehiculo;
 import com.example.mycar.repositories.AlquilerRepository;
 import com.example.mycar.repositories.CaracteristicaVehiculoRepository;
 import com.example.mycar.repositories.VehiculoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class VehiculoScheduler {
@@ -20,7 +20,7 @@ public class VehiculoScheduler {
 
     @Autowired
     private AlquilerRepository alquilerRepository;
-    
+
     @Autowired
     private CaracteristicaVehiculoRepository caracteristicaVehiculoRepository;
 
@@ -32,13 +32,13 @@ public class VehiculoScheduler {
         for (Vehiculo v : vehiculos) {
             boolean alquilado = alquilerRepository.existeAlquilerActivoEnFecha(v, hoy);
             v.setEstadoVehiculo(alquilado ? EstadoVehiculo.Alquilado : EstadoVehiculo.Disponible);
-            
+
         }
 
         vehiculoRepository.saveAll(vehiculos);
-        
+
         caracteristicaVehiculoRepository.actualizarTotales();
     }
-	
+
 
 }
