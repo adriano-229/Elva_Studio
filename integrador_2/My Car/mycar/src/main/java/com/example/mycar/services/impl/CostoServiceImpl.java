@@ -142,7 +142,7 @@ public class CostoServiceImpl implements CostoService {
     @Transactional(readOnly = true)
     public Double calcularCostoAlquiler(Long alquilerId) throws Exception {
         Alquiler alquiler = alquilerRepository.findByIdAndActivoTrue(alquilerId)
-                .orElseThrow(() -> new Exception(STR."No se encontro el alquiler con ID \{alquilerId}"));
+                .orElseThrow(() -> new Exception("No se encontró el alquiler con ID " + alquilerId));
         long diasLong = ChronoUnit.DAYS.between(alquiler.getFechaDesde(), alquiler.getFechaHasta());
         if (diasLong == 0) diasLong = 1;
         int dias = (int) diasLong;
