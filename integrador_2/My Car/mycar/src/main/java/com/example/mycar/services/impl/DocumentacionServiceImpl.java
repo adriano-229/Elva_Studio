@@ -23,7 +23,7 @@ import java.util.List;
 public class DocumentacionServiceImpl extends BaseServiceImpl<Documentacion, DocumentacionDTO, Long> implements DocumentacionService {
 
     private static final Logger log = LoggerFactory.getLogger(DocumentacionServiceImpl.class);
-    @Value("${app.upload.dir}")
+    @Value("${app.upload.docs.dir}")
     private String uploadDir;
 
     public DocumentacionServiceImpl(BaseRepository<Documentacion, Long> baseRepository,
