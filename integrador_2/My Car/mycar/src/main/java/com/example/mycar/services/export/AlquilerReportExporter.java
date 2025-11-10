@@ -2,8 +2,8 @@ package com.example.mycar.services.export;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -62,14 +62,14 @@ public class AlquilerReportExporter {
             int rowIdx = 1;
             for (AlquilerReporteDTO dto : datos) {
                 Row row = sheet.createRow(rowIdx++);
-                row.createCell(0).setCellValue(nullSafe(dto.clienteNombreCompleto()));
-                row.createCell(1).setCellValue(nullSafe(dto.clienteDocumento()));
-                row.createCell(2).setCellValue(nullSafe(dto.vehiculoPatente()));
-                row.createCell(3).setCellValue(nullSafe(dto.vehiculoModelo()));
-                row.createCell(4).setCellValue(nullSafe(dto.vehiculoMarca()));
+                row.createCell(0).setCellValue(nullSafe(dto.getClienteNombreCompleto()));
+                row.createCell(1).setCellValue(nullSafe(dto.getClienteDocumento()));
+                row.createCell(2).setCellValue(nullSafe(dto.getVehiculoPatente()));
+                row.createCell(3).setCellValue(nullSafe(dto.getVehiculoModelo()));
+                row.createCell(4).setCellValue(nullSafe(dto.getVehiculoMarca()));
 
-                Date fechaDesde = dto.fechaDesde();
-                Date fechaHasta = dto.fechaHasta();
+                LocalDate fechaDesde = dto.getFechaDesde();
+                LocalDate fechaHasta = dto.getFechaHasta();
 
                 Cell desdeCell = row.createCell(5);
                 if (fechaDesde != null) {
@@ -84,7 +84,7 @@ public class AlquilerReportExporter {
                 }
 
                 Cell montoCell = row.createCell(7);
-                double monto = dto.montoTotal() == null ? 0.0 : dto.montoTotal();
+                double monto = dto.getMontoTotal() == null ? 0.0 : dto.getMontoTotal();
                 montoCell.setCellValue(monto);
             }
 
@@ -117,16 +117,17 @@ public class AlquilerReportExporter {
                 table.addCell(cell);
             }
 
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             for (AlquilerReporteDTO dto : datos) {
-                table.addCell(valueOrDash(dto.clienteNombreCompleto()));
-                table.addCell(valueOrDash(dto.clienteDocumento()));
-                table.addCell(valueOrDash(dto.vehiculoPatente()));
-                table.addCell(valueOrDash(dto.vehiculoModelo()));
-                table.addCell(valueOrDash(dto.vehiculoMarca()));
-                table.addCell(formatDate(dto.fechaDesde(), formatter));
-                table.addCell(formatDate(dto.fechaHasta(), formatter));
-                table.addCell(formatMonto(dto.montoTotal()));
+                table.addCell(valueOrDash(dto.getClienteNombreCompleto()));
+                table.addCell(valueOrDash(dto.getClienteDocumento()));
+                table.addCell(valueOrDash(dto.getVehiculoPatente()));
+                table.addCell(valueOrDash(dto.getVehiculoModelo()));
+                table.addCell(valueOrDash(dto.getVehiculoMarca()));
+                table.addCell(formatDate(dto.getFechaDesde(), formatter));
+                table.addCell(formatDate(dto.getFechaHasta(), formatter));
+                table.addCell(formatMonto(dto.getMontoTotal()));
             }
 
             document.add(table);
@@ -145,8 +146,12 @@ public class AlquilerReportExporter {
         return value == null ? "" : value;
     }
 
-    private String formatDate(Date date, SimpleDateFormat formatter) {
+    /*private String formatDate(Date date, SimpleDateFormat formatter) {
         return date == null ? "-" : formatter.format(date);
+    }*/
+    
+    private String formatDate(LocalDate date, DateTimeFormatter formatter) {
+        return date == null ? "-" : date.format(formatter);
     }
 
     private String formatMonto(Double monto) {

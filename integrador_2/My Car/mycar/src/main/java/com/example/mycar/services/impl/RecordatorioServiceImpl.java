@@ -89,7 +89,8 @@ public class RecordatorioServiceImpl implements RecordatorioService {
                 continue;
             }
 
-            LocalDate fechaMensaje = dto.fechaHasta() != null ? toLocalDate(dto.fechaHasta()) : fechaReferencia;
+            //LocalDate fechaMensaje = dto.fechaHasta() != null ? toLocalDate(dto.fechaHasta()) : fechaReferencia;
+            LocalDate fechaMensaje = dto.fechaHasta() != null ? dto.fechaHasta() : fechaReferencia;
             String asunto = construirAsunto(dto, fechaMensaje);
             String cuerpo = construirCuerpo(dto, fechaMensaje);
 
