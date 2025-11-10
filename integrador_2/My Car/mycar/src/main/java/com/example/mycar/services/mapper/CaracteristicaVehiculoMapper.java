@@ -1,11 +1,10 @@
 package com.example.mycar.services.mapper;
 
-import org.mapstruct.Mapper;
-
 import com.example.mycar.dto.CaracteristicaVehiculoDTO;
 import com.example.mycar.entities.CaracteristicaVehiculo;
+import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
-public interface CaracteristicaVehiculoMapper extends BaseMapper<CaracteristicaVehiculo, CaracteristicaVehiculoDTO>{
+@Mapper(componentModel = "spring", uses = {ImagenMapper.class, CostoVehiculoMapper.class})
+public interface CaracteristicaVehiculoMapper extends BaseMapper<CaracteristicaVehiculo, CaracteristicaVehiculoDTO> {
 
 }

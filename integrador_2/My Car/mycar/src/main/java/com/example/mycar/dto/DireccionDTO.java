@@ -13,13 +13,15 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class DireccionDTO extends BaseDTO{
-	
-    @NotBlank @Size(max = 120)
+public class DireccionDTO extends BaseDTO {
+
+    @NotBlank
+    @Size(max = 120)
     private String calle;
 
-    @NotBlank @Size(max = 20)
-    private String numeracion;
+    @NotBlank
+    @Size(max = 20)
+    private Integer numeracion;
 
     @Size(max = 120)
     private String barrio;
@@ -34,6 +36,6 @@ public class DireccionDTO extends BaseDTO{
     private String referencia;
 
     @NotBlank
-    private String localidadId; // relación
+    private Long localidadId;
 
 }
