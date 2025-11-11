@@ -1,8 +1,1 @@
-# Maven build
-target/
-**/target/
-
-# IntelliJ / VSCode (ya que estás)
-.idea/
-*.iml
-.vscode/
+/.metadata/

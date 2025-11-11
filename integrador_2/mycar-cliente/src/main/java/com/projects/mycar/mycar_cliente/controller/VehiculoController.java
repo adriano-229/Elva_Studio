@@ -25,7 +25,7 @@ public class VehiculoController extends BaseControllerImpl<VehiculoDTO, Vehiculo
     public String listarDisponibles(Model model) {
         List<VehiculoDTO> disponibles = service.buscarPorEstado(EstadoVehiculo.Disponible);
         model.addAttribute("vehiculos", disponibles);
-        return "flota";
+        return "flota"; 
     }
 	
 	/*

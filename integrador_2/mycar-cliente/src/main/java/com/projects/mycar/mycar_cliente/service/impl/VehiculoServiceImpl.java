@@ -6,7 +6,6 @@ import com.projects.mycar.mycar_cliente.domain.VehiculoDTO;
 import com.projects.mycar.mycar_cliente.domain.enums.EstadoVehiculo;
 import com.projects.mycar.mycar_cliente.service.VehiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class VehiculoServiceImpl extends BaseServiceImpl<VehiculoDTO, Long> impl
     @Override
     public List<VehiculoDTO> buscarPorEstado(EstadoVehiculo estado) {
         try {
-            return daoVehiculo.findByEstado(estado);
+            return daoVehiculo.findByEstadoVehiculoAndActivoTrue(estado);
         } catch (Exception e) {
             e.printStackTrace();
             return List.of();

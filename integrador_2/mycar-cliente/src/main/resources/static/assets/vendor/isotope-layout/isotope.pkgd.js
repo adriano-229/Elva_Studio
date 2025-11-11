@@ -2539,6 +2539,7 @@
 }(window, function factory(Outlayer, getSize) {
 
 
+
 // -------------------------- masonryDefinition -------------------------- //
 
     // create an Outlayer layout class
@@ -3002,6 +3003,7 @@
 
 }(window, function factory(window, Outlayer, getSize, matchesSelector, utils,
                            Item, LayoutMode) {
+
 
 
 // -------------------------- vars -------------------------- //

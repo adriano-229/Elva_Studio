@@ -1,0 +1,65 @@
+package com.example.mycar.services.mapper;
+
+import com.example.mycar.dto.UsuarioDTO;
+import com.example.mycar.entities.Usuario;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2025-11-05T13:20:40-0300",
+    comments = "version: 1.6.2, compiler: Eclipse JDT (IDE) 3.42.0.v20250526-2018, environment: Java 21.0.7 (Eclipse Adoptium)"
+)
+@Component
+public class UsuarioMapperImpl implements UsuarioMapper {
+
+    @Override
+    public Usuario toEntity(UsuarioDTO dto) {
+        if ( dto == null ) {
+            return null;
+        }
+
+        Usuario usuario = new Usuario();
+
+        usuario.setActivo( dto.isActivo() );
+        usuario.setId( dto.getId() );
+        usuario.setClave( dto.getClave() );
+        usuario.setNombreUsuario( dto.getNombreUsuario() );
+        usuario.setRol( dto.getRol() );
+
+        return usuario;
+    }
+
+    @Override
+    public UsuarioDTO toDto(Usuario entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        UsuarioDTO.UsuarioDTOBuilder<?, ?> usuarioDTO = UsuarioDTO.builder();
+
+        usuarioDTO.activo( entity.isActivo() );
+        usuarioDTO.id( entity.getId() );
+        usuarioDTO.clave( entity.getClave() );
+        usuarioDTO.nombreUsuario( entity.getNombreUsuario() );
+        usuarioDTO.rol( entity.getRol() );
+
+        return usuarioDTO.build();
+    }
+
+    @Override
+    public List<UsuarioDTO> toDtoList(List<Usuario> entities) {
+        if ( entities == null ) {
+            return null;
+        }
+
+        List<UsuarioDTO> list = new ArrayList<UsuarioDTO>( entities.size() );
+        for ( Usuario usuario : entities ) {
+            list.add( toDto( usuario ) );
+        }
+
+        return list;
+    }
+}

@@ -1,0 +1,56 @@
+package com.example.mycar.services.mapper;
+
+import com.example.mycar.dto.ImagenDTO;
+import com.example.mycar.entities.Imagen;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2025-11-05T13:20:42-0300",
+    comments = "version: 1.6.2, compiler: Eclipse JDT (IDE) 3.42.0.v20250526-2018, environment: Java 21.0.7 (Eclipse Adoptium)"
+)
+@Component
+public class ImagenMapperImpl implements ImagenMapper {
+
+    @Override
+    public Imagen toEntity(ImagenDTO dto) {
+        if ( dto == null ) {
+            return null;
+        }
+
+        Imagen.ImagenBuilder imagen = Imagen.builder();
+
+        return imagen.build();
+    }
+
+    @Override
+    public ImagenDTO toDto(Imagen entity) {
+        if ( entity == null ) {
+            return null;
+        }
+
+        ImagenDTO imagenDTO = new ImagenDTO();
+
+        imagenDTO.setActivo( entity.isActivo() );
+        imagenDTO.setId( entity.getId() );
+
+        return imagenDTO;
+    }
+
+    @Override
+    public List<ImagenDTO> toDtoList(List<Imagen> entities) {
+        if ( entities == null ) {
+            return null;
+        }
+
+        List<ImagenDTO> list = new ArrayList<ImagenDTO>( entities.size() );
+        for ( Imagen imagen : entities ) {
+            list.add( toDto( imagen ) );
+        }
+
+        return list;
+    }
+}
