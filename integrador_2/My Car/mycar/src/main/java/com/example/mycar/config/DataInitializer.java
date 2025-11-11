@@ -1,6 +1,9 @@
 package com.example.mycar.config;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -67,7 +70,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     @Transactional
-    public void run(String... args) {
+    public void run(String... args) throws IOException {
         if (usuarioRepository.count() > 0) {
             return;
         }
@@ -117,7 +120,8 @@ public class DataInitializer implements CommandLineRunner {
                 .tipoImagen(TipoImagen.Persona)
                 .build();
         entityManager.persist(imagenEmpleado);
-
+        
+        /*
         Imagen imagenVehiculo = Imagen.builder()
                 .nombre("vehiculo-sedan.png")
                 .mime("image/png")
@@ -125,6 +129,41 @@ public class DataInitializer implements CommandLineRunner {
                 .tipoImagen(TipoImagen.Vehiculo)
                 .build();
         entityManager.persist(imagenVehiculo);
+        */
+        
+        Path path = Path.of("src/main/resources/static/img/vehiculos/chevrolet-tracker.jpg");
+        byte[] contenido = Files.readAllBytes(path);
+
+        Imagen imgChevrolet = Imagen.builder()
+            .nombre("chevrolet-tracker.jpg")
+            .mime("image/png")
+            .contenido(contenido)
+            .tipoImagen(TipoImagen.Vehiculo)
+            .build();
+        entityManager.persist(imgChevrolet);
+        
+        Path path2 = Path.of("src/main/resources/static/img/vehiculos/toyota-corolla.webp");
+        byte[] contenido2 = Files.readAllBytes(path2);
+
+        Imagen imgToyota = Imagen.builder()
+            .nombre("toyota-corolla.webp")
+            .mime("image/webp")
+            .contenido(contenido2)
+            .tipoImagen(TipoImagen.Vehiculo)
+            .build();
+        entityManager.persist(imgToyota);
+        
+        Path path3 = Path.of("src/main/resources/static/img/vehiculos/renault-kangoo.jpg");
+        byte[] contenido3 = Files.readAllBytes(path3);
+
+        Imagen imgRenault = Imagen.builder()
+            .nombre("renault-kangoo.jpg")
+            .mime("image/webp")
+            .contenido(contenido2)
+            .tipoImagen(TipoImagen.Vehiculo)
+            .build();
+        entityManager.persist(imgRenault);
+
 
         ContactoCorreoElectronico contactoCorreoEmpleado = new ContactoCorreoElectronico();
         contactoCorreoEmpleado.setTipoContacto(TipoContacto.Laboral);
@@ -257,7 +296,7 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 15),
                 pagoEfectivo, new BigDecimal("30000"), 15000.0, 15000.0,
                 "Pago recibido en mostrador",
-                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imgToyota, costoVehiculo, nacionalidadArgentina);
 
         crearAlquilerCompleto(
                 "Laura", "Pérez", LocalDate.of(1989, 7, 14), "28765432", "laura-perez",
@@ -268,7 +307,7 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 4, 5), LocalDate.of(2024, 4, 20),
                 pagoTransferencia, new BigDecimal("45000"), 32000.0, 13000.0,
                 "Pago con transferencia bancaria",
-                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imgToyota, costoVehiculo, nacionalidadArgentina);
 
         crearAlquilerCompleto(
                 "Jorge", "Ramírez", LocalDate.of(1985, 3, 22), "26543210", "jorge-ramirez",
@@ -279,7 +318,7 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 5, 10), LocalDate.of(2024, 5, 18),
                 pagoEfectivo, new BigDecimal("22000"), 18000.0, 4000.0,
                 "Pago en efectivo",
-                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imgToyota, costoVehiculo, nacionalidadArgentina);
 
         crearAlquilerCompleto(
                 "Sofía", "López", LocalDate.of(1995, 11, 3), "33445566", "sofia-lopez",
@@ -290,7 +329,7 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 6, 1), LocalDate.of(2024, 6, 12),
                 pagoTransferencia, new BigDecimal("28000"), 22000.0, 6000.0,
                 "Pago con tarjeta",
-                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imgToyota, costoVehiculo, nacionalidadArgentina);
 
         crearAlquilerCompleto(
                 "Diego", "Martínez", LocalDate.of(1990, 1, 18), "31223344", "diego-martinez",
@@ -301,7 +340,7 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 7, 3), LocalDate.of(2024, 7, 15),
                 pagoTransferencia, new BigDecimal("26000"), 21000.0, 5000.0,
                 "Pago mixto confirmado",
-                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imgRenault, costoVehiculo, nacionalidadArgentina);
 
         crearAlquilerCompleto(
                 "Carla", "Díaz", LocalDate.of(1993, 4, 8), "29998877", "carla-diaz",
@@ -312,7 +351,7 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 8, 15), LocalDate.of(2024, 8, 30),
                 pagoTransferencia, new BigDecimal("31000"), 25000.0, 6000.0,
                 "Transferencia inmediata acreditada",
-                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imgRenault, costoVehiculo, nacionalidadArgentina);
 
         crearAlquilerCompleto(
                 "Pablo", "Herrera", LocalDate.of(1987, 12, 30), "27889900", "pablo-herrera",
@@ -323,13 +362,13 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 9, 5), LocalDate.of(2024, 9, 25),
                 pagoTransferencia, new BigDecimal("34000"), 28000.0, 6000.0,
                 "Pago anticipado por transferencia",
-                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imgRenault, costoVehiculo, nacionalidadArgentina);
 
         // Vehículos adicionales sin alquiler para alimentar reportes (misma marca/modelo)
-        crearVehiculoDisponible("AE777BC", "Toyota", "Corolla", 2022, 4, 5, imagenVehiculo, costoVehiculo);
-        crearVehiculoDisponible("AE778BC", "Toyota", "Corolla", 2023, 4, 5, imagenVehiculo, costoVehiculo);
-        crearVehiculoDisponible("AF555JK", "Renault", "Kangoo", 2020, 5, 5, imagenVehiculo, costoVehiculo);
-        crearVehiculoDisponible("AF556JK", "Renault", "Kangoo", 2021, 5, 5, imagenVehiculo, costoVehiculo);
+        crearVehiculoDisponible("AE777BC", "Toyota", "Corolla", 2022, 4, 5, imgToyota, costoVehiculo);
+        crearVehiculoDisponible("AE778BC", "Toyota", "Corolla", 2023, 4, 5, imgToyota, costoVehiculo);
+        crearVehiculoDisponible("AF555JK", "Renault", "Kangoo", 2020, 5, 5, imgRenault, costoVehiculo);
+        crearVehiculoDisponible("AF556JK", "Renault", "Kangoo", 2021, 5, 5, imgRenault, costoVehiculo);
 
         Usuario usuarioAdmin = new Usuario();
         usuarioAdmin.setNombreUsuario("admin");

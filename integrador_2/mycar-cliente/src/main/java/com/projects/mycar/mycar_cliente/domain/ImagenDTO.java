@@ -1,16 +1,20 @@
 package com.projects.mycar.mycar_cliente.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.projects.mycar.mycar_cliente.domain.enums.TipoImagen;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.SuperBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@SuperBuilder
-@Data
-@EqualsAndHashCode(callSuper = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ImagenDTO extends BaseDTO {
 
     private String nombre;

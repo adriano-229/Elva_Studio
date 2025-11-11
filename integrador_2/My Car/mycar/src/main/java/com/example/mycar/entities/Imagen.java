@@ -19,7 +19,8 @@ public class Imagen extends Base {
     @Column(name = "mime", nullable = false)
     private String mime;
 
-    @Column(name = "contenido", nullable = false)
+    @Lob
+    @Column(name = "contenido", nullable = false, columnDefinition = "LONGBLOB")
     private byte[] contenido;
 
     @Enumerated(EnumType.STRING)

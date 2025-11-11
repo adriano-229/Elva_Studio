@@ -5,17 +5,20 @@ import com.projects.mycar.mycar_cliente.domain.enums.EstadoVehiculo;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.Setter;
 
-@SuperBuilder
-@Data
-@EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor 
-@AllArgsConstructor
+
+
+
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class VehiculoDTO extends BaseDTO {
 
 
@@ -23,8 +26,8 @@ public class VehiculoDTO extends BaseDTO {
 
     private String patente;
 
-    private Long caracteristicaVehiculoId;
+    //private Long caracteristicaVehiculoId;
 
-    //private CaracteristicaVehiculoDTO caracteristicaVehiculo;
+    private CaracteristicaVehiculoDTO caracteristicaVehiculo;
 
 }
