@@ -1,55 +1,23 @@
 package com.example.mycar.config;
 
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.List;
-
+import com.example.mycar.entities.*;
+import com.example.mycar.enums.*;
+import com.example.mycar.repositories.UsuarioRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.example.mycar.entities.Alquiler;
-import com.example.mycar.entities.CaracteristicaVehiculo;
-import com.example.mycar.entities.Cliente;
-import com.example.mycar.entities.ConfiguracionCorreoAutomatico;
-import com.example.mycar.entities.ContactoCorreoElectronico;
-import com.example.mycar.entities.ContactoTelefonico;
-import com.example.mycar.entities.CostoVehiculo;
-import com.example.mycar.entities.Departamento;
-import com.example.mycar.entities.DetalleFactura;
-import com.example.mycar.entities.Direccion;
-import com.example.mycar.entities.Documentacion;
-import com.example.mycar.entities.Empleado;
-import com.example.mycar.entities.Empresa;
-import com.example.mycar.entities.Factura;
-import com.example.mycar.entities.FormaDePago;
-import com.example.mycar.entities.Imagen;
-import com.example.mycar.entities.Localidad;
-import com.example.mycar.entities.Nacionalidad;
-import com.example.mycar.entities.Pais;
-import com.example.mycar.entities.Provincia;
-import com.example.mycar.entities.Usuario;
-import com.example.mycar.entities.Vehiculo;
-import com.example.mycar.enums.EstadoFactura;
-import com.example.mycar.enums.EstadoVehiculo;
-import com.example.mycar.enums.RolUsuario;
-import com.example.mycar.enums.TipoContacto;
-import com.example.mycar.enums.TipoDocumentacion;
-import com.example.mycar.enums.TipoDocumento;
-import com.example.mycar.enums.TipoEmpleado;
-import com.example.mycar.enums.TipoImagen;
-import com.example.mycar.enums.TipoPago;
-import com.example.mycar.enums.TipoTelefono;
-import com.example.mycar.repositories.UsuarioRepository;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
 
 @Configuration
-@Profile({ "dev", "test" })
+@Profile({"dev", "test"})
 public class DataInitializer implements CommandLineRunner {
 
     private final UsuarioRepository usuarioRepository;
@@ -105,7 +73,7 @@ public class DataInitializer implements CommandLineRunner {
         Imagen imagenCliente = Imagen.builder()
                 .nombre("cliente-demo.png")
                 .mime("image/png")
-                .contenido(new byte[] { 0 })
+                .contenido(new byte[]{0})
                 .tipoImagen(TipoImagen.Persona)
                 .build();
         entityManager.persist(imagenCliente);
@@ -113,7 +81,7 @@ public class DataInitializer implements CommandLineRunner {
         Imagen imagenEmpleado = Imagen.builder()
                 .nombre("empleado-demo.png")
                 .mime("image/png")
-                .contenido(new byte[] { 0 })
+                .contenido(new byte[]{0})
                 .tipoImagen(TipoImagen.Persona)
                 .build();
         entityManager.persist(imagenEmpleado);
@@ -121,7 +89,7 @@ public class DataInitializer implements CommandLineRunner {
         Imagen imagenVehiculo = Imagen.builder()
                 .nombre("vehiculo-sedan.png")
                 .mime("image/png")
-                .contenido(new byte[] { 0 })
+                .contenido(new byte[]{0})
                 .tipoImagen(TipoImagen.Vehiculo)
                 .build();
         entityManager.persist(imagenVehiculo);
@@ -422,7 +390,7 @@ public class DataInitializer implements CommandLineRunner {
         caracteristica.setImagen(imagenVehiculo);
         caracteristica.setCostoVehiculo(costoVehiculo);
         entityManager.persist(caracteristica);
-        
+
         Vehiculo vehiculo = new Vehiculo();
         vehiculo.setEstadoVehiculo(EstadoVehiculo.Alquilado);
         vehiculo.setPatente(patente);
@@ -443,7 +411,7 @@ public class DataInitializer implements CommandLineRunner {
         cliente.setNacionalidad(nacionalidad);
         //cliente.setAlquiler(alquiler);
         entityManager.persist(cliente);
-        
+
         Alquiler alquiler = new Alquiler();
         alquiler.setFechaDesde(fechaDesde);
         alquiler.setFechaHasta(fechaHasta);
@@ -501,7 +469,7 @@ public class DataInitializer implements CommandLineRunner {
         caracteristica.setImagen(imagenVehiculo);
         caracteristica.setCostoVehiculo(costoVehiculo);
         entityManager.persist(caracteristica);
-        
+
         Vehiculo vehiculo = new Vehiculo();
         vehiculo.setEstadoVehiculo(EstadoVehiculo.Disponible);
         vehiculo.setPatente(patente);

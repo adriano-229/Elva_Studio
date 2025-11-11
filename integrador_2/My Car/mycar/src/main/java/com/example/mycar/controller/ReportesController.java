@@ -1,7 +1,14 @@
 package com.example.mycar.controller;
 
-import java.time.LocalDate;
-
+import com.example.mycar.enums.ReportFormat;
+import com.example.mycar.services.ReporteService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,17 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
-
-import com.example.mycar.enums.ReportFormat;
-import com.example.mycar.services.ReporteService;
-
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDate;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
@@ -64,9 +61,9 @@ public class ReportesController {
             @RequestParam("hasta") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate hasta,
             @Parameter(description = "Formato opcional de exportación. Valores admitidos: pdf, xlsx.", example = "pdf")
             @RequestParam(value = "formato", required = false) String formato) {
-        
+
         //Validaciones
-        validacionesFechasRequest(desde,hasta);
+        validacionesFechasRequest(desde, hasta);
         //Verificar si recibimos formato
         if (!StringUtils.hasText(formato)) {
             return ResponseEntity.ok(reporteService.obtenerAlquileresPorPeriodo(desde, hasta));
@@ -118,7 +115,7 @@ public class ReportesController {
             @RequestParam(value = "formato", required = false) String formato) {
 
         //Validaciones
-        validacionesFechasRequest(desde,hasta);
+        validacionesFechasRequest(desde, hasta);
         //Verificar si recibimos formato
         if (!StringUtils.hasText(formato)) {
             return ResponseEntity.ok(reporteService.obtenerRecaudacionPorModelo(desde, hasta));
@@ -142,11 +139,11 @@ public class ReportesController {
     }
 
 
-    private void validacionesFechasRequest(LocalDate desde,LocalDate hasta){
+    private void validacionesFechasRequest(LocalDate desde, LocalDate hasta) {
         if (desde == null || hasta == null) {
             throw new ResponseStatusException(BAD_REQUEST, "Los parámetros 'desde' y 'hasta' son obligatorios.");
         }
-        
+
         if (hasta.isBefore(desde)) {
             throw new ResponseStatusException(BAD_REQUEST, "El parámetro 'hasta' debe ser mayor o igual a 'desde'.");
         }

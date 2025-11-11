@@ -1,7 +1,5 @@
 package com.example.mycar.dto.reportes;
 
-import java.math.BigDecimal;
-
 /**
  * Resumen de recaudación agrupada por modelo de vehículo.
  */

@@ -106,7 +106,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // 2️⃣ Resource Server (DEV) - permite todo para evitar enviar Authorization: Bearer en desarrollo
+    // 2️⃣ Resource Server (DEV) - permite para evitar enviar Authorization: Bearer en desarrollo
     @Bean
     @Order(2)
     @Profile("dev")

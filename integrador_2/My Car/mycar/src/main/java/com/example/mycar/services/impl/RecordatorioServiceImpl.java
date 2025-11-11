@@ -1,17 +1,5 @@
 package com.example.mycar.services.impl;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-
 import com.example.mycar.dto.recordatorios.RecordatorioDestinatarioResponse;
 import com.example.mycar.dto.recordatorios.RecordatorioDevolucionDTO;
 import com.example.mycar.dto.recordatorios.RecordatorioJobResponse;
@@ -20,9 +8,19 @@ import com.example.mycar.entities.ContactoCorreoElectronico;
 import com.example.mycar.repositories.ClienteRepository;
 import com.example.mycar.services.CorreoService;
 import com.example.mycar.services.RecordatorioService;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -64,9 +62,9 @@ public class RecordatorioServiceImpl implements RecordatorioService {
 
         String mensaje = """
                 Hola %s,
-
+                
                 Esto es una prueba de recepción.
-
+                
                 Saludos,
                 Equipo MyCar
                 """.formatted(cliente.getNombre());
@@ -149,10 +147,10 @@ public class RecordatorioServiceImpl implements RecordatorioService {
 
         return """
                 Hola %s,
-
+                
                 Te recordamos que el %s vence la devolución de tu %s%s.
                 Por favor acercate a la sucursal para finalizar el trámite o contactanos si necesitás extender el alquiler.
-
+                
                 ¡Muchas gracias!
                 Equipo MyCar
                 """.formatted(nombre, fechaTexto, vehiculo, patente);

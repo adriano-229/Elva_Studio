@@ -1,10 +1,11 @@
 package com.example.mycar.dto.reportes;
-import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 /**
  * Proyección inmutable para el reporte de alquileres por período.
@@ -25,13 +26,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AlquilerReporteDTO {
-        private String clienteNombreCompleto;
-        private String clienteDocumento;
-        private String vehiculoPatente;
-        private String vehiculoModelo;
-        private String vehiculoMarca;
-        private LocalDate fechaDesde;
-        private LocalDate fechaHasta;
-        private Double montoTotal;
+    private String clienteNombreCompleto;
+    private String clienteDocumento;
+    private String vehiculoPatente;
+    private String vehiculoModelo;
+    private String vehiculoMarca;
+    private LocalDate fechaDesde;
+    private LocalDate fechaHasta;
+    private Double montoTotal;
 }
 

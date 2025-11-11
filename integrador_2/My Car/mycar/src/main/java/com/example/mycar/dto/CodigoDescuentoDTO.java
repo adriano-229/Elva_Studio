@@ -13,7 +13,8 @@ public class CodigoDescuentoDTO {
     private Boolean utilizado;
     private LocalDate fechaUtilizacion;
 
-    public CodigoDescuentoDTO() {}
+    public CodigoDescuentoDTO() {
+    }
 
     public CodigoDescuentoDTO(Long id, String codigo, Double porcentajeDescuento, Long clienteId, String clienteNombre,
                               LocalDate fechaGeneracion, LocalDate fechaExpiracion, Boolean utilizado, LocalDate fechaUtilizacion) {
@@ -28,22 +29,75 @@ public class CodigoDescuentoDTO {
         this.fechaUtilizacion = fechaUtilizacion;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getCodigo() { return codigo; }
-    public void setCodigo(String codigo) { this.codigo = codigo; }
-    public Double getPorcentajeDescuento() { return porcentajeDescuento; }
-    public void setPorcentajeDescuento(Double porcentajeDescuento) { this.porcentajeDescuento = porcentajeDescuento; }
-    public Long getClienteId() { return clienteId; }
-    public void setClienteId(Long clienteId) { this.clienteId = clienteId; }
-    public String getClienteNombre() { return clienteNombre; }
-    public void setClienteNombre(String clienteNombre) { this.clienteNombre = clienteNombre; }
-    public LocalDate getFechaGeneracion() { return fechaGeneracion; }
-    public void setFechaGeneracion(LocalDate fechaGeneracion) { this.fechaGeneracion = fechaGeneracion; }
-    public LocalDate getFechaExpiracion() { return fechaExpiracion; }
-    public void setFechaExpiracion(LocalDate fechaExpiracion) { this.fechaExpiracion = fechaExpiracion; }
-    public Boolean getUtilizado() { return utilizado; }
-    public void setUtilizado(Boolean utilizado) { this.utilizado = utilizado; }
-    public LocalDate getFechaUtilizacion() { return fechaUtilizacion; }
-    public void setFechaUtilizacion(LocalDate fechaUtilizacion) { this.fechaUtilizacion = fechaUtilizacion; }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public Double getPorcentajeDescuento() {
+        return porcentajeDescuento;
+    }
+
+    public void setPorcentajeDescuento(Double porcentajeDescuento) {
+        this.porcentajeDescuento = porcentajeDescuento;
+    }
+
+    public Long getClienteId() {
+        return clienteId;
+    }
+
+    public void setClienteId(Long clienteId) {
+        this.clienteId = clienteId;
+    }
+
+    public String getClienteNombre() {
+        return clienteNombre;
+    }
+
+    public void setClienteNombre(String clienteNombre) {
+        this.clienteNombre = clienteNombre;
+    }
+
+    public LocalDate getFechaGeneracion() {
+        return fechaGeneracion;
+    }
+
+    public void setFechaGeneracion(LocalDate fechaGeneracion) {
+        this.fechaGeneracion = fechaGeneracion;
+    }
+
+    public LocalDate getFechaExpiracion() {
+        return fechaExpiracion;
+    }
+
+    public void setFechaExpiracion(LocalDate fechaExpiracion) {
+        this.fechaExpiracion = fechaExpiracion;
+    }
+
+    public Boolean getUtilizado() {
+        return utilizado;
+    }
+
+    public void setUtilizado(Boolean utilizado) {
+        this.utilizado = utilizado;
+    }
+
+    public LocalDate getFechaUtilizacion() {
+        return fechaUtilizacion;
+    }
+
+    public void setFechaUtilizacion(LocalDate fechaUtilizacion) {
+        this.fechaUtilizacion = fechaUtilizacion;
+    }
 }

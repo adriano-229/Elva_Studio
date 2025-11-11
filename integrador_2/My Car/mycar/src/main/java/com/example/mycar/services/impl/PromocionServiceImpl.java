@@ -2,7 +2,10 @@ package com.example.mycar.services.impl;
 
 import com.example.mycar.dto.CodigoDescuentoDTO;
 import com.example.mycar.dto.ConfiguracionPromocionDTO;
-import com.example.mycar.entities.*;
+import com.example.mycar.entities.Cliente;
+import com.example.mycar.entities.CodigoDescuento;
+import com.example.mycar.entities.ConfiguracionPromocion;
+import com.example.mycar.entities.ContactoCorreoElectronico;
 import com.example.mycar.repositories.ClienteRepository;
 import com.example.mycar.repositories.CodigoDescuentoRepository;
 import com.example.mycar.repositories.ConfiguracionPromocionRepository;
@@ -190,7 +193,7 @@ public class PromocionServiceImpl implements PromocionService {
             return ((ContactoCorreoElectronico) contacto).getEmail();
         }
         return null;*/
-    	ContactoCorreoElectronico contacto = cliente.getContactoCorreo();
+        ContactoCorreoElectronico contacto = cliente.getContactoCorreo();
         if (contacto != null) {
             return contacto.getEmail();
         }

@@ -1,20 +1,5 @@
 package com.example.mycar.services.export;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.stereotype.Component;
-
 import com.example.mycar.dto.reportes.AlquilerReporteDTO;
 import com.example.mycar.enums.ReportFormat;
 import com.lowagie.text.Document;
@@ -24,6 +9,15 @@ import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Component;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Component
 public class AlquilerReportExporter {
@@ -149,7 +143,7 @@ public class AlquilerReportExporter {
     /*private String formatDate(Date date, SimpleDateFormat formatter) {
         return date == null ? "-" : formatter.format(date);
     }*/
-    
+
     private String formatDate(LocalDate date, DateTimeFormatter formatter) {
         return date == null ? "-" : date.format(formatter);
     }

@@ -3,7 +3,6 @@ package com.example.mycar.services.impl;
 import com.example.mycar.dto.AlquilerConCostoDTO;
 import com.example.mycar.dto.PagareDTO;
 import com.example.mycar.entities.*;
-import com.example.mycar.entities.CodigoDescuento;
 import com.example.mycar.repositories.AlquilerRepository;
 import com.example.mycar.repositories.ClienteRepository;
 import com.example.mycar.repositories.CodigoDescuentoRepository;

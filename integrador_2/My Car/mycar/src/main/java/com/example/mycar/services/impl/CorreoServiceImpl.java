@@ -1,18 +1,16 @@
 package com.example.mycar.services.impl;
 
-import java.util.Properties;
-
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.stereotype.Service;
-
 import com.example.mycar.entities.ConfiguracionCorreoAutomatico;
 import com.example.mycar.entities.Empresa;
 import com.example.mycar.repositories.EmpresaRepository;
 import com.example.mycar.services.CorreoService;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.stereotype.Service;
+
+import java.util.Properties;
 
 @Service
 @RequiredArgsConstructor

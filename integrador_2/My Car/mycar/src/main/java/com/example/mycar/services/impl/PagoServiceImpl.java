@@ -4,7 +4,6 @@ import com.example.mycar.dto.FacturaDTO;
 import com.example.mycar.dto.RespuestaPagoDTO;
 import com.example.mycar.dto.SolicitudPagoDTO;
 import com.example.mycar.entities.*;
-import com.example.mycar.entities.CodigoDescuento;
 import com.example.mycar.enums.EstadoFactura;
 import com.example.mycar.enums.TipoPago;
 import com.example.mycar.error.*;
@@ -50,6 +49,26 @@ public class PagoServiceImpl implements PagoService {
         this.facturaService = facturaService;
         this.facturaMapper = facturaMapper;
         this.codigoDescuentoRepository = codigoDescuentoRepository;
+    }
+
+    private static double getSubtotal(Alquiler alquiler, int dias) {
+        Vehiculo vehiculo = alquiler.getVehiculo();
+        if (vehiculo == null) {
+            throw new VehiculoSinCostoException(null);
+        }
+
+        // Nuevo origen del costo: caracteristicaVehiculo -> costoVehiculo
+        CaracteristicaVehiculo caracteristica = vehiculo.getCaracteristicaVehiculo();
+        if (caracteristica == null || caracteristica.getCostoVehiculo() == null) {
+            throw new VehiculoSinCostoException(vehiculo.getId());
+        }
+
+        double costoPorDia = caracteristica.getCostoVehiculo().getCosto();
+        if (costoPorDia <= 0) {
+            throw new VehiculoSinCostoException(vehiculo.getId());
+        }
+
+        return Math.round(costoPorDia * dias * 100.0) / 100.0;
     }
 
     @Override
@@ -127,7 +146,8 @@ public class PagoServiceImpl implements PagoService {
         double porcentajeDescuento = 0.0;
 
         if (!alquileres.isEmpty()) {
-            Long clienteId = alquileres.getFirst().getCliente().getId();
+            Long clienteId = alquileres.get(0).getCliente().getId();
+
             Optional<CodigoDescuento> codigoOpt =
                     codigoDescuentoRepository.findByClienteIdAndUtilizadoFalseAndActivoTrue(clienteId);
 
@@ -209,26 +229,6 @@ public class PagoServiceImpl implements PagoService {
                 .mensaje(mensaje)
                 .urlPagoMercadoPago(urlMercadoPago)
                 .build();
-    }
-
-    private static double getSubtotal(Alquiler alquiler, int dias) {
-        Vehiculo vehiculo = alquiler.getVehiculo();
-        if (vehiculo == null) {
-            throw new VehiculoSinCostoException(null);
-        }
-
-        // Nuevo origen del costo: caracteristicaVehiculo -> costoVehiculo
-        CaracteristicaVehiculo caracteristica = vehiculo.getCaracteristicaVehiculo();
-        if (caracteristica == null || caracteristica.getCostoVehiculo() == null) {
-            throw new VehiculoSinCostoException(vehiculo.getId());
-        }
-
-        double costoPorDia = caracteristica.getCostoVehiculo().getCosto();
-        if (costoPorDia <= 0) {
-            throw new VehiculoSinCostoException(vehiculo.getId());
-        }
-
-        return Math.round(costoPorDia * dias * 100.0) / 100.0;
     }
 
     @Override

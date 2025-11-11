@@ -1,15 +1,13 @@
 package com.example.mycar.scheduler;
 
-import java.time.LocalDate;
-
+import com.example.mycar.dto.recordatorios.RecordatorioJobResponse;
+import com.example.mycar.services.RecordatorioService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.example.mycar.dto.recordatorios.RecordatorioJobResponse;
-import com.example.mycar.services.RecordatorioService;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDate;
 
 @Component
 @RequiredArgsConstructor

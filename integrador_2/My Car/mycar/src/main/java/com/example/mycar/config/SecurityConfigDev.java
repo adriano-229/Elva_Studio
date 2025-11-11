@@ -35,7 +35,7 @@ public class SecurityConfigDev {
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
-    
+
     @Bean
     public JavaMailSender javaMailSender() {
         return new JavaMailSenderImpl(); // Bean vacío, evita el error
