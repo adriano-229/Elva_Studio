@@ -3,6 +3,7 @@ package com.projects.mycar.mycar_cliente.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.projects.mycar.mycar_cliente.domain.enums.EstadoVehiculo;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,6 +25,6 @@ public class VehiculoDTO extends BaseDTO {
 
     private Long caracteristicaVehiculoId;
 
-    private CaracteristicaVehiculoDTO caracteristicaVehiculo;
+    //private CaracteristicaVehiculoDTO caracteristicaVehiculo;
 
 }
