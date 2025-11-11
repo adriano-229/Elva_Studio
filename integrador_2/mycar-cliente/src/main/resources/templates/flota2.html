@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>About - Tour Bootstrap Template</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link th:href="@{/assets/css/main.css}"  rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Tour
+  * Template URL: https://bootstrapmade.com/tour-bootstrap-travel-website-template/
+  * Updated: Jul 01 2025 with Bootstrap v5.3.7
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="about-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between" 
+    	th:replace="fragments/nav :: navbar">
+    </div>
+  </header> 
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/travel/showcase-8.webp);">
+      <div class="container position-relative">
+        <h1>Flota</h1>
+        <p>Explora todos los vehiulos disponiles para tu viaje</p>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li class="current">Flota</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Travel About Section -->
+    <section id="travel-about" class="travel-about section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center mb-5">
+            <div class="intro-content" data-aos="fade-up" data-aos-delay="200">
+              <h2>Nuestra Flota</h2>
+              <p class="lead">Conoce todos los vehículos disponibles y sus características principales</p>
+            </div>
+          </div>
+        </div>
+        <div>
+		  <h2>Prueba Vehículos</h2>
+		  <ul>
+		    <li th:each="vehiculo : ${vehiculos}" th:text="${vehiculo.patente} + ' - ' + ${vehiculo.estadoVehiculo}"></li>
+		  </ul>
+		</div>
+        <!-- 
+        <div class="row g-4" data-aos="fade-up" data-aos-delay="300">
+
+          <div class="col-lg-4 col-md-6" th:each="vehiculo : ${vehiculos}">
+            <div class="feature-card h-100">
+              <div class="feature-front">
+                <div class="feature-icon">
+                  <i class="bi bi-car-front-fill"></i>
+                </div>
+                <h4 th:text="${vehiculo.patente}">Patente</h4>
+                <p>
+                  Estado: <span th:text="${vehiculo.estadoVehiculo}">Estado</span><br/>
+                  Característica: <span th:text="${vehiculo.caracteristicaVehiculo != null ? vehiculo.caracteristicaVehiculo.marca : 'Sin información'}">Marca</span>
+                </p>
+              </div>
+              <div class="feature-back">
+                <p>Detalles adicionales del vehículo podrán aparecer aquí.</p>
+              </div>
+            </div>
+          </div>
+        </div>-->
+        
+    </section><!-- /Travel About Section -->
+
+  </main>
+
+  <footer 
+        th:replace="fragments/footer :: footer">
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

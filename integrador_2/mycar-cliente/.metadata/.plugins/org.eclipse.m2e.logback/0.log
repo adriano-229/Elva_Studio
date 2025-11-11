@@ -1,0 +1,8 @@
+2025-11-07 09:44:45,189 [Worker-0: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2025-11-07 09:52:05,306 [Worker-14: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.example:mycar:0.0.1-SNAPSHOT @ C:\Users\trini\IS2\Elva_Studio\integrador_2\My Car\mycar\pom.xml.
+2025-11-07 09:52:30,054 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-07 09:52:30,215 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-11-07 09:52:30,247 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\integrador_2\My Car\mycar\src\test\resources
+2025-11-07 09:52:45,491 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2025-11-07 09:52:45,499 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2025-11-07 09:52:45,517 [Worker-11: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\trini\IS2\Elva_Studio\integrador_2\My Car\mycar\src\test\resources

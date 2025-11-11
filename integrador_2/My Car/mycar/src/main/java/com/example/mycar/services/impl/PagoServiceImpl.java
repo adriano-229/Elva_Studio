@@ -127,7 +127,7 @@ public class PagoServiceImpl implements PagoService {
         double porcentajeDescuento = 0.0;
 
         if (!alquileres.isEmpty()) {
-            Long clienteId = alquileres.getFirst().getCliente().getId();
+            Long clienteId = alquileres.get(0).getCliente().getId();
             Optional<CodigoDescuento> codigoOpt =
                     codigoDescuentoRepository.findByClienteIdAndUtilizadoFalseAndActivoTrue(clienteId);
 
