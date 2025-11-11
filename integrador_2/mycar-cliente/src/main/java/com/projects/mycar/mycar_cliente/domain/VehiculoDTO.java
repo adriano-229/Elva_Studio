@@ -22,6 +22,6 @@ public class VehiculoDTO extends BaseDTO {
     private String patente;
     private Long caracteristicaVehiculoId;
 
-    private CaracteristicaVehiculoDTO caracteristicaVehiculo;
+    //private CaracteristicaVehiculoDTO caracteristicaVehiculo;
 
 }

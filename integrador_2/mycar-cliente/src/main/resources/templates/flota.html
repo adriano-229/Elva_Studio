@@ -6,7 +6,9 @@
   <title>Flota - Prueba</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
+
 <div class="container mt-5">
   <h2>Nuestra Flota</h2>
   <div class="row g-4">
@@ -16,14 +18,12 @@
           <div class="feature-icon mb-2">
             <i class="bi bi-car-front-fill fs-2"></i>
           </div>
-          <h4 th:text="${vehiculo.patente}">Patente</h4>
+
           <p>
+            Patente: <span th:text=${vehiculo.patente}>Patente</span>
             Estado: <span th:text="${vehiculo.estadoVehiculo}">Estado</span><br/>
-            Marca: <span th:text="${vehiculo.caracteristicaVehiculo.marca}">Marca</span><br/>
-            Modelo: <span th:text="${vehiculo.caracteristicaVehiculo.modelo}">Modelo</span><br/>
-            Año: <span th:text="${vehiculo.caracteristicaVehiculo.anio}">Año</span><br/>
-            Costo: $<span th:text="${vehiculo.caracteristicaVehiculo.costo}">0</span>
           </p>
+
         </div>
         <div class="feature-back p-3 border rounded mt-2 bg-light">
           <p>Detalles adicionales del vehículo podrán aparecer aquí.</p>
