@@ -1,12 +1,8 @@
 package com.example.mycar.controller;
 
-import com.example.mycar.dto.AlquilerDTO;
 import com.example.mycar.dto.BaseDTO;
 import com.example.mycar.entities.Base;
 import com.example.mycar.services.impl.BaseServiceImpl;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +16,7 @@ public abstract class BaseControllerImpl<E extends Base, D extends BaseDTO, S ex
     @GetMapping
     public ResponseEntity<?> getAll() {
         try {
-        	System.out.println("ESTOY EN EL CONTROLLER - GETALL");
-        	List<AlquilerDTO> alquileres = (List<AlquilerDTO>) servicio.findAll();
-        	if (alquileres.isEmpty()) {
-        		System.out.println("LISTA ALQUILERES LLEGO VACIA");
-        	}
-        	System.out.println("LISTA ALQUILERES: " + alquileres);
-            return ResponseEntity.status(HttpStatus.OK).body(servicio.findAll());
+        	return ResponseEntity.status(HttpStatus.OK).body(servicio.findAll());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error. por favor intente más tarde.\"}");
         }
