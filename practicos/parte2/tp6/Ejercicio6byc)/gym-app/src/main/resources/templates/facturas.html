@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::content})}">
+<div th:fragment="content">
+  <!-- Encabezado -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-0"><i class="bi bi-receipt me-2"></i>Facturación</h1>
+      <small class="text-muted">Gestión de comprobantes y emisión</small>
+    </div>
+    <div class="d-flex gap-2">
+      <a class="btn btn-outline-secondary" th:href="@{/admin/facturas/export?fmt=xlsx}">
+        <i class="bi bi-file-earmark-spreadsheet me-1"></i>Exportar XLSX
+      </a>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalGenerarFactura">
+        <i class="bi bi-file-plus me-1"></i>Nueva factura
+      </button>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <form class="row g-2 mb-3" th:action="@{/admin/facturas}" method="get">
+    <div class="col-md-3">
+      <input type="text" name="socio" class="form-control" placeholder="Socio (nombre/documento)" th:value="${filtroSocio}">
+    </div>
+    <div class="col-md-2">
+      <select name="estado" class="form-select">
+        <option value="" th:selected="${estado == null}">Todos los estados</option>
+        <option th:value="PENDIENTE" th:selected="${estado=='PENDIENTE'}">Pendiente</option>
+        <option th:value="PAGADA" th:selected="${estado=='PAGADA'}">Pagada</option>
+        <option th:value="ANULADA" th:selected="${estado=='ANULADA'}">Anulada</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <input type="date" name="desde" class="form-control" th:value="${desde}">
+    </div>
+    <div class="col-md-2">
+      <input type="date" name="hasta" class="form-control" th:value="${hasta}">
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-outline-secondary"><i class="bi bi-search"></i> Buscar</button>
+    </div>
+  </form>
+
+  <!-- Tabla -->
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>#</th>
+          <th>Nº factura</th>
+          <th>Socio</th>
+          <th>Fecha</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <th class="text-nowrap">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="f, idx : ${facturas}">
+          <td th:text="${idx.index + 1}">1</td>
+          <td th:text="${f.numero}">A-0001-00001234</td>
+          <td>
+            <a th:href="@{'/socios/' + ${f.socioId}}" th:text="${f.socioNombre}">Juan Pérez</a>
+            <small class="text-muted d-block" th:text="${f.socioDocumento}">DNI 12345678</small>
+          </td>
+          <td th:text="${#temporals.format(f.fecha, 'dd/MM/yyyy')}">01/09/2025</td>
+          <td th:text="${#numbers.formatDecimal(f.total,1,'POINT',2,'COMMA')}">$ 10.000,00</td>
+          <td>
+            <span class="badge text-bg-warning" th:if="${f.estado=='PENDIENTE'}">Pendiente</span>
+            <span class="badge text-bg-success" th:if="${f.estado=='PAGADA'}">Pagada</span>
+            <span class="badge text-bg-secondary" th:if="${f.estado=='ANULADA'}">Anulada</span>
+          </td>
+          <td class="text-nowrap">
+            <a th:href="@{'/facturas/' + ${f.id}}" class="btn btn-sm btn-outline-primary" title="Ver">
+              <i class="bi bi-eye"></i>
+            </a>
+            <a th:href="@{'/facturas/pdf/' + ${f.id}}" class="btn btn-sm btn-outline-secondary" title="PDF">
+              <i class="bi bi-filetype-pdf"></i>
+            </a>
+            <a th:if="${f.estado=='PENDIENTE'}"
+               th:href="@{'/pagos/registrar?facturaId=' + ${f.id}}"
+               class="btn btn-sm btn-outline-success" title="Registrar pago">
+              <i class="bi bi-cash-coin"></i>
+            </a>
+            <a th:if="${f.estado=='PENDIENTE'}"
+               th:href="@{'/facturas/anular/' + ${f.id}}"
+               class="btn btn-sm btn-outline-danger" title="Anular"
+               onclick="return confirm('¿Anular la factura?')">
+              <i class="bi bi-x-circle"></i>
+            </a>
+          </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(facturas)}">
+          <td colspan="7" class="text-center text-muted py-4">No hay facturas para los filtros seleccionados.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Paginación -->
+  <nav th:if="${totalPaginas > 1}" aria-label="Paginación">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:classappend="${paginaActual == 1} ? 'disabled'">
+        <a class="page-link" th:href="@{'/facturas?page=' + ${paginaActual - 1}}">Anterior</a>
+      </li>
+      <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPaginas)}"
+          th:classappend="${i == paginaActual} ? 'active'">
+        <a class="page-link" th:text="${i}" th:href="@{'/facturas?page=' + ${i}}">1</a>
+      </li>
+      <li class="page-item" th:classappend="${paginaActual == totalPaginas} ? 'disabled'">
+        <a class="page-link" th:href="@{'/facturas?page=' + ${paginaActual + 1}}">Siguiente</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Modal: Generar Factura -->
+  <div class="modal fade" id="modalGenerarFactura" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form th:action="@{/admin/facturas/generar}" method="post">
+          <div class="modal-header">
+            <h5 class="modal-title">Generar factura</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Socio</label>
+              <input type="text" name="socio" class="form-control" placeholder="Nombre o documento" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Concepto</label>
+              <select name="concepto" class="form-select" required>
+                <option value="CUOTA_MENSUAL">Cuota mensual</option>
+                <option value="MATRICULA">Matrícula</option>
+                <option value="OTRO">Otro</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Importe</label>
+              <input type="number" name="importe" class="form-control" min="0" step="0.01" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Observaciones</label>
+              <textarea name="obs" class="form-control" rows="2"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
+            <button class="btn btn-primary" type="submit">Emitir</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</html>

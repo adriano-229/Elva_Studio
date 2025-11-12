@@ -7,8 +7,12 @@ import java.util.Optional;
 
 @Repository
 public interface CodigoDescuentoRepository extends BaseRepository<CodigoDescuento, Long> {
-    Optional<CodigoDescuento> findByCodigoAndActivoTrue(String codigo);
 
+    //Optional<CodigoDescuento> findByCodigoAndActivoTrue(String codigo);
+
+
+    Optional<CodigoDescuento> findByCodigoIgnoreCaseAndActivoTrue(String codigo);
+    
     Optional<CodigoDescuento> findByClienteIdAndUtilizadoFalseAndActivoTrue(Long clienteId);
 }
 

@@ -1,9 +1,11 @@
 package com.example.mycar.config;
 
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -70,6 +72,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     @Transactional
+
     public void run(String... args) throws IOException {
         if (usuarioRepository.count() > 0) {
             return;
@@ -120,9 +123,10 @@ public class DataInitializer implements CommandLineRunner {
                 .tipoImagen(TipoImagen.Persona)
                 .build();
         entityManager.persist(imagenEmpleado);
+
         
         System.out.println("Estoy por leer una imagen");
-        
+
         Imagen imagenVehiculo = Imagen.builder()
                 .nombre("vehiculo-sedan.png")
                 .mime("image/png")
@@ -288,69 +292,6 @@ public class DataInitializer implements CommandLineRunner {
         entityManager.persist(imgYaris);
         
         
-        
-     // ----- IMÁGENES DE VEHÍCULOS -----
-        /*
-        Path path1 = Path.of("src/main/resources/static/img/vehiculos/chevrolet-tracker.jpg");
-        byte[] contenido1 = Files.readAllBytes(path1);
-        Imagen imgChevroletTracker = Imagen.builder().nombre("chevrolet-tracker.jpg").mime("image/jpeg").contenido(contenido1).tipoImagen(TipoImagen.Vehiculo).build();
-        entityManager.persist(imgChevroletTracker);
-        System.out.println("Chevrolet Tracker bytes: " + contenido1.length);
-
-        Path path2 = Path.of("src/main/resources/static/img/vehiculos/toyota-corolla.webp");
-        byte[] contenido2 = Files.readAllBytes(path2);
-        Imagen imgToyotaCorolla = Imagen.builder().nombre("toyota-corolla.webp").mime("image/webp").contenido(contenido2).tipoImagen(TipoImagen.Vehiculo).build();
-        entityManager.persist(imgToyotaCorolla);
-
-        Path path3 = Path.of("src/main/resources/static/img/vehiculos/renault-kangoo.jpg");
-        byte[] contenido3 = Files.readAllBytes(path3);
-        Imagen imgRenaultKangoo = Imagen.builder().nombre("renault-kangoo.jpg").mime("image/jpeg").contenido(contenido3).tipoImagen(TipoImagen.Vehiculo).build();
-        entityManager.persist(imgRenaultKangoo);
-
-        Path path4 = Path.of("src/main/resources/static/img/vehiculos/ford-focus.jpg");
-        byte[] contenido4 = Files.readAllBytes(path4);
-        Imagen imgFordFocus = Imagen.builder().nombre("ford-focus.jpg").mime("image/jpeg").contenido(contenido4).tipoImagen(TipoImagen.Vehiculo).build();
-        entityManager.persist(imgFordFocus);
-
-        Path path5 = Path.of("src/main/resources/static/img/vehiculos/honda-civic.jpg");
-        byte[] contenido5 = Files.readAllBytes(path5);
-        Imagen imgHondaCivic = Imagen.builder().nombre("honda-civic.jpg").mime("image/jpeg").contenido(contenido5).tipoImagen(TipoImagen.Vehiculo).build();
-        entityManager.persist(imgHondaCivic);
-
-        Path path6 = Path.of("src/main/resources/static/img/vehiculos/fiat-cronos.jpg");
-        byte[] contenido6 = Files.readAllBytes(path6);
-        Imagen imgFiatCronos = Imagen.builder().nombre("fiat-cronos.jpg").mime("image/jpeg").contenido(contenido6).tipoImagen(TipoImagen.Vehiculo).build();
-        entityManager.persist(imgFiatCronos);
-        
-        Path path7 = Path.of("src/main/resources/static/img/vehiculos/toyota-hilux.jpg");
-        byte[] contenido7 = Files.readAllBytes(path7);
-        Imagen imgToyotaHilux = Imagen.builder().nombre("toyota-hilux.jpg").mime("image/jpeg").contenido(contenido7).tipoImagen(TipoImagen.Vehiculo).build();
-        entityManager.persist(imgToyotaHilux);
-*/
-       /* Imagen imgVolkswagenGolf = Imagen.builder().nombre("vw-golf.jpg").mime("image/jpeg").contenido(new byte[]{0}).tipoImagen(TipoImagen.Vehiculo).build();
-        entityManager.persist(imgVolkswagenGolf);
-
-        Imagen imgNissanSentra = Imagen.builder().nombre("nissan-sentra.jpg").mime("image/jpeg").contenido(new byte[]{0}).tipoImagen(TipoImagen.Vehiculo).build();
-        entityManager.persist(imgNissanSentra);
-
-        Imagen imgHyundaiElantra = Imagen.builder().nombre("hyundai-elantra.jpg").mime("image/jpeg").contenido(new byte[]{0}).tipoImagen(TipoImagen.Vehiculo).build();
-        entityManager.persist(imgHyundaiElantra);
-
-        Imagen imgKiaRio = Imagen.builder().nombre("kia-rio.jpg").mime("image/jpeg").contenido(new byte[]{0}).tipoImagen(TipoImagen.Vehiculo).build();
-        entityManager.persist(imgKiaRio);
-
-        Imagen imgMazda3 = Imagen.builder().nombre("mazda3.jpg").mime("image/jpeg").contenido(new byte[]{0}).tipoImagen(TipoImagen.Vehiculo).build();
-        entityManager.persist(imgMazda3);
-
-        Imagen imgChevroletOnix = Imagen.builder().nombre("chevrolet-onix.jpg").mime("image/jpeg").contenido(new byte[]{0}).tipoImagen(TipoImagen.Vehiculo).build();
-        entityManager.persist(imgChevroletOnix); 
-
-        Imagen imgFordRanger = Imagen.builder().nombre("ford-ranger.jpg").mime("image/jpeg").contenido(new byte[]{0}).tipoImagen(TipoImagen.Vehiculo).build();
-        entityManager.persist(imgFordRanger);
-
-        Imagen imgRenaultDuster = Imagen.builder().nombre("renault-duster.jpg").mime("image/jpeg").contenido(new byte[]{0}).tipoImagen(TipoImagen.Vehiculo).build();
-        entityManager.persist(imgRenaultDuster);*/
-
 
         ContactoCorreoElectronico contactoCorreoEmpleado = new ContactoCorreoElectronico();
         contactoCorreoEmpleado.setTipoContacto(TipoContacto.Laboral);
@@ -384,6 +325,7 @@ public class DataInitializer implements CommandLineRunner {
         costoVehiculo.setFechaHasta(Date.valueOf(LocalDate.of(2024, 12, 31)));
         costoVehiculo.setCosto(15000.0);
         entityManager.persist(costoVehiculo);
+
         
         CostoVehiculo costoToyota = new CostoVehiculo();
         costoToyota.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
@@ -635,26 +577,7 @@ public class DataInitializer implements CommandLineRunner {
                 "Pago anticipado por transferencia",
                 ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
 
-        // Vehículos adicionales sin alquiler para alimentar reportes (misma marca/modelo)
-        /*
-        crearVehiculoDisponible("AE101AA", "Chevrolet", "Tracker", 2023, 5, 5, imgChevroletTracker, costoVehiculo2);
-        crearVehiculoDisponible("AF201BB", "Toyota", "Corolla", 2022, 4, 5, imgToyotaCorolla, costoVehiculo);
-        crearVehiculoDisponible("AG301CC", "Renault", "Kangoo", 2021, 5, 5, imgRenaultKangoo, costoVehiculo);
-        crearVehiculoDisponible("AH401DD", "Ford", "Focus", 2020, 5, 5, imgFordFocus, costoVehiculo);
-        crearVehiculoDisponible("AI501EE", "Honda", "Civic", 2022, 4, 5, imgHondaCivic, costoVehiculo);
-        crearVehiculoDisponible("AJ601FF", "Fiat", "Cronos", 2023, 4, 5, imgFiatCronos, costoVehiculo);
-        crearVehiculoDisponible("AQ401MM", "Toyota", "Hilux", 2023, 4, 5, imgToyotaHilux, costoVehiculo);
-       
-        crearVehiculoDisponible("AK701GG", "Volkswagen", "Golf", 2021, 4, 5, imgVolkswagenGolf, costoVehiculo);
-        crearVehiculoDisponible("AL801HH", "Nissan", "Sentra", 2020, 4, 5, imgNissanSentra, costoVehiculo);
-        crearVehiculoDisponible("AM901II", "Hyundai", "Elantra", 2022, 4, 5, imgHyundaiElantra, costoVehiculo);
-        crearVehiculoDisponible("AN101JJ", "Kia", "Rio", 2021, 4, 5, imgKiaRio, costoVehiculo);
-        crearVehiculoDisponible("AO201KK", "Mazda", "3", 2023, 4, 5, imgMazda3, costoVehiculo);
-        crearVehiculoDisponible("AP301LL", "Chevrolet", "Onix", 2022, 5, 5, imgChevroletOnix, costoVehiculo);
-        
-        crearVehiculoDisponible("AR501NN", "Ford", "Ranger", 2022, 5, 5, imgFordRanger, costoVehiculo);
-        crearVehiculoDisponible("AS601OO", "Renault", "Duster", 2021, 5, 5, imgRenaultDuster, costoVehiculo);
-*/
+
         crearVehiculoDisponible("AE777BC", "Toyota", "Corolla", 2022, 4, 5, imgToyota, costoToyota);
         crearVehiculoDisponible("AE778BC", "Toyota", "Corolla", 2023, 4, 5, imgCorolla, costoCorolla);
         crearVehiculoDisponible("AF555JK", "Renault", "Kangoo", 2020, 5, 5, imgRenault, costoRenault);

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Empresas - TP1</title>
+<body>
+<div>
+  <h1 class="mt-4">Gestión de Empresas</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+    <li class="breadcrumb-item active">Empresas</li>
+  </ol>
+
+  <div class="mb-4 d-flex gap-2 flex-wrap">
+    <!-- Botón Nueva Empresa (solo ADMIN) -->
+    <a class="btn btn-primary btn-lg" sec:authorize="hasRole('ADMIN')" th:href="@{/empresas/nueva}">
+      <i class="fas fa-plus-circle me-2"></i>Nueva Empresa
+    </a>
+    <a class="btn btn-info btn-lg" th:href="@{/export/empresas/excel}">
+      <i class="fas fa-file-pdf me-2"></i>Descargar Excel
+    </a>
+  </div>
+
+  <!-- Tabla de Empresas -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <i class="fas fa-table me-1"></i>
+      Listado de Empresas
+    </div>
+    <div class="card-body">
+      <table class="table table-hover" id="datatablesSimple">
+        <thead>
+        <tr>
+          <th>Razón Social</th>
+          <th>Dirección</th>
+          <th>Estado</th>
+          <th style="text-align: center;">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="empresa : ${empresas}">
+          <td th:text="${empresa.razonSocial}"></td>
+          <td>
+              <span th:if="${empresa.direccion != null}">
+                <span th:text="${empresa.direccion.calle} + ' ' + ${empresa.direccion.altura}"></span>,
+                <span th:text="${empresa.direccion.departamento?.nombre}"></span>,
+                <span th:text="${empresa.direccion.departamento?.provincia?.nombre}"></span>
+              </span>
+            <span class="text-muted fst-italic" th:unless="${empresa.direccion != null}">
+                Sin dirección
+              </span>
+          </td>
+          <td>
+            <span class="badge bg-danger" th:if="${empresa.eliminado}">Eliminado</span>
+            <span class="badge bg-success" th:unless="${empresa.eliminado}">Activo</span>
+          </td>
+          <td style="text-align: center;">
+            <div class="d-flex justify-content-center gap-1">
+              <a class="btn btn-sm btn-primary"
+                 th:href="@{|/empresas/editar/${empresa.id}|}"
+                 title="Editar">
+                <i class="fas fa-edit"></i>
+              </a>
+
+              <a class="btn btn-sm btn-info"
+                 target="_blank"
+                 th:href="@{|/empresas/mapa/${empresa.id}|}"
+                 th:if="${empresa.direccion != null}"
+                 title="Ver en Mapa">
+                <i class="fas fa-map-marked-alt"></i>
+              </a>
+
+              <a class="btn btn-sm btn-danger"
+                 onclick="return confirm('¿Está seguro de eliminar esta empresa?')"
+                 sec:authorize="hasRole('ADMIN')"
+                 th:href="@{|/empresas/eliminar/${empresa.id}|}"
+                 title="Eliminar">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (document.getElementById('datatablesSimple')) {
+            const dataTable = new simpleDatatables.DataTable("#datatablesSimple", {
+                searchable: true,
+                fixedHeight: false,
+                perPage: 10,
+                labels: {
+                    placeholder: "Buscar empresa...",
+                    perPage: "Empresas por página",
+                    noRows: "No se encontraron empresas",
+                    info: "Mostrando {start} a {end} de {rows} empresas",
+                },
+                columns: [
+                    {select: 0, sort: "asc"},
+                    {select: 2, sortable: false},
+                    {select: 3, sortable: false}
+                ]
+            });
+        }
+    });
+</script>
+</body>
+</html>

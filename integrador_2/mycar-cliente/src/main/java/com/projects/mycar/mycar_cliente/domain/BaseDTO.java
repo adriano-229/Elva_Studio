@@ -1,6 +1,7 @@
 package com.projects.mycar.mycar_cliente.domain;
 
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
 public abstract class BaseDTO {
     private Long id;
 

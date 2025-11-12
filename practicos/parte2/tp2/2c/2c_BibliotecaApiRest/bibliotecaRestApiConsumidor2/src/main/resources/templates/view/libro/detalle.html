@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Detalle del Libro - ' + ${libro.titulo}">Detalle Libro</title>
+
+    <!-- Bootstrap y FontAwesome -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body { background-color: #f8f9fa; }
+
+        .d-flex { min-height: 100vh; }
+
+        /* Sidebar fija */
+        .sidebar {
+            width: 220px;
+            background-color: #343a40; 
+            color: white;
+            flex-shrink: 0;
+            padding-top: 20px;
+        }
+        .sidebar a { color: white; display: block; padding: 10px 20px; text-decoration: none; border-radius: 5px; }
+        .sidebar a:hover { background-color: #495057; }
+
+        /* Contenido principal */
+        .content { 
+            flex-grow: 1; 
+            padding: 40px 30px; 
+            overflow: auto; 
+        }
+
+        .card { 
+            padding: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1); 
+            background-color: #fff;
+            max-width: 700px;
+            margin: auto;
+        }
+        .card h2 { margin-bottom: 25px; font-weight: 700; }
+        .field-label { font-weight: 600; color: #495057; }
+        .field-value { color: #212529; }
+
+        .btn-pdf {
+            margin-top: 25px;
+        }
+
+        .btn-outline-danger {
+            font-weight: 500;
+            padding: 10px 20px;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        .btn-outline-danger:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .back-btn {
+            margin-top: 20px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+<div class="d-flex">
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: sidebar('libros')" class="sidebar"></div>
+
+    <!-- Contenido -->
+    <div class="content">
+
+        <!-- Mensaje de error -->
+        <div th:if="${msgError}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fa fa-exclamation-triangle"></i>
+            <span th:text="${msgError}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="card">
+			<h2 class="text-center display-6 fw-bold mb-4" th:text="${libro.titulo}">Título del libro</h2>
+
+
+            <p><span class="field-label">Género:</span> <span class="field-value" th:text="${libro.genero}">Género</span></p>
+            <p><span class="field-label">Fecha:</span> <span class="field-value" th:text="${libro.fecha}">0</span></p>
+            <p><span class="field-label">Páginas:</span> <span class="field-value" th:text="${libro.paginas}">0</span></p>
+
+            <!-- Lista de autores -->
+            <div th:if="${libro.autores != null and !libro.autores.isEmpty()}">
+                <span class="field-label">Autores:</span>
+                <ul>
+                    <li th:each="autor : ${libro.autores}" th:text="${autor.nombre + ' ' + autor.apellido}"></li>
+                </ul>
+            </div>
+
+            <!-- Botón PDF -->
+            <div th:if="${libro.rutaPdf}" class="btn-pdf text-center">
+                <a th:href="@{/libro/verpdf/{id}(id=${libro.id})}" target="_blank" class="btn btn-outline-danger">
+                    <i class="fa fa-file-pdf me-2"></i> Ver PDF
+                </a>
+            </div>
+
+            <!-- Botón volver -->
+            <div class="back-btn text-center">
+                <a th:href="@{/libro/listar}" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left me-2"></i> Volver al listado
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="fragments/head :: head"></th:block>
+<th:block th:replace="fragments/navbar :: navbar"></th:block>
+
+<style>
+    .player-banner {
+        position: relative;
+        width: 100%;
+        height: 250px;
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.6);
+    }
+
+    .player-photo {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 5px solid white;
+        margin-top: -100px;
+    }
+
+    .player-info h2, .player-info h4 {
+        color: #333;
+    }
+
+    .stat-label {
+        font-weight: 600;
+    }
+</style>
+
+<div class="container-fluid p-0">
+    <!-- Banner -->
+    <div class="player-banner" th:style="'background-image: url(' + (${player.strThumb} != null ? ${player.strThumb} : '/images/default-banner.jpg') + ');'"></div>
+</div>
+
+<div class="container py-5">
+    <div class="row justify-content-center align-items-center">
+        <!-- Foto del jugador -->
+        <div class="col-md-4 text-center">
+            <img th:src="${player.strCutout != null ? player.strCutout : '/images/default-player.png'}" 
+                 alt="Jugador" class="player-photo shadow-lg">
+        </div>
+
+        <!-- Información principal -->
+        <div class="col-md-6 player-info">
+            <h2 th:text="${player.strPlayer}">Nombre Jugador</h2>
+            <h4 class="text-muted" th:text="${player.strTeam}">Equipo</h4>
+            <p>
+                <span class="stat-label">Número:</span> <span th:text="${player.strNumber != null ? player.strNumber : '—'}"></span> | 
+                <span class="stat-label">Posición:</span> <span th:text="${player.strPosition != null ? player.strPosition : '—'}"></span>
+            </p>
+            <p>
+                <span class="stat-label">Nacionalidad:</span> <span th:text="${player.strNationality}">—</span> | 
+                <span class="stat-label">Fecha de nacimiento:</span> <span th:text="${player.dateBorn}">—</span>
+            </p>
+            <p>
+                <span class="stat-label">Altura:</span> <span th:text="${player.strHeight}">—</span> | 
+                <span class="stat-label">Peso:</span> <span th:text="${player.strWeight}">—</span>
+            </p>
+            <p>
+                <span class="stat-label">Salario:</span> <span th:text="${player.strWage != null ? player.strWage : '—'}"></span>
+            </p>
+            <p>
+                <span class="stat-label">Lado preferido:</span> <span th:text="${player.strSide != null ? player.strSide : '—'}"></span> | 
+                <span class="stat-label">Estado:</span> <span th:text="${player.strStatus != null ? player.strStatus : '—'}"></span>
+            </p>
+
+			<!-- Botón para volver al detalle del equipo -->
+			<form th:action="@{/team/detalle/{idTeam}(idTeam=${wrapper.idTeam})}" 
+			      method="get" 
+			      th:object="${wrapper}" 
+			      class="mt-3">
+			    
+			    <!-- Campos ocultos del wrapper -->
+			    <input type="hidden" th:field="*{idLeague}" />
+			    <input type="hidden" th:field="*{league}" />
+	
+			    <button type="submit" class="btn btn-secondary">
+			        ← Volver al equipo
+			    </button>
+			</form>
+		</div>
+    </div>
+
+    <!-- Imagen secundaria si existe -->
+    <div class="row mt-5" th:if="${player.strThumb != null}">
+        <div class="col text-center">
+            <img th:src="${player.strThumb}" class="img-fluid rounded shadow-sm" alt="Imagen secundaria" style="max-height:300px; object-fit:cover;">
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+</html>

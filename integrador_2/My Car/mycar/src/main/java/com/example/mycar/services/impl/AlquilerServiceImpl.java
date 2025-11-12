@@ -2,6 +2,9 @@ package com.example.mycar.services.impl;
 
 import com.example.mycar.dto.AlquilerDTO;
 import com.example.mycar.dto.ClienteDTO;
+
+import com.example.mycar.dto.DocumentacionDTO;
+
 import com.example.mycar.dto.VehiculoDTO;
 import com.example.mycar.entities.Alquiler;
 import com.example.mycar.enums.EstadoVehiculo;
@@ -30,6 +33,8 @@ public class AlquilerServiceImpl extends BaseServiceImpl<Alquiler, AlquilerDTO, 
     private ClienteServiceImpl clienteService;
     @Autowired
     private VehiculoServiceImpl vehiculoService;
+    @Autowired
+    private DocumentacionServiceImpl documentacionService;
     @Autowired
     private VehiculoMapper vehiculoMapper;
     @Autowired
@@ -93,6 +98,11 @@ public class AlquilerServiceImpl extends BaseServiceImpl<Alquiler, AlquilerDTO, 
 
         VehiculoDTO vehiculo = vehiculoService.findById(entity.getVehiculoId());
         entity.setVehiculo(vehiculo);
+
+        
+        DocumentacionDTO documentacion = documentacionService.findById(entity.getDocumentacionId());
+        entity.setDocumentacion(documentacion);
+
 
         if (entity.getFechaDesde().equals(hoy)) {
             entity.getVehiculo().setEstadoVehiculo(EstadoVehiculo.Alquilado);

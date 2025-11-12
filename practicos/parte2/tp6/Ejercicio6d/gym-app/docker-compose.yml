@@ -31,8 +31,12 @@ services:
       SPRING_DATASOURCE_USERNAME: gym_user
       SPRING_DATASOURCE_PASSWORD: gym_pass
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+<<<<<<< HEAD
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_FLYWAY_ENABLED: "false"
+=======
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
+>>>>>>> origin/perla
       MERCADOPAGO_ACCESS_TOKEN: change-me
       MERCADOPAGO_PUBLIC_KEY: change-me
       APP_UPLOAD_DIR: /data/facturas

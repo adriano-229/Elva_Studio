@@ -10,9 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
 @Setter
@@ -29,5 +26,6 @@ public class VehiculoDTO extends BaseDTO {
     //private Long caracteristicaVehiculoId;
 
     private CaracteristicaVehiculoDTO caracteristicaVehiculo;
+
 
 }

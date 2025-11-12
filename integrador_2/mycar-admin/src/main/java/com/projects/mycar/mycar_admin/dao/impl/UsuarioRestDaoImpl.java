@@ -1,0 +1,39 @@
+package com.projects.mycar.mycar_admin.dao.impl;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
+
+import com.example.mycar.mycar_admin.domain.UsuarioDTO;
+import com.projects.mycar.mycar_admin.dao.UsuarioRestDao;
+
+@Repository
+public class UsuarioRestDaoImpl extends BaseRestDaoImpl<UsuarioDTO, Long> implements UsuarioRestDao{
+
+	public UsuarioRestDaoImpl() {
+		super(UsuarioDTO.class, UsuarioDTO[].class, "http://localhost:9000/api/usuarios");
+		
+	}
+
+	@Override
+	public UsuarioDTO crearUsuarioClavePorDefecto(UsuarioDTO usuario) throws Exception {
+		
+		try {
+			
+			String uri = baseUrl + "/alta";
+
+	        ResponseEntity<UsuarioDTO> response = restTemplate.postForEntity(
+	                uri,
+	                usuario,          
+	                entityClass   
+	        );
+			
+	        return response.getBody();
+			
+		} catch (Exception e) {
+			throw new Exception("Error al crear usuario con clave por defecto");
+		}
+		
+		
+	}
+
+}

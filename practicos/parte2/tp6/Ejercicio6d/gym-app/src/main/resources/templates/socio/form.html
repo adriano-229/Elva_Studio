@@ -8,7 +8,10 @@
 
   <form th:action="${#strings.isEmpty(form.id)} ? @{/admin/socios} : @{|/admin/socios/${form.id}|}"
         method="post" th:object="${form}">
+<<<<<<< HEAD
     <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}">
+=======
+>>>>>>> origin/perla
     <div class="row g-3">
       <!-- Persona -->
       <div class="col-md-4">
@@ -35,11 +38,14 @@
         <input class="form-control" th:field="*{numeroDocumento}">
       </div>
       <div class="col-md-4">
+<<<<<<< HEAD
         <label class="form-label">N° Socio</label>
         <input class="form-control" th:field="*{numeroSocio}" type="number" min="1" required>
         <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('numeroSocio')}" th:errors="*{numeroSocio}"></div>
       </div>
       <div class="col-md-4">
+=======
+>>>>>>> origin/perla
         <label class="form-label">Teléfono</label>
         <input class="form-control" th:field="*{telefono}">
       </div>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
+  <title>Login</title>
+  
+  <!-- loader -->
+  <link th:href="@{/assets/css/pace.min.css}" rel="stylesheet"/>
+  <script th:src="@{/assets/js/pace.min.js}"></script>
+  
+  <!-- favicon -->
+  <link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon">
+  
+  <!-- Bootstrap core CSS -->
+  <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet"/>
+  <link th:href="@{/assets/css/animate.css}" rel="stylesheet"/>
+  <link th:href="@{/assets/css/icons.css}" rel="stylesheet"/>
+  <link th:href="@{/assets/css/app-style.css}" rel="stylesheet"/>
+</head>
+
+<body class="bg-theme bg-theme1">
+
+<div id="wrapper">
+  <div class="card card-authentication1 mx-auto my-5">
+    <div class="card-body">
+      <div class="card-content p-2">
+        <div class="text-center">
+          <img th:src="@{/assets/images/logo-icon.png}" alt="logo icon">
+        </div>
+        <div class="card-title text-uppercase text-center py-3">Sign In</div>
+		
+		<div th:if="${error}" class="alert alert-danger" role="alert">
+	        Usuario o contraseña incorrectos.
+	    </div>
+	    <div th:if="${logout}" class="alert alert-success" role="alert">
+        	Sesión finalizada correctamente.
+	    </div>
+
+        <!-- Login form -->
+        <form th:action="@{/login}" method="post">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+          
+          <div class="form-group">
+            <label for="username" class="sr-only">Username</label>
+            <div class="position-relative has-icon-right">
+              <input type="text" id="username" name="username" class="form-control input-shadow" placeholder="Enter Username" required>
+              <div class="form-control-position">
+                <i class="icon-user"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="sr-only">Password</label>
+            <div class="position-relative has-icon-right">
+              <input type="password" id="password" name="password" class="form-control input-shadow" placeholder="Enter Password" required>
+              <div class="form-control-position">
+                <i class="icon-lock"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-6">
+              <div class="icheck-material-white">
+                <input type="checkbox" id="remember-me" name="remember-me"/>
+                <label for="remember-me">Remember me</label>
+              </div>
+            </div>
+            <div class="form-group col-6 text-right">
+              <a th:href="@{/reset-password}">Reset Password</a>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-light btn-block">Sign In</button>
+        </form>
+
+      </div>
+    </div>
+    <div class="card-footer text-center py-3">
+      <p class="text-warning mb-0">Do not have an account? <a th:href="@{/register}"> Sign Up here</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/popper.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/js/sidebar-menu.js}"></script>
+<script th:src="@{/assets/js/app-script.js}"></script>
+
+</body>
+</html>

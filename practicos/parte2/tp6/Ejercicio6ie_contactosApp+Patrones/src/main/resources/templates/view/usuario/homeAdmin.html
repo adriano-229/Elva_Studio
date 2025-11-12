@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
+  <title th:text="'Perfil de ' + ${persona.nombre}">Dashtreme Admin - Perfil</title>
+
+  <!-- loader-->
+  <link th:href="@{/assets/css/pace.min.css}" rel="stylesheet"/>
+  <script th:src="@{/assets/js/pace.min.js}"></script>
+
+  <!--favicon-->
+  <link rel="icon" th:href="@{/assets/images/favicon.ico}" type="image/x-icon"/>
+
+  <!-- CSS principales -->
+  <link th:href="@{/assets/plugins/simplebar/css/simplebar.css}" rel="stylesheet"/>
+  <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet"/>
+  <link th:href="@{/assets/css/animate.css}" rel="stylesheet" type="text/css"/>
+  <link th:href="@{/assets/css/icons.css}" rel="stylesheet" type="text/css"/>
+  <link th:href="@{/assets/css/sidebar-menu.css}" rel="stylesheet"/>
+  <link th:href="@{/assets/css/app-style.css}" rel="stylesheet"/>
+</head>
+
+<body class="bg-theme bg-theme1">
+
+<!-- loader -->
+<div id="pageloader-overlay" class="visible incoming">
+  <div class="loader-wrapper-outer">
+    <div class="loader-wrapper-inner">
+      <div class="loader"></div>
+    </div>
+  </div>
+</div>
+
+<!-- wrapper -->
+<div id="wrapper">
+
+  <!-- Sidebar -->
+  <div th:replace="fragments/sidebar :: sidebar"></div>
+
+  <!-- Navbar -->
+  <div th:replace="fragments/navbar :: navbar"></div>
+
+  <div class="clearfix"></div>
+
+  <!-- Contenido principal -->
+  <div class="content-wrapper">
+    <div class="container-fluid">
+
+      <div class="row mt-3">
+
+        <!-- Perfil lateral -->
+        <!--<div class="col-lg-4">
+          <div class="card profile-card-2">
+            <div class="card-img-block">
+              <img class="img-fluid" th:src="@{/assets/images/profile-bg.jpg}" alt="Card image cap">
+            </div>
+            <div class="card-body pt-5">
+              <img th:src="${user.imagen != null ? @{/uploads/{img}(img=${user.imagen})} : 'https://via.placeholder.com/110x110'}"
+                   alt="profile-image" class="profile">
+              <h5 class="card-title" th:text="${user.nombre + ' ' + user.apellido}">Mark Stern</h5>
+              <p class="card-text" th:text="${user.descripcion != null ? user.descripcion : 'Usuario del sistema'}">
+                Descripción del usuario
+              </p>
+
+              
+            </div>-->
+
+            <!-- Skills -->
+            <!--<div class="card-body border-top border-light">
+              <div th:each="skill : ${user.skills}">
+                <div class="media align-items-center mb-3">
+                  <div><img th:src="@{/assets/images/timeline/{icon}(icon=${skill.icon})}" class="skill-img" alt="skill img"></div>
+                  <div class="media-body text-left ml-3">
+                    <div class="progress-wrapper">
+                      <p th:text="${skill.nombre} + ' '">
+                        Skill <span class="float-right" th:text="${skill.nivel + '%'}">65%</span>
+                      </p>
+                      <div class="progress" style="height: 5px;">
+                        <div class="progress-bar" th:style="'width:' + ${skill.nivel} + '%'"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr th:if="${!#lists.isLast(skill, user.skills)}"/>
+              </div>
+            </div>
+          </div>
+        </div>-->
+
+        <!-- Información y Tabs -->
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-body">
+              <ul class="nav nav-tabs nav-tabs-primary top-icon nav-justified">
+                <li class="nav-item">
+                  <a href="#" data-target="#profile" data-toggle="pill" class="nav-link active">
+                    <i class="icon-user"></i> <span class="hidden-xs">Perfil</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" data-target="#messages" data-toggle="pill" class="nav-link">
+                    <i class="icon-envelope-open"></i> <span class="hidden-xs">Mensajes</span>
+                  </a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('USER') or hasRole('ADMIN')">
+                  <a href="#" data-target="#edit" data-toggle="pill" class="nav-link">
+                    <i class="icon-note"></i> <span class="hidden-xs">Editar</span>
+                  </a>
+                </li>
+              </ul>
+
+              <div class="tab-content p-3">
+
+                <!-- Tab Perfil -->
+                <div class="tab-pane active" id="profile">
+                  <h5 class="mb-3">Perfil del Usuario</h5>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h6>Nombre</h6>
+                      <p th:text="${persona.nombre}">Gabriel</p>
+                      <h6>Apellido</h6>
+                      <p th:text="${persona.apellido}">Angel</p>
+                    </div>
+					<div class="col-md-6">
+                        <h6>Permisos</h6>
+                        <a href="javascript:void();" class="badge badge-dark badge-pill">administrador</a>
+                        <hr>
+                        <span class="badge badge-primary"><i class="fa fa-user"></i> 900 Followers</span>
+                        <span class="badge badge-success"><i class="fa fa-cog"></i> 43 Forks</span>
+                        <span class="badge badge-danger"><i class="fa fa-eye"></i> 245 Views</span>
+                    </div>
+                    <!--<div class="col-md-6">
+                      <h6>Estadísticas</h6>
+                      <span class="badge badge-primary"><i class="fa fa-user"></i> <span th:text="${user.followers}">900</span> Seguidores</span>
+                      <span class="badge badge-success"><i class="fa fa-cog"></i> <span th:text="${user.projects}">43</span> Proyectos</span>
+                      <span class="badge badge-danger"><i class="fa fa-eye"></i> <span th:text="${user.views}">245</span> Vistas</span>
+                    </div>-->
+                  </div>
+                </div>
+
+                <!-- Tab Mensajes -->
+                <div class="tab-pane" id="messages">
+                  <div th:if="${messages != null}">
+                    <div th:each="msg : ${messages}" class="alert alert-info alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                      <div class="alert-message">
+                        <span th:text="${msg.texto}">Mensaje de ejemplo</span>
+                        <span class="float-right font-weight-bold" th:text="${#temporals.format(msg.fecha, 'dd/MM/yyyy HH:mm')}">Hace 2 horas</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tab Editar -->
+                <div class="tab-pane" id="edit">
+                  <form th:action="@{/perfil/guardar}" th:object="${persona}" method="post">
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label">Nombre</label>
+                      <div class="col-lg-9">
+                        <input class="form-control" type="text" th:field="*{nombre}" placeholder="Nombre">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label">Apellido</label>
+                      <div class="col-lg-9">
+                        <input class="form-control" type="text" th:field="*{apellido}" placeholder="Apellido">
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label class="col-lg-3 col-form-label"></label>
+                      <div class="col-lg-9">
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        <a th:href="@{/perfil}" class="btn btn-secondary">Cancelar</a>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Overlay -->
+      <div class="overlay toggle-menu"></div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div th:replace="fragments/footer :: footer"></div>
+
+  <!-- Botón subir -->
+  <a href="javascript:void(0);" class="back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+</div>
+
+<!-- JS principales -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/popper.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/plugins/simplebar/js/simplebar.js}"></script>
+<script th:src="@{/assets/js/sidebar-menu.js}"></script>
+<script th:src="@{/assets/js/app-script.js}"></script>
+
+</body>
+</html>

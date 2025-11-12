@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}">
+<head>
+  <title>Proveedores</title>
+</head>
+<body>
+<div>
+  <h2>Listado de Proveedores</h2>
+  <div>
+    <a th:href="@{/proveedores/export/pdf}">Descargar PDF</a>
+  </div>
+  <!-- Solo ADMIN puede crear nuevos proveedores -->
+  <div sec:authorize="hasRole('ADMIN')">
+    <a th:href="@{/proveedores/nuevo}">Nuevo Proveedor</a>
+  </div>
+
+  <table>
+    <thead>
+    <tr><th>ID</th><th>CUIT</th><th>Nombre</th><th>Apellido</th><th>Email</th><th>Dirección</th><th>Activo</th><th>Acciones</th></tr>
+    </thead>
+    <tbody>
+    <tr th:each="proveedor : ${proveedores}">
+      <td th:text="${proveedor.id}"></td>
+      <td th:text="${proveedor.cuit}"></td>
+      <td th:text="${proveedor.nombre}"></td>
+      <td th:text="${proveedor.apellido}"></td>
+      <td th:text="${proveedor.email}"></td>
+      <td th:text="${proveedor.direccion.calle + ' ' + proveedor.direccion.altura}"></td>
+      <td th:text="${proveedor.activo ? 'Sí' : 'No'}"></td>
+      <td>
+        <!-- Todos pueden editar -->
+        <a th:href="@{|/proveedores/editar/${proveedor.id}|}">Editar</a>
+        <!-- Solo ADMIN puede eliminar -->
+        <span sec:authorize="hasRole('ADMIN')">
+          | <a th:href="@{|/proveedores/eliminar/${proveedor.id}|}">Eliminar</a>
+        </span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

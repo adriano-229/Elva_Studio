@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout (~{::content})">
+
+<div th:fragment="content">
+    <div class="row mt-3">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <ul class="nav nav-tabs nav-tabs-primary top-icon nav-justified">
+                        <li class="nav-item">
+                            <a href="javascript:void();" data-target="#profile" data-toggle="pill" class="nav-link active">
+                                <i class="icon-user"></i> <span class="hidden-xs">Profile</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="javascript:void();" data-target="#edit" data-toggle="pill" class="nav-link">
+                                <i class="icon-note"></i> <span class="hidden-xs">Edit</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="javascript:void();" data-target="#activity" data-toggle="pill" class="nav-link">
+                                <i class="fa fa-clock-o"></i> <span class="hidden-xs">Recent Activity</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content p-3">
+
+                        <!-- TAB PROFILE -->
+                        <div class="tab-pane active" id="profile">
+                            <h5 class="mb-3">User Profile</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Nombre:</strong> <span th:text="${persona.nombre}">Nombre</span></p>
+                                    <p><strong>Apellido:</strong> <span th:text="${persona.apellido}">Apellido</span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Cuenta:</strong> <span th:text="${usuario.cuenta}">cuenta_usuario</span></p>
+                                    <p><strong>Clave:</strong> <span>******</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB EDIT -->
+                        <div class="tab-pane" id="edit">
+                            <form th:action="@{/perfil/actualizar}" method="post">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Nombre</label>
+                                    <div class="col-lg-9">
+                                        <input class="form-control" type="text" th:field="*{persona.nombre}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Apellido</label>
+                                    <div class="col-lg-9">
+                                        <input class="form-control" type="text" th:field="*{persona.apellido}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Cuenta</label>
+                                    <div class="col-lg-9">
+                                        <input class="form-control" type="text" th:field="*{usuario.cuenta}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label">Clave</label>
+                                    <div class="col-lg-9">
+                                        <input class="form-control" type="password" th:field="*{usuario.clave}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-9 offset-lg-3">
+                                        <input type="submit" class="btn btn-primary" value="Save Changes">
+                                        <input type="reset" class="btn btn-secondary" value="Cancel">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- TAB RECENT ACTIVITY -->
+                        <div class="tab-pane" id="activity">
+                            <h5 class="mb-3"><span class="fa fa-clock-o ion-clock float-right"></span> Recent Activity</h5>
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <td><strong></strong> Agregaste nuevo contacto de correo electronico<strong>Personal</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong></strong> Agregaste nuevo contacto telefónico <strong>Personal</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong></strong> Nombre de usuario actualizado <strong>Discussions</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong></strong> Contraseña actualizada correctamente <strong>Discussions</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong></strong> Agregaste nuevo contacto de correo electronico<strong>Laboral</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div> <!-- end tab-content -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

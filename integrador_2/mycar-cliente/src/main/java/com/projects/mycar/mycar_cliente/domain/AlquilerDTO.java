@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 
 @SuperBuilder
@@ -12,8 +12,9 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = true)
 public class AlquilerDTO extends BaseDTO {
 
-    private LocalDate fechaDesde;
-    private LocalDate fechaHasta;
+
+    private Date fechaDesde;
+    private Date fechaHasta;
     private Long vehiculoId;
     private Long documentacionId;
 

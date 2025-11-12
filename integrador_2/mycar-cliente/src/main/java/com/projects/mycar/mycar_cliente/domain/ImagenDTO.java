@@ -1,5 +1,6 @@
 package com.projects.mycar.mycar_cliente.domain;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.projects.mycar.mycar_cliente.domain.enums.TipoImagen;
 
@@ -24,8 +25,5 @@ public class ImagenDTO extends BaseDTO {
     private byte[] contenido;
 
     private String ruta;
-
-    private TipoImagen tipoImagen;
-
 
 }

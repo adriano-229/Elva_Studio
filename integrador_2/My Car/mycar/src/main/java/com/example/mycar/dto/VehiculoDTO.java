@@ -30,4 +30,7 @@ public class VehiculoDTO extends BaseDTO {
 
     private CaracteristicaVehiculoDTO caracteristicaVehiculo;
 
+
+    // Removido costoVehiculo: ahora el costo se obtiene via caracteristicaVehiculo.getCostoVehiculo()
+
 }
