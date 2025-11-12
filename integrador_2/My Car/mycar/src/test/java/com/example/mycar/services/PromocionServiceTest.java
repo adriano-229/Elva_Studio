@@ -391,7 +391,7 @@ public class PromocionServiceTest {
         List<CodigoDescuento> codigos = codigoDescuentoRepository.findAll();
         assertFalse(codigos.isEmpty());
 
-        CodigoDescuento codigoGenerado = codigos.getFirst();
+        CodigoDescuento codigoGenerado = codigos.get(0);
         assertEquals(clienteTest.getId(), codigoGenerado.getCliente().getId());
         assertEquals(15.0, codigoGenerado.getPorcentajeDescuento());
         assertFalse(codigoGenerado.getUtilizado());

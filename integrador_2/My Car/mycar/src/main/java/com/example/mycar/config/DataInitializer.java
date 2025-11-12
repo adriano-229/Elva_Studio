@@ -48,8 +48,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
-@Configuration
-@Profile({ "dev", "test" })
+//@Configuration
+//@Profile({ "dev", "test" })
 public class DataInitializer implements CommandLineRunner {
 
     private final UsuarioRepository usuarioRepository;
