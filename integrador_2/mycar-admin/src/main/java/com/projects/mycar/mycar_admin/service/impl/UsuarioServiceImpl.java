@@ -32,4 +32,10 @@ public class UsuarioServiceImpl extends BaseServiceImpl<UsuarioDTO, Long> implem
 			
 	}
 
+	@Override
+	protected void beforeSave(UsuarioDTO entity) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

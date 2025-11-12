@@ -18,7 +18,7 @@ public class AlquilerRestDaoImpl extends BaseRestDaoImpl<AlquilerDTO, Long> impl
 	public AlquilerRestDaoImpl() {
 		super(AlquilerDTO.class, AlquilerDTO[].class, "http://localhost:9000/api/v1/alquileres");
 	}
-
+	
 	@Override
 	public List<AlquilerDTO> buscarPorPeriodo(LocalDate desde, LocalDate hasta) throws Exception {
 		try {

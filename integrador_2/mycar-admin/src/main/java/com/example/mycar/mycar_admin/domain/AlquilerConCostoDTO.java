@@ -1,5 +1,7 @@
 package com.example.mycar.mycar_admin.domain;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,9 +19,19 @@ public class AlquilerConCostoDTO {
 
     private Long alquilerId;
     private String vehiculoPatente;
-    private String fechaDesde;
-    private String fechaHasta;
+    private LocalDate fechaDesde;
+    private LocalDate fechaHasta;
     private Integer cantidadDias;
     private Double costoPorDia;
     private Double subtotal;
+    private Long idCliente;
+    private Long idVehiculo;
+    private DocumentacionDTO documentacion;
+    private String codigoDescuento;
+    private Double porcentajeDescuento;
+    private double descuento;
+    private double totalConDescuento;
+    
+    
+    
 }

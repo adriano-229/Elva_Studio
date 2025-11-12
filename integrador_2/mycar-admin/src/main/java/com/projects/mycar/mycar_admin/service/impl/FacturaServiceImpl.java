@@ -53,4 +53,10 @@ public class FacturaServiceImpl extends BaseServiceImpl<FacturaDTO, Long> implem
 		
 	}
 
+	@Override
+	protected void beforeSave(FacturaDTO entity) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

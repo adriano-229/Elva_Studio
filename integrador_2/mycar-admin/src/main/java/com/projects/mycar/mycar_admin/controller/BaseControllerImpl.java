@@ -37,7 +37,8 @@ public abstract class BaseControllerImpl<E extends BaseDTO, S extends BaseServic
         try {
 
             List<E> entities = servicio.findAll();
-            model.addAttribute("lista", entities);
+            System.out.println("ESTOY EN EL CONTROLLER - LISTA: " + entities);
+            model.addAttribute("entities", entities);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,8 +51,8 @@ public abstract class BaseControllerImpl<E extends BaseDTO, S extends BaseServic
     @PostMapping("/crear")
     public String guardar(@ModelAttribute E entity, Model model) {
         try {
-
-            servicio.save(entity);
+        	System.out.println("POST CREAR CONTROLADOR");
+        	servicio.save(entity);
             model.addAttribute("msgExito", "Registro creado correctamente");
         } catch (Exception e) {
             e.printStackTrace();
