@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class AlquilerConCostoDTO {
-
-    private Long alquilerId;
+	
+	private Long alquilerId;
     private String vehiculoPatente;
     private String fechaDesde;
     private String fechaHasta;

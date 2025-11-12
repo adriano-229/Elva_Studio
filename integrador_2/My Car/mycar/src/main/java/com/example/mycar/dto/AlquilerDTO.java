@@ -26,7 +26,9 @@ public class AlquilerDTO extends BaseDTO {
     @FutureOrPresent(message = "La fecha hasta debe ser una fecha actual o futura")
     private LocalDate fechaHasta;
 
-    @NotNull(message = "La documentación es obligatoria")
+    //@NotNull(message = "La documentación es obligatoria")
+    private Long documentacionId;
+    
     private DocumentacionDTO documentacion;
 
     @NotNull(message = "El vehículo es obligatorio")
