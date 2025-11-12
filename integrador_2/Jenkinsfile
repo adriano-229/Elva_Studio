@@ -13,13 +13,6 @@ pipeline {
         ansiColor('xterm')
     }
 
-    parameters {
-        string(name: 'REGISTRY_URL', defaultValue: '', description: 'Opcional: registry (por ejemplo registry.example.com)')
-        string(name: 'IMAGE_TAG', defaultValue: 'latest', description: 'Tag para las imágenes Docker')
-        string(name: 'REGISTRY_CREDENTIALS_ID', defaultValue: '', description: 'Credencial Jenkins para el registry (username/password)')
-        booleanParam(name: 'PUSH_IMAGES', defaultValue: false, description: 'Hacer push al registry luego de construir las imágenes')
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -62,46 +55,14 @@ pipeline {
             }
         }
 
-        stage('Build Images') {
+        stage('Deploy (docker compose up)') {
             steps {
                 script {
-                    [
-                        [name: 'mycar-api',     path: "My Car/mycar"],
-                        [name: 'mycar-admin',   path: "mycar-admin"],
-                        [name: 'mycar-cliente', path: "mycar-cliente"]
-                    ].each { module ->
-                        def image = buildImageName(module.name)
-                        def modulePath = "${repoBase}${module.path}"
-                        sh "docker build -t ${image}:${params.IMAGE_TAG} '${modulePath}'"
+                    def composeFile = "${repoBase}docker-compose.yml"
+                    if (!fileExists(composeFile)) {
+                        error("No se encontró ${composeFile}. ¿Está el repo en la ruta esperada?")
                     }
-                }
-            }
-        }
-
-        stage('Push Images') {
-            when {
-                expression {
-                    return params.PUSH_IMAGES &&
-                        params.REGISTRY_URL?.trim() &&
-                        params.REGISTRY_CREDENTIALS_ID?.trim()
-                }
-            }
-            steps {
-                script {
-                    def modules = ['mycar-api', 'mycar-admin', 'mycar-cliente']
-
-                    withCredentials([usernamePassword(credentialsId: params.REGISTRY_CREDENTIALS_ID,
-                            usernameVariable: 'REG_USER', passwordVariable: 'REG_PASS')]) {
-                        sh 'echo "$REG_PASS" | docker login ' + params.REGISTRY_URL + ' -u "$REG_USER" --password-stdin'
-                        try {
-                            modules.each { module ->
-                                def image = buildImageName(module)
-                                sh "docker push ${image}:${params.IMAGE_TAG}"
-                            }
-                        } finally {
-                            sh 'docker logout ' + params.REGISTRY_URL
-                        }
-                    }
+                    sh "docker compose -f '${composeFile}' up -d --build"
                 }
             }
         }
@@ -114,6 +75,4 @@ pipeline {
     }
 }
 
-def buildImageName(String image) {
-    return params.REGISTRY_URL?.trim() ? "${params.REGISTRY_URL}/${image}" : image
-}
+*** End Patch***
