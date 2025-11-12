@@ -80,7 +80,6 @@ pipeline {
                 dir("${env.TARGET_DIR}") {
                     sh '''
                         set -e
-                        HOST_IP=$(ip -4 route list default | awk '{print $3}')
                         API_URL="http://${HOST_IP:-localhost}:9300/actuator/health"
                         echo "Chequeando API en: $API_URL"
 
