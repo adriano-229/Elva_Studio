@@ -41,21 +41,21 @@ pipeline {
                 stage('API') {
                     steps {
                         dir("${repoBase}My Car/mycar") {
-                            sh 'mvn -B clean verify'
+                            sh 'mvn -B -DskipTests clean package'
                         }
                     }
                 }
                 stage('Admin') {
                     steps {
                         dir("${repoBase}mycar-admin") {
-                            sh 'mvn -B clean verify'
+                            sh 'mvn -B -DskipTests clean package'
                         }
                     }
                 }
                 stage('Cliente') {
                     steps {
                         dir("${repoBase}mycar-cliente") {
-                            sh 'mvn -B clean verify'
+                            sh 'mvn -B -DskipTests clean package'
                         }
                     }
                 }

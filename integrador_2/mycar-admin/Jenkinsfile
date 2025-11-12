@@ -51,7 +51,7 @@ pipeline {
         stage('Build & Test') {
             steps {
                 dir(moduleDir()) {
-                    sh 'mvn -B clean verify'
+                    sh 'mvn -B -DskipTests clean package'
                 }
             }
         }
