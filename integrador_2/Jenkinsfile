@@ -1,16 +1,13 @@
-def repoBase = ''
-
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.9.9-eclipse-temurin-17'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+    agent any
 
     options {
         timestamps()
         ansiColor('xterm')
+    }
+
+    environment {
+        SUBDIR = 'integrador_2'
     }
 
     stages {
@@ -18,51 +15,88 @@ pipeline {
             steps {
                 checkout scm
                 script {
-                    if (fileExists("My Car/mycar/pom.xml")) {
-                        repoBase = ''
-                    } else if (fileExists("integrador_2/My Car/mycar/pom.xml")) {
-                        repoBase = 'integrador_2/'
+                    if (fileExists("${env.SUBDIR}/docker-compose.yml")) {
+                        env.TARGET_DIR = env.SUBDIR
+                    } else if (fileExists('docker-compose.yml')) {
+                        env.TARGET_DIR = '.'
                     } else {
-                        error('No se encontró el módulo My Car/mycar en el workspace')
+                        error("No encontré docker-compose.yml ni en la raíz ni en ${env.SUBDIR}")
                     }
                 }
             }
         }
 
-        stage('Build & Test') {
-            parallel {
-                stage('API') {
-                    steps {
-                        dir("${repoBase}My Car/mycar") {
-                            sh 'mvn -B -DskipTests clean package'
-                        }
-                    }
-                }
-                stage('Admin') {
-                    steps {
-                        dir("${repoBase}mycar-admin") {
-                            sh 'mvn -B -DskipTests clean package'
-                        }
-                    }
-                }
-                stage('Cliente') {
-                    steps {
-                        dir("${repoBase}mycar-cliente") {
-                            sh 'mvn -B -DskipTests clean package'
-                        }
-                    }
-                }
-            }
-        }
-
-        stage('Deploy (docker compose up)') {
+        stage('Build images & start DB') {
             steps {
-                script {
-                    def composeFile = "${repoBase}docker-compose.yml"
-                    if (!fileExists(composeFile)) {
-                        error("No se encontró ${composeFile}. ¿Está el repo en la ruta esperada?")
-                    }
-                    sh "docker compose -f '${composeFile}' up -d --build"
+                dir("${env.TARGET_DIR}") {
+                    sh '''
+                        set -e
+                        docker compose down || true
+                        docker compose build
+
+                        docker compose up -d mysql
+                        MYSQL_CID="$(docker compose ps -q mysql || true)"
+                        if [ -z "$MYSQL_CID" ]; then
+                          echo "No se encontró el contenedor mysql"
+                          exit 1
+                        fi
+
+                        echo "Esperando a que MySQL quede healthy..."
+                        for i in $(seq 1 60); do
+                          STATUS="$(docker inspect -f '{{.State.Health.Status}}' "$MYSQL_CID" 2>/dev/null || echo missing)"
+                          if [ "$STATUS" = healthy ]; then
+                            echo "MySQL healthy ✅"
+                            break
+                          fi
+                          echo "MySQL status: $STATUS (intento $i/60)"
+                          sleep 3
+                        done
+
+                        STATUS="$(docker inspect -f '{{.State.Health.Status}}' "$MYSQL_CID" 2>/dev/null || echo missing)"
+                        if [ "$STATUS" != healthy ]; then
+                          echo "MySQL no llegó a healthy ❌"
+                          docker compose logs mysql || true
+                          exit 1
+                        fi
+                    '''
+                }
+            }
+        }
+
+        stage('Start apps') {
+            steps {
+                dir("${env.TARGET_DIR}") {
+                    sh '''
+                        set -e
+                        docker compose up -d mycar-api mycar-admin mycar-cliente
+                        docker compose ps
+                    '''
+                }
+            }
+        }
+
+        stage('Healthcheck API') {
+            steps {
+                dir("${env.TARGET_DIR}") {
+                    sh '''
+                        set -e
+                        HOST_IP=$(ip -4 route list default | awk '{print $3}')
+                        API_URL="http://${HOST_IP:-localhost}:9300/actuator/health"
+                        echo "Chequeando API en: $API_URL"
+
+                        for i in $(seq 1 60); do
+                          if curl -fsS "$API_URL" >/dev/null 2>&1; then
+                            echo "API UP ✅"
+                            exit 0
+                          fi
+                          echo "Esperando API... ($i/60)"
+                          sleep 3
+                        done
+
+                        echo "Healthcheck de la API FALLÓ ❌"
+                        docker compose logs mycar-api || true
+                        exit 1
+                    '''
                 }
             }
         }
@@ -70,7 +104,22 @@ pipeline {
 
     post {
         always {
-            cleanWs()
+            dir("${env.TARGET_DIR ?: env.SUBDIR}") {
+                sh '''
+                    docker compose logs --no-color > compose.logs || true
+                    docker compose logs mysql --no-color > mysql.logs || true
+                    docker compose logs mycar-api --no-color > mycar-api.logs || true
+                    docker compose logs mycar-admin --no-color > mycar-admin.logs || true
+                    docker compose logs mycar-cliente --no-color > mycar-cliente.logs || true
+                '''
+            }
+            archiveArtifacts artifacts: "${env.TARGET_DIR ?: env.SUBDIR}/**/*.logs, ${env.TARGET_DIR ?: env.SUBDIR}/*.logs, *.logs", allowEmptyArchive: true
+        }
+        success {
+            echo '✅ Deploy OK'
+        }
+        failure {
+            echo '❌ Deploy fallido'
         }
     }
 }
