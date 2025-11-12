@@ -1,133 +1,173 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>About - Tour Bootstrap Template</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flota - My Car</title>
+  <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">-->
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <!-- Bootstrap y vendor CSS -->
+  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <!-- Main CSS -->
+  <link href="/assets/css/main.css" rel="stylesheet">
 
-  <!-- Main CSS File -->
-  <link th:href="@{/assets/css/main.css}"  rel="stylesheet">
+  <style>
+    main {
+      margin-top: 100px;
+    }
 
-  <!-- =======================================================
-  * Template Name: Tour
-  * Template URL: https://bootstrapmade.com/tour-bootstrap-travel-website-template/
-  * Updated: Jul 01 2025 with Bootstrap v5.3.7
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+    h2 {
+      color: #004aad;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-title {
+      font-weight: 600;
+      color: #222;
+    }
+
+    .card-footer {
+      background: transparent;
+      border-top: none;
+    }
+  </style>
+
+<!-- 
+  <style>
+        .card-img-top {
+            height: 180px;
+            object-fit: cover;
+        }
+        .card {
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.03);
+        }
+  </style> -->
+    
 </head>
 
-<body class="about-page">
+<body class="index-page">
 
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between" 
     	th:replace="fragments/nav :: navbar">
     </div>
   </header> 
-
+  
   <main class="main">
-
-    <!-- Page Title -->
-    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/travel/showcase-8.webp);">
-      <div class="container position-relative">
-        <h1>Flota</h1>
-        <p>Explora todos los vehiulos disponiles para tu viaje</p>
-        <nav class="breadcrumbs">
-          <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">Flota</li>
-          </ol>
-        </nav>
-      </div>
-    </div><!-- End Page Title -->
-
-    <!-- Travel About Section -->
-    <section id="travel-about" class="travel-about section">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row">
-          <div class="col-lg-8 mx-auto text-center mb-5">
-            <div class="intro-content" data-aos="fade-up" data-aos-delay="200">
-              <h2>Nuestra Flota</h2>
-              <p class="lead">Conoce todos los vehículos disponibles y sus características principales</p>
-            </div>
-          </div>
-        </div>
-        <div>
-		  <h2>Prueba Vehículos</h2>
-		  <ul>
-		    <li th:each="vehiculo : ${vehiculos}" th:text="${vehiculo.patente} + ' - ' + ${vehiculo.estadoVehiculo}"></li>
-		  </ul>
-		</div>
-        <!-- 
-        <div class="row g-4" data-aos="fade-up" data-aos-delay="300">
-
-          <div class="col-lg-4 col-md-6" th:each="vehiculo : ${vehiculos}">
-            <div class="feature-card h-100">
-              <div class="feature-front">
-                <div class="feature-icon">
-                  <i class="bi bi-car-front-fill"></i>
-                </div>
-                <h4 th:text="${vehiculo.patente}">Patente</h4>
-                <p>
-                  Estado: <span th:text="${vehiculo.estadoVehiculo}">Estado</span><br/>
-                  Característica: <span th:text="${vehiculo.caracteristicaVehiculo != null ? vehiculo.caracteristicaVehiculo.marca : 'Sin información'}">Marca</span>
-                </p>
-              </div>
-              <div class="feature-back">
-                <p>Detalles adicionales del vehículo podrán aparecer aquí.</p>
-              </div>
-            </div>
-          </div>
-        </div>-->
-        
-    </section><!-- /Travel About Section -->
+  
+    <div class="container mt-5">
+	    <h2 class="mb-4 text-center">Nuestra Flota</h2>
+	    <div class="row">
+	        <!-- Recorremos la lista de vehiculos -->
+	        <div class="col-md-4 mb-4" th:each="vehiculo : ${vehiculos}">
+	            <div class="card h-100 shadow-sm">
+					     
+				     <img th:src="${vehiculo.caracteristicaVehiculo.urlImagen}"
+				     th:alt="${vehiculo.caracteristicaVehiculo.marca} + ' ' + ${vehiculo.caracteristicaVehiculo.modelo}"
+				     class="card-img-top">
+					     
+	
+	                <div class="card-body">
+	                    <!-- Marca y modelo -->
+	                    <h5 class="card-title" th:text="${vehiculo.caracteristicaVehiculo.marca} + ' ' + ${vehiculo.caracteristicaVehiculo.modelo}"></h5>
+	                    <!-- Patente -->
+	                    <p class="card-text">Precio por dia: <span th:text="${vehiculo.caracteristicaVehiculo.costoVehiculo.costo}"></span></p>
+	                </div>
+	
+	                <div class="card-footer text-center">
+	                    <!-- Estado -->
+	                    <span class="badge bg-success" th:text="${vehiculo.estadoVehiculo}"></span>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+  	</div>
 
   </main>
-
+	
   <footer 
         th:replace="fragments/footer :: footer">
   </footer>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <!-- Scripts -->
+  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/vendor/aos/aos.js"></script>
+  <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/assets/js/main.js"></script>
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
-
+  <!-- Bootstrap JS 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>-->
 </body>
-
 </html>
+
+ <!-- Why Us Section -->
+    <section id="why-us" class="why-us section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <!-- Why Choose Us -->
+        <div class="why-choose-section">
+          <div class="row justify-content-center">
+            <div class="col-lg-8 text-center mb-5" data-aos="fade-up" data-aos-delay="100">
+              <h3>Siempre la mejor calidad de la mano de <br /> <span style="color:#0055aa;">My Car</span></h3>
+              <h3>Nuestra Flota:</h3>
+              </div>
+          </div>
+
+          <div class="row g-4" th:each="vehiculo : ${vehiculos}">
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <i class="bi bi-people-fill"></i>
+                </div>
+               	<img th:src="${vehiculo.caracteristicaVehiculo.urlImagen}"
+				     th:alt="${vehiculo.caracteristicaVehiculo.marca} + ' ' + ${vehiculo.caracteristicaVehiculo.modelo}"
+				     class="card-img-top">
+				     
+				<!-- Marca y modelo -->
+                <h5 class="card-title" th:text="${vehiculo.caracteristicaVehiculo.marca} + ' ' + ${vehiculo.caracteristicaVehiculo.modelo}"></h5>
+                <!-- Precio -->
+                <p class="card-text">Precio por dia: <span th:text="${vehiculo.caracteristicaVehiculo.costoVehiculo.costo}"></span></p>
+	            <!-- Estado -->
+	            <span class="badge bg-success" th:text="${vehiculo.estadoVehiculo}"></span>
+              </div>
+            </div>
+
+          </div><!-- End Features Grid -->
+        </div><!-- End Why Choose Us -->
+
+      </div>
+
+    </section><!-- /Why Us Section -->
+

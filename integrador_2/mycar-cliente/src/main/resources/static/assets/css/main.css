@@ -8477,3 +8477,38 @@ section,
 .starter-section {
   /* Add your styles here */
 }
+
+/* Ajusta la posición de los puntitos del carrusel */
+.flota-swiper .swiper-pagination {
+  position: relative;
+  margin-top: 30px;  /* separa los puntitos del contenido */
+}
+
+/* Efecto hover sobre las tarjetas de vehículos */
+.flota-swiper .feature-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 15px;
+  background-color: #ffffff;
+}
+
+/* Al pasar el mouse */
+.flota-swiper .feature-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+/* Transición más suave en la imagen también */
+.flota-swiper .feature-card img {
+  transition: transform 0.3s ease;
+}
+
+.flota-swiper .feature-card:hover img {
+  transform: scale(1.05);
+}
+
+
+.flota .text-center {
+  margin-top: 100px; /* ajustá el valor a gusto: 80px, 120px, etc. */
+}
+

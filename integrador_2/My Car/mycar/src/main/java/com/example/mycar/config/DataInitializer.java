@@ -121,7 +121,8 @@ public class DataInitializer implements CommandLineRunner {
                 .build();
         entityManager.persist(imagenEmpleado);
         
-        /*
+        System.out.println("Estoy por leer una imagen");
+        
         Imagen imagenVehiculo = Imagen.builder()
                 .nombre("vehiculo-sedan.png")
                 .mime("image/png")
@@ -129,14 +130,15 @@ public class DataInitializer implements CommandLineRunner {
                 .tipoImagen(TipoImagen.Vehiculo)
                 .build();
         entityManager.persist(imagenVehiculo);
-        */
+        
         
         Path path = Path.of("src/main/resources/static/img/vehiculos/chevrolet-tracker.jpg");
         byte[] contenido = Files.readAllBytes(path);
-
+        System.out.println("Bytes Chevrolet: " + contenido.length);
+        
         Imagen imgChevrolet = Imagen.builder()
             .nombre("chevrolet-tracker.jpg")
-            .mime("image/png")
+            .mime("image/jpeg")
             .contenido(contenido)
             .tipoImagen(TipoImagen.Vehiculo)
             .build();
@@ -159,10 +161,195 @@ public class DataInitializer implements CommandLineRunner {
         Imagen imgRenault = Imagen.builder()
             .nombre("renault-kangoo.jpg")
             .mime("image/webp")
-            .contenido(contenido2)
+            .contenido(contenido3)
             .tipoImagen(TipoImagen.Vehiculo)
             .build();
         entityManager.persist(imgRenault);
+        
+        Path path4 = Path.of("src/main/resources/static/img/vehiculos/corlla2023.jpg");
+        byte[] contenido4 = Files.readAllBytes(path4);
+
+        Imagen imgCorolla = Imagen.builder()
+            .nombre("corolla.jpg")
+            .mime("image/webp")
+            .contenido(contenido4)
+            .tipoImagen(TipoImagen.Vehiculo)
+            .build();
+        entityManager.persist(imgCorolla);
+        
+        Path path5 = Path.of("src/main/resources/static/img/vehiculos/toyota-hilux.jpg");
+        byte[] contenido5 = Files.readAllBytes(path5);
+
+        Imagen imgHilux = Imagen.builder()
+            .nombre("toyota-hilux.jpg")
+            .mime("image/jpeg")
+            .contenido(contenido5)
+            .tipoImagen(TipoImagen.Vehiculo)
+            .build();
+        entityManager.persist(imgHilux);
+        
+        Path path6 = Path.of("src/main/resources/static/img/vehiculos/ford-focus.jpg");
+        byte[] contenido6 = Files.readAllBytes(path6);
+
+        Imagen imgFocus = Imagen.builder()
+            .nombre("fiat-focus.jpg")
+            .mime("image/jpeg")
+            .contenido(contenido6)
+            .tipoImagen(TipoImagen.Vehiculo)
+            .build();
+        entityManager.persist(imgFocus);
+        
+        Path path7 = Path.of("src/main/resources/static/img/vehiculos/honda-civic.jpg");
+        byte[] contenido7 = Files.readAllBytes(path7);
+
+        Imagen imgCivic = Imagen.builder()
+            .nombre("honda-civic.jpg")
+            .mime("image/jpeg")
+            .contenido(contenido7)
+            .tipoImagen(TipoImagen.Vehiculo)
+            .build();
+        entityManager.persist(imgCivic);
+        
+        Path path8 = Path.of("src/main/resources/static/img/vehiculos/amarok-v6.jpg");
+        byte[] contenido8 = Files.readAllBytes(path8);
+
+        Imagen imgAmarok = Imagen.builder()
+            .nombre("amarok-v6.jpg")
+            .mime("image/jpeg")
+            .contenido(contenido8)
+            .tipoImagen(TipoImagen.Vehiculo)
+            .build();
+        entityManager.persist(imgAmarok);
+        
+        Path path9 = Path.of("src/main/resources/static/img/vehiculos/chevrolet-onix.jpg");
+        byte[] contenido9 = Files.readAllBytes(path9);
+
+        Imagen imgOnix = Imagen.builder()
+            .nombre("chevrolet-onix.jpg")
+            .mime("image/jpeg")
+            .contenido(contenido9)
+            .tipoImagen(TipoImagen.Vehiculo)
+            .build();
+        entityManager.persist(imgOnix);
+        
+        Path path10 = Path.of("src/main/resources/static/img/vehiculos/ford-ranger.jpg");
+        byte[] contenido10 = Files.readAllBytes(path10);
+
+        Imagen imgRanger = Imagen.builder()
+            .nombre("ford-ranger.jpg")
+            .mime("image/jpeg")
+            .contenido(contenido10)
+            .tipoImagen(TipoImagen.Vehiculo)
+            .build();
+        entityManager.persist(imgRanger);
+        
+        Path path11 = Path.of("src/main/resources/static/img/vehiculos/nissan-frontier.jpg");
+        byte[] contenido11 = Files.readAllBytes(path11);
+
+        Imagen imgFrontier = Imagen.builder()
+            .nombre("nissan-frontier.jpg")
+            .mime("image/jpeg")
+            .contenido(contenido11)
+            .tipoImagen(TipoImagen.Vehiculo)
+            .build();
+        entityManager.persist(imgFrontier);
+        
+        Path path12 = Path.of("src/main/resources/static/img/vehiculos/peugot-208.jpg");
+        byte[] contenido12 = Files.readAllBytes(path12);
+
+        Imagen imgPeugot = Imagen.builder()
+            .nombre("peugot-208.jpg")
+            .mime("image/jpeg")
+            .contenido(contenido12)
+            .tipoImagen(TipoImagen.Vehiculo)
+            .build();
+        entityManager.persist(imgPeugot);
+        
+        Path path13 = Path.of("src/main/resources/static/img/vehiculos/renault-duster.jpg");
+        byte[] contenido13 = Files.readAllBytes(path13);
+
+        Imagen imgDuster = Imagen.builder()
+            .nombre("renault-duster.jpg")
+            .mime("image/jpeg")
+            .contenido(contenido13)
+            .tipoImagen(TipoImagen.Vehiculo)
+            .build();
+        entityManager.persist(imgDuster);
+        
+        Path path14 = Path.of("src/main/resources/static/img/vehiculos/toyota-yaris.jpg");
+        byte[] contenido14 = Files.readAllBytes(path14);
+
+        Imagen imgYaris = Imagen.builder()
+            .nombre("toyota-yaris..jpg")
+            .mime("image/jpeg")
+            .contenido(contenido14)
+            .tipoImagen(TipoImagen.Vehiculo)
+            .build();
+        entityManager.persist(imgYaris);
+        
+        
+        
+     // ----- IMÁGENES DE VEHÍCULOS -----
+        /*
+        Path path1 = Path.of("src/main/resources/static/img/vehiculos/chevrolet-tracker.jpg");
+        byte[] contenido1 = Files.readAllBytes(path1);
+        Imagen imgChevroletTracker = Imagen.builder().nombre("chevrolet-tracker.jpg").mime("image/jpeg").contenido(contenido1).tipoImagen(TipoImagen.Vehiculo).build();
+        entityManager.persist(imgChevroletTracker);
+        System.out.println("Chevrolet Tracker bytes: " + contenido1.length);
+
+        Path path2 = Path.of("src/main/resources/static/img/vehiculos/toyota-corolla.webp");
+        byte[] contenido2 = Files.readAllBytes(path2);
+        Imagen imgToyotaCorolla = Imagen.builder().nombre("toyota-corolla.webp").mime("image/webp").contenido(contenido2).tipoImagen(TipoImagen.Vehiculo).build();
+        entityManager.persist(imgToyotaCorolla);
+
+        Path path3 = Path.of("src/main/resources/static/img/vehiculos/renault-kangoo.jpg");
+        byte[] contenido3 = Files.readAllBytes(path3);
+        Imagen imgRenaultKangoo = Imagen.builder().nombre("renault-kangoo.jpg").mime("image/jpeg").contenido(contenido3).tipoImagen(TipoImagen.Vehiculo).build();
+        entityManager.persist(imgRenaultKangoo);
+
+        Path path4 = Path.of("src/main/resources/static/img/vehiculos/ford-focus.jpg");
+        byte[] contenido4 = Files.readAllBytes(path4);
+        Imagen imgFordFocus = Imagen.builder().nombre("ford-focus.jpg").mime("image/jpeg").contenido(contenido4).tipoImagen(TipoImagen.Vehiculo).build();
+        entityManager.persist(imgFordFocus);
+
+        Path path5 = Path.of("src/main/resources/static/img/vehiculos/honda-civic.jpg");
+        byte[] contenido5 = Files.readAllBytes(path5);
+        Imagen imgHondaCivic = Imagen.builder().nombre("honda-civic.jpg").mime("image/jpeg").contenido(contenido5).tipoImagen(TipoImagen.Vehiculo).build();
+        entityManager.persist(imgHondaCivic);
+
+        Path path6 = Path.of("src/main/resources/static/img/vehiculos/fiat-cronos.jpg");
+        byte[] contenido6 = Files.readAllBytes(path6);
+        Imagen imgFiatCronos = Imagen.builder().nombre("fiat-cronos.jpg").mime("image/jpeg").contenido(contenido6).tipoImagen(TipoImagen.Vehiculo).build();
+        entityManager.persist(imgFiatCronos);
+        
+        Path path7 = Path.of("src/main/resources/static/img/vehiculos/toyota-hilux.jpg");
+        byte[] contenido7 = Files.readAllBytes(path7);
+        Imagen imgToyotaHilux = Imagen.builder().nombre("toyota-hilux.jpg").mime("image/jpeg").contenido(contenido7).tipoImagen(TipoImagen.Vehiculo).build();
+        entityManager.persist(imgToyotaHilux);
+*/
+       /* Imagen imgVolkswagenGolf = Imagen.builder().nombre("vw-golf.jpg").mime("image/jpeg").contenido(new byte[]{0}).tipoImagen(TipoImagen.Vehiculo).build();
+        entityManager.persist(imgVolkswagenGolf);
+
+        Imagen imgNissanSentra = Imagen.builder().nombre("nissan-sentra.jpg").mime("image/jpeg").contenido(new byte[]{0}).tipoImagen(TipoImagen.Vehiculo).build();
+        entityManager.persist(imgNissanSentra);
+
+        Imagen imgHyundaiElantra = Imagen.builder().nombre("hyundai-elantra.jpg").mime("image/jpeg").contenido(new byte[]{0}).tipoImagen(TipoImagen.Vehiculo).build();
+        entityManager.persist(imgHyundaiElantra);
+
+        Imagen imgKiaRio = Imagen.builder().nombre("kia-rio.jpg").mime("image/jpeg").contenido(new byte[]{0}).tipoImagen(TipoImagen.Vehiculo).build();
+        entityManager.persist(imgKiaRio);
+
+        Imagen imgMazda3 = Imagen.builder().nombre("mazda3.jpg").mime("image/jpeg").contenido(new byte[]{0}).tipoImagen(TipoImagen.Vehiculo).build();
+        entityManager.persist(imgMazda3);
+
+        Imagen imgChevroletOnix = Imagen.builder().nombre("chevrolet-onix.jpg").mime("image/jpeg").contenido(new byte[]{0}).tipoImagen(TipoImagen.Vehiculo).build();
+        entityManager.persist(imgChevroletOnix); 
+
+        Imagen imgFordRanger = Imagen.builder().nombre("ford-ranger.jpg").mime("image/jpeg").contenido(new byte[]{0}).tipoImagen(TipoImagen.Vehiculo).build();
+        entityManager.persist(imgFordRanger);
+
+        Imagen imgRenaultDuster = Imagen.builder().nombre("renault-duster.jpg").mime("image/jpeg").contenido(new byte[]{0}).tipoImagen(TipoImagen.Vehiculo).build();
+        entityManager.persist(imgRenaultDuster);*/
 
 
         ContactoCorreoElectronico contactoCorreoEmpleado = new ContactoCorreoElectronico();
@@ -197,6 +384,90 @@ public class DataInitializer implements CommandLineRunner {
         costoVehiculo.setFechaHasta(Date.valueOf(LocalDate.of(2024, 12, 31)));
         costoVehiculo.setCosto(15000.0);
         entityManager.persist(costoVehiculo);
+        
+        CostoVehiculo costoToyota = new CostoVehiculo();
+        costoToyota.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
+        costoToyota.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoToyota.setCosto(25000.0);
+        entityManager.persist(costoToyota);
+        
+        CostoVehiculo costoRenault = new CostoVehiculo();
+        costoRenault.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
+        costoRenault.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoRenault.setCosto(23500.0);
+        entityManager.persist(costoRenault);
+        
+        CostoVehiculo costoCorolla = new CostoVehiculo();
+        costoCorolla.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
+        costoCorolla.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoCorolla.setCosto(189000.0);
+        entityManager.persist(costoCorolla);
+        
+        CostoVehiculo costoChevrolet = new CostoVehiculo();
+        costoChevrolet.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
+        costoChevrolet.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoChevrolet.setCosto(32000.0);
+        entityManager.persist(costoChevrolet);
+        
+        CostoVehiculo costoHilux = new CostoVehiculo();
+        costoHilux.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
+        costoHilux.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoHilux.setCosto(45000.0);
+        entityManager.persist(costoHilux);
+        
+        CostoVehiculo costoFocus = new CostoVehiculo();
+        costoFocus.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
+        costoFocus.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoFocus.setCosto(14560.0);
+        entityManager.persist(costoFocus);
+        
+        CostoVehiculo costoCivic = new CostoVehiculo();
+        costoCivic.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
+        costoCivic.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoCivic.setCosto(21900.0);
+        entityManager.persist(costoCivic);
+        
+        CostoVehiculo costoAmarok = new CostoVehiculo();
+        costoAmarok.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
+        costoAmarok.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoAmarok.setCosto(33450.0);
+        entityManager.persist(costoAmarok);
+        
+        CostoVehiculo costoOnix = new CostoVehiculo();
+        costoOnix.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
+        costoOnix.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoOnix.setCosto(24590.0);
+        entityManager.persist(costoOnix);
+        
+        CostoVehiculo costoRanger = new CostoVehiculo();
+        costoRanger.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
+        costoRanger.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoRanger.setCosto(48900.0);
+        entityManager.persist(costoRanger);
+        
+        CostoVehiculo costoNissan = new CostoVehiculo();
+        costoNissan.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
+        costoNissan.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoNissan.setCosto(55670.0);
+        entityManager.persist(costoNissan);
+        
+        CostoVehiculo costoPeugot = new CostoVehiculo();
+        costoPeugot.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
+        costoPeugot.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoPeugot.setCosto(28700.0);
+        entityManager.persist(costoPeugot);
+        
+        CostoVehiculo costoDuster = new CostoVehiculo();
+        costoDuster.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
+        costoDuster.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoDuster.setCosto(23450.0);
+        entityManager.persist(costoDuster);
+        
+        CostoVehiculo costoYaris = new CostoVehiculo();
+        costoYaris.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
+        costoYaris.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoYaris.setCosto(21960.0);
+        entityManager.persist(costoYaris);
 
 
         /*CaracteristicaVehiculo caracteristicaVehiculo = new CaracteristicaVehiculo();
@@ -296,7 +567,7 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 15),
                 pagoEfectivo, new BigDecimal("30000"), 15000.0, 15000.0,
                 "Pago recibido en mostrador",
-                ciudadMendoza, imagenCliente, imgToyota, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
 
         crearAlquilerCompleto(
                 "Laura", "Pérez", LocalDate.of(1989, 7, 14), "28765432", "laura-perez",
@@ -307,7 +578,7 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 4, 5), LocalDate.of(2024, 4, 20),
                 pagoTransferencia, new BigDecimal("45000"), 32000.0, 13000.0,
                 "Pago con transferencia bancaria",
-                ciudadMendoza, imagenCliente, imgToyota, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
 
         crearAlquilerCompleto(
                 "Jorge", "Ramírez", LocalDate.of(1985, 3, 22), "26543210", "jorge-ramirez",
@@ -318,7 +589,7 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 5, 10), LocalDate.of(2024, 5, 18),
                 pagoEfectivo, new BigDecimal("22000"), 18000.0, 4000.0,
                 "Pago en efectivo",
-                ciudadMendoza, imagenCliente, imgToyota, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
 
         crearAlquilerCompleto(
                 "Sofía", "López", LocalDate.of(1995, 11, 3), "33445566", "sofia-lopez",
@@ -329,7 +600,7 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 6, 1), LocalDate.of(2024, 6, 12),
                 pagoTransferencia, new BigDecimal("28000"), 22000.0, 6000.0,
                 "Pago con tarjeta",
-                ciudadMendoza, imagenCliente, imgToyota, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
 
         crearAlquilerCompleto(
                 "Diego", "Martínez", LocalDate.of(1990, 1, 18), "31223344", "diego-martinez",
@@ -340,7 +611,7 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 7, 3), LocalDate.of(2024, 7, 15),
                 pagoTransferencia, new BigDecimal("26000"), 21000.0, 5000.0,
                 "Pago mixto confirmado",
-                ciudadMendoza, imagenCliente, imgRenault, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
 
         crearAlquilerCompleto(
                 "Carla", "Díaz", LocalDate.of(1993, 4, 8), "29998877", "carla-diaz",
@@ -351,7 +622,7 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 8, 15), LocalDate.of(2024, 8, 30),
                 pagoTransferencia, new BigDecimal("31000"), 25000.0, 6000.0,
                 "Transferencia inmediata acreditada",
-                ciudadMendoza, imagenCliente, imgRenault, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
 
         crearAlquilerCompleto(
                 "Pablo", "Herrera", LocalDate.of(1987, 12, 30), "27889900", "pablo-herrera",
@@ -362,13 +633,43 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 9, 5), LocalDate.of(2024, 9, 25),
                 pagoTransferencia, new BigDecimal("34000"), 28000.0, 6000.0,
                 "Pago anticipado por transferencia",
-                ciudadMendoza, imagenCliente, imgRenault, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
 
         // Vehículos adicionales sin alquiler para alimentar reportes (misma marca/modelo)
-        crearVehiculoDisponible("AE777BC", "Toyota", "Corolla", 2022, 4, 5, imgToyota, costoVehiculo);
-        crearVehiculoDisponible("AE778BC", "Toyota", "Corolla", 2023, 4, 5, imgToyota, costoVehiculo);
-        crearVehiculoDisponible("AF555JK", "Renault", "Kangoo", 2020, 5, 5, imgRenault, costoVehiculo);
-        crearVehiculoDisponible("AF556JK", "Renault", "Kangoo", 2021, 5, 5, imgRenault, costoVehiculo);
+        /*
+        crearVehiculoDisponible("AE101AA", "Chevrolet", "Tracker", 2023, 5, 5, imgChevroletTracker, costoVehiculo2);
+        crearVehiculoDisponible("AF201BB", "Toyota", "Corolla", 2022, 4, 5, imgToyotaCorolla, costoVehiculo);
+        crearVehiculoDisponible("AG301CC", "Renault", "Kangoo", 2021, 5, 5, imgRenaultKangoo, costoVehiculo);
+        crearVehiculoDisponible("AH401DD", "Ford", "Focus", 2020, 5, 5, imgFordFocus, costoVehiculo);
+        crearVehiculoDisponible("AI501EE", "Honda", "Civic", 2022, 4, 5, imgHondaCivic, costoVehiculo);
+        crearVehiculoDisponible("AJ601FF", "Fiat", "Cronos", 2023, 4, 5, imgFiatCronos, costoVehiculo);
+        crearVehiculoDisponible("AQ401MM", "Toyota", "Hilux", 2023, 4, 5, imgToyotaHilux, costoVehiculo);
+       
+        crearVehiculoDisponible("AK701GG", "Volkswagen", "Golf", 2021, 4, 5, imgVolkswagenGolf, costoVehiculo);
+        crearVehiculoDisponible("AL801HH", "Nissan", "Sentra", 2020, 4, 5, imgNissanSentra, costoVehiculo);
+        crearVehiculoDisponible("AM901II", "Hyundai", "Elantra", 2022, 4, 5, imgHyundaiElantra, costoVehiculo);
+        crearVehiculoDisponible("AN101JJ", "Kia", "Rio", 2021, 4, 5, imgKiaRio, costoVehiculo);
+        crearVehiculoDisponible("AO201KK", "Mazda", "3", 2023, 4, 5, imgMazda3, costoVehiculo);
+        crearVehiculoDisponible("AP301LL", "Chevrolet", "Onix", 2022, 5, 5, imgChevroletOnix, costoVehiculo);
+        
+        crearVehiculoDisponible("AR501NN", "Ford", "Ranger", 2022, 5, 5, imgFordRanger, costoVehiculo);
+        crearVehiculoDisponible("AS601OO", "Renault", "Duster", 2021, 5, 5, imgRenaultDuster, costoVehiculo);
+*/
+        crearVehiculoDisponible("AE777BC", "Toyota", "Corolla", 2022, 4, 5, imgToyota, costoToyota);
+        crearVehiculoDisponible("AE778BC", "Toyota", "Corolla", 2023, 4, 5, imgCorolla, costoCorolla);
+        crearVehiculoDisponible("AF555JK", "Renault", "Kangoo", 2020, 5, 5, imgRenault, costoRenault);
+        //crearVehiculoDisponible("AF556JK", "Renault", "Kangoo", 2021, 5, 5, imgRenault, costoRenault);
+        crearVehiculoDisponible("AE101AA", "Chevrolet", "Tracker", 2023, 5, 5, imgChevrolet, costoChevrolet);
+        crearVehiculoDisponible("AE101BB", "Toyota", "Hillux", 2023, 5, 5, imgHilux, costoHilux);
+        crearVehiculoDisponible("AE102VA", "Ford", "Focus", 2023, 5, 5, imgFocus, costoFocus);
+        crearVehiculoDisponible("AE101PP", "Honda", "Civic", 2023, 5, 5, imgCivic, costoCivic);
+        crearVehiculoDisponible("HE101AA", "Volkswagen", "Amarok", 2022, 4, 5, imgAmarok, costoAmarok);
+        crearVehiculoDisponible("JE102BB", "Chevrolet", "Onix", 2023, 4, 5, imgOnix, costoOnix);
+        crearVehiculoDisponible("OE103CC", "Ford", "Ranger", 2023, 4, 5, imgRanger, costoRanger);
+        crearVehiculoDisponible("JE104DD", "Nissan", "Frontier", 2023, 4, 5, imgFrontier, costoNissan);
+        crearVehiculoDisponible("PE105EE", "Peugeot", "208", 2022, 4, 5, imgPeugot, costoPeugot);
+        crearVehiculoDisponible("EE106FF", "Renault", "Duster", 2021, 4, 5, imgDuster, costoDuster);
+        crearVehiculoDisponible("KE107GG", "Toyota", "Yaris", 2023, 4, 5, imgYaris, costoYaris);
 
         Usuario usuarioAdmin = new Usuario();
         usuarioAdmin.setNombreUsuario("admin");
