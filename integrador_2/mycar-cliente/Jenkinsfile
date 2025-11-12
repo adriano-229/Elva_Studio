@@ -1,5 +1,5 @@
 def moduleDir() {
-    return 'mycar-cliente'
+    return 'integrador_2/mycar-cliente'
 }
 
 def imageName() {
