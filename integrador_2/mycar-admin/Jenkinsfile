@@ -1,5 +1,8 @@
+def modulePath = ''
+def relativeModulePath = 'mycar-admin'
+
 def moduleDir() {
-    return 'integrador_2/mycar-admin'
+    return modulePath
 }
 
 def imageName() {
@@ -31,6 +34,17 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
+                script {
+                    if (fileExists('pom.xml')) {
+                        modulePath = '.'
+                    } else if (fileExists("${relativeModulePath}/pom.xml")) {
+                        modulePath = relativeModulePath
+                    } else if (fileExists("integrador_2/${relativeModulePath}/pom.xml")) {
+                        modulePath = "integrador_2/${relativeModulePath}"
+                    } else {
+                        error("No se encontró el módulo ${relativeModulePath}")
+                    }
+                }
             }
         }
 

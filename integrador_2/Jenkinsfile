@@ -1,3 +1,5 @@
+def repoBase = ''
+
 pipeline {
     agent {
         docker {
@@ -22,6 +24,15 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
+                script {
+                    if (fileExists("My Car/mycar/pom.xml")) {
+                        repoBase = ''
+                    } else if (fileExists("integrador_2/My Car/mycar/pom.xml")) {
+                        repoBase = 'integrador_2/'
+                    } else {
+                        error('No se encontró el módulo My Car/mycar en el workspace')
+                    }
+                }
             }
         }
 
@@ -29,21 +40,21 @@ pipeline {
             parallel {
                 stage('API') {
                     steps {
-                        dir('My Car/mycar') {
+                        dir("${repoBase}My Car/mycar") {
                             sh 'mvn -B clean verify'
                         }
                     }
                 }
                 stage('Admin') {
                     steps {
-                        dir('mycar-admin') {
+                        dir("${repoBase}mycar-admin") {
                             sh 'mvn -B clean verify'
                         }
                     }
                 }
                 stage('Cliente') {
                     steps {
-                        dir('mycar-cliente') {
+                        dir("${repoBase}mycar-cliente") {
                             sh 'mvn -B clean verify'
                         }
                     }
@@ -54,15 +65,14 @@ pipeline {
         stage('Build Images') {
             steps {
                 script {
-                    def modules = [
+                    [
                         [name: 'mycar-api',     path: "My Car/mycar"],
                         [name: 'mycar-admin',   path: "mycar-admin"],
                         [name: 'mycar-cliente', path: "mycar-cliente"]
-                    ]
-
-                    modules.each { module ->
+                    ].each { module ->
                         def image = buildImageName(module.name)
-                        sh "docker build -t ${image}:${params.IMAGE_TAG} '${module.path}'"
+                        def modulePath = "${repoBase}${module.path}"
+                        sh "docker build -t ${image}:${params.IMAGE_TAG} '${modulePath}'"
                     }
                 }
             }
