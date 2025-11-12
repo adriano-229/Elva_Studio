@@ -25,21 +25,21 @@ pipeline {
                 stage('API') {
                     steps {
                         dir('My Car/mycar') {
-                            sh 'mvn -B clean verify'
+                            sh './mvnw -B clean verify'
                         }
                     }
                 }
                 stage('Admin') {
                     steps {
                         dir('mycar-admin') {
-                            sh 'mvn -B clean verify'
+                            sh './mvnw -B clean verify'
                         }
                     }
                 }
                 stage('Cliente') {
                     steps {
                         dir('mycar-cliente') {
-                            sh 'mvn -B clean verify'
+                            sh './mvnw -B clean verify'
                         }
                     }
                 }

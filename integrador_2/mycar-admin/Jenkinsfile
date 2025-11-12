@@ -33,7 +33,7 @@ pipeline {
         stage('Build & Test') {
             steps {
                 dir(moduleDir()) {
-                    sh 'mvn -B clean verify'
+                    sh './mvnw -B clean verify'
                 }
             }
         }
