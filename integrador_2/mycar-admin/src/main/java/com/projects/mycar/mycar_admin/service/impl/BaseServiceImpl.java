@@ -53,6 +53,7 @@ public abstract class BaseServiceImpl<E extends BaseDTO, ID extends Serializable
     public void save(E entity) throws Exception {
         try {
             validar(entity);
+            beforeSave(entity);
             dao.crear(entity);
 
         } catch (Exception e) {
@@ -91,5 +92,7 @@ public abstract class BaseServiceImpl<E extends BaseDTO, ID extends Serializable
             throw e;
         }
     }
+    
+    protected abstract void beforeSave(E entity) throws Exception;
 
 }

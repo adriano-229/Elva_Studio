@@ -15,7 +15,7 @@ import lombok.Getter;
 @Getter
 public class UsuarioController extends BaseControllerImpl<UsuarioDTO, UsuarioServiceImpl> {
 
-	private String viewList = "";
+	private String viewList = "view/usuario/listar";
 	private String viewEdit = "";
 	private String redirectList= "";
 	

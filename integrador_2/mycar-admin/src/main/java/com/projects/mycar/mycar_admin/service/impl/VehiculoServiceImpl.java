@@ -46,4 +46,10 @@ public class VehiculoServiceImpl extends BaseServiceImpl<VehiculoDTO, Long> impl
 			
 	}
 
+	@Override
+	protected void beforeSave(VehiculoDTO entity) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

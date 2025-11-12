@@ -51,4 +51,10 @@ public class PromocionServiceImpl extends BaseServiceImpl<ConfiguracionPromocion
 		
 	}
 
+	@Override
+	protected void beforeSave(ConfiguracionPromocionDTO entity) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

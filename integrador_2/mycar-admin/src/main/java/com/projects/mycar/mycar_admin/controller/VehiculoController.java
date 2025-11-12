@@ -15,7 +15,7 @@ import lombok.Getter;
 @Getter
 public class VehiculoController extends BaseControllerImpl<VehiculoDTO, VehiculoServiceImpl>{
 	
-	private String viewList = "";
+	private String viewList = "view/vehiculo/listar";
 	private String viewEdit = "";
 	private String redirectList= "";
 

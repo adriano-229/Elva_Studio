@@ -2,7 +2,7 @@ package com.example.mycar.mycar_admin.domain;
 
 import java.time.LocalDate;
 
-public class CodigoDescuentoDTO {
+public class CodigoDescuentoDTO extends BaseDTO{
     private Long id;
     private String codigo;
     private Double porcentajeDescuento;

@@ -1,6 +1,9 @@
 package com.example.mycar.mycar_admin.domain;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.mycar.mycar_admin.domain.enums.TipoDocumentacion;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -26,9 +29,12 @@ public class DocumentacionDTO extends BaseDTO {
     @Size(max = 255, message = "La observación no puede tener más de 255 caracteres")
     private String observacion;
 
-    /*@NotBlank(message = "El nombre del archivo no puede estar vacío")
-    @Size(min = 3, max = 100, message = "El nombre del archivo debe tener entre 3 y 100 caracteres")
+    //puede ser null - se define al guardar el archivo 
+    /*@Size(min = 3, max = 100, message = "El nombre del archivo debe tener entre 3 y 100 caracteres")
     @Pattern(regexp = ".*\\.(pdf|docx|doc)$", message = "El archivo debe tener una extensión válida (.pdf, .docx, .doc)")*/
     private String nombreArchivo;
+    
+    @JsonIgnore
+	private MultipartFile pdf;
 
 }

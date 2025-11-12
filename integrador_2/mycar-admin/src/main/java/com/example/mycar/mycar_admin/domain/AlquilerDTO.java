@@ -26,7 +26,9 @@ public class AlquilerDTO extends BaseDTO {
     @FutureOrPresent(message = "La fecha hasta debe ser una fecha actual o futura")
     private LocalDate fechaHasta;
 
-    @NotNull(message = "La documentación es obligatoria")
+    //@NotNull(message = "La documentación es obligatoria")
+    private Long documentacionId;
+    
     private DocumentacionDTO documentacion;
 
     @NotNull(message = "El vehículo es obligatorio")
@@ -39,11 +41,11 @@ public class AlquilerDTO extends BaseDTO {
 
     private ClienteDTO cliente;
 
-    @NotNull(message = "El costo calculado no puede ser nulo")
+    //@NotNull(message = "El costo calculado no puede ser nulo")
     @Positive(message = "El costo calculado debe ser mayor que 0")
     private Double costoCalculado;
 
-    @NotNull(message = "La cantidad de días es obligatoria")
+    //@NotNull(message = "La cantidad de días es obligatoria")
     @Positive(message = "La cantidad de días debe ser mayor que 0")
     private Integer cantidadDias;
 }
