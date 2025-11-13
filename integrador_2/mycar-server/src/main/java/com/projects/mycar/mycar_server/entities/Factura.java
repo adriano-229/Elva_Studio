@@ -1,0 +1,60 @@
+package com.projects.mycar.mycar_server.entities;
+
+import com.projects.mycar.mycar_server.enums.EstadoFactura;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
+@Table(name = "factura")
+public class Factura extends Base {
+
+    @Column(name = "numero_factura", nullable = false)
+    private long numeroFactura;
+
+    @Column(name = "fecha_factura", nullable = false)
+    private LocalDate fechaFactura;
+
+    @Column(name = "subtotal")
+    private Double subtotal;
+
+    @Column(name = "descuento")
+    private Double descuento;
+
+    @Column(name = "porcentaje_descuento")
+    private Double porcentajeDescuento;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "codigo_descuento_id")
+    private CodigoDescuento codigoDescuento;
+
+    @Column(name = "total_pagado", nullable = false)
+    private Double totalPagado = 0.0;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private EstadoFactura estado = EstadoFactura.Sin_definir;
+
+    // Opcional: observaciones
+    @Column(name = "observacion_pago")
+    private String observacionPago;
+
+    @Column(name = "observacion_anulacion")
+    private String observacionAnulacion;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "forma_pago_id")
+    private FormaDePago formaDePago;
+
+    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<DetalleFactura> detalles = new ArrayList<>();
+}

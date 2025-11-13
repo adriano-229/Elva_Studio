@@ -1,0 +1,5 @@
+package com.projects.mycar.mycar_server.enums;
+
+public enum TipoDocumentacion {
+    Documento_identidad, Carnet_de_conducir
+}
