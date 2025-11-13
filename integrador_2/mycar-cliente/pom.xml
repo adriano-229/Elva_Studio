@@ -8,7 +8,7 @@
         <version>3.5.7</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.projects.mycar</groupId>
+    <groupId>com.projects</groupId>
     <artifactId>mycar-cliente</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>mycar-cliente</name>
