@@ -28,6 +28,13 @@ public abstract class BaseServiceImpl<E extends Base, D extends BaseDTO, ID exte
         try {
             List<E> entities = Optional.ofNullable(baseRepository.findByActivoTrue())
                     .orElse(Collections.emptyList());
+            if (entities.isEmpty()) {
+            	System.out.println("LA LISTA ESTA VACIA");
+            } else {
+            	System.out.println("LISTA NO VACIA");
+            }
+            
+            
             return baseMapper.toDtoList(entities);
         } catch (Exception e) {
             throw new Exception("Error al obtener entidades", e);

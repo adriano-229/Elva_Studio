@@ -157,7 +157,7 @@ public class PromocionServiceImpl implements PromocionService {
     @Transactional
     public CodigoDescuentoDTO validarYObtenerCodigoDescuento(String codigo, Long clienteId) {
         CodigoDescuento codigoDescuento = codigoDescuentoRepository
-                .findByCodigoAndActivoTrue(codigo)
+                .findByCodigoIgnoreCaseAndActivoTrue(codigo)
                 .orElseThrow(() -> new RuntimeException("Código de descuento no válido"));
 
         // Validar que el código pertenezca al cliente
@@ -183,7 +183,7 @@ public class PromocionServiceImpl implements PromocionService {
         String codigo;
         do {
             codigo = "MYCAR-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
-        } while (codigoDescuentoRepository.findByCodigoAndActivoTrue(codigo).isPresent());
+        } while (codigoDescuentoRepository.findByCodigoIgnoreCaseAndActivoTrue(codigo).isPresent());
         return codigo;
     }
 

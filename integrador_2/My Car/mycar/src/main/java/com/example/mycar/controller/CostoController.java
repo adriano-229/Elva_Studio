@@ -1,5 +1,6 @@
 package com.example.mycar.controller;
 
+import com.example.mycar.dto.AlquilerFormDTO;
 import com.example.mycar.dto.PagareDTO;
 import com.example.mycar.services.CostoService;
 import org.springframework.http.HttpStatus;
@@ -49,11 +50,22 @@ public class CostoController {
      * @param alquilerId ID del alquiler
      * @return Costo calculado
      */
-    @GetMapping("/calcular/{alquilerId}")
+    /*@GetMapping("/calcular/{alquilerId}")
     public ResponseEntity<?> calcularCostoAlquiler(@PathVariable Long alquilerId) {
         try {
             Double costo = costoService.calcularCostoAlquiler(alquilerId);
             return ResponseEntity.ok("{\"costo\":" + costo + "}");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("{\"error\":\"" + e.getMessage() + "\"}");
+        }
+    }*/
+    
+    @PostMapping("/calcularCosto")
+    public ResponseEntity<?> calcularCostoAlquiler(@RequestBody AlquilerFormDTO alquiler) {
+        try {
+            AlquilerFormDTO costo = costoService.calcularCostoAlquiler(alquiler);
+            return ResponseEntity.ok(costo);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("{\"error\":\"" + e.getMessage() + "\"}");

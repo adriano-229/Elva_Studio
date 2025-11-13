@@ -1,13 +1,19 @@
 package com.example.mycar.services.impl;
 
 import com.example.mycar.dto.AlquilerConCostoDTO;
+import com.example.mycar.dto.AlquilerFormDTO;
+import com.example.mycar.dto.CaracteristicaVehiculoDTO;
+import com.example.mycar.dto.CodigoDescuentoDTO;
 import com.example.mycar.dto.PagareDTO;
+import com.example.mycar.dto.VehiculoDTO;
 import com.example.mycar.entities.*;
 import com.example.mycar.repositories.AlquilerRepository;
 import com.example.mycar.repositories.ClienteRepository;
 import com.example.mycar.repositories.CodigoDescuentoRepository;
 import com.example.mycar.services.CostoService;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +28,13 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class CostoServiceImpl implements CostoService {
-
+	
+	@Autowired
+	private VehiculoServiceImpl vehiculoService;
+	
+	@Autowired
+	private CodigoDescuentoServiceImpl codigoDescuentoService;
+	
     private final AlquilerRepository alquilerRepository;
     private final ClienteRepository clienteRepository;
     private final CodigoDescuentoRepository codigoDescuentoRepository;
@@ -136,8 +148,59 @@ public class CostoServiceImpl implements CostoService {
                 .clienteId(clienteId)
                 .build();
     }
-
+    
     @Override
+    @Transactional(readOnly = true)
+    public AlquilerFormDTO calcularCostoAlquiler(AlquilerFormDTO alquiler) throws Exception {
+        long diasLong = ChronoUnit.DAYS.between(alquiler.getFechaDesde(), alquiler.getFechaHasta());
+        if (diasLong == 0) diasLong = 1;
+        int dias = (int) diasLong;
+        alquiler.setCantidadDias(dias);
+        
+        if (alquiler.getIdVehiculo() == null) {
+            throw new Exception("No se puede calcular el costo. Vehiculo no asociado");
+        }
+        
+        VehiculoDTO vehiculo = vehiculoService.findById(alquiler.getIdVehiculo());
+        
+        if (vehiculo == null) {
+        	throw new Exception("EL vehiculo no esta registrado");
+        }
+        
+        CaracteristicaVehiculoDTO caracteristica = vehiculo.getCaracteristicaVehiculo();
+        if (caracteristica == null || caracteristica.getCostoVehiculo() == null) {
+            throw new Exception("No se puede calcular el costo. Vehiculo sin costo definido.");
+        }
+        
+        alquiler.setCostoPorDia(caracteristica.getCostoVehiculo().getCosto());
+        
+        double subtotal = caracteristica.getCostoVehiculo().getCosto() * dias;
+        alquiler.setSubtotal(subtotal);
+        
+        double descuento = 0;
+        System.out.println("CODIGO DESCUENTO: " + alquiler.getCodigoDescuento());
+        if (alquiler.getCodigoDescuento() != null && !alquiler.getCodigoDescuento().isBlank()) {
+        	CodigoDescuentoDTO codigoDescuento = codigoDescuentoService.findByCodigo(alquiler.getCodigoDescuento());
+        	
+        	if (codigoDescuento == null) {
+        		throw new Exception("El codigo de descuento no es válido");
+        	}
+        	
+        	alquiler.setPorcentajeDescuento(codigoDescuento.getPorcentajeDescuento());
+        	
+        	descuento = (subtotal * codigoDescuento.getPorcentajeDescuento()) / 100;
+        	alquiler.setDescuento(descuento);
+        	
+        }
+        
+        alquiler.setTotalConDescuento(subtotal-descuento);
+        
+        
+        
+        return alquiler;
+    }
+
+    /*@Override
     @Transactional(readOnly = true)
     public Double calcularCostoAlquiler(Long alquilerId) throws Exception {
         Alquiler alquiler = alquilerRepository.findByIdAndActivoTrue(alquilerId)
@@ -154,5 +217,5 @@ public class CostoServiceImpl implements CostoService {
             throw new Exception("No se puede calcular el costo. Vehiculo sin costo definido.");
         }
         return caracteristica.getCostoVehiculo().getCosto() * dias;
-    }
+    }*/
 }
