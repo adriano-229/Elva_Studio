@@ -14,19 +14,19 @@ public enum ReportFormat {
         this.contentType = contentType;
     }
 
+    public static ReportFormat fromQueryValue(String value) {
+        return Arrays.stream(values())
+                .filter(format -> format.queryValue.equalsIgnoreCase(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Formato no soportado: " + value));
+    }
+
     public String getQueryValue() {
         return queryValue;
     }
 
     public String getContentType() {
         return contentType;
-    }
-
-    public static ReportFormat fromQueryValue(String value) {
-        return Arrays.stream(values())
-                .filter(format -> format.queryValue.equalsIgnoreCase(value))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Formato no soportado: " + value));
     }
 
     public String filenameSuffix() {

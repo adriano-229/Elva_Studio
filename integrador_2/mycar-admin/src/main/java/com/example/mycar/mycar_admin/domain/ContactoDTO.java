@@ -1,7 +1,6 @@
 package com.example.mycar.mycar_admin.domain;
 
 import com.example.mycar.mycar_admin.domain.enums.TipoContacto;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

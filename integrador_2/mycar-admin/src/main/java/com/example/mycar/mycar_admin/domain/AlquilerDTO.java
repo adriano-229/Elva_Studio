@@ -28,7 +28,7 @@ public class AlquilerDTO extends BaseDTO {
 
     //@NotNull(message = "La documentación es obligatoria")
     private Long documentacionId;
-    
+
     private DocumentacionDTO documentacion;
 
     @NotNull(message = "El vehículo es obligatorio")

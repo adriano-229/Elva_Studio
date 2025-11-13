@@ -1,5 +1,6 @@
 package com.example.mycar.mycar_admin.domain;
 
+import com.example.mycar.mycar_admin.domain.enums.EstadoFactura;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,8 +9,6 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.util.List;
-
-import com.example.mycar.mycar_admin.domain.enums.EstadoFactura;
 
 @Getter
 @Setter

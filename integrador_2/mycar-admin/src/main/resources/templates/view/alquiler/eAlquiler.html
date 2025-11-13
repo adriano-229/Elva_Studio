@@ -1,209 +1,213 @@
 <!DOCTYPE html>
-<html lang="es" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light" xmlns:th="http://www.thymeleaf.org">
+<html data-pc-direction="ltr" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-theme="light" dir="ltr"
+      lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Alquiler | Tu Aplicación</title>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Crear Alquiler | Tu Aplicación</title>
 
-    <!-- CSS Datta Able -->
-    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/icons.css}">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- CSS Datta Able -->
+  <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/icons.css}">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Sidebar -->
-    <div th:replace="fragments/layout :: sidebar"></div>
+<!-- Sidebar -->
+<div th:replace="fragments/layout :: sidebar"></div>
 
-    <!-- Navbar -->
-    <div th:replace="fragments/layout :: navbar"></div>
+<!-- Navbar -->
+<div th:replace="fragments/layout :: navbar"></div>
 
-    <!-- Contenido principal -->
-    <div class="pc-container">
-        <div class="pc-content">
-            <div class="container-fluid py-4">
+<!-- Contenido principal -->
+<div class="pc-container">
+  <div class="pc-content">
+    <div class="container-fluid py-4">
 
-                <h4 class="mb-4">Alquilar Vehículo</h4>
-				
-				<!-- Mensajes de error -->
-				<div th:if="${msgError != null}" class="mb-4">
-				    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-				        <i data-feather="alert-circle" class="me-2"></i>
-				        <span th:text="${msgError}">Error al procesar la solicitud</span>
-				        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-				    </div>
-				</div>
+      <h4 class="mb-4">Alquilar Vehículo</h4>
 
-                <div class="row g-4">
+      <!-- Mensajes de error -->
+      <div class="mb-4" th:if="${msgError != null}">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <i class="me-2" data-feather="alert-circle"></i>
+          <span th:text="${msgError}">Error al procesar la solicitud</span>
+          <button aria-label="Cerrar" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+        </div>
+      </div>
 
-                    <!-- Columna izquierda: Formulario completo de Alquiler -->
-                    <div class="col-xl-8 col-lg-12 col-md-12 d-flex flex-column">
-                        <form th:action="@{/alquiler/crear}" method="post"  th:object="${alquiler}" enctype="multipart/form-data">
+      <div class="row g-4">
 
-                            <!-- Campo oculto para el ID del cliente -->
-                            <input type="hidden" id="clienteId" th:field="*{clienteId}" required>
-							<input type="hidden" th:field="*{fechaDesde}">
-						    <input type="hidden" th:field="*{fechaHasta}">
-							<input type="hidden" th:field="*{costoCalculado}">
-							<input type="hidden" th:field="*{cantidadDias}">
-							
-							<!-- Detalle de Cotización -->
-                            <div class="card shadow-sm mb-4">
-                                <div class="card-header">Detalle de Cotización</div>
-                                <div class="card-body" th:if="${vehiculoSeleccionado != null}">
-									<input type="hidden" th:field="*{vehiculoId}" required>
-                                    <div class="text-center mb-3">
-                                        <img th:src="@{${vehiculoSeleccionado.caracteristicaVehiculo.imagen}}" alt="Imagen del vehículo"
-                                             class="img-fluid rounded" style="max-height:250px; object-fit:cover;">
-                                    </div>
-                                    <h5 class="text-center mb-2" th:text="${vehiculoSeleccionado.caracteristicaVehiculo.marca} + ' ' + ${vehiculoSeleccionado.caracteristicaVehiculo.modelo}"></h5>
-                                    <p class="text-center text-muted mb-3">
-                                        Año: <span th:text="${vehiculoSeleccionado.caracteristicaVehiculo.anio}"></span> |
-                                        Costo por día: $<span th:text="${vehiculoSeleccionado.caracteristicaVehiculo.costoVehiculo.costo}"></span> |
-										Dias: <span th:text="${alquilerCotizado.cantidadDias}"></span>
-                                    </p>
+        <!-- Columna izquierda: Formulario completo de Alquiler -->
+        <div class="col-xl-8 col-lg-12 col-md-12 d-flex flex-column">
+          <form enctype="multipart/form-data" method="post" th:action="@{/alquiler/crear}" th:object="${alquiler}">
 
-                                    <!-- Fechas de alquiler (solo mostrar, no editar) -->
-									<div class="grid grid-cols-2 gap-3 mb-3 text-center">
-										<div>
-									        <label class="form-label d-block">Desde</label>
-									        <span th:text="${#temporals.format(alquiler.fechaDesde, 'yyyy-MM-dd')}"></span>
-									    </div>
-									    <div>
-									        <label class="form-label d-block">Hasta</label>
-									        <span th:text="${#temporals.format(alquiler.fechaHasta, 'yyyy-MM-dd')}"></span>
-									    </div>
-									</div>
+            <!-- Campo oculto para el ID del cliente -->
+            <input id="clienteId" required th:field="*{clienteId}" type="hidden">
+            <input th:field="*{fechaDesde}" type="hidden">
+            <input th:field="*{fechaHasta}" type="hidden">
+            <input th:field="*{costoCalculado}" type="hidden">
+            <input th:field="*{cantidadDias}" type="hidden">
 
-                                    <div class="d-flex justify-content-between mb-2">
-                                        <span>Subtotal:</span>
-                                        <span>$<span th:text="${alquilerCotizado.subtotal}">0</span></span>
-                                    </div>
-                                    <div class="d-flex justify-content-between mb-2">
-                                        <span>Descuento:</span>
-                                        <span>$<span th:text="${alquilerCotizado.descuento}">0</span></span>
-                                    </div>
-                                    <div class="d-flex justify-content-between font-weight-bold mb-4">
-                                        <span>Total:</span>
-                                        <span>$<span th:text="${alquilerCotizado.totalConDescuento}">0</span></span>
-                                    </div>
-                                </div>
-                            </div>
-							
-							</div>
-							
-							<!--Informacion cliente-->
-							<div id="clienteSeleccionadoCard" 
-							     class="card shadow-sm mb-4" 
-							     th:if="${cliente!= null}">
-							    <div class="card-header">Información del Cliente</div>
-							    <div class="card-body">
-							        <ul class="list-group list-group-flush">
-							            <li class="list-group-item">
-							                <strong>Nombre:</strong> 
-							                <span th:text="${cliente.nombre} + ' ' + ${cliente.apellido}">Nombre Apellido</span>
-							            </li>
-							            <li class="list-group-item">
-							                <strong>DNI:</strong> 
-							                <span th:text="${cliente.numeroDocumento}">12345678</span>
-							            </li>
-							            <li class="list-group-item">
-							                <strong>Dirección Estadia:</strong> 
-							                <span th:text="${cliente.direccionEstadia}">Calle Ejemplo 123</span>
-							            </li>
-							            <!--<li class="list-group-item" th:if="${clienteDTO.telefono != null}">
-							                <strong>Teléfono:</strong> 
-							                <span th:text="${cliente.telefono}">0000-0000</span>
-							            </li>
-							            <li class="list-group-item" th:if="${clienteDTO.email != null}">
-							                <strong>Email:</strong> 
-							                <span th:text="${cliente.email}">ejemplo@email.com</span>
-							            </li>-->
-							        </ul>
-							    </div>
-							</div>
+            <!-- Detalle de Cotización -->
+            <div class="card shadow-sm mb-4">
+              <div class="card-header">Detalle de Cotización</div>
+              <div class="card-body" th:if="${vehiculoSeleccionado != null}">
+                <input required th:field="*{vehiculoId}" type="hidden">
+                <div class="text-center mb-3">
+                  <img alt="Imagen del vehículo" class="img-fluid rounded"
+                       style="max-height:250px; object-fit:cover;" th:src="@{${vehiculoSeleccionado.caracteristicaVehiculo.imagen}}">
+                </div>
+                <h5 class="text-center mb-2"
+                    th:text="${vehiculoSeleccionado.caracteristicaVehiculo.marca} + ' ' + ${vehiculoSeleccionado.caracteristicaVehiculo.modelo}"></h5>
+                <p class="text-center text-muted mb-3">
+                  Año: <span th:text="${vehiculoSeleccionado.caracteristicaVehiculo.anio}"></span> |
+                  Costo por día: $<span
+                    th:text="${vehiculoSeleccionado.caracteristicaVehiculo.costoVehiculo.costo}"></span> |
+                  Dias: <span th:text="${alquilerCotizado.cantidadDias}"></span>
+                </p>
+
+                <!-- Fechas de alquiler (solo mostrar, no editar) -->
+                <div class="grid grid-cols-2 gap-3 mb-3 text-center">
+                  <div>
+                    <label class="form-label d-block">Desde</label>
+                    <span th:text="${#temporals.format(alquiler.fechaDesde, 'yyyy-MM-dd')}"></span>
+                  </div>
+                  <div>
+                    <label class="form-label d-block">Hasta</label>
+                    <span th:text="${#temporals.format(alquiler.fechaHasta, 'yyyy-MM-dd')}"></span>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-between mb-2">
+                  <span>Subtotal:</span>
+                  <span>$<span th:text="${alquilerCotizado.subtotal}">0</span></span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                  <span>Descuento:</span>
+                  <span>$<span th:text="${alquilerCotizado.descuento}">0</span></span>
+                </div>
+                <div class="d-flex justify-content-between font-weight-bold mb-4">
+                  <span>Total:</span>
+                  <span>$<span th:text="${alquilerCotizado.totalConDescuento}">0</span></span>
+                </div>
+              </div>
+            </div>
+
+        </div>
+
+        <!--Informacion cliente-->
+        <div class="card shadow-sm mb-4"
+             id="clienteSeleccionadoCard"
+             th:if="${cliente!= null}">
+          <div class="card-header">Información del Cliente</div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <strong>Nombre:</strong>
+                <span th:text="${cliente.nombre} + ' ' + ${cliente.apellido}">Nombre Apellido</span>
+              </li>
+              <li class="list-group-item">
+                <strong>DNI:</strong>
+                <span th:text="${cliente.numeroDocumento}">12345678</span>
+              </li>
+              <li class="list-group-item">
+                <strong>Dirección Estadia:</strong>
+                <span th:text="${cliente.direccionEstadia}">Calle Ejemplo 123</span>
+              </li>
+              <!--<li class="list-group-item" th:if="${clienteDTO.telefono != null}">
+                  <strong>Teléfono:</strong>
+                  <span th:text="${cliente.telefono}">0000-0000</span>
+              </li>
+              <li class="list-group-item" th:if="${clienteDTO.email != null}">
+                  <strong>Email:</strong>
+                  <span th:text="${cliente.email}">ejemplo@email.com</span>
+              </li>-->
+            </ul>
+          </div>
+        </div>
 
 
-                            <!-- Documentación -->
-                            <div class="card shadow-sm mb-4">
-                                <div class="card-header">Documentación</div>
-                                <div class="card-body">
-                                    <div class="row g-3">
-										<div class="col-md-4">
-										    <label class="form-label">Tipo de Documento</label>
-										    <select class="form-select" th:field="*{alquiler.documentacion.tipoDocumentacion}" required>
-										        <option value="" disabled selected>-- Selecciona un tipo --</option>
-										        <option th:each="tipo : ${T(com.example.mycar.mycar_admin.domain.enums.TipoDocumentacion).values()}"
-										                th:value="${tipo}" 
-										                th:text="${tipo}"></option>
-										    </select>
-										</div>
+        <!-- Documentación -->
+        <div class="card shadow-sm mb-4">
+          <div class="card-header">Documentación</div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">Tipo de Documento</label>
+                <select class="form-select" required th:field="*{alquiler.documentacion.tipoDocumentacion}">
+                  <option disabled selected value="">-- Selecciona un tipo --</option>
+                  <option th:each="tipo : ${T(com.example.mycar.mycar_admin.domain.enums.TipoDocumentacion).values()}"
+                          th:text="${tipo}"
+                          th:value="${tipo}"></option>
+                </select>
+              </div>
 
-                                        <div class="col-md-4">
-                                            <label class="form-label">Observación</label>
-                                            <input type="text" class="form-control" th:field="*{alquiler.documentacion.observacion}" placeholder="Observación">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="form-label">Subir PDF</label>
-                                            <input type="file" th:field="*{alquiler.documentacion.pdf}" id="pdf" class="form-control" accept=".pdf">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-							
-							<!-- Botones centrados respecto al formulario -->
-						    <div class="d-flex justify-content-center mt-4">
-						        <a th:href="@{/alquiler/cotizar}" class="btn btn-secondary me-2">Volver</a>
-						        <button type="submit" class="btn btn-success">Aceptar</button>
-						    </div>
+              <div class="col-md-4">
+                <label class="form-label">Observación</label>
+                <input class="form-control" placeholder="Observación" th:field="*{alquiler.documentacion.observacion}"
+                       type="text">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Subir PDF</label>
+                <input accept=".pdf" class="form-control" id="pdf" th:field="*{alquiler.documentacion.pdf}" type="file">
+              </div>
+            </div>
+          </div>
+        </div>
 
-                        </form>
-                    </div>
+        <!-- Botones centrados respecto al formulario -->
+        <div class="d-flex justify-content-center mt-4">
+          <a class="btn btn-secondary me-2" th:href="@{/alquiler/cotizar}">Volver</a>
+          <button class="btn btn-success" type="submit">Aceptar</button>
+        </div>
 
-                </div> <!-- row -->
-				
-			</div> <!-- container-fluid -->
-        </div> <!-- pc-content -->
-    </div> <!-- pc-container -->
+        </form>
+      </div>
 
-    <!-- Footer -->
-    <div th:replace="fragments/layout :: footer"></div>
+    </div> <!-- row -->
 
-    <!-- Scripts Datta Able -->
-    <script th:src="@{/assets/js/plugins/simplebar.min.js}"></script>
-    <script th:src="@{/assets/js/plugins/popper.min.js}"></script>
-    <script th:src="@{/assets/js/plugins/feather.min.js}"></script>
-    <script th:src="@{/assets/js/component.js}"></script>
-    <script th:src="@{/assets/js/theme.js}"></script>
-    <script th:src="@{/assets/js/script.js}"></script>
-    <script th:src="@{/assets/js/plugins/datepicker.min.js}"></script>
+  </div> <!-- container-fluid -->
+</div> <!-- pc-content -->
+</div> <!-- pc-container -->
 
-    <!-- Inicializar Feather, Datepicker y selección de cliente -->
-    <script>
-   /*document.addEventListener('DOMContentLoaded', function() {
-        feather.replace();
-        new Datepicker(document.getElementById('fechaDesde'), { format: 'yyyy-mm-dd', autohide: true });
-        new Datepicker(document.getElementById('fechaHasta'), { format: 'yyyy-mm-dd', autohide: true });
+<!-- Footer -->
+<div th:replace="fragments/layout :: footer"></div>
 
-        const botonesSeleccion = document.querySelectorAll('.seleccionar-cliente');
-        const clienteIdInput = document.getElementById('clienteId');
-        const btnAceptar = document.getElementById('btnAceptar');
+<!-- Scripts Datta Able -->
+<script th:src="@{/assets/js/plugins/simplebar.min.js}"></script>
+<script th:src="@{/assets/js/plugins/popper.min.js}"></script>
+<script th:src="@{/assets/js/plugins/feather.min.js}"></script>
+<script th:src="@{/assets/js/component.js}"></script>
+<script th:src="@{/assets/js/theme.js}"></script>
+<script th:src="@{/assets/js/script.js}"></script>
+<script th:src="@{/assets/js/plugins/datepicker.min.js}"></script>
 
-        botonesSeleccion.forEach(btn => {
-            btn.addEventListener('click', function() {
-                clienteIdInput.value = this.dataset.id;
+<!-- Inicializar Feather, Datepicker y selección de cliente -->
+<script>
+    /*document.addEventListener('DOMContentLoaded', function() {
+         feather.replace();
+         new Datepicker(document.getElementById('fechaDesde'), { format: 'yyyy-mm-dd', autohide: true });
+         new Datepicker(document.getElementById('fechaHasta'), { format: 'yyyy-mm-dd', autohide: true });
 
-                document.getElementById('clienteSeleccionadoCard').style.display = 'block';
-                document.getElementById('clienteNombre').textContent = this.dataset.nombre;
-                document.getElementById('clienteNumeroDocumento').textContent = this.dataset.numeroDocumento;
-                document.getElementById('clienteDireccion').textContent = this.dataset.direccion;
+         const botonesSeleccion = document.querySelectorAll('.seleccionar-cliente');
+         const clienteIdInput = document.getElementById('clienteId');
+         const btnAceptar = document.getElementById('btnAceptar');
 
-                btnAceptar.disabled = false;
-            });
-        });
-    });*/
-    </script>
+         botonesSeleccion.forEach(btn => {
+             btn.addEventListener('click', function() {
+                 clienteIdInput.value = this.dataset.id;
+
+                 document.getElementById('clienteSeleccionadoCard').style.display = 'block';
+                 document.getElementById('clienteNombre').textContent = this.dataset.nombre;
+                 document.getElementById('clienteNumeroDocumento').textContent = this.dataset.numeroDocumento;
+                 document.getElementById('clienteDireccion').textContent = this.dataset.direccion;
+
+                 btnAceptar.disabled = false;
+             });
+         });
+     });*/
+</script>
 
 </body>
 </html>

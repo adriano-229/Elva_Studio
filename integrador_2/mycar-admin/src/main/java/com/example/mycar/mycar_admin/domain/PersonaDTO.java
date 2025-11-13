@@ -1,5 +1,6 @@
 package com.example.mycar.mycar_admin.domain;
 
+import com.example.mycar.mycar_admin.domain.enums.TipoDocumento;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,8 +9,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-
-import com.example.mycar.mycar_admin.domain.enums.TipoDocumento;
 
 @Getter
 @Setter

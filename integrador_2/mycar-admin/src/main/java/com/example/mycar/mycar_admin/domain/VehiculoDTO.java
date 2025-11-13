@@ -1,7 +1,6 @@
 package com.example.mycar.mycar_admin.domain;
 
 import com.example.mycar.mycar_admin.domain.enums.EstadoVehiculo;
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;

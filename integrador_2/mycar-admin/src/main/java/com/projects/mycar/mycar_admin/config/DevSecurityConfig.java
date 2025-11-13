@@ -13,9 +13,9 @@ public class DevSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf().disable()    // Deshabilita CSRF (solo para pruebas)
-            .authorizeHttpRequests()
-            .anyRequest().permitAll();  // Permite todas las rutas sin login
+                .csrf().disable()    // Deshabilita CSRF (solo para pruebas)
+                .authorizeHttpRequests()
+                .anyRequest().permitAll();  // Permite todas las rutas sin login
         return http.build();
     }
 }

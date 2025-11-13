@@ -2,12 +2,7 @@ package com.example.mycar.mycar_admin.domain;
 
 import com.example.mycar.mycar_admin.domain.enums.EstadoFactura;
 import com.example.mycar.mycar_admin.domain.enums.TipoPago;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter

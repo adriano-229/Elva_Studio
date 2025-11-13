@@ -1,5 +1,6 @@
 package com.example.mycar.mycar_admin.domain;
 
+import com.example.mycar.mycar_admin.domain.enums.TipoPago;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -8,8 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-
-import com.example.mycar.mycar_admin.domain.enums.TipoPago;
 
 /**
  * DTO que recibe la solicitud de pago desde el frontend.

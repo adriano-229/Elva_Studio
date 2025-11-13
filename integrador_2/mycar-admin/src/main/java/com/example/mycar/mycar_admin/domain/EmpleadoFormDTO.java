@@ -1,5 +1,7 @@
 package com.example.mycar.mycar_admin.domain;
 
+import com.example.mycar.mycar_admin.domain.enums.TipoDocumento;
+import com.example.mycar.mycar_admin.domain.enums.TipoEmpleado;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,9 +9,6 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 import java.time.LocalDate;
-
-import com.example.mycar.mycar_admin.domain.enums.TipoDocumento;
-import com.example.mycar.mycar_admin.domain.enums.TipoEmpleado;
 
 @Data
 public class EmpleadoFormDTO {

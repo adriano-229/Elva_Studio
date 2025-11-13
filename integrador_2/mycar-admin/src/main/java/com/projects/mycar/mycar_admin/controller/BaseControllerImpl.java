@@ -1,5 +1,7 @@
 package com.projects.mycar.mycar_admin.controller;
 
+import com.example.mycar.mycar_admin.domain.BaseDTO;
+import com.projects.mycar.mycar_admin.service.impl.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,9 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.example.mycar.mycar_admin.domain.BaseDTO;
-import com.projects.mycar.mycar_admin.service.impl.BaseServiceImpl;
 
 import java.util.List;
 
@@ -51,8 +50,8 @@ public abstract class BaseControllerImpl<E extends BaseDTO, S extends BaseServic
     @PostMapping("/crear")
     public String guardar(@ModelAttribute E entity, Model model) {
         try {
-        	System.out.println("POST CREAR CONTROLADOR");
-        	servicio.save(entity);
+            System.out.println("POST CREAR CONTROLADOR");
+            servicio.save(entity);
             model.addAttribute("msgExito", "Registro creado correctamente");
         } catch (Exception e) {
             e.printStackTrace();

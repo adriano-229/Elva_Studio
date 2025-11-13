@@ -1,125 +1,126 @@
 <!DOCTYPE html>
-<html lang="es" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light">
+<html data-pc-direction="ltr" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-theme="light" dir="ltr"
+      lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usuarios | Dashboard</title>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Usuarios | Dashboard</title>
 
-    <!-- Datta Able CSS -->
-    <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <!-- Datta Able CSS -->
+  <link href="../assets/css/style.css" id="main-style-link" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 </head>
 <body>
 
-    <!-- Sidebar -->
-    <div th:replace="fragments/layout :: sidebar"></div>
-    <!-- Header -->
-    <div th:replace="fragments/layout :: navbar"></div>
+<!-- Sidebar -->
+<div th:replace="fragments/layout :: sidebar"></div>
+<!-- Header -->
+<div th:replace="fragments/layout :: navbar"></div>
 
-    <!-- Contenido principal -->
-    <div class="pc-container">
-        <div class="pc-content">
-            
-            <!-- Encabezado con título y botón Nuevo Usuario -->
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
-                <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">Listado de Usuarios</h3>
-            </div>
+<!-- Contenido principal -->
+<div class="pc-container">
+  <div class="pc-content">
 
-            <div class="grid grid-cols-12 gap-x-6 mt-4">
-                <div class="col-span-12">
-
-                    <!-- Mensajes de éxito o error -->
-                    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-                        <span th:text="${successMessage}"></span>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
-                        <span th:text="${errorMessage}"></span>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-
-                    <!-- Filtros a la izquierda y botón Nuevo Usuario a la derecha -->
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-6">
-
-                        <!-- Filtros -->
-                        <form class="flex flex-wrap items-end gap-3" th:action="@{/usuarios/listar}" method="get">
-                            <input type="text" name="busqueda" placeholder="Nombre o Rol" 
-                                   th:value="${busqueda}" class="form-control" style="width: 200px;">
-                            <select name="rol" class="form-select" style="width: 160px;">
-                                <option value="">Todos</option>
-                                <option value="ADMIN" th:selected="${rol=='ADMIN'}">Admin</option>
-                                <option value="USER" th:selected="${rol=='USER'}">Usuario</option>
-                            </select>
-                            <button type="submit" class="btn btn-success">Filtrar</button>
-                            <a th:href="@{/usuarios/listar}" class="btn btn-secondary">Limpiar</a>
-                        </form>
-						
-						<!-- Botón Nuevo Vehículo a la derecha -->
-						<a th:href="@{/usuario/crear}" class="btn btn-primary flex items-center gap-2">
-						    <i data-feather="plus"></i> Nuevo Usuario
-						</a>
-
-                    </div>
-
-                    <!-- Tabla de usuarios -->
-                    <div class="card table-card">
-                        <div class="card-header">
-                            <h5>Usuarios</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Nombre de Usuario</th>
-											<th>Nombre Completo</th>
-                                            <th>Rol</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each="usuario : ${entities}" class="hover:bg-theme-bg-1/10 transition-colors">
-                                            <td th:text="${usuario.nombreUsuario}">JuanP</td>
-											<td th:text="${usuario.persona.nombre + ' ' + usuario.persona.apellido}">Nombre Completo</td>
-											<td th:text="${usuario.rol}">ADMIN</td>
-                                            <td class="flex gap-1">
-                                                <a th:href="@{/usuarios/ver/{id}(id=${usuario.id})}" class="badge bg-theme-bg-2 text-white">Ver</a>
-                                                <a th:href="@{/usuarios/editar/{id}(id=${usuario.id})}" class="badge bg-theme-bg-1 text-white">Editar</a>
-                                                <a th:href="@{/usuarios/eliminar/{id}(id=${usuario.id})}" 
-                                                   onclick="return confirm('¿Está seguro que desea eliminar este usuario?');" 
-                                                   class="badge bg-danger text-white">Eliminar</a>
-                                            </td>
-                                        </tr>
-                                        <tr th:if="${#lists.isEmpty(entities)}">
-                                            <td colspan="3" class="text-center text-muted">No se encontraron usuarios.</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-
-        </div>
+    <!-- Encabezado con título y botón Nuevo Usuario -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
+      <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">Listado de Usuarios</h3>
     </div>
 
-    <!-- Footer -->
-    <div th:replace="fragments/layout :: footer"></div>
+    <div class="grid grid-cols-12 gap-x-6 mt-4">
+      <div class="col-span-12">
 
-    <!-- Scripts Datta Able -->
-    <script src="../assets/js/plugins/simplebar.min.js"></script>
-    <script src="../assets/js/plugins/popper.min.js"></script>
-    <script src="../assets/js/plugins/feather.min.js"></script>
-    <script src="../assets/js/component.js"></script>
-    <script src="../assets/js/theme.js"></script>
-    <script src="../assets/js/script.js"></script>
+        <!-- Mensajes de éxito o error -->
+        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert" th:if="${successMessage}">
+          <span th:text="${successMessage}"></span>
+          <button class="btn-close" data-bs-dismiss="alert" type="button"></button>
+        </div>
+        <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert" th:if="${errorMessage}">
+          <span th:text="${errorMessage}"></span>
+          <button class="btn-close" data-bs-dismiss="alert" type="button"></button>
+        </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            feather.replace();
-        });
-    </script>
+        <!-- Filtros a la izquierda y botón Nuevo Usuario a la derecha -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-6">
+
+          <!-- Filtros -->
+          <form class="flex flex-wrap items-end gap-3" method="get" th:action="@{/usuarios/listar}">
+            <input class="form-control" name="busqueda" placeholder="Nombre o Rol"
+                   style="width: 200px;" th:value="${busqueda}" type="text">
+            <select class="form-select" name="rol" style="width: 160px;">
+              <option value="">Todos</option>
+              <option th:selected="${rol=='ADMIN'}" value="ADMIN">Admin</option>
+              <option th:selected="${rol=='USER'}" value="USER">Usuario</option>
+            </select>
+            <button class="btn btn-success" type="submit">Filtrar</button>
+            <a class="btn btn-secondary" th:href="@{/usuarios/listar}">Limpiar</a>
+          </form>
+
+          <!-- Botón Nuevo Vehículo a la derecha -->
+          <a class="btn btn-primary flex items-center gap-2" th:href="@{/usuario/crear}">
+            <i data-feather="plus"></i> Nuevo Usuario
+          </a>
+
+        </div>
+
+        <!-- Tabla de usuarios -->
+        <div class="card table-card">
+          <div class="card-header">
+            <h5>Usuarios</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th>Nombre de Usuario</th>
+                  <th>Nombre Completo</th>
+                  <th>Rol</th>
+                  <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="hover:bg-theme-bg-1/10 transition-colors" th:each="usuario : ${entities}">
+                  <td th:text="${usuario.nombreUsuario}">JuanP</td>
+                  <td th:text="${usuario.persona.nombre + ' ' + usuario.persona.apellido}">Nombre Completo</td>
+                  <td th:text="${usuario.rol}">ADMIN</td>
+                  <td class="flex gap-1">
+                    <a class="badge bg-theme-bg-2 text-white" th:href="@{/usuarios/ver/{id}(id=${usuario.id})}">Ver</a>
+                    <a class="badge bg-theme-bg-1 text-white" th:href="@{/usuarios/editar/{id}(id=${usuario.id})}">Editar</a>
+                    <a class="badge bg-danger text-white"
+                       onclick="return confirm('¿Está seguro que desea eliminar este usuario?');"
+                       th:href="@{/usuarios/eliminar/{id}(id=${usuario.id})}">Eliminar</a>
+                  </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(entities)}">
+                  <td class="text-center text-muted" colspan="3">No se encontraron usuarios.</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<div th:replace="fragments/layout :: footer"></div>
+
+<!-- Scripts Datta Able -->
+<script src="../assets/js/plugins/simplebar.min.js"></script>
+<script src="../assets/js/plugins/popper.min.js"></script>
+<script src="../assets/js/plugins/feather.min.js"></script>
+<script src="../assets/js/component.js"></script>
+<script src="../assets/js/theme.js"></script>
+<script src="../assets/js/script.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        feather.replace();
+    });
+</script>
 </body>
 </html>

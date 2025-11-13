@@ -1,5 +1,7 @@
 package com.example.mycar.mycar_admin.domain;
 
+import com.example.mycar.mycar_admin.domain.enums.EstadoVehiculo;
+import com.example.mycar.mycar_admin.domain.enums.TipoImagen;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +11,6 @@ import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.util.Date;
-
-import com.example.mycar.mycar_admin.domain.enums.EstadoVehiculo;
-import com.example.mycar.mycar_admin.domain.enums.TipoImagen;
 
 @Getter
 @Setter

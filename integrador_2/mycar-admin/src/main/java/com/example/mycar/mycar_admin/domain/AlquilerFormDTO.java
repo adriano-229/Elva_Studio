@@ -1,12 +1,8 @@
 package com.example.mycar.mycar_admin.domain;
 
-import java.time.LocalDate;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -15,8 +11,8 @@ import lombok.Setter;
 @Builder
 public class AlquilerFormDTO {
 
-	private Long alquilerId;
-	private String vehiculoPatente;
+    private Long alquilerId;
+    private String vehiculoPatente;
     private LocalDate fechaDesde;
     private LocalDate fechaHasta;
     private Integer cantidadDias;

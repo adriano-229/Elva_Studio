@@ -1,11 +1,11 @@
 package com.example.mycar.mycar_admin.domain;
 
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 /**
  * DTO que representa un alquiler con su costo calculado.
@@ -31,7 +31,6 @@ public class AlquilerConCostoDTO {
     private Double porcentajeDescuento;
     private double descuento;
     private double totalConDescuento;
-    
-    
-    
+
+
 }

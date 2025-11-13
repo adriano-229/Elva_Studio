@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class PagoOnline extends Pago{
+public class PagoOnline extends Pago {
 
     private Long paymentId;  // el ID del pago que manda MercadoPago
 
