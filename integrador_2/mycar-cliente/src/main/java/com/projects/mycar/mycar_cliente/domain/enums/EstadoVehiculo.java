@@ -1,7 +1,6 @@
 package com.projects.mycar.mycar_cliente.domain.enums;
 
 public enum EstadoVehiculo {
-    DISPONIBLE,
-    ALQUILADO
+    Disponible, Alquilado
 
 }

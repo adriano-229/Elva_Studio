@@ -1,7 +1,6 @@
 package com.projects.mycar.mycar_cliente.domain.enums;
 
 public enum TipoDocumento {
-    DOCUMENTO_IDENTIDAD,
-    CARNET_DE_CONDUCIR
+    Carnet_de_conducir, Documento_de_identidad
 
 }

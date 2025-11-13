@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>My Car</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Tour
+  * Template URL: https://bootstrapmade.com/tour-bootstrap-travel-website-template/
+  * Updated: Jul 01 2025 with Bootstrap v5.3.7
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between" 
+    	th:replace="fragments/nav :: navbar">
+    </div>
+  </header> 
+
+  <main class="main">
+
+    <section id="travel-hero" class="travel-hero section dark-background">
+
+      <div class="hero-background">
+        <img src="assets/img/travel/portada.jpg" class="img-fluid rounded-4 w-100" alt="Portada" />
+        <div class="hero-overlay"></div>
+      </div>
+
+      <div class="container position-relative">
+        <div class="row align-items-center">
+          <div class="col-lg-7">
+            <div class="hero-text" data-aos="fade-up" data-aos-delay="100">
+              <h1 class="hero-title">Encuentra el auto ideal para tu proximo destino</h1>
+              <p class="hero-subtitle">Alquila en minutos, conduce con confianza y disfruta del viaje sin preocupaciones</p>
+              <div class="hero-buttons">
+                <a href="#" class="btn btn-primary me-3">Cotizar alquiler</a>
+                <a href="#" class="btn btn-outline">Ver autos disponibles</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="booking-form-wrapper" data-aos="fade-left" data-aos-delay="200">
+              <div class="booking-form">
+                <h3 class="form-title">Reserva tu auto</h3>
+                <form action="" class="">
+                  <div class="form-group mb-3">
+                    <label for="carSelect">Autos</label>
+                    <select name="carSelect" id="form-select" class="form-select" required="">
+                      <option value="">Elegi tu auto</option>  
+                    </select>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group mb-3">
+                        <label for="checkin">Desde</label>
+                        <input type="date" name="checkin" id="checkin" class="form-control" required="">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group mb-3">
+                        <label for="checkout">Hasta</label>
+                        <input type="date" name="checkout" id="checkout" class="form-control" required="">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group mb-3">
+                        <label for="adults">Cantidad de personas</label>
+                        <select name="adults" id="adults" class="form-select" required="">
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="4">5</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- 
+                    <div class="col-md-6">
+                      <div class="form-group mb-3">
+                        <label for="children">Children</label>
+                        <select name="children" id="children" class="form-select">
+                          <option value="0">No Children</option>
+                          <option value="1">1 Child</option>
+                          <option value="2">2 Children</option>
+                          <option value="3">3+ Children</option>
+                        </select>
+                      </div>
+                    </div>  -->
+                  </div>
+	
+                  <div class="form-group mb-3">
+                    <label for="tour-type">Extras</label>
+                    <div class="form-check">
+		                <input class="form-check-input" type="checkbox" value="gps" id="extraGps">
+		                <label class="form-check-label" for="extraGps">GPS</label>
+		            </div>
+		            <div class="form-check">
+		                <input class="form-check-input" type="checkbox" value="childSeat" id="extraChild">
+		                <label class="form-check-label" for="extraChild">Silla bebé</label>
+		            </div>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary w-100">Cotizar</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section><!-- /Travel Hero Section -->
+
+    <!-- Why Us Section -->
+    <section id="why-us" class="why-us section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <!-- About Us Content -->
+        <div class="row align-items-center mb-5">
+          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
+            <div class="content">
+              <h3>Recorré Mendoza con confianza </h3>
+              <p>En <strong>My Car</strong> te ofrecemos la libertad de explorar Mendoza a tu ritmo. 
+		      Ya sea que vengas por trabajo, vacaciones o aventura, tenemos el vehículo ideal para vos, 
+		      con atención personalizada y soporte durante todo tu viaje.</p>
+		
+		      <p>Contamos con una amplia flota de autos y cobertura en toda la provincia.
+		      Nos apasiona ayudarte a vivir experiencias únicas, seguras y cómodas.</p>
+		      <div class="stats-row">
+                <div class="stat-item">
+                  <span data-purecounter-start="0" data-purecounter-end="1200" data-purecounter-duration="2" class="purecounter">0</span>
+                  <div class="stat-label">Clientes Satisfechos</div>
+                </div>
+                <div class="stat-item">
+                  <span data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="2" class="purecounter">0</span>
+                  <div class="stat-label">Autos Disponibles</div>
+                </div>
+                <div class="stat-item">
+                  <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="2" class="purecounter">0</span>
+                  <div class="stat-label">Años de Experiencia</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
+            <div class="about-image">
+              <img src="assets/img/travel/paisaje2.jpg" alt="Travel Experience" class="img-fluid rounded-4">
+              <div class="experience-badge">
+                <div class="experience-number">15+</div>
+                <div class="experience-text">Años de Experiencia</div>
+              </div>
+            </div>
+          </div>
+        </div><!-- End About Us Content -->
+
+        <!-- Why Choose Us -->
+        <div class="why-choose-section">
+          <div class="row justify-content-center">
+            <div class="col-lg-8 text-center mb-5" data-aos="fade-up" data-aos-delay="100">
+              <h3>¿Por qué elegir <span style="color:#0055aa;">My Car</span> para tu próximo viaje?</h3>
+              <p>Conectamos a miles de viajeros con el auto perfecto para su recorrido en Mendoza. 
+		      Disfrutá de un servicio rápido, transparente y seguro desde el primer clic hasta la devolución del vehículo.</p>
+		      </div>
+          </div>
+
+          <div class="row g-4">
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <i class="bi bi-people-fill"></i>
+                </div>
+                <h4>Amplia flota</h4>
+                <p>Contamos con autos compactos. Elegí el vehículo ideal para cada tipo de viaje.</p>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="250">
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <i class="bi bi-shield-check"></i>
+                </div>
+                <h4>Seguridad y Confianza</h4>
+                <p>Todos nuestros autos están asegurados y pasan controles técnicos periódicos para tu tranquilidad.</p>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <i class="bi bi-cash"></i>
+                </div>
+                <h4>Precios Transparentes</h4>
+                <p>Sin costos ocultos. Conocé el valor total de tu alquiler antes de confirmar la reserva.</p>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="350">
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <i class="bi bi-headset"></i>
+                </div>
+                <h4>Retiro y Entrega Flexible</h4>
+                <p>Podés retirar o devolver el auto en distintos puntos de Mendoza, incluso en el aeropuerto.</p>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <i class="bi bi-geo-alt-fill"></i>
+                </div>
+                <h4>Atención Personalizada</h4>
+                <p>Estamos disponibles las 24 hs para asistirte antes, durante y después de tu alquiler</p>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="450">
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <i class="bi bi-star-fill"></i>
+                </div>
+                <h4>Experiencia Garantizada</h4>
+                <p>Más de 15 años acompañando a viajeros con un servicio de excelencia en toda la provincia.</p>
+              </div>
+            </div>
+          </div><!-- End Features Grid -->
+        </div><!-- End Why Choose Us -->
+
+      </div>
+
+    </section><!-- /Why Us Section -->
+
+    <!-- Featured Destinations Section -->
+    <section id="featured-destinations" class="featured-destinations section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Autos Destacados</h2>
+        <div><span>Elegí entre</span> <span class="description-title">nuestros modelos mas populares</span></div>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row">
+
+          <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="200">
+            <div class="featured-destination">
+              <div class="destination-overlay">
+                <img src="assets/img/travel/fordKuga.jpg" alt="Tropical Paradise" class="img-fluid">
+                <div class="destination-info">
+                  <span class="destination-tag">Mas alquilado</span>
+                  <h3>Ford Kuga</h3>
+                  <p class="location"><i class="bi bi-geo-alt-fill"></i>Ideal para rutas y montaña</p>
+                  <p class="description">Comodidad, potencia y espacio para toda la familia. Perfecto para recorrer Mendoza con estilo y seguridad.</p>
+                  <div class="destination-meta">
+                    <div class="tours-count">
+                      <i class="bi bi-collection"></i>
+                      <span>Automático</span>
+                    </div>
+                    <div class="rating">
+                      <i class="bi bi-star-fill"></i>
+                      <span>4.9 (320)</span>
+                    </div>
+                  </div>
+                  <div class="price-info">
+                    <span class="starting-from">Desde</span>
+                    <span class="amount">$28.000 / día</span>
+                  </div>
+                  <a href="destination-details.html" class="explore-btn">
+                    <span>Ver más</span>
+                    <i class="bi bi-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="row g-3">
+
+              <div class="col-12" data-aos="fade-left" data-aos-delay="300">
+                <div class="compact-destination">
+                  <div class="destination-image">
+                    <img src="assets/img/travel/fiatCronos.jpg" alt="Mountain Adventure" class="img-fluid">
+                    <div class="badge-offer">Económico</div>
+                  </div>
+                  <div class="destination-details">
+                    <h4>Fiat Cronos</h4>
+                    <p class="location"><i class="bi bi-geo-alt"></i> Ideal para la ciudad</p>
+                    <p class="brief">Perfecto para moverte cómodamente y ahorrar combustible.</p>
+                    <div class="stats-row">
+                      <span class="tour-count"><i class="bi bi-calendar-check"></i> 5 pasajeros</span>
+                      <span class="rating"><i class="bi bi-star-fill"></i> 4.8</span>
+                      <span class="price">desde $18.000 / día</span>
+                    </div>
+                    <a href="destination-details.html" class="quick-link">Ver más <i class="bi bi-chevron-right"></i></a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12" data-aos="fade-left" data-aos-delay="400">
+                <div class="compact-destination">
+                  <div class="destination-image">
+                    <img src="assets/img/travel/amarokV6.jpg" alt="Cultural Heritage" class="img-fluid">
+                  </div>
+                  <div class="destination-details">
+                    <h4>Amarok v6</h4>
+                    <p class="location"><i class="bi bi-geo-alt"></i> 4x4</p>
+                    <p class="brief">Para aventuras off-road. Rendimiento y tracción para recorrer zonas rurales o caminos de montaña.</p>
+                    <div class="stats-row">
+                      <span class="tour-count"><i class="bi bi-calendar-check"></i> Diesel</span>
+                      <span class="rating"><i class="bi bi-star-fill"></i> 4.7</span>
+                      <span class="price">desde $32.000 / día</span>
+                    </div>
+                    <a href="destination-details.html" class="quick-link">Ver más <i class="bi bi-chevron-right"></i></a>
+                  </div>
+                </div>
+              </div>
+			  
+              <div class="col-12" data-aos="fade-left" data-aos-delay="500">
+                <div class="compact-destination">
+                  <div class="destination-image">
+                    <img src="assets/img/travel/peugot208.jpg" alt="Safari Experience" class="img-fluid">
+                    <div class="badge-offer limited">Popular en Mendoza</div>
+                  </div>
+                  <div class="destination-details">
+                    <h4>Peugot 208</h4>
+                    <p class="location"><i class="bi bi-geo-alt"></i> Ideal para la ciudad y escapadas</p>
+                    <p class="brief">Compacto, económico y con excelente maniobrabilidad en zonas urbanas de Mendoza.</p>
+                    <div class="stats-row">
+                      <span class="tour-count"><i class="bi bi-calendar-check"></i>5 pasajeros</span>
+                      <span class="rating"><i class="bi bi-star-fill"></i> 4.9</span>
+                      <span class="price">desde $16.000/ día</span>
+                    </div>
+                    <a href="destination-details.html" class="quick-link">Ver más <i class="bi bi-chevron-right"></i></a>
+                  </div>
+                </div>
+              </div> 
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section><!-- /Featured Destinations Section -->
+
+    <!-- Featured Tours Section -->
+    <section id="featured-tours" class="featured-tours section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Experiencias imperdibles en la ciudad</h2>
+        <div><span>Descubrí</span> <span class="description-title">las mejores rutas para recorrer Mendoza</span></div>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="tour-card">
+              <div class="tour-image">
+                <img src="assets/img/travel/rutaDelVino.jpg" alt="Serene Beach Retreat" class="img-fluid" loading="lazy">
+                <div class="tour-badge">Imperdible</div>
+                <div class="tour-price">120 km</div>
+              </div>
+              <div class="tour-content">
+                <h4>Ruta del Vino - Valle de Uco</h4>
+                <div class="tour-meta">
+                  <span class="duration"><i class="bi bi-clock"></i> Desde Mendoza Capital</span>
+                  <span class="group-size"><i class="bi bi-people"></i> Ideal para día completo</span>
+                </div>
+                <p>Degustaciones, viñedos y paisajes únicos entre Tupungato, Tunuyán y San Carlos.</p>
+                <div class="tour-action">
+                  <a href="booking.html" class="btn-book">Ver más</a>
+                  <div class="tour-rating">    
+                    <span>4.8 (95)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- End Tour Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="tour-card">
+              <div class="tour-image">
+                <img src="assets/img/travel/altaMontania.jpg" alt="Arctic Expedition" class="img-fluid" loading="lazy">
+                <div class="tour-badge limited">Aventura</div>
+                <div class="tour-price">190 km</div>
+              </div>
+              <div class="tour-content">
+                <h4>Camino a Alta Montaña</h4>
+                <div class="tour-meta">
+                  <span class="duration"><i class="bi bi-clock"></i> 1 dia</span>
+                  <span class="group-size"><i class="bi bi-people"></i> Paisajes Imperdibles</span>
+                </div>
+                <p>Pasá por Potrerillos, Uspallata y el imponente Puente del Inca hasta el Aconcagua.</p>
+                
+                <div class="tour-action">
+                  <a href="booking.html" class="btn-book">Ver más</a>
+                  <div class="tour-rating">
+                    <span>4.6 (55)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- End Tour Item -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+            <div class="tour-card">
+              <div class="tour-image">
+                <img src="assets/img/travel/atuel.png" alt="Desert Safari" class="img-fluid" loading="lazy">
+                <div class="tour-badge new">Recomendado</div>
+                <div class="tour-price">230 km</div>
+              </div>
+              <div class="tour-content">
+                <h4>Cañón del Atuel – San Rafael</h4>
+                <div class="tour-meta">
+                  <span class="duration"><i class="bi bi-clock"></i> San rafael</span>
+                  <span class="group-size"><i class="bi bi-people"></i> Ideal en camioneta</span>
+                </div>
+                <p>Conducí entre montañas, diques y el río Atuel en uno de los paisajes más impactantes de Mendoza.</p> 
+                <div class="tour-action">
+                  <a href="booking.html" class="btn-book">Ver más</a>
+                  <div class="tour-rating">
+                    <span>4.9 (72)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div><!-- End Tour Item -->         
+
+        </div>
+       
+      </div>
+
+    </section><!-- /Featured Tours Section -->
+
+    <!-- Testimonials Home Section -->
+    <section id="testimonials-home" class="testimonials-home section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Opiniones</h2>
+        <div><span>Lo que nuestros clientes</span> <span class="description-title">opinan de My Car</span></div>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="swiper init-swiper">
+          <script type="application/json" class="swiper-config">
+            {
+              "loop": true,
+              "speed": 600,
+              "autoplay": {
+                "delay": 5000
+              },
+              "slidesPerView": "auto",
+              "pagination": {
+                "el": ".swiper-pagination",
+                "type": "bullets",
+                "clickable": true
+              },
+              "breakpoints": {
+                "320": {
+                  "slidesPerView": 1,
+                  "spaceBetween": 40
+                },
+                "1200": {
+                  "slidesPerView": 3,
+                  "spaceBetween": 1
+                }
+              }
+            }
+          </script>
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  <span>Alquilé un auto por cuatro días para un viaje al Valle de Uco. Todo excelente: el vehículo estaba impecable y siempre estuvieron en contacto para cualquier duda. Muy buena experiencia.</span>
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
+                <img src="assets/img/person/person-m-9.webp" class="testimonial-img" alt="">
+                <h3>Martin Gonzales</h3>
+                <h4>Godoy Cruz, Mendoza</h4>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  <span>Necesitaba un auto por el fin de semana y fue todo rapidísimo. Me entregaron un vehículo limpio, con el tanque lleno y el personal siempre disponible por WhatsApp. Lo recomiendo sin dudar.</span>
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
+                <img src="assets/img/person/person-f-5.webp" class="testimonial-img" alt="">
+                <h3>Lucia Perez</h3>
+                <h4>San Juan, Argentina</h4>
+              </div>
+            </div><!-- End testimonial item -->
+            
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  <span>Alquilé un auto por trabajo durante tres días. No tuve ningún inconveniente y la comunicación fue excelente. Me avisaron por mensaje antes de la devolución y todo fue muy fácil.</span>
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
+                <img src="assets/img/person/person-m-6.webp" class="testimonial-img" alt="">
+                <h3>Federico Lopez</h3>
+                <h4>Buenos Aires, Argentina</h4>
+              </div>
+            </div>
+              
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  <span>Tuve una muy buena experiencia con My car, ya habia alquilado autos antes, pero ellos me brindaron una experiencia inolvidable. Si vuelvo a Mendoza sin dudas los vuelvo a elejir.</span>
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
+                <img src="assets/img/person/person-f-9.webp" class="testimonial-img" alt="">
+                <h3>Martina Manzano</h3>
+                <h4>Santiago, Chile</h4>
+              </div>
+            </div>
+              
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  <span>Queria recomendar My car ya que la atencion fue un 10/10, cualquier duda que teniamos nos ayudaron al instante. Muy atentos!</span>
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
+                <img src="assets/img/person/person-m-10.webp" class="testimonial-img" alt="">
+                <h3>Martiniano Serra</h3>
+                <h4>Buenos Aires, Argentina</h4>
+              </div>
+            </div>
+              
+              
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  <span>Elegimos con mi familia una camioneta para poder ir a la motaña y recorrer los mejores lugares de Mendoza, sin duda una experiencia inolvidable. Repetiremos!</span>
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
+                <img src="assets/img/person/person-m-8.webp" class="testimonial-img" alt="">
+                <h3>Giuliana Vazquez</h3>
+                <h4>Tucuman, Argentina</h4>
+              </div>
+            </div><!-- End testimonial item -->
+
+            
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+
+    </section><!-- /Testimonials Home Section -->
+    
+	<section id="weather" class="section">
+		  <div class="container text-center">
+		    <h2>Clima actual en Mendoza</h2>
+		    <p id="temperature">Cargando temperatura...</p>
+		    <p id="description"></p>
+		    <img id="weather-icon" alt="Icono del clima" style="width: 80px; display:none;">
+		  </div>
+	</section>
+	
+   
+  </main>
+
+  <footer 
+        th:replace="fragments/footer :: footer">
+  </footer>
+  
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+  
+  <script>
+	  const apiKey = "mi api key real"; // reemplazá con tu key real
+	  const url = `https://api.openweathermap.org/data/2.5/weather?q=Mendoza,AR&units=metric&lang=es&appid=${apiKey}`;
+	
+	  async function obtenerClima() {
+	    try {
+	      const response = await fetch(url);
+	      const data = await response.json();
+	
+	      const temp = Math.round(data.main.temp);
+	      const desc = data.weather[0].description;
+	      const icon = data.weather[0].icon;
+	
+	      document.getElementById("temperature").textContent = `${temp}°C`;
+	      document.getElementById("description").textContent = desc.charAt(0).toUpperCase() + desc.slice(1);
+	      const iconElement = document.getElementById("weather-icon");
+	      iconElement.src = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+	      iconElement.style.display = "inline";
+	    } catch (error) {
+	      console.error("Error al obtener el clima:", error);
+	      document.getElementById("temperature").textContent = "No se pudo cargar el clima 😔";
+	    }
+	  }
+	
+	  obtenerClima();
+  </script>
+  
+	
+	
+</body>
+
+</html>
