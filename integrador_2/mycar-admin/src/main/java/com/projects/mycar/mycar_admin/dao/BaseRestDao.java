@@ -1,10 +1,10 @@
 package com.projects.mycar.mycar_admin.dao;
 
+import com.projects.mycar.mycar_admin.domain.BaseDTO;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
-
-import com.example.mycar.mycar_admin.domain.BaseDTO;
 
 
 public interface BaseRestDao<E extends BaseDTO, ID extends Serializable> {

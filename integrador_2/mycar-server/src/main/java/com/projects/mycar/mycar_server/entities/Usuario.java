@@ -1,0 +1,31 @@
+package com.projects.mycar.mycar_server.entities;
+
+import com.projects.mycar.mycar_server.enums.RolUsuario;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@EqualsAndHashCode(callSuper = true)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "usuario")
+public class Usuario extends Base {
+
+    @Column(name = "nombre_usuario", nullable = false, unique = true, length = 50)
+    private String nombreUsuario;
+
+    @Column(name = "clave", nullable = false)
+    private String clave;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "rol", nullable = false)
+    private RolUsuario rol;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "persona_id")
+    private Persona persona;
+}

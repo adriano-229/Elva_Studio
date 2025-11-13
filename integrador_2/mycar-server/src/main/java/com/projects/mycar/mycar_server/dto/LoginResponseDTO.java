@@ -1,0 +1,14 @@
+package com.projects.mycar.mycar_server.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+public class LoginResponseDTO {
+
+    private String token;
+    private boolean requiereCambioClave;
+}

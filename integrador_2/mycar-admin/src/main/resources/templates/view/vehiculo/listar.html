@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html data-pc-direction="ltr" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-theme="light" dir="ltr"
+      lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Vehículos | Dashboard</title>
+
+  <!-- Datta Able CSS -->
+  <link href="../assets/css/style.css" id="main-style-link" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div th:replace="fragments/layout :: sidebar"></div>
+<!-- Header -->
+<div th:replace="fragments/layout :: navbar"></div>
+
+<!-- Contenido principal -->
+<div class="pc-container">
+  <div class="pc-content">
+
+    <!-- Encabezado con título y botón Nuevo Vehículo -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
+      <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">Listado de Vehiculos</h3>
+    </div>
+
+    <div class="grid grid-cols-12 gap-x-6 mt-4">
+      <div class="col-span-12">
+
+        <!-- Mensajes de éxito o error -->
+        <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${successMessage}">
+          <span th:text="${successMessage}"></span>
+          <button class="btn-close" data-bs-dismiss="alert" type="button"></button>
+        </div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${errorMessage}">
+          <span th:text="${errorMessage}"></span>
+          <button class="btn-close" data-bs-dismiss="alert" type="button"></button>
+        </div>
+
+        <!-- Encabezado con filtros a la izquierda y botón a la derecha -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-6">
+
+          <!-- Filtros a la izquierda -->
+          <form class="flex flex-wrap items-end gap-3" method="get" th:action="@{/vehiculos/listar}">
+            <input class="form-control" name="busqueda" placeholder="Marca, Modelo o Patente"
+                   style="width: 180px;" th:value="${busqueda}" type="text">
+            <select class="form-select" name="estadoVehiculo" style="width: 140px;">
+              <option value="">Todos</option>
+              <option th:selected="${estadoVehiculo=='DISPONIBLE'}" value="DISPONIBLE">Disponible</option>
+              <option th:selected="${estadoVehiculo=='ALQUILADO'}" value="ALQUILADO">Alquilado</option>
+            </select>
+            <button class="btn btn-success" type="submit">Filtrar</button>
+            <a class="btn btn-secondary" th:href="@{/vehiculos/listar}">Limpiar</a>
+          </form>
+
+          <!-- Botón Nuevo Vehículo a la derecha -->
+          <a class="btn btn-primary flex items-center gap-2" th:href="@{/vehiculo/crear}">
+            <i data-feather="plus"></i> Nuevo Vehículo
+          </a>
+
+        </div>
+
+
+        <!-- Tabla de vehículos -->
+        <div class="card table-card">
+          <div class="card-header">
+            <h5>Vehículos</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th>Marca</th>
+                  <th>Modelo</th>
+                  <th>Año</th>
+                  <th>Asientos</th>
+                  <th>Patente</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="hover:bg-theme-bg-1/10 transition-colors" th:each="vehiculo : ${entities}">
+                  <td th:text="${vehiculo.caracteristicaVehiculo.marca}">Toyota</td>
+                  <td th:text="${vehiculo.caracteristicaVehiculo.modelo}">Corolla</td>
+                  <td th:text="${vehiculo.caracteristicaVehiculo.anio}">2023</td>
+                  <td th:text="${vehiculo.caracteristicaVehiculo.cantidadAsiento}">5</td>
+                  <td th:text="${vehiculo.patente}">ABC123</td>
+                  <td>
+                                                <span
+                                                    th:classappend="${vehiculo.estadoVehiculo=='DISPONIBLE'} ? 'badge bg-success' : 'badge bg-warning'"
+                                                    th:text="${vehiculo.estadoVehiculo}">
+                                                    Disponible
+                                                </span>
+                  </td>
+                  <td class="flex gap-1">
+                    <a class="badge bg-theme-bg-2 text-white" th:href="@{/vehiculos/detalle/{id}(id=${vehiculo.id})}">Ver</a>
+                    <a class="badge bg-theme-bg-1 text-white" th:href="@{/vehiculos/modificar/{id}(id=${vehiculo.id})}">Editar</a>
+                    <a class="badge bg-danger text-white"
+                       onclick="return confirm('¿Está seguro que desea eliminar este vehículo?');"
+                       th:href="@{/vehiculos/eliminar/{id}(id=${vehiculo.id})}">Eliminar</a>
+                  </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(entities)}">
+                  <td class="text-center text-muted" colspan="7">No se encontraron vehículos.</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<div th:replace="fragments/layout :: footer"></div>
+
+<!-- Scripts Datta Able -->
+<script src="../assets/js/plugins/simplebar.min.js"></script>
+<script src="../assets/js/plugins/popper.min.js"></script>
+<script src="../assets/js/plugins/feather.min.js"></script>
+<script src="../assets/js/component.js"></script>
+<script src="../assets/js/theme.js"></script>
+<script src="../assets/js/script.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        feather.replace();
+    });
+</script>
+</body>
+</html>

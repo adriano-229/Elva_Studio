@@ -1,9 +1,8 @@
 package com.projects.mycar.mycar_admin.controller;
 
+import com.projects.mycar.mycar_admin.domain.BaseDTO;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.example.mycar.mycar_admin.domain.BaseDTO;
 
 import java.io.Serializable;
 

@@ -15,5 +15,4 @@ public class CostoVehiculoDTO extends BaseDTO {
     private Date fechaDesde;
     private Date fechaHasta;
     private BigDecimal costo;
-
 }

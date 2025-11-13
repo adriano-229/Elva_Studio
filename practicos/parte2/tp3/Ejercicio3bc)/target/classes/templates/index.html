@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html th:replace="~{fragments/layout :: layout(~{::title}, ~{::div})}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <title>Inicio</title>
+</head>
+<body>
+<div>
+  <h2>Bienvenido al Sistema TP1</h2>
+  <div sec:authorize="hasRole('ADMIN')">
+    <h3>Panel de Administrador</h3>
+    <p>Como administrador, tienes acceso completo al sistema.</p>
+  </div>
+  <div sec:authorize="hasRole('USUARIO')">
+    <h3>Panel de Usuario</h3>
+    <p>Puedes modificar empresas y proveedores existentes.</p>
+  </div>
+</div>
+</body>
+</html>

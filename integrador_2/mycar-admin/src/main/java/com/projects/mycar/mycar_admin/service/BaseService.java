@@ -1,10 +1,10 @@
 package com.projects.mycar.mycar_admin.service;
 
 
+import com.projects.mycar.mycar_admin.domain.BaseDTO;
+
 import java.io.Serializable;
 import java.util.List;
-
-import com.example.mycar.mycar_admin.domain.BaseDTO;
 
 // hacemos que el id sea generico para poder reutilizarlo
 public interface BaseService<E extends BaseDTO, ID extends Serializable> {

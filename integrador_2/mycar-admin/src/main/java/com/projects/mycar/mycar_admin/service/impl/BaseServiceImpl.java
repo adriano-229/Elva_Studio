@@ -1,11 +1,11 @@
 package com.projects.mycar.mycar_admin.service.impl;
 
+import com.projects.mycar.mycar_admin.dao.BaseRestDao;
+import com.projects.mycar.mycar_admin.domain.BaseDTO;
+import com.projects.mycar.mycar_admin.service.BaseService;
+
 import java.io.Serializable;
 import java.util.List;
-
-import com.example.mycar.mycar_admin.domain.BaseDTO;
-import com.projects.mycar.mycar_admin.dao.BaseRestDao;
-import com.projects.mycar.mycar_admin.service.BaseService;
 
 
 public abstract class BaseServiceImpl<E extends BaseDTO, ID extends Serializable> implements BaseService<E, ID> {
@@ -53,6 +53,7 @@ public abstract class BaseServiceImpl<E extends BaseDTO, ID extends Serializable
     public void save(E entity) throws Exception {
         try {
             validar(entity);
+            beforeSave(entity);
             dao.crear(entity);
 
         } catch (Exception e) {
@@ -91,5 +92,7 @@ public abstract class BaseServiceImpl<E extends BaseDTO, ID extends Serializable
             throw e;
         }
     }
+
+    protected abstract void beforeSave(E entity) throws Exception;
 
 }

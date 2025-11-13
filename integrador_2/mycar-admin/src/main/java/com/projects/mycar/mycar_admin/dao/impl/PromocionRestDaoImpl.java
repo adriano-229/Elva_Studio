@@ -1,62 +1,61 @@
 package com.projects.mycar.mycar_admin.dao.impl;
 
+import com.projects.mycar.mycar_admin.dao.PromocionRestDao;
+import com.projects.mycar.mycar_admin.domain.ConfiguracionPromocionDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
-import com.example.mycar.mycar_admin.domain.ConfiguracionPromocionDTO;
-import com.projects.mycar.mycar_admin.dao.PromocionRestDao;
-
 @Repository
-public class PromocionRestDaoImpl extends BaseRestDaoImpl<ConfiguracionPromocionDTO, Long> implements PromocionRestDao{
+public class PromocionRestDaoImpl extends BaseRestDaoImpl<ConfiguracionPromocionDTO, Long> implements PromocionRestDao {
 
-	public PromocionRestDaoImpl() {
-		super(ConfiguracionPromocionDTO.class, ConfiguracionPromocionDTO[].class, "http://localhost:9000/api/promociones");
-	}
+    public PromocionRestDaoImpl() {
+        super(ConfiguracionPromocionDTO.class, ConfiguracionPromocionDTO[].class, "http://localhost:9000/api/promociones");
+    }
 
-	@Override
-	public ConfiguracionPromocionDTO configurarPromocion(ConfiguracionPromocionDTO configuracion) throws Exception {
-		try {
-			
-			String uri = baseUrl + "/configurar";
+    @Override
+    public ConfiguracionPromocionDTO configurarPromocion(ConfiguracionPromocionDTO configuracion) throws Exception {
+        try {
 
-	        ResponseEntity<ConfiguracionPromocionDTO> response = restTemplate.postForEntity(
-	                uri,
-	                configuracion,          
-	                ConfiguracionPromocionDTO.class   
-	        );
-			
-	        return response.getBody();
-			
-		} catch (Exception e) {
-			throw new Exception("Error al configurar promocion, e");
-		}
-	}
+            String uri = baseUrl + "/configurar";
 
-	@Override
-	public ConfiguracionPromocionDTO obtenerConfiguracionActiva() throws Exception {
-		
-		try {
-			
-			String uri = baseUrl + "//configuracion-activa";
-			ResponseEntity<ConfiguracionPromocionDTO> response = restTemplate.getForEntity(
-	                uri,         
-	                ConfiguracionPromocionDTO.class   
-	        );
-			
-			return response.getBody();
-			
-			
-		} catch (Exception e) {
-			throw new Exception("Error al obtener configuracion activa", e);
-		}
-		
-		
-	}
+            ResponseEntity<ConfiguracionPromocionDTO> response = restTemplate.postForEntity(
+                    uri,
+                    configuracion,
+                    ConfiguracionPromocionDTO.class
+            );
 
-	@Override
-	public String enviarPromocionesManual() throws Exception {
-		try {
-			
+            return response.getBody();
+
+        } catch (Exception e) {
+            throw new Exception("Error al configurar promocion, e");
+        }
+    }
+
+    @Override
+    public ConfiguracionPromocionDTO obtenerConfiguracionActiva() throws Exception {
+
+        try {
+
+            String uri = baseUrl + "//configuracion-activa";
+            ResponseEntity<ConfiguracionPromocionDTO> response = restTemplate.getForEntity(
+                    uri,
+                    ConfiguracionPromocionDTO.class
+            );
+
+            return response.getBody();
+
+
+        } catch (Exception e) {
+            throw new Exception("Error al obtener configuracion activa", e);
+        }
+
+
+    }
+
+    @Override
+    public String enviarPromocionesManual() throws Exception {
+        try {
+
             ResponseEntity<String> response = restTemplate.postForEntity(
                     baseUrl + "/enviar-manual",
                     null,
@@ -74,6 +73,6 @@ public class PromocionRestDaoImpl extends BaseRestDaoImpl<ConfiguracionPromocion
             throw new RuntimeException("No se pudo conectar con el servicio de promociones: " + e.getMessage(), e);
         }
     }
-	
+
 
 }

@@ -1,17 +1,25 @@
 package com.projects.mycar.mycar_cliente.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.projects.mycar.mycar_cliente.domain.enums.TipoImagen;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.SuperBuilder;
+import lombok.*;
 
-@SuperBuilder
-@Data
-@EqualsAndHashCode(callSuper = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ImagenDTO extends BaseDTO {
+
     private String nombre;
+
     private String mime;
-    private String url;
+
+    private byte[] contenido;
+
+    private String ruta;
+
     private TipoImagen tipoImagen;
 
 
