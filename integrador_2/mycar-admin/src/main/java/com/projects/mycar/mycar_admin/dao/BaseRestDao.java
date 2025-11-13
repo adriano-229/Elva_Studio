@@ -1,6 +1,6 @@
 package com.projects.mycar.mycar_admin.dao;
 
-import com.example.mycar.mycar_admin.domain.BaseDTO;
+import com.projects.mycar.mycar_admin.domain.BaseDTO;
 
 import java.io.Serializable;
 import java.util.List;

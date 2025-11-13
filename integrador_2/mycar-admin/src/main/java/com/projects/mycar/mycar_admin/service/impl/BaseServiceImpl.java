@@ -1,7 +1,7 @@
 package com.projects.mycar.mycar_admin.service.impl;
 
-import com.example.mycar.mycar_admin.domain.BaseDTO;
 import com.projects.mycar.mycar_admin.dao.BaseRestDao;
+import com.projects.mycar.mycar_admin.domain.BaseDTO;
 import com.projects.mycar.mycar_admin.service.BaseService;
 
 import java.io.Serializable;

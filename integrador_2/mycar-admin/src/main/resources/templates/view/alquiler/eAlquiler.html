@@ -56,7 +56,8 @@
                 <input required th:field="*{vehiculoId}" type="hidden">
                 <div class="text-center mb-3">
                   <img alt="Imagen del vehículo" class="img-fluid rounded"
-                       style="max-height:250px; object-fit:cover;" th:src="@{${vehiculoSeleccionado.caracteristicaVehiculo.imagen}}">
+                       style="max-height:250px; object-fit:cover;"
+                       th:src="@{${vehiculoSeleccionado.caracteristicaVehiculo.imagen}}">
                 </div>
                 <h5 class="text-center mb-2"
                     th:text="${vehiculoSeleccionado.caracteristicaVehiculo.marca} + ' ' + ${vehiculoSeleccionado.caracteristicaVehiculo.modelo}"></h5>
@@ -137,7 +138,7 @@
                 <label class="form-label">Tipo de Documento</label>
                 <select class="form-select" required th:field="*{alquiler.documentacion.tipoDocumentacion}">
                   <option disabled selected value="">-- Selecciona un tipo --</option>
-                  <option th:each="tipo : ${T(com.example.mycar.mycar_admin.domain.enums.TipoDocumentacion).values()}"
+                  <option th:each="tipo : ${T(com.projects.mycar.mycar_admin.domain.enums.TipoDocumentacion).values()}"
                           th:text="${tipo}"
                           th:value="${tipo}"></option>
                 </select>

@@ -1,7 +1,7 @@
 package com.projects.mycar.mycar_admin.dao;
 
-import com.example.mycar.mycar_admin.domain.VehiculoDTO;
-import com.example.mycar.mycar_admin.domain.enums.EstadoVehiculo;
+import com.projects.mycar.mycar_admin.domain.VehiculoDTO;
+import com.projects.mycar.mycar_admin.domain.enums.EstadoVehiculo;
 
 import java.time.LocalDate;
 import java.util.List;

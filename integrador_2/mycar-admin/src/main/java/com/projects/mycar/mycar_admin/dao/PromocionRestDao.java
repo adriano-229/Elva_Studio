@@ -1,6 +1,6 @@
 package com.projects.mycar.mycar_admin.dao;
 
-import com.example.mycar.mycar_admin.domain.ConfiguracionPromocionDTO;
+import com.projects.mycar.mycar_admin.domain.ConfiguracionPromocionDTO;
 
 public interface PromocionRestDao extends BaseRestDao<ConfiguracionPromocionDTO, Long> {
 

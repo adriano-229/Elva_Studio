@@ -1,6 +1,6 @@
 package com.projects.mycar.mycar_admin.controller;
 
-import com.example.mycar.mycar_admin.domain.ConfiguracionPromocionDTO;
+import com.projects.mycar.mycar_admin.domain.ConfiguracionPromocionDTO;
 import com.projects.mycar.mycar_admin.service.impl.PromocionServiceImpl;
 import lombok.Getter;
 import org.springframework.stereotype.Controller;

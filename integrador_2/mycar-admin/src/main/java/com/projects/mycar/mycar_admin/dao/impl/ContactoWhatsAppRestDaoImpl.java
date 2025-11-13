@@ -1,6 +1,6 @@
 package com.projects.mycar.mycar_admin.dao.impl;
 
-import com.example.mycar.mycar_admin.domain.contacto.ContactoWhatsappResponse;
+import com.projects.mycar.mycar_admin.domain.contacto.ContactoWhatsappResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;

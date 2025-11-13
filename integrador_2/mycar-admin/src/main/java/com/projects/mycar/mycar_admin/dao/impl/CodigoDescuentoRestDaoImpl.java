@@ -1,7 +1,7 @@
 package com.projects.mycar.mycar_admin.dao.impl;
 
-import com.example.mycar.mycar_admin.domain.CodigoDescuentoDTO;
 import com.projects.mycar.mycar_admin.dao.CodigoDescuentoRestDao;
+import com.projects.mycar.mycar_admin.domain.CodigoDescuentoDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.util.UriComponentsBuilder;

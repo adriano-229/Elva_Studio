@@ -1,6 +1,6 @@
 package com.projects.mycar.mycar_admin.controller;
 
-import com.example.mycar.mycar_admin.domain.BaseDTO;
+import com.projects.mycar.mycar_admin.domain.BaseDTO;
 import com.projects.mycar.mycar_admin.service.impl.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;

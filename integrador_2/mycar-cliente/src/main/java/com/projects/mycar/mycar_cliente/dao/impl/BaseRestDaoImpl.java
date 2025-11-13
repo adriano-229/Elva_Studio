@@ -1,165 +1,165 @@
 package com.projects.mycar.mycar_cliente.dao.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.projects.mycar.mycar_cliente.dao.BaseRestDao;
+import com.projects.mycar.mycar_cliente.domain.BaseDTO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
+public abstract class BaseRestDaoImpl<E extends BaseDTO, ID extends Serializable> implements BaseRestDao<E, ID> {
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.projects.mycar.mycar_cliente.dao.BaseRestDao;
-import com.projects.mycar.mycar_cliente.domain.BaseDTO;
+    @Autowired
+    protected RestTemplate restTemplate;
 
-public abstract class BaseRestDaoImpl<E extends BaseDTO, ID extends Serializable> implements BaseRestDao<E, ID>  {
-	
-	@Autowired
-	protected RestTemplate restTemplate;
-	
-	//para hacerlo generico declaramos este atributo que va a ser inicializado por medio del constructor
-	protected Class<E> entityClass;
-	
-	protected String baseUrl;
-	
-	protected Class<E[]> entityArrayClass;
-	
-	public BaseRestDaoImpl(Class<E> entityClass, Class<E[]> entityArrayClass, String baseUrl) {
-		this.entityClass = entityClass;
-		this.baseUrl = baseUrl;
-		this.entityArrayClass = entityArrayClass;
-	}
-	
-	@Override
-	public void crear(E dto) throws Exception {
-		
-		try {
-			 
-			 restTemplate.postForEntity(baseUrl, dto, entityClass);
-		     
-	      } catch (Exception e){
-	          e.printStackTrace();
-	          throw new Exception("Error al crear entidad", e);
-	      }
-		
-	}
+    //para hacerlo generico declaramos este atributo que va a ser inicializado por medio del constructor
+    protected Class<E> entityClass;
 
-	@Override
-	public void actualizar(E dto) throws Exception {
+    protected String baseUrl;
 
-		try {
-			 
-			 String uri = baseUrl + "/{id}";
-			 
-			 restTemplate.put(uri, dto, dto.getId());
-		     
-	      } catch (Exception e){
-	          e.printStackTrace();
-	          throw new Exception("Error al actualizar entidad", e);
-	      }
-		
-	}
+    protected Class<E[]> entityArrayClass;
 
-	@Override
-	public void eliminar(ID id) throws Exception {
-	    try {
-	        String uri = baseUrl + "/{id}";
-	        restTemplate.delete(uri, id);
+    public BaseRestDaoImpl(Class<E> entityClass, Class<E[]> entityArrayClass, String baseUrl) {
+        this.entityClass = entityClass;
+        this.baseUrl = baseUrl;
+        this.entityArrayClass = entityArrayClass;
+    }
 
-	    } catch (HttpClientErrorException e) {
-	        // Mostrar respuesta cruda para depurar
-	        String respuesta = e.getResponseBodyAsString();
-	        System.out.println(">>> RESPUESTA DEL SERVIDOR: " + respuesta);
+    @Override
+    public void crear(E dto) throws Exception {
 
-	        String mensajeError = null;
-	        try {
-	            ObjectMapper mapper = new ObjectMapper();
+        try {
 
-	            // Parseamos el JSON, permitiendo valores de cualquier tipo
-	            Map<String, Object> map = mapper.readValue(respuesta, new TypeReference<Map<String, Object>>() {});
+            restTemplate.postForEntity(baseUrl, dto, entityClass);
 
-	            // Buscamos la clave que contiene el mensaje
-	            if (map.containsKey("error")) {
-	                mensajeError = map.get("error").toString();
-	            } else if (map.containsKey("message")) {
-	                mensajeError = map.get("message").toString();
-	            } else {
-	                mensajeError = respuesta;
-	            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Error al crear entidad", e);
+        }
 
-	        } catch (Exception parseEx) {
-	            // Si falla el parseo, usamos el cuerpo completo
-	            mensajeError = respuesta;
-	        }
+    }
 
-	        // Lanzamos solo el mensaje legible
-	        throw new RuntimeException(mensajeError);
+    @Override
+    public void actualizar(E dto) throws Exception {
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        throw new Exception("Error al eliminar entidad", e);
-	    }
-	}
+        try {
+
+            String uri = baseUrl + "/{id}";
+
+            restTemplate.put(uri, dto, dto.getId());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Error al actualizar entidad", e);
+        }
+
+    }
+
+    @Override
+    public void eliminar(ID id) throws Exception {
+        try {
+            String uri = baseUrl + "/{id}";
+            restTemplate.delete(uri, id);
+
+        } catch (HttpClientErrorException e) {
+            // Mostrar respuesta cruda para depurar
+            String respuesta = e.getResponseBodyAsString();
+            System.out.println(">>> RESPUESTA DEL SERVIDOR: " + respuesta);
+
+            String mensajeError = null;
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+
+                // Parseamos el JSON, permitiendo valores de cualquier tipo
+                Map<String, Object> map = mapper.readValue(respuesta, new TypeReference<Map<String, Object>>() {
+                });
+
+                // Buscamos la clave que contiene el mensaje
+                if (map.containsKey("error")) {
+                    mensajeError = map.get("error").toString();
+                } else if (map.containsKey("message")) {
+                    mensajeError = map.get("message").toString();
+                } else {
+                    mensajeError = respuesta;
+                }
+
+            } catch (Exception parseEx) {
+                // Si falla el parseo, usamos el cuerpo completo
+                mensajeError = respuesta;
+            }
+
+            // Lanzamos solo el mensaje legible
+            throw new RuntimeException(mensajeError);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Error al eliminar entidad", e);
+        }
+    }
 
 
-	@Override
-	public Optional<E> buscarPorId(ID id) throws Exception {
-		
-		try {
-			
-			String uri = baseUrl + "/{id}";
-			ResponseEntity<E> response = restTemplate.getForEntity(uri, entityClass, id);
-			E entity = response.getBody();
-			
-			return Optional.ofNullable(entity);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Error al buscar entidad", e);
-		}
-		
-	}
-	
-	
-	@Override
-	public boolean existsById(ID id) throws Exception {
-		
-		try {
-			
-			String uri = baseUrl + "/{id}";
-			ResponseEntity<E> response = restTemplate.getForEntity(uri, entityClass, id);
-			
-			return response.getStatusCode().is2xxSuccessful();
-			
-		} catch (HttpClientErrorException.NotFound ex) {
-			
-			return false;
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Error de Sistemas");
-		}
-		
-	}
-	
+    @Override
+    public Optional<E> buscarPorId(ID id) throws Exception {
 
-	@Override
-	public List<E> listarActivo() throws Exception {
-		
-		try {
-			;
-			ResponseEntity<E[]> response = restTemplate.getForEntity(baseUrl, entityArrayClass);
-			E[] array = response.getBody();
-			return Arrays.asList(array);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Error al listar entidades", e);
-		}
-		
-	}
+        try {
+
+            String uri = baseUrl + "/{id}";
+            ResponseEntity<E> response = restTemplate.getForEntity(uri, entityClass, id);
+            E entity = response.getBody();
+
+            return Optional.ofNullable(entity);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Error al buscar entidad", e);
+        }
+
+    }
+
+
+    @Override
+    public boolean existsById(ID id) throws Exception {
+
+        try {
+
+            String uri = baseUrl + "/{id}";
+            ResponseEntity<E> response = restTemplate.getForEntity(uri, entityClass, id);
+
+            return response.getStatusCode().is2xxSuccessful();
+
+        } catch (HttpClientErrorException.NotFound ex) {
+
+            return false;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Error de Sistemas");
+        }
+
+    }
+
+
+    @Override
+    public List<E> listarActivo() throws Exception {
+
+        try {
+            ;
+            ResponseEntity<E[]> response = restTemplate.getForEntity(baseUrl, entityArrayClass);
+            E[] array = response.getBody();
+            return Arrays.asList(array);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Error al listar entidades", e);
+        }
+
+    }
 }

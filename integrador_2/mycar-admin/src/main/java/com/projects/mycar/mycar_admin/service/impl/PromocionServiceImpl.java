@@ -1,8 +1,8 @@
 package com.projects.mycar.mycar_admin.service.impl;
 
-import com.example.mycar.mycar_admin.domain.ConfiguracionPromocionDTO;
 import com.projects.mycar.mycar_admin.dao.BaseRestDao;
 import com.projects.mycar.mycar_admin.dao.impl.PromocionRestDaoImpl;
+import com.projects.mycar.mycar_admin.domain.ConfiguracionPromocionDTO;
 import com.projects.mycar.mycar_admin.service.PromocionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

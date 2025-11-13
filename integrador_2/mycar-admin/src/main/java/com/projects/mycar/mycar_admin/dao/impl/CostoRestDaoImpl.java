@@ -1,8 +1,8 @@
 package com.projects.mycar.mycar_admin.dao.impl;
 
-import com.example.mycar.mycar_admin.domain.AlquilerFormDTO;
-import com.example.mycar.mycar_admin.domain.PagareDTO;
 import com.projects.mycar.mycar_admin.dao.CostoRestDao;
+import com.projects.mycar.mycar_admin.domain.AlquilerFormDTO;
+import com.projects.mycar.mycar_admin.domain.PagareDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;

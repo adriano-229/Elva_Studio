@@ -1,6 +1,6 @@
 package com.projects.mycar.mycar_admin.service;
 
-import com.example.mycar.mycar_admin.domain.ConfiguracionPromocionDTO;
+import com.projects.mycar.mycar_admin.domain.ConfiguracionPromocionDTO;
 
 public interface PromocionService extends BaseService<ConfiguracionPromocionDTO, Long> {
 

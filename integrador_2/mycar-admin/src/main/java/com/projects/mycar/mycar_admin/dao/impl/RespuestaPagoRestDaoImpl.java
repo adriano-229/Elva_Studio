@@ -1,7 +1,7 @@
 package com.projects.mycar.mycar_admin.dao.impl;
 
-import com.example.mycar.mycar_admin.domain.RespuestaPagoDTO;
-import com.example.mycar.mycar_admin.domain.SolicitudPagoDTO;
+import com.projects.mycar.mycar_admin.domain.RespuestaPagoDTO;
+import com.projects.mycar.mycar_admin.domain.SolicitudPagoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;

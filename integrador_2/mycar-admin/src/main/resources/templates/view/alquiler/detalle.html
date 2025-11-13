@@ -354,8 +354,9 @@
                   <label class="form-label">Tipo de Documentación</label>
                   <select class="form-select" th:field="*{tipoDocumentacion}">
                     <option value="">Seleccione...</option>
-                    <option th:each="tipo : ${T(com.example.mycar.mycar_admin.domain.enums.TipoDocumentacion).values()}"
-                            th:text="${tipo}" th:value="${tipo}"></option>
+                    <option
+                        th:each="tipo : ${T(com.projects.mycar.mycar_admin.domain.enums.TipoDocumentacion).values()}"
+                        th:text="${tipo}" th:value="${tipo}"></option>
                   </select>
                 </div>
                 <div class="col-span-12 md:col-span-4">

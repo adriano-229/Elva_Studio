@@ -1,6 +1,6 @@
 package com.projects.mycar.mycar_admin.service;
 
-import com.example.mycar.mycar_admin.domain.FacturaDTO;
+import com.projects.mycar.mycar_admin.domain.FacturaDTO;
 
 import java.util.List;
 

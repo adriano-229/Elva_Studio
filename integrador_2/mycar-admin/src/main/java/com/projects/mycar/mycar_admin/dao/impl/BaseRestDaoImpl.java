@@ -1,9 +1,9 @@
 package com.projects.mycar.mycar_admin.dao.impl;
 
-import com.example.mycar.mycar_admin.domain.BaseDTO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projects.mycar.mycar_admin.dao.BaseRestDao;
+import com.projects.mycar.mycar_admin.domain.BaseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;

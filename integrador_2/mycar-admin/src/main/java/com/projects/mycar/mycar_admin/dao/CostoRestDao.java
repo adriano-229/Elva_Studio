@@ -1,7 +1,7 @@
 package com.projects.mycar.mycar_admin.dao;
 
-import com.example.mycar.mycar_admin.domain.AlquilerFormDTO;
-import com.example.mycar.mycar_admin.domain.PagareDTO;
+import com.projects.mycar.mycar_admin.domain.AlquilerFormDTO;
+import com.projects.mycar.mycar_admin.domain.PagareDTO;
 
 import java.util.List;
 

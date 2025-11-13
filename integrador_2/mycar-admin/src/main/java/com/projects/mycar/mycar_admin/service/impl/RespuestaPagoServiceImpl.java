@@ -1,8 +1,8 @@
 package com.projects.mycar.mycar_admin.service.impl;
 
-import com.example.mycar.mycar_admin.domain.RespuestaPagoDTO;
-import com.example.mycar.mycar_admin.domain.SolicitudPagoDTO;
 import com.projects.mycar.mycar_admin.dao.impl.RespuestaPagoRestDaoImpl;
+import com.projects.mycar.mycar_admin.domain.RespuestaPagoDTO;
+import com.projects.mycar.mycar_admin.domain.SolicitudPagoDTO;
 import com.projects.mycar.mycar_admin.service.RespuestaPagoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

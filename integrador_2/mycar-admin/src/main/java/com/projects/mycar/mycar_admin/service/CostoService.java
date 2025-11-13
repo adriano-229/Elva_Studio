@@ -1,6 +1,6 @@
 package com.projects.mycar.mycar_admin.service;
 
-import com.example.mycar.mycar_admin.domain.AlquilerFormDTO;
+import com.projects.mycar.mycar_admin.domain.AlquilerFormDTO;
 
 public interface CostoService {
 

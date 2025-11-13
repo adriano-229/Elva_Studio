@@ -1,6 +1,6 @@
 package com.projects.mycar.mycar_admin.service;
 
-import com.example.mycar.mycar_admin.domain.AlquilerDTO;
+import com.projects.mycar.mycar_admin.domain.AlquilerDTO;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.projects.mycar.mycar_admin.dao.impl;
 
-import com.example.mycar.mycar_admin.domain.ConfiguracionPromocionDTO;
 import com.projects.mycar.mycar_admin.dao.PromocionRestDao;
+import com.projects.mycar.mycar_admin.domain.ConfiguracionPromocionDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 

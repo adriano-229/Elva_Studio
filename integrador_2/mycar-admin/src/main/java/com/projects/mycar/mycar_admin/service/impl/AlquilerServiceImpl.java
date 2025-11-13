@@ -1,9 +1,9 @@
 package com.projects.mycar.mycar_admin.service.impl;
 
-import com.example.mycar.mycar_admin.domain.AlquilerDTO;
-import com.example.mycar.mycar_admin.domain.DocumentacionDTO;
 import com.projects.mycar.mycar_admin.dao.BaseRestDao;
 import com.projects.mycar.mycar_admin.dao.impl.AlquilerRestDaoImpl;
+import com.projects.mycar.mycar_admin.domain.AlquilerDTO;
+import com.projects.mycar.mycar_admin.domain.DocumentacionDTO;
 import com.projects.mycar.mycar_admin.service.AlquilerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

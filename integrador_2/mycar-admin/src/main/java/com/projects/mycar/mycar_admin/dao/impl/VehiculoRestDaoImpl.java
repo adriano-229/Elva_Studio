@@ -1,8 +1,8 @@
 package com.projects.mycar.mycar_admin.dao.impl;
 
-import com.example.mycar.mycar_admin.domain.VehiculoDTO;
-import com.example.mycar.mycar_admin.domain.enums.EstadoVehiculo;
 import com.projects.mycar.mycar_admin.dao.VehiculoRestDao;
+import com.projects.mycar.mycar_admin.domain.VehiculoDTO;
+import com.projects.mycar.mycar_admin.domain.enums.EstadoVehiculo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.util.UriComponentsBuilder;

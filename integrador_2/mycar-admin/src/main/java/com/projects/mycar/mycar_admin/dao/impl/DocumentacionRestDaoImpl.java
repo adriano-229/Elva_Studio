@@ -1,7 +1,7 @@
 package com.projects.mycar.mycar_admin.dao.impl;
 
-import com.example.mycar.mycar_admin.domain.DocumentacionDTO;
 import com.projects.mycar.mycar_admin.dao.DocumentacionRestDao;
+import com.projects.mycar.mycar_admin.domain.DocumentacionDTO;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

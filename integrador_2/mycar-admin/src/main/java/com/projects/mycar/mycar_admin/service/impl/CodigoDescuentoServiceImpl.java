@@ -1,8 +1,8 @@
 package com.projects.mycar.mycar_admin.service.impl;
 
-import com.example.mycar.mycar_admin.domain.CodigoDescuentoDTO;
 import com.projects.mycar.mycar_admin.dao.BaseRestDao;
 import com.projects.mycar.mycar_admin.dao.impl.CodigoDescuentoRestDaoImpl;
+import com.projects.mycar.mycar_admin.domain.CodigoDescuentoDTO;
 import com.projects.mycar.mycar_admin.service.CodigoDescuentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

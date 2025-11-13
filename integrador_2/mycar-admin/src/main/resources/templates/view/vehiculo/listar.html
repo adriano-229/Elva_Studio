@@ -90,8 +90,9 @@
                   <td th:text="${vehiculo.caracteristicaVehiculo.cantidadAsiento}">5</td>
                   <td th:text="${vehiculo.patente}">ABC123</td>
                   <td>
-                                                <span th:classappend="${vehiculo.estadoVehiculo=='DISPONIBLE'} ? 'badge bg-success' : 'badge bg-warning'"
-                                                      th:text="${vehiculo.estadoVehiculo}">
+                                                <span
+                                                    th:classappend="${vehiculo.estadoVehiculo=='DISPONIBLE'} ? 'badge bg-success' : 'badge bg-warning'"
+                                                    th:text="${vehiculo.estadoVehiculo}">
                                                     Disponible
                                                 </span>
                   </td>

@@ -1,7 +1,7 @@
 package com.projects.mycar.mycar_admin.dao.impl;
 
-import com.example.mycar.mycar_admin.domain.UsuarioDTO;
 import com.projects.mycar.mycar_admin.dao.UsuarioRestDao;
+import com.projects.mycar.mycar_admin.domain.UsuarioDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 

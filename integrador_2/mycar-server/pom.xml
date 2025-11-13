@@ -11,7 +11,6 @@
     <groupId>com.projects</groupId>
     <artifactId>mycar-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>mycar</name>
     <url/>
     <licenses>
         <license/>

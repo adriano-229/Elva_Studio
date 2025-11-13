@@ -2,15 +2,7 @@ package com.projects.mycar.mycar_cliente.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
+import lombok.*;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
