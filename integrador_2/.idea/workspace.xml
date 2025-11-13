@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="40f87d1c-9354-4d17-97c2-85fe742450be" name="Changes" comment="Package and modules normalization." />
+    <list id="e56235ff-d7e6-4726-aae8-875b6c491698" name="Ignore" comment="Ignore">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.agent.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.ask.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.ask2agent.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.edit.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/integrador_2.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_11_2025,_12_25_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_11_2025,_12_25_[Changes]1/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_11_2025__12_25__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_13_11_2025__12_25__Changes_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../practicos/parte2/tp1/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../practicos/parte2/tp5/Ejercicio5f)/.idea/Ejercicio5f).iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../practicos/parte2/tp5/Ejercicio5f)/.idea/copilot.data.migration.agent.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../practicos/parte2/tp5/Ejercicio5f)/.idea/copilot.data.migration.ask.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../practicos/parte2/tp5/Ejercicio5f)/.idea/copilot.data.migration.ask2agent.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../practicos/parte2/tp5/Ejercicio5f)/.idea/copilot.data.migration.edit.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../practicos/parte2/tp5/Ejercicio5f)/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../practicos/parte2/tp5/Ejercicio5f)/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../practicos/parte2/tp5/Ejercicio5f)/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../practicos/parte2/tp5/Ejercicio5f)/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="module" />
+      <option value="repository" />
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$/.." source="adriano" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="merge-adriano-trinidad-cliente" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;adriano-229&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:adriano-229/Elva_Studio.git&quot;,
+    &quot;accountId&quot;: &quot;90582b1b-05dc-4c51-adb1-357f51501044&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="35OqFf5acMHqY3AysBNpqHr7QIl" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="openDirectoriesWithSingleClick" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.MyCarAdminApplication.executor": "Run",
+    "Spring Boot.MyCarClienteApplication.executor": "Run",
+    "Spring Boot.MyCarServerApplication.executor": "Run",
+    "Spring Boot.MycarAdminApplication.executor": "Run",
+    "Spring Boot.MycarApplication.executor": "Run",
+    "Spring Boot.MycarClienteApplication.executor": "Run",
+    "git-widget-placeholder": "adriano",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/adriano/repos/Elva_Studio/integrador_2/mycar-server",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "application.passwordSafe",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="KtorApplicationConfigurationType" />
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+    <option name="configurationStatuses">
+      <map>
+        <entry key="SpringBootApplicationConfigurationType">
+          <value>
+            <map>
+              <entry key="MyCarAdminApplication" value="STOPPED" />
+              <entry key="MyCarClienteApplication" value="STOPPED" />
+              <entry key="MyCarServerApplication" value="STOPPED" />
+            </map>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.MyCarClienteApplication">
+    <configuration name="MyCarAdminApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="mycar-admin" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.projects.mycar.mycar_admin.MyCarAdminApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MyCarClienteApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="mycar-cliente" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.projects.mycar.mycar_cliente.MyCarClienteApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.projects.mycar.mycar_cliente.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MyCarServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <envs>
+        <env name="DB_NAME" value="mycar" />
+        <env name="DB_PASSWORD" value="adriano" />
+        <env name="DB_USERNAME" value="adriano" />
+        <env name="MAIL_PASSWORD" value="jlgq xszr jmvm xtuq" />
+        <env name="MAIL_USERNAME" value="adrianosfabris@gmail.com" />
+      </envs>
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="mycar-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.mycar.MyCarServerApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.mycar.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.MyCarAdminApplication" />
+      <item itemvalue="Spring Boot.MyCarServerApplication" />
+      <item itemvalue="Spring Boot.MyCarClienteApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.MycarClienteApplication" />
+        <item itemvalue="Spring Boot.MycarApplication" />
+        <item itemvalue="Spring Boot.MycarClienteApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="40f87d1c-9354-4d17-97c2-85fe742450be" name="Changes" comment="" />
+      <changelist id="e56235ff-d7e6-4726-aae8-875b6c491698" name="Ignore" comment="" />
+      <created>1736270944021</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1736270944021</updated>
+      <workItem from="1762991364965" duration="242000" />
+      <workItem from="1762991624170" duration="2906000" />
+      <workItem from="1763039617382" duration="1320000" />
+      <workItem from="1763046831881" duration="2343000" />
+      <workItem from="1763049197152" duration="1684000" />
+    </task>
+    <task id="LOCAL-00001" summary="Update application names and server ports in properties and POM files">
+      <option name="closed" value="true" />
+      <created>1763048027548</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1763048027548</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add enums for image types, user roles, document types, employee types, payment types, contact types, vehicle states, and invoice states">
+      <option name="closed" value="true" />
+      <created>1763048560902</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1763048560902</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Refactor code formatting and clean up imports across multiple files">
+      <option name="closed" value="true" />
+      <created>1763048591339</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1763048591339</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Actualizo módulo cliente con versión de Trinidad">
+      <option name="closed" value="true" />
+      <created>1763049463606</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1763049463606</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Package and modules normalization.">
+      <option name="closed" value="true" />
+      <created>1763050880708</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1763050880708</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Paths">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="dir:/home/adriano/repos/Elva_Studio/integrador_2/mycar-cliente" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Update application names and server ports in properties and POM files" />
+    <MESSAGE value="Add enums for image types, user roles, document types, employee types, payment types, contact types, vehicle states, and invoice states" />
+    <MESSAGE value="Refactor code formatting and clean up imports across multiple files" />
+    <MESSAGE value="Actualizo módulo cliente con versión de Trinidad" />
+    <MESSAGE value="Package and modules normalization." />
+    <option name="LAST_COMMIT_MESSAGE" value="Package and modules normalization." />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html data-pc-direction="ltr" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-theme="light" dir="ltr"
+      lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Listado de Alquileres | MyCar</title>
+
+  <!-- CSS Datta Able -->
+  <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/icons.css}">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Sidebar -->
+<div th:replace="fragments/layout :: sidebar"></div>
+
+<!-- Navbar -->
+<div th:replace="fragments/layout :: navbar"></div>
+
+<!-- Contenido principal -->
+<div class="pc-container">
+  <div class="pc-content">
+
+    <!-- Título y botón nuevo alquiler -->
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">Listado de Alquileres</h3>
+      <!--<a th:href="@{/alquiler/crear}" class="btn btn-primary flex items-center gap-2">
+        <i data-feather="plus"></i> Nuevo Alquiler
+      </a>-->
+    </div>
+
+    <!-- Mensajes de éxito o error -->
+    <div class="alert alert-success alert-dismissible fade show flex items-center gap-2" role="alert"
+         th:if="${successMessage}">
+      <i class="text-success-500" data-feather="check-circle"></i>
+      <span th:text="${successMessage}"></span>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show flex items-center gap-2" role="alert"
+         th:if="${errorMessage}">
+      <i class="text-danger-500" data-feather="alert-circle"></i>
+      <span th:text="${errorMessage}"></span>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+    </div>
+
+    <!-- Filtro de búsqueda por periodo -->
+    <form class="flex items-end justify-end gap-3 mb-6" method="get" th:action="@{/alquiler/listar}">
+
+      <!-- Campos de fecha más compactos -->
+      <div class="flex flex-col">
+        <label class="form-label mb-1" for="fechaDesde">Fecha Desde</label>
+        <input class="form-control" id="fechaDesde" name="fechaDesde" style="width: 160px;" th:value="${fechaDesde}"
+               type="date"/>
+      </div>
+      <div class="flex flex-col">
+        <label class="form-label mb-1" for="fechaHasta">Fecha Hasta</label>
+        <input class="form-control" id="fechaHasta" name="fechaHasta" style="width: 160px;" th:value="${fechaHasta}"
+               type="date"/>
+      </div>
+
+      <!-- Botones a la derecha -->
+      <div class="flex gap-2 ml-4">
+        <button class="btn btn-success flex items-center gap-2" type="submit">Filtrar</button>
+        <a class="btn btn-secondary flex items-center gap-2" th:href="@{/alquiler/listar}">Limpiar</a>
+      </div>
+
+    </form>
+
+
+    <!-- Tabla de alquileres -->
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover table-striped align-middle text-center">
+            <thead class="bg-primary-100 dark:bg-primary-600 text-white">
+            <tr>
+              <th>#</th>
+              <th>Fecha Desde</th>
+              <th>Fecha Hasta</th>
+              <th>Modelo</th>
+              <th>Patente</th>
+              <th>Costo diario</th>
+              <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                th:each="alquiler, iterStat : ${entities}">
+              <td th:text="${iterStat.index + 1}"></td>
+              <td th:text="${alquiler.fechaDesde != null} ? ${#temporals.format(alquiler.fechaDesde, 'dd/MM/yyyy')} : ''"></td>
+              <td th:text="${alquiler.fechaHasta != null} ? ${#temporals.format(alquiler.fechaHasta, 'dd/MM/yyyy')} : ''"></td>
+
+              <td th:text="${alquiler.vehiculo.caracteristicaVehiculo.modelo}"></td>
+              <td th:text="${alquiler.vehiculo.patente}"></td>
+              <!--<td th:text="${alquiler.cantDias}"></td>-->
+              <td th:text="${alquiler.vehiculo.caracteristicaVehiculo.costoVehiculo.costo}"></td>
+              <td class="flex justify-center gap-2">
+                <a class="btn btn-info btn-sm flex items-center gap-1"
+                   th:href="@{'/alquiler/detalle/' + ${alquiler.id}}">
+                  <i data-feather="eye"></i> Ver
+                </a>
+                <!--<a th:href="@{'/alquiler/editar/' + ${alquiler.id}}" class="btn btn-warning btn-sm flex items-center gap-1">
+                  <i data-feather="edit"></i> Editar
+                </a>-->
+                <a class="btn btn-danger btn-sm flex items-center gap-1"
+                   onclick="return confirm('¿Seguro que deseas eliminar este alquiler?');"
+                   th:href="@{'/alquiler/eliminar/' + ${alquiler.id}}">
+                  <i data-feather="trash-2"></i> Eliminar
+                </a>
+              </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(entities)}">
+              <td class="text-center text-gray-500 py-4" colspan="8">No se encontraron alquileres para este período.
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Footer -->
+<div th:replace="fragments/layout :: footer"></div>
+
+<!-- Scripts Datta Able -->
+<script th:src="@{/assets/js/plugins/simplebar.min.js}"></script>
+<script th:src="@{/assets/js/plugins/popper.min.js}"></script>
+<script th:src="@{/assets/js/plugins/feather.min.js}"></script>
+<script th:src="@{/assets/js/component.js}"></script>
+<script th:src="@{/assets/js/theme.js}"></script>
+
+<!-- Inicializar Feather Icons -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        feather.replace();
+    });
+</script>
+
+</body>
+</html>

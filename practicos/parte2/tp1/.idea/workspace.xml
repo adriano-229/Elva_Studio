@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9259e65b-9171-4955-ac7f-5079c5e8004f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../integrador_2/My Car/mycar/docs/patrones-diseno.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/PaisServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/PaisServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../integrador_2/mycar-cliente/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/../../../integrador_2/mycar-cliente/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../integrador_2/mycar-cliente/src/main/java/com/projects/mycar/mycar_cliente/controller/BaseControllerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../integrador_2/mycar-cliente/src/main/java/com/projects/mycar/mycar_cliente/controller/BaseControllerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../integrador_2/mycar-cliente/src/main/java/com/projects/mycar/mycar_cliente/controller/VehiculoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../integrador_2/mycar-cliente/src/main/java/com/projects/mycar/mycar_cliente/controller/VehiculoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../integrador_2/mycar-cliente/src/main/java/com/projects/mycar/mycar_cliente/dao/impl/BaseRestDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../integrador_2/mycar-cliente/src/main/java/com/projects/mycar/mycar_cliente/dao/impl/BaseRestDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../integrador_2/mycar-cliente/src/main/java/com/projects/mycar/mycar_cliente/dao/impl/VehiculoRestDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../integrador_2/mycar-cliente/src/main/java/com/projects/mycar/mycar_cliente/dao/impl/VehiculoRestDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../integrador_2/mycar-cliente/src/main/java/com/projects/mycar/mycar_cliente/domain/UsuarioDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../integrador_2/mycar-cliente/src/main/java/com/projects/mycar/mycar_cliente/domain/UsuarioDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../integrador_2/mycar-cliente/src/main/java/com/projects/mycar/mycar_cliente/service/impl/BaseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../integrador_2/mycar-cliente/src/main/java/com/projects/mycar/mycar_cliente/service/impl/BaseServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../integrador_2/mycar-cliente/src/main/java/com/projects/mycar/mycar_cliente/service/impl/VehiculoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../integrador_2/mycar-cliente/src/main/java/com/projects/mycar/mycar_cliente/service/impl/VehiculoServiceImpl.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="35Ob58Hfk96eR9OrHz8QBg8qukX" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="openDirectoriesWithSingleClick" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "trini",
+    "kotlin-language-version-configured": "true",
+    "settings.editor.selected.configurable": "application.passwordSafe",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="Tp1Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="tp1" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.elva.tp1.Tp1Application" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9259e65b-9171-4955-ac7f-5079c5e8004f" name="Changes" comment="" />
+      <created>1736270944021</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1736270944021</updated>
+      <workItem from="1762983880219" duration="61000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

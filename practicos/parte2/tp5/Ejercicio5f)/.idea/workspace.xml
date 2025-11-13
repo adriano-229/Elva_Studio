@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="bf81aac8-3b47-4837-891b-fa2362d1f6e6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/MycarApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/config/DataInitializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/config/SecurityConfigDev.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/AlquilerController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/AuthController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/BaseController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/BaseControllerImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/CaracteristicaVehiculoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/ClienteController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/CodigoDescuentoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/ContactoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/CostoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/CostoVehiculoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/DocumentacionController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/FacturaController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/ImagenController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/MercadoPagoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/PagoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/PromocionController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/RecordatoriosController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/ReportesController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/UsuarioController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/controller/VehiculoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/AlquilerConCostoDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/AlquilerDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/AlquilerFormDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/BaseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/CambiarClaveDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/CaracteristicaVehiculoDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/ClienteDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/CodigoDescuentoDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/ConfiguracionPromocionDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/ContactoCorreoElectronicoDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/ContactoDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/ContactoTelefonicoDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/CostoVehiculoDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/DepartamentoDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/DetalleFacturaDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/DireccionDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/DocumentacionDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/EmpleadoDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/EmpleadoFormDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/EmpleadoListadoDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/EmpresaDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/EmpresaFormDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/FacturaDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/ImagenDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/LocalidadDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/LoginRequestDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/LoginResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/NacionalidadDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/PagareDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/Pago.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/PagoCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/PagoOnline.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/PagoTransferencia.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/PaisDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/PersonaDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/ProvinciaDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/RespuestaPagoDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/SolicitudPagoDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/UsuarioDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/VehiculoDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/VehiculoFormDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/contacto/ContactoWhatsappResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/recordatorios/RecordatorioDestinatarioResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/recordatorios/RecordatorioDevolucionDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/recordatorios/RecordatorioJobResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/reportes/AlquilerReporteDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/dto/reportes/RecaudacionModeloDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/Alquiler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/Base.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/CaracteristicaVehiculo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/Cliente.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/CodigoDescuento.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/ConfiguracionCorreoAutomatico.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/ConfiguracionPromocion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/Contacto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/ContactoCorreoElectronico.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/ContactoTelefonico.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/CostoVehiculo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/Departamento.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/DetalleFactura.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/Direccion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/Documentacion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/Empleado.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/Empresa.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/Factura.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/FormaDePago.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/Imagen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/Localidad.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/Nacionalidad.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/Pais.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/Persona.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/Provincia.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/Usuario.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/entities/Vehiculo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/enums/EstadoFactura.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/enums/EstadoVehiculo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/enums/Mes.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/enums/ReportFormat.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/enums/RolUsuario.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/enums/TipoContacto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/enums/TipoDocumentacion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/enums/TipoDocumento.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/enums/TipoEmpleado.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/enums/TipoImagen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/enums/TipoPago.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/enums/TipoTelefono.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/error/AlquilerNoEncontradoException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/error/AlquilerYaFacturadoException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/error/EntidadRelacionadaException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/error/FacturaNoEncontradaException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/error/FacturaYaAnuladaException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/error/FacturaYaAprobadaException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/error/VehiculoSinCostoException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/AlquilerRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/BaseRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/CaracteristicaVehiculoRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/ClienteRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/CodigoDescuentoRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/ConfiguracionPromocionRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/ContactoRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/CostoVehiculoRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/DepartamentoRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/DetalleFacturaRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/DireccionRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/DocumentacionRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/EmpresaRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/FacturaRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/FormaDePagoRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/ImagenRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/LocalidadRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/PaisRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/ProvinciaRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/UsuarioRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/repositories/VehiculoRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/scheduler/PromocionScheduler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/scheduler/RecordatorioScheduler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/scheduler/VehiculoScheduler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/security/JwtRequestFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/security/JwtUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/security/UserDetailsImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/security/UserDetailsServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/security/auth/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/AlquilerService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/BaseService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/CaracteristicaVehiculoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/ClienteService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/CodigoDescuentoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/ContactoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/CorreoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/CostoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/CostoVehiculoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/DepartamentoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/DireccionService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/DocumentacionService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/EmailService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/FacturaService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/ImagenService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/LocalidadService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/PagoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/PaisService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/PromocionService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/ProvinciaService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/RecordatorioService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/ReporteService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/UsuarioService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/VehiculoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/export/AlquilerReportExporter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/export/RecaudacionModeloReportExporter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/AlquilerServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/BaseServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/CaracteristicaVehiculoServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/ClienteServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/CodigoDescuentoServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/ContactoServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/CorreoServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/CostoServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/CostoVehiculoServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/DepartamentoServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/DireccionServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/DocumentacionServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/EmailServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/FacturaServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/ImagenServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/LocalidadServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/PagoServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/PaisServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/PromocionServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/ProvinciaServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/RecordatorioServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/ReporteServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/UsuarioServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/impl/VehiculoServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/AlquilerMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/BaseMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/CaracteristicaVehiculoMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/ClienteMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/CodigoDescuentoMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/ContactoMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/CostoVehiculoMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/DepartamentoMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/DetalleFacturaMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/DireccionMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/DocumentacionMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/FacturaMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/ImagenMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/LocalidadMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/PaisMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/PersonaMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/ProvinciaMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/UsuarioMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/services/mapper/VehiculoMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/strategy/BusquedaVehiculosStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/strategy/VehiculosAlquiladosStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/java/com/example/mycar/strategy/VehiculosDisponiblesStrategy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/resources/application-dev.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/test/java/com/example/mycar/MycarApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/test/java/com/example/mycar/security/TestSecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/test/java/com/example/mycar/services/PagoServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/test/java/com/example/mycar/services/PromocionServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/My Car/mycar/src/test/resources/application-test.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/mycar-admin/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/mycar-admin/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/mycar-admin/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/mycar-admin/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/mycar-admin/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/mycar-cliente/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/mycar-cliente/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/mycar-cliente/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/mycar-cliente/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../integrador_2/mycar-cliente/mvnw.cmd" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "adriano-229"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "git@github.com:adriano-229/Elva_Studio.git",
+    "accountId": "90582b1b-05dc-4c51-adb1-357f51501044"
+  }
+}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="35ObOoNbgGbPO3V4ymnIhwsTp3Y" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="openDirectoriesWithSingleClick" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.LibraryApplication.executor": "Run",
+    "git-widget-placeholder": "perla",
+    "kotlin-language-version-configured": "true",
+    "settings.editor.selected.configurable": "application.passwordSafe",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="LibraryApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="library" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.adriano.library.LibraryApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bf81aac8-3b47-4837-891b-fa2362d1f6e6" name="Changes" comment="" />
+      <created>1736270944021</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1736270944021</updated>
+      <workItem from="1762984036645" duration="114000" />
+      <workItem from="1763046864376" duration="21000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>

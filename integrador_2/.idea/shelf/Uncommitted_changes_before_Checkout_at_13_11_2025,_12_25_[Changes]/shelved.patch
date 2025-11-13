@@ -1,0 +1,15 @@
+Index: mycar-admin/src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>spring.application.name=mycar-admin\nspring.profiles.active=dev\n\nserver.port=8080\n
+===================================================================
+diff --git a/mycar-admin/src/main/resources/application.properties b/mycar-admin/src/main/resources/application.properties
+--- a/mycar-admin/src/main/resources/application.properties	(revision 50060868a04c3abc86ebdcafa5bedda3b9eb0cfe)
++++ b/mycar-admin/src/main/resources/application.properties	(date 1763047207098)
+@@ -1,4 +1,3 @@
+-spring.application.name=mycar-admin
++spring.application.name=mycar
+ spring.profiles.active=dev
+-
+-server.port=8080
++server.port=8081
