@@ -8,11 +8,10 @@
 		<version>3.5.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.projects.mycar</groupId>
+    <groupId>com.projects.mycar</groupId>
 	<artifactId>mycar-admin</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>mycar-admin</name>
-	<description>aplicacion mycar </description>
 	<url/>
 	<licenses>
 		<license/>
