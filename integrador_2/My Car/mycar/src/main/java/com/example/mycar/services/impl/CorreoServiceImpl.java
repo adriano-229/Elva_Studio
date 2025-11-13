@@ -1,14 +1,18 @@
 package com.example.mycar.services.impl;
 
+import java.time.LocalDateTime;
 import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
 import com.example.mycar.entities.ConfiguracionCorreoAutomatico;
 import com.example.mycar.entities.Empresa;
+import com.example.mycar.entities.RegistroEnvioCorreo;
 import com.example.mycar.repositories.EmpresaRepository;
+import com.example.mycar.repositories.RegistroEnvioCorreoRepository;
 import com.example.mycar.services.CorreoService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +24,9 @@ import lombok.extern.slf4j.Slf4j;
 public class CorreoServiceImpl implements CorreoService {
 
     private final EmpresaRepository empresaRepository;
+    private final RegistroEnvioCorreoRepository registroEnvioCorreoRepository;
+    @Value("${app.correo.delay-ms:10000}")
+    private long delayMs;
 
     @Override
     public void enviarCorreo(String destinatario, String asunto, String cuerpo) {
@@ -39,8 +46,15 @@ public class CorreoServiceImpl implements CorreoService {
         mensaje.setSubject(asunto);
         mensaje.setText(cuerpo);
 
-        log.info("Enviando recordatorio de devolución a {}", destinatario);
-        mailSender.send(mensaje);
+        try {
+            aplicarDelay();
+            log.info("Enviando correo a {}", destinatario);
+            mailSender.send(mensaje);
+            registrarEnvio(destinatario, asunto, cuerpo, true, null);
+        } catch (Exception e) {
+            registrarEnvio(destinatario, asunto, cuerpo, false, e.getMessage());
+            throw e;
+        }
     }
 
     private JavaMailSenderImpl crearMailSender(ConfiguracionCorreoAutomatico configuracion) {
@@ -55,5 +69,33 @@ public class CorreoServiceImpl implements CorreoService {
         props.put("mail.smtp.starttls.enable", String.valueOf(configuracion.isTls()));
 
         return mailSender;
+    }
+
+    private void aplicarDelay() {
+        if (delayMs <= 0) {
+            return;
+        }
+        try {
+            Thread.sleep(delayMs);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.warn("Delay de envío interrumpido", e);
+        }
+    }
+
+    private void registrarEnvio(String destinatario,
+                                String asunto,
+                                String cuerpo,
+                                boolean exito,
+                                String mensajeError) {
+        RegistroEnvioCorreo registro = RegistroEnvioCorreo.builder()
+                .destinatario(destinatario)
+                .asunto(asunto)
+                .cuerpo(cuerpo)
+                .fechaEnvio(LocalDateTime.now())
+                .exito(exito)
+                .mensajeError(mensajeError)
+                .build();
+        registroEnvioCorreoRepository.save(registro);
     }
 }

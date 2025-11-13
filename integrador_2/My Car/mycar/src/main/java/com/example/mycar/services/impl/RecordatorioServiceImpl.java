@@ -35,7 +35,7 @@ public class RecordatorioServiceImpl implements RecordatorioService {
     private final CorreoService correoService;
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public RecordatorioJobResponse enviarRecordatoriosProgramados(LocalDate fechaObjetivo) {
         LocalDate fecha = fechaObjetivo != null ? fechaObjetivo : LocalDate.now().plusDays(1);
         Date fechaSql = Date.valueOf(fecha);
@@ -45,14 +45,14 @@ public class RecordatorioServiceImpl implements RecordatorioService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public RecordatorioJobResponse enviarRecordatoriosDevolucion(Long clienteId) {
         List<RecordatorioDevolucionDTO> clientes = clienteRepository.findClientesConAlquilerActivo(clienteId);
         return procesarEnvio(clientes, LocalDate.now());
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public void enviarPrueba(Long clienteId) {
         Cliente cliente = clienteRepository.findByIdAndActivoTrue(clienteId)
                 .orElseThrow(() -> new IllegalArgumentException("El cliente solicitado no existe o fue dado de baja."));
