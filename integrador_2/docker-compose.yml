@@ -50,6 +50,7 @@ services:
     environment:
       SERVER_PORT: 9100
       MYCAR_API_BASE_URL: ${MYCAR_API_BASE_URL:-http://mycar-server:9300}
+      SPRING_PROFILES_ACTIVE: ${MYCAR_ADMIN_PROFILE:-dev}
     ports:
       - "9100:9100"
     networks:
