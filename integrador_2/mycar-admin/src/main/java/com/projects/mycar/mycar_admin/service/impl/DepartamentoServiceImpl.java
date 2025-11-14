@@ -1,9 +1,8 @@
 package com.projects.mycar.mycar_admin.service.impl;
 
-import org.springframework.stereotype.Service;
-
-import com.example.mycar.mycar_admin.domain.DepartamentoDTO;
 import com.projects.mycar.mycar_admin.dao.BaseRestDao;
+import com.projects.mycar.mycar_admin.domain.DepartamentoDTO;
+import org.springframework.stereotype.Service;
 
 @Service
 public class DepartamentoServiceImpl extends BaseServiceImpl<DepartamentoDTO, Long>{

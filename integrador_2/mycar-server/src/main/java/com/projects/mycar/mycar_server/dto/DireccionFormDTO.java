@@ -1,12 +1,9 @@
-package com.example.mycar.mycar_admin.domain;
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+package com.projects.mycar.mycar_server.mycar_admin.domain;
 
 public class DireccionFormDTO {
-	
-	private String calle;
-	private Integer numeracion;
+
+    private String calle;
+    private Integer numeracion;
     private String barrio;
     private String manzana_piso;
     private String casa_departamento;
@@ -14,6 +11,6 @@ public class DireccionFormDTO {
     private Long localidadId;
     private Long departamentoId;
     private Long provinciaId;
-    
+
 
 }

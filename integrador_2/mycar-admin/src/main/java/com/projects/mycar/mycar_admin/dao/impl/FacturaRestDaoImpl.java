@@ -1,15 +1,14 @@
 package com.projects.mycar.mycar_admin.dao.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import com.projects.mycar.mycar_admin.dao.FacturaRestDao;
+import com.projects.mycar.mycar_admin.domain.FacturaDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.example.mycar.mycar_admin.domain.FacturaDTO;
-import com.projects.mycar.mycar_admin.dao.FacturaRestDao;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Repository
 public class FacturaRestDaoImpl extends BaseRestDaoImpl<FacturaDTO, Long> implements FacturaRestDao{

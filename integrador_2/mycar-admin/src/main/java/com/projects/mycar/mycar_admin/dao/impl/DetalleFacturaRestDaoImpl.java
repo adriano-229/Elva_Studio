@@ -1,6 +1,6 @@
 package com.projects.mycar.mycar_admin.dao.impl;
 
-import com.example.mycar.mycar_admin.domain.DetalleFacturaDTO;
+import com.projects.mycar.mycar_admin.domain.DetalleFacturaDTO;
 
 public class DetalleFacturaRestDaoImpl extends BaseRestDaoImpl<DetalleFacturaDTO, Long>{
 

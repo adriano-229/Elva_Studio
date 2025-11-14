@@ -39,4 +39,6 @@ public class DocumentacionServiceImpl extends BaseServiceImpl<DocumentacionDTO, 
 
     }
 
+    public void updateDocumentacion(DocumentacionDTO entity) {
+    }
 }

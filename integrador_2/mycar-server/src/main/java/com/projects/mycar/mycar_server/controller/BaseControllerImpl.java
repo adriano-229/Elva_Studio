@@ -43,7 +43,7 @@ public abstract class BaseControllerImpl<E extends Base, D extends BaseDTO, S ex
     @PostMapping
     public ResponseEntity<?> save(@RequestBody D dto) {
         try {
-        	System.out.println("CONTROLLER SERVICE");
+            System.out.println("CONTROLLER SERVICE");
             return ResponseEntity.status(HttpStatus.OK).body(servicio.save(dto));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"Error. por favor intente más tarde.\"}");
@@ -64,8 +64,8 @@ public abstract class BaseControllerImpl<E extends Base, D extends BaseDTO, S ex
         try {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(servicio.delete(id));
         } catch (Exception e) {
-        	System.out.println("ERRROR AL ELIMINAR");
-        	e.printStackTrace();
+            System.out.println("ERRROR AL ELIMINAR");
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"Error. por favor intente más tarde.\"}");
         }
 

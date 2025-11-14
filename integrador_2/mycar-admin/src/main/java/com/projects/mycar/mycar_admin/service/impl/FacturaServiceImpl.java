@@ -1,14 +1,13 @@
 package com.projects.mycar.mycar_admin.service.impl;
 
-import java.util.List;
-
+import com.projects.mycar.mycar_admin.dao.BaseRestDao;
+import com.projects.mycar.mycar_admin.dao.impl.FacturaRestDaoImpl;
+import com.projects.mycar.mycar_admin.domain.FacturaDTO;
+import com.projects.mycar.mycar_admin.service.FacturaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.mycar.mycar_admin.domain.FacturaDTO;
-import com.projects.mycar.mycar_admin.dao.BaseRestDao;
-import com.projects.mycar.mycar_admin.dao.impl.FacturaRestDaoImpl;
-import com.projects.mycar.mycar_admin.service.FacturaService;
+import java.util.List;
 
 @Service
 public class FacturaServiceImpl extends BaseServiceImpl<FacturaDTO, Long> implements FacturaService{

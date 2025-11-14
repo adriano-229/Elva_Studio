@@ -1,33 +1,17 @@
 package com.projects.mycar.mycar_admin.controller;
 
-import java.time.LocalDate;
-import java.util.Collection;
-import java.util.List;
+import com.projects.mycar.mycar_admin.domain.*;
+import com.projects.mycar.mycar_admin.domain.enums.EstadoVehiculo;
+import com.projects.mycar.mycar_admin.service.impl.*;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.mycar.mycar_admin.domain.AlquilerDTO;
-import com.example.mycar.mycar_admin.domain.AlquilerFormDTO;
-import com.example.mycar.mycar_admin.domain.ClienteDTO;
-import com.example.mycar.mycar_admin.domain.DocumentacionDTO;
-import com.example.mycar.mycar_admin.domain.VehiculoDTO;
-import com.example.mycar.mycar_admin.domain.enums.EstadoVehiculo;
-import com.projects.mycar.mycar_admin.service.impl.AlquilerServiceImpl;
-import com.projects.mycar.mycar_admin.service.impl.ClienteServiceImpl;
-import com.projects.mycar.mycar_admin.service.impl.CodigoDescuentoServiceImpl;
-import com.projects.mycar.mycar_admin.service.impl.CostoServiceImpl;
-import com.projects.mycar.mycar_admin.service.impl.VehiculoServiceImpl;
-
-import lombok.Getter;
+import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @RequestMapping("/alquiler")
@@ -46,9 +30,9 @@ public class AlquilerController extends BaseControllerImpl<AlquilerDTO, Alquiler
 	@Autowired
 	private CostoServiceImpl costoService;
 	
-	private String viewList = "view/alquiler/listar";
-	private String viewEdit = "view/alquiler/eAlquiler";
-	private String redirectList= "redirect:/alquiler/listar";
+	private final String viewList = "view/alquiler/listar";
+	private final String viewEdit = "view/alquiler/eAlquiler";
+	private final String redirectList= "redirect:/alquiler/listar";
 	
 	@Override
 	@GetMapping("/crear")

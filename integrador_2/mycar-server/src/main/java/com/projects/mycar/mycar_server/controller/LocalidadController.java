@@ -1,14 +1,13 @@
-package com.example.mycar.controller;
+package com.projects.mycar.mycar_server.controller;
 
+import com.projects.mycar.mycar_server.dto.LocalidadDTO;
+import com.projects.mycar.mycar_server.entities.Localidad;
+import com.projects.mycar.mycar_server.services.impl.LocalidadServiceImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.mycar.dto.LocalidadDTO;
-import com.example.mycar.entities.Localidad;
-import com.example.mycar.services.impl.LocalidadServiceImpl;
-
 @RestController
 @RequestMapping("/api/v1/localidades")
-public class LocalidadController extends BaseControllerImpl<Localidad, LocalidadDTO, LocalidadServiceImpl>{
+public class LocalidadController extends BaseControllerImpl<Localidad, LocalidadDTO, LocalidadServiceImpl> {
 
 }

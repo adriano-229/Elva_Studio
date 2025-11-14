@@ -99,10 +99,10 @@ public class AlquilerServiceImpl extends BaseServiceImpl<Alquiler, AlquilerDTO, 
 
         DocumentacionDTO documentacion = documentacionService.findById(entity.getDocumentacionId());
         entity.setDocumentacion(documentacion);
-        
+
         System.out.println("FECHA HOY: " + hoy);
         System.out.println("FECHA USUARIO: " + entity.getFechaDesde());
-        
+
         if (entity.getFechaDesde().equals(hoy)) {
             entity.getVehiculo().setEstadoVehiculo(EstadoVehiculo.Alquilado);
             System.out.println("ESTADO VEHICULO: " + entity.getVehiculo().getEstadoVehiculo());
@@ -110,11 +110,11 @@ public class AlquilerServiceImpl extends BaseServiceImpl<Alquiler, AlquilerDTO, 
             System.out.println("TOTALES ANTES ALQUILADO: " + entity.getVehiculo().getCaracteristicaVehiculo().getCantidadVehiculoAlquilado());
             //caracteristicaVehiculoRepository.actualizarTotales();
             vehiculoService.update(vehiculo.getId(), entity.getVehiculo());
-            
+
             System.out.println("TOTALES DESPUES: " + entity.getVehiculo().getCaracteristicaVehiculo().getCantidadTotalVehiculo());
             System.out.println("TOTALES DEPSUES ALQUILADO: " + entity.getVehiculo().getCaracteristicaVehiculo().getCantidadVehiculoAlquilado());
-            
-            
+
+
         }
 
     }

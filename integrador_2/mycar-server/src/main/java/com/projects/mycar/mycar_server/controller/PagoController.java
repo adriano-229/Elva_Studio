@@ -19,7 +19,7 @@ public class PagoController {
     public PagoController(PagoService pagoService) {
         this.pagoService = pagoService;
     }
-    
+
     @PostMapping("/procesar")
     public ResponseEntity<?> procesarPago(@Valid @RequestBody SolicitudPagoDTO solicitud) {
         try {
