@@ -68,7 +68,7 @@ pipeline {
                 dir("${env.TARGET_DIR}") {
                     sh '''
                         set -e
-                        docker compose up -d mycar-api mycar-admin mycar-cliente
+                        docker compose up -d mycar-server mycar-admin mycar-cliente
                         docker compose ps
                     '''
                 }
@@ -93,7 +93,7 @@ pipeline {
                         done
 
                         echo "Healthcheck de la API FALLÓ ❌"
-                        docker compose logs mycar-api || true
+                        docker compose logs mycar-server || true
                         exit 1
                     '''
                 }
@@ -107,7 +107,7 @@ pipeline {
                 sh '''
                     docker compose logs --no-color > compose.logs || true
                     docker compose logs mysql --no-color > mysql.logs || true
-                    docker compose logs mycar-api --no-color > mycar-api.logs || true
+                    docker compose logs mycar-server --no-color > mycar-server.logs || true
                     docker compose logs mycar-admin --no-color > mycar-admin.logs || true
                     docker compose logs mycar-cliente --no-color > mycar-cliente.logs || true
                 '''

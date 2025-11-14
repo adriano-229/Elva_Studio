@@ -23,10 +23,10 @@ services:
     networks:
       - mycar
 
-  mycar-api:
+  mycar-server:
     build:
-      context: "./My Car/mycar"
-    image: mycar-api:latest
+      context: ./mycar-server
+    image: mycar-server:latest
     depends_on:
       mysql:
         condition: service_healthy
@@ -46,10 +46,10 @@ services:
       context: ./mycar-admin
     image: mycar-admin:latest
     depends_on:
-      - mycar-api
+      - mycar-server
     environment:
       SERVER_PORT: 9100
-      MYCAR_API_BASE_URL: ${MYCAR_API_BASE_URL:-http://mycar-api:9300}
+      MYCAR_API_BASE_URL: ${MYCAR_API_BASE_URL:-http://mycar-server:9300}
     ports:
       - "9100:9100"
     networks:
@@ -60,10 +60,10 @@ services:
       context: ./mycar-cliente
     image: mycar-cliente:latest
     depends_on:
-      - mycar-api
+      - mycar-server
     environment:
       SERVER_PORT: 9200
-      MYCAR_API_BASE_URL: ${MYCAR_API_BASE_URL:-http://mycar-api:9300}
+      MYCAR_API_BASE_URL: ${MYCAR_API_BASE_URL:-http://mycar-server:9300}
     ports:
       - "9200:9200"
     networks:
