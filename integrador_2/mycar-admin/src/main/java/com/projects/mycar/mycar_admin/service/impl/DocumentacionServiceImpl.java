@@ -29,7 +29,6 @@ public class DocumentacionServiceImpl extends BaseServiceImpl<DocumentacionDTO, 
 
     @Override
     protected void validar(DocumentacionDTO entity) throws Exception {
-        // TODO Auto-generated method stub
 
     }
 
