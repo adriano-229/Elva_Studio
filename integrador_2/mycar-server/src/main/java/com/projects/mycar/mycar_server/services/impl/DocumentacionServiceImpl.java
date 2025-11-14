@@ -166,4 +166,6 @@ public class DocumentacionServiceImpl extends BaseServiceImpl<Documentacion, Doc
 
     }
 
+    public Object updateDocumentacion(Long id, DocumentacionDTO documentacion, MultipartFile archivo) {
+    }
 }
