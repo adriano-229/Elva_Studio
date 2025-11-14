@@ -13,7 +13,7 @@ public interface BaseController<E extends BaseDTO, ID extends Serializable> {
 
     String crear(Model model);
 
-    String guardar(E entity, Model model);
+    String guardar(E entity, Model model, RedirectAttributes redirectAttributes);
 
     String modificar(ID id, Model model);
 

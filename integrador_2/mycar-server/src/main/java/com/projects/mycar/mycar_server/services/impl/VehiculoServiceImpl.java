@@ -128,6 +128,7 @@ public class VehiculoServiceImpl extends BaseServiceImpl<Vehiculo, VehiculoDTO, 
     @Override
     public List<VehiculoDTO> buscarPorEstado(EstadoVehiculo estado) {
         List<Vehiculo> vehiculos = repository.findByEstadoVehiculoAndActivoTrue(estado);
+        System.out.println("Vehículos encontrados: " + vehiculos.size());
         return vehiculoMapper.toDtoList(vehiculos);
     }
 

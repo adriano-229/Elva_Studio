@@ -8,6 +8,57 @@
   <link href="../assets/css/style.css" id="main-style-link" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f5f6fa;
+      color: #333;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .card-header {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 8px;
+    }
+
+    .form-label {
+      font-weight: 500;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .form-control, .form-select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+      transition: border 0.3s, box-shadow 0.3s;
+    }
+
+    .form-control:focus, .form-select:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+    }
+
+    #btnContinuar {
+      margin-top: 10px;
+      padding: 0.25rem 0.5rem;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -15,8 +66,8 @@
 <!-- Sidebar -->
 <div th:replace="fragments/layout :: sidebar"></div>
 
-<!-- Header -->
-<div th:replace="fragments/layout :: header"></div>
+<!-- Navbar -->
+<div th:replace="fragments/layout :: navbar"></div>
 
 <!-- Main Content -->
 <div class="pc-container">
@@ -38,10 +89,6 @@
           </div>
 
         </div>
-        <!--<ul class="breadcrumb">
-            <li class="breadcrumb-item"><a th:href="@{/dashboard}">Home</a></li>
-            <li class="breadcrumb-item" aria-current="page">Cotización</li>
-        </ul>-->
       </div>
     </div>
 
@@ -64,7 +111,7 @@
                 <select class="form-select" id="auto" th:field="*{idVehiculo}">
                   <option disabled selected value="">-- Elige un vehículo --</option>
                   <option th:each="auto : ${listaVehiculos}"
-                          th:text="${auto.caracteristicaVehiculo.marca} + ' - ' + ${auto.caracteristicaVehiculo.modelo}"
+                          th:text="${auto.caracteristicaVehiculo.marca} + ' - ' + ${auto.caracteristicaVehiculo.modelo} + ' - ' + ${auto.patente}"
                           th:value="${auto.id}">
                     Auto 1
                   </option>
@@ -123,21 +170,17 @@
                 <!-- Imagen del vehículo -->
                 <div class="text-center mb-3">
                   <img alt="Imagen del vehículo"
-                       style="width:100%; max-width:300px; height:200px; object-fit:cover; border-radius:8px;"
+                       class="vehiculo-img"
                        th:src="@{${vehiculoSeleccionado.caracteristicaVehiculo.imagen}}">
                 </div>
 
-                <!-- Información del vehículo -->
-                <h5 class="text-center mb-2"
-                    th:text="${vehiculoSeleccionado.caracteristicaVehiculo.marca} + ' ' + ${vehiculoSeleccionado.caracteristicaVehiculo.modelo}"></h5>
-                <p class="text-center text-muted mb-3">
-                  Año: <span th:text="${vehiculoSeleccionado.caracteristicaVehiculo.anio}"></span> |
-                  Costo por día: $<span
-                    th:text="${vehiculoSeleccionado.caracteristicaVehiculo.costoVehiculo.costo}"></span> |
-                  Dias: <span th:text="${alquilerCotizado.cantidadDias}"> dias</span>
-                </p>
+                <!-- Datos vehículo -->
+                <div class="text-center mb-3">
+                  <h5 th:text="${vehiculoSeleccionado.caracteristicaVehiculo.marca} + ' ' + ${vehiculoSeleccionado.caracteristicaVehiculo.modelo}"></h5>
+                  <p class="text-muted" th:text="'Patente: ' + ${vehiculoSeleccionado.patente}">Patente</p>
+                </div>
 
-                <!-- Fechas de alquiler (solo mostrar, no editar) -->
+                <!-- Fechas -->
                 <div class="grid grid-cols-2 gap-3 mb-3 text-center">
                   <div>
                     <label class="form-label d-block">Desde</label>
@@ -148,7 +191,6 @@
                     <span th:text="${#temporals.format(alquilerCotizado.fechaHasta, 'yyyy-MM-dd')}"></span>
                   </div>
                 </div>
-
 
                 <!-- Totales -->
                 <div class="mb-2 flex justify-between">
@@ -163,38 +205,34 @@
                   <span>Total:</span>
                   <span>$<span th:text="${alquilerCotizado.totalConDescuento}">0</span></span>
                 </div>
+              </div>
 
-                <!--Busqueda cliente-->
-                <div class="col-span-12 xl:col-span-4 md:col-span-12" th:if="${alquilerCotizado != null}">
-                  <div class="card mt-4">
-                    <div class="card-header">
-                      <h5>Buscar Cliente</h5>
-                    </div>
-                    <div class="card-body">
-                      <div class="input-group mb-3">
-                        <input class="form-control" id="dniBuscar" placeholder="Ingrese DNI del cliente" required
-                               type="text">
-                        <button class="btn btn-primary" onclick="buscarCliente()" type="button">Buscar</button>
-                      </div>
-                      <div id="resultadoCliente"></div>
-                      <input id="clienteId" name="idCliente" required th:field="*{idCliente}" type="hidden">
-                    </div>
+              <!--Busqueda cliente-->
+              <div class="card mt-4">
+                <div class="card-header">
+                  <h5>Buscar Cliente</h5>
+                </div>
+                <div class="card-body">
+                  <div class="input-group mb-3">
+                    <input class="form-control" id="dniBuscar" placeholder="Ingrese DNI del cliente" required
+                           type="text">
+                    <button class="btn btn-success" onclick="buscarCliente()" type="button">Buscar</button>
                   </div>
+                  <div id="resultadoCliente"></div>
+                  <input id="clienteId" name="idCliente" required th:field="*{idCliente}" type="hidden">
                 </div>
+              </div>
 
-
-                <!-- Botón de alquilar -->
-                <div class="text-center">
-                  <button class="btn btn-primary w-full" disabled id="btnContinuar" type="submit">Continuar</button>
-
-                </div>
+              <!-- Botón de alquilar -->
+              <div class="text-center">
+                <button class="btn btn-primary btn-sm" disabled id="btnContinuar" type="submit">Continuar</button>
+              </div>
+            </div>
           </form>
         </div>
       </div>
     </div>
   </div>
-</div>
-</div>
 </div>
 
 <!-- Footer -->
@@ -207,25 +245,16 @@
 <script src="../assets/js/component.js"></script>
 <script src="../assets/js/theme.js"></script>
 <script src="../assets/js/script.js"></script>
-<!--<script src="../assets/js/plugins/datepicker.min.js"></script>-->
 
 <!-- Flatpickr CSS -->
 <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
-
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-
-<!-- Inicializar datepicker -->
 <script th:inline="javascript">
     /*<![CDATA[*/
     const listaClientes = /*[[${listaClientes}]]*/ [];
-    /*]]>*/
-
-    // Fechas disponibles (puedes inyectarlas desde Thymeleaf)
     let fechasDisponibles = /*[[${fechasDisponibles}]]*/ ["2025-11-12", "2025-11-13", "2025-11-15", "2025-11-16"];
-
-    // Convertimos fechas a objetos Date para comparación
-    let fechasDisponiblesObj = fechasDisponibles.map(d => new Date(d + "T00:00:00"));
+    /*]]>*/
 
     function isAvailable(date) {
         const dateStr = date.toISOString().split('T')[0];
@@ -237,17 +266,16 @@
         dateFormat: "Y-m-d",
         disable: [
             function (date) {
-                return !isAvailable(date); // Deshabilitar fechas no disponibles
+                return !isAvailable(date);
             }
         ],
         onDayCreate: function (dObj, dStr, fp, dayElem) {
-            const dateStr = dayElem.dateObj.toISOString().split('T')[0];
             if (isAvailable(dayElem.dateObj)) {
-                dayElem.style.backgroundColor = "#3b82f6"; // azul
+                dayElem.style.backgroundColor = "#3b82f6";
                 dayElem.style.color = "#fff";
                 dayElem.style.borderRadius = "50%";
             } else {
-                dayElem.style.color = "#a1a1aa"; // gris
+                dayElem.style.color = "#a1a1aa";
                 dayElem.style.cursor = "not-allowed";
             }
         },
@@ -255,19 +283,16 @@
             const fechaDesdeInput = document.querySelector("input[name='fechaDesde']");
             const fechaHastaInput = document.querySelector("input[name='fechaHasta']");
 
-            // Si seleccionó una sola fecha
             if (selectedDates.length === 1) {
                 const fecha = selectedDates[0].toISOString().split('T')[0];
                 fechaDesdeInput.value = fecha;
                 fechaHastaInput.value = fecha;
             }
 
-
             if (selectedDates.length === 2) {
                 let start = selectedDates[0];
                 let end = selectedDates[1];
 
-                // Validar que todas las fechas entre start y end estén disponibles
                 let current = new Date(start);
                 let valid = true;
                 while (current <= end) {
@@ -280,13 +305,13 @@
                 }
 
                 if (!valid) {
-                    alert("El rango seleccionado contiene fechas no disponibles. Por favor selecciona solo fechas disponibles consecutivas.");
+                    alert("El rango seleccionado contiene fechas no disponibles. Selecciona fechas consecutivas válidas.");
                     instance.clear();
-                    document.querySelector("input[name='fechaDesde']").value = "";
-                    document.querySelector("input[name='fechaHasta']").value = "";
+                    fechaDesdeInput.value = "";
+                    fechaHastaInput.value = "";
                 } else {
-                    document.querySelector("input[name='fechaDesde']").value = start.toISOString().split('T')[0];
-                    document.querySelector("input[name='fechaHasta']").value = end.toISOString().split('T')[0];
+                    fechaDesdeInput.value = start.toISOString().split('T')[0];
+                    fechaHastaInput.value = end.toISOString().split('T')[0];
                 }
             }
         }
@@ -309,29 +334,28 @@
         }
 
         contenedor.innerHTML = `
-		        <div class="card mt-2">
-		            <div class="card-body p-2">
-		                <strong>${cliente.nombre} ${cliente.apellido}</strong><br>
-		                DNI: ${cliente.numeroDocumento}<br>
-		                <button class="btn btn-success btn-sm float-end mt-1"
-		                        onclick="seleccionarCliente(${cliente.id}, '${cliente.nombre}', '${cliente.apellido}', '${cliente.numeroDocumento}')">
-		                    Seleccionar
-		                </button>
-		            </div>
-		        </div>
-		    `;
+            <div class="card mt-2">
+                <div class="card-body p-2">
+                    <strong>${cliente.nombre} ${cliente.apellido}</strong><br>
+                    DNI: ${cliente.numeroDocumento}<br>
+                    <button class="btn btn-success btn-sm float-end mt-1"
+                            onclick="seleccionarCliente(${cliente.id}, '${cliente.nombre}', '${cliente.apellido}', '${cliente.numeroDocumento}')">
+                        Seleccionar
+                    </button>
+                </div>
+            </div>
+        `;
     }
 
     function seleccionarCliente(id, nombre, apellido, dni) {
         document.getElementById('clienteId').value = id;
         document.getElementById('resultadoCliente').innerHTML = `
-		        <div class="alert alert-success mt-2">
-		            Cliente seleccionado: <strong>${nombre} ${apellido}</strong> (DNI: ${dni})
-		        </div>
-		    `;
+            <div class="alert alert-success mt-2">
+                Cliente seleccionado: <strong>${nombre} ${apellido}</strong> (DNI: ${dni})
+            </div>
+        `;
         document.getElementById("btnContinuar").disabled = false;
     }
-
 </script>
 
 </body>

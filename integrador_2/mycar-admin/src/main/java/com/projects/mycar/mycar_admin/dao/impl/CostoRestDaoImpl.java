@@ -16,7 +16,7 @@ public class CostoRestDaoImpl implements CostoRestDao {
     @Autowired
     private RestTemplate restTemplate;
 
-    private String baseUrl = "http://localhost:9000/api/costos";
+    private String baseUrl = "http://localhost:8083/api/costos";
 
     @Override
     public PagareDTO calcularPagare(List<Long> alquilerIds, Long clienteId) throws Exception {

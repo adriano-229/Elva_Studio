@@ -19,14 +19,15 @@ public class FacturaServiceImpl extends BaseServiceImpl<FacturaDTO, Long> implem
         super(dao);
     }
 
-    @Override
-    public List<FacturaDTO> obtenerPagosPendientes() throws Exception {
-        try {
-            return daoFactura.obtenerPagosPendientes();
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
-        }
-    }
+	@Override
+	public List<FacturaDTO> obtenerPagosPendientes() throws Exception {
+		try {
+			return daoFactura.obtenerPagosPendientes();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e.getMessage());
+		}
+	}
 
     @Override
     public FacturaDTO aprobarPago(Long idFactura) throws Exception {

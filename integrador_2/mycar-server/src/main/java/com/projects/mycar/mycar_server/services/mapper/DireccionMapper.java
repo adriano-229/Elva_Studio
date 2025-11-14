@@ -5,7 +5,7 @@ import com.projects.mycar.mycar_server.entities.Direccion;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {LocalidadMapper.class})
+@Mapper(componentModel = "spring", uses = {LocalidadSimpleMapper.class})
 public interface DireccionMapper extends BaseMapper<Direccion, DireccionDTO> {
 
     @Override

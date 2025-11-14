@@ -8,11 +8,13 @@ import com.projects.mycar.mycar_server.services.DireccionService;
 import com.projects.mycar.mycar_server.services.mapper.BaseMapper;
 import com.projects.mycar.mycar_server.services.mapper.LocalidadMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+@Service
 public class DireccionServiceImpl extends BaseServiceImpl<Direccion, DireccionDTO, Long> implements DireccionService {
 
     @Autowired

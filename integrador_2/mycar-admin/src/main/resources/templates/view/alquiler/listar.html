@@ -6,11 +6,184 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Listado de Alquileres | MyCar</title>
 
-  <!-- CSS Datta Able -->
-  <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
-  <link rel="stylesheet" th:href="@{/assets/css/style.css}">
-  <link rel="stylesheet" th:href="@{/assets/css/icons.css}">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- CSS Datta Able -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/icons.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+	
+	<style>
+	/* Fondo general */
+	body {
+	    font-family: 'Open Sans', sans-serif;
+	    background-color: #f5f6f8;
+	    color: #333;
+	}
+
+	/* Cards */
+	.card {
+	    border-radius: 10px;
+	    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+	    border: none;
+	    margin-bottom: 20px;
+	}
+
+	/* Card body */
+	.card-body {
+	    padding: 20px;
+	}
+
+	/* Card headers */
+	.card-header {
+	    background-color: #e6f0fa; /* azul grisáceo suave */
+	    color: #2c3e50;
+	    font-weight: 600;
+	    font-size: 1.1rem;
+	    border-bottom: none;
+	    border-radius: 10px 10px 0 0;
+	}
+
+	/* Alerts */
+	.alert {
+	    border-radius: 6px;
+	    padding: 12px 15px;
+	    font-size: 0.95rem;
+	    display: flex;
+	    align-items: center;
+	}
+
+	.alert-success {
+	    background-color: #d4edda;
+	    color: #155724;
+	}
+
+	.alert-danger {
+	    background-color: #f8d7da;
+	    color: #721c24;
+	}
+
+	/* Botones */
+	.btn {
+	    border-radius: 6px;
+	    font-weight: 500;
+	    padding: 6px 12px;
+	    transition: all 0.2s;
+	}
+
+	.btn:hover {
+	    transform: translateY(-1px);
+	}
+
+	/* Colores botones */
+	.btn-success {
+	    background-color: #28a745;
+	    color: #fff;
+	}
+
+	.btn-success:hover {
+	    background-color: #218838;
+	}
+
+	.btn-secondary {
+	    background-color: #6c757d;
+	    color: #fff;
+	}
+
+	.btn-secondary:hover {
+	    background-color: #5a6268;
+	}
+
+	.btn-info {
+	    background-color: #2ab7ca; /* Verde-azulado estilo Datta Able */
+	    color: #fff;
+	    border-radius: 6px;
+	    font-weight: 500;
+	    padding: 4px 10px;
+	    transition: all 0.2s;
+	}
+
+	.btn-info:hover {
+	    background-color: #24a0b0; /* Hover más oscuro y suave */
+	}
+
+
+
+	.btn-danger {
+	    background-color: #dc3545;
+	    color: #fff;
+	}
+
+	.btn-danger:hover {
+	    background-color: #c82333;
+	}
+	
+	
+	/* Tabla */
+	.table {
+	    font-size: 0.95rem;
+	    color: #2c3e50;
+	}
+
+	.table thead {
+	    background-color: #b0bec5; /* Gris claro con toque azulado */
+	    color: #2c3e50; /* Texto oscuro para contraste */
+	}
+
+	.table tbody tr:hover {
+	    background-color: #f5f7fa; /* Hover suave */
+	}
+
+
+	.table th, .table td {
+	    vertical-align: middle;
+	    text-align: center;
+	    padding: 12px;
+	}
+
+	/* Mensajes de tabla vacía */
+	.text-gray-500 {
+	    color: #6c757d !important;
+	}
+
+	/* Formulario de filtros */
+	form.flex {
+	    flex-wrap: wrap;
+	    align-items: flex-end;
+	    gap: 15px;
+	}
+
+	form.flex .form-label {
+	    font-weight: 500;
+	    font-size: 0.9rem;
+	}
+
+	/* Inputs fecha */
+	input[type="date"] {
+	    border-radius: 6px;
+	    border: 1px solid #ced4da;
+	    padding: 6px 10px;
+	    font-size: 0.9rem;
+	}
+
+	/* Íconos Feather */
+	i[data-feather] {
+	    vertical-align: middle;
+	}
+
+	/* Responsive */
+	@media (max-width: 768px) {
+	    form.flex {
+	        flex-direction: column;
+	        align-items: stretch;
+	    }
+	    form.flex .flex {
+	        width: 100%;
+	        justify-content: flex-start;
+	    }
+	}
+	</style>
+
+	
 </head>
 <body>
 
@@ -32,23 +205,21 @@
       </a>-->
     </div>
 
-    <!-- Mensajes de éxito o error -->
-    <div class="alert alert-success alert-dismissible fade show flex items-center gap-2" role="alert"
-         th:if="${successMessage}">
-      <i class="text-success-500" data-feather="check-circle"></i>
-      <span th:text="${successMessage}"></span>
-      <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
-    </div>
+	    <!-- Mensajes de éxito o error -->
+	    <div th:if="${msgExito}" class="alert alert-success alert-dismissible fade show flex items-center gap-2" role="alert">
+	      <i data-feather="check-circle" class="text-success-500"></i>
+	      <span th:text="${msgExito}"></span>
+	      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	    </div>
 
-    <div class="alert alert-danger alert-dismissible fade show flex items-center gap-2" role="alert"
-         th:if="${errorMessage}">
-      <i class="text-danger-500" data-feather="alert-circle"></i>
-      <span th:text="${errorMessage}"></span>
-      <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
-    </div>
+	    <div th:if="${msgError}" class="alert alert-danger alert-dismissible fade show flex items-center gap-2" role="alert">
+	      <i data-feather="alert-circle" class="text-danger-500"></i>
+	      <span th:text="${msgError}"></span>
+	      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	    </div>
 
-    <!-- Filtro de búsqueda por periodo -->
-    <form class="flex items-end justify-end gap-3 mb-6" method="get" th:action="@{/alquiler/listar}">
+		<!-- Filtro de búsqueda por periodo -->
+		<form class="flex items-end justify-end gap-3 mb-6" th:action="@{/alquiler/buscar}" method="get">
 
       <!-- Campos de fecha más compactos -->
       <div class="flex flex-col">
@@ -94,37 +265,63 @@
               <td th:text="${alquiler.fechaDesde != null} ? ${#temporals.format(alquiler.fechaDesde, 'dd/MM/yyyy')} : ''"></td>
               <td th:text="${alquiler.fechaHasta != null} ? ${#temporals.format(alquiler.fechaHasta, 'dd/MM/yyyy')} : ''"></td>
 
-              <td th:text="${alquiler.vehiculo.caracteristicaVehiculo.modelo}"></td>
-              <td th:text="${alquiler.vehiculo.patente}"></td>
-              <!--<td th:text="${alquiler.cantDias}"></td>-->
-              <td th:text="${alquiler.vehiculo.caracteristicaVehiculo.costoVehiculo.costo}"></td>
-              <td class="flex justify-center gap-2">
-                <a class="btn btn-info btn-sm flex items-center gap-1"
-                   th:href="@{'/alquiler/detalle/' + ${alquiler.id}}">
-                  <i data-feather="eye"></i> Ver
-                </a>
-                <!--<a th:href="@{'/alquiler/editar/' + ${alquiler.id}}" class="btn btn-warning btn-sm flex items-center gap-1">
-                  <i data-feather="edit"></i> Editar
-                </a>-->
-                <a class="btn btn-danger btn-sm flex items-center gap-1"
-                   onclick="return confirm('¿Seguro que deseas eliminar este alquiler?');"
-                   th:href="@{'/alquiler/eliminar/' + ${alquiler.id}}">
-                  <i data-feather="trash-2"></i> Eliminar
-                </a>
-              </td>
-            </tr>
-            <tr th:if="${#lists.isEmpty(entities)}">
-              <td class="text-center text-gray-500 py-4" colspan="8">No se encontraron alquileres para este período.
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+	    <!-- Tabla de alquileres -->
+	    <div class="card shadow-sm">
+	      <div class="card-body">
+	        <div class="table-responsive">
+	          <table class="table table-hover table-striped align-middle text-center">
+	            <thead class="bg-primary-100 dark:bg-primary-600 text-white">
+	              <tr>
+	                <th>#</th>
+	                <th>Fecha Desde</th>
+	                <th>Fecha Hasta</th>
+	                <th>Modelo</th>
+	                <th>Patente</th>
+	                <th>Costo diario</th>
+					<th>Precio</th>
+	                <th>Acciones</th>
+	              </tr>
+	            </thead>
+	            <tbody>
+	              <tr th:each="alquiler, iterStat : ${entities}" class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+	                <td th:text="${iterStat.index + 1}"></td>
+					<td th:text="${alquiler.fechaDesde != null} ? ${#temporals.format(alquiler.fechaDesde, 'dd/MM/yyyy')} : ''"></td>
+					<td th:text="${alquiler.fechaHasta != null} ? ${#temporals.format(alquiler.fechaHasta, 'dd/MM/yyyy')} : ''"></td>
 
-  </div>
-</div>
+	                <td th:text="${alquiler.vehiculo.caracteristicaVehiculo.modelo}"></td>
+	                <td th:text="${alquiler.vehiculo.patente}"></td>
+	                <!--<td th:text="${alquiler.cantDias}"></td>-->
+	                <td th:text="${alquiler.vehiculo.caracteristicaVehiculo.costoVehiculo.costo}"></td>
+					<td th:text="${alquiler.costoCalculado}"></td>
+					<td class="d-flex justify-content-center gap-2">
+					    <!-- Botón Ver -->
+					    <a th:href="@{'/alquiler/detalle/' + ${alquiler.id}}" 
+					       class="btn btn-info btn-sm" 
+					       style="min-width: 90px;">
+					        Ver
+					    </a>
+
+					    <!-- Botón Eliminar -->
+					    <a th:href="@{'/alquiler/eliminar/' + ${alquiler.id}}" 
+					       class="btn btn-danger btn-sm" 
+					       style="min-width: 90px;"
+					       onclick="return confirm('¿Seguro que deseas eliminar este alquiler?');">
+					        Eliminar
+					    </a>
+					</td>
+
+	              </tr>
+	              <tr th:if="${#lists.isEmpty(entities)}">
+	                <td colspan="8" class="text-center text-gray-500 py-4">No se encontraron alquileres para este período.</td>
+	              </tr>
+	            </tbody>
+	          </table>
+	        </div>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
 
 
 <!-- Footer -->

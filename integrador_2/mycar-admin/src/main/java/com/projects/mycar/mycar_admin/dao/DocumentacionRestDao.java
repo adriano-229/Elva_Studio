@@ -2,6 +2,9 @@ package com.projects.mycar.mycar_admin.dao;
 
 import com.projects.mycar.mycar_admin.domain.DocumentacionDTO;
 
-public interface DocumentacionRestDao extends BaseRestDao<DocumentacionDTO, Long> {
+public interface DocumentacionRestDao extends BaseRestDao<DocumentacionDTO, Long>{
+	
+	public DocumentacionDTO crearDocumentacion(DocumentacionDTO dto) throws Exception;
+	public void actualizarDocumentacion(DocumentacionDTO dto) throws Exception;
 
 }

@@ -17,26 +17,17 @@
       }
 
       .page-header {
-          background: #f9fafb; /* gris claro */
+          background: #f9fafb;
           border-radius: 10px;
           padding: 25px 30px;
-          color: #111827; /* texto oscuro */
+          color: #111827;
           box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-          border: 1px solid #e5e7eb; /* línea sutil */
+          border: 1px solid #e5e7eb;
       }
-
 
       .page-header h5 {
           font-weight: 600;
           margin-bottom: 5px;
-      }
-
-      .page-header .breadcrumb-item a {
-          color: #cbd5e1;
-      }
-
-      .page-header .breadcrumb-item.active {
-          color: #fff;
       }
 
       .card {
@@ -84,73 +75,12 @@
           border-bottom: none;
       }
 
-      .btn {
-          border-radius: 6px;
-          font-weight: 500;
-      }
-
-      .btn-primary {
-          background-color: #2563eb;
-          border: none;
-      }
-
-      .btn-primary:hover {
-          background-color: #1e40af;
-      }
-
-      .btn-warning {
-          background-color: #f59e0b;
-          border: none;
-          color: #fff;
-      }
-
-      .btn-warning:hover {
-          background-color: #d97706;
-      }
-
-      .alert {
-          border-radius: 8px;
-          padding: 15px 20px;
-          font-weight: 500;
-      }
-
-      .alert-success {
-          background-color: #dcfce7;
-          color: #15803d;
-      }
-
-      .alert-danger {
-          background-color: #fee2e2;
-          color: #b91c1c;
-      }
-
-      .info-icon {
-          font-size: 40px;
-          color: #2563eb;
-          opacity: 0.8;
-      }
-
-      .label-muted {
-          color: #6b7280;
-          font-size: 14px;
-      }
-
-      .form-label {
-          font-weight: 500;
-      }
-
-      @media (max-width: 992px) {
-          .grid {
-              display: block !important;
-          }
-      }
-
       .vehicle-image-container {
           width: 100%;
           height: 200px;
           overflow: hidden;
           border-bottom: 1px solid #eee;
-          background-color: #f8fafc; /* tono suave de fondo */
+          background-color: #f8fafc;
       }
 
       .vehicle-image {
@@ -171,8 +101,8 @@
 <!-- Sidebar -->
 <div th:replace="fragments/layout :: sidebar"></div>
 
-<!-- Header -->
-<div th:replace="fragments/layout :: header"></div>
+<!-- Navbar -->
+<div th:replace="fragments/layout :: navbar"></div>
 
 <!-- Main -->
 <div class="pc-container">
@@ -183,15 +113,7 @@
       <div class="d-flex justify-content-between align-items-center">
         <div>
           <h5>Detalle del Alquiler</h5>
-          <!--<ul class="breadcrumb mb-0">
-              <li class="breadcrumb-item"><a th:href="@{/dashboard}">Inicio</a></li>
-              <li class="breadcrumb-item"><a th:href="@{/alquiler/listar}">Alquileres</a></li>
-              <li class="breadcrumb-item active">Detalle</li>-->
-          </ul>
         </div>
-        <!--<a th:href="@{/alquiler/listar}" class="btn btn-light text-dark">
-            <i class="ti ti-arrow-left"></i> Volver
-        </a>-->
       </div>
     </div>
 
@@ -243,33 +165,27 @@
           <div class="card-header bg-gradient-success">
             <i class="ti ti-car me-2"></i> Vehículo
           </div>
-
-          <!-- Imagen del vehículo -->
           <div class="vehicle-image-container">
             <img alt="Vehículo"
                  class="vehicle-image"
                  th:src="@{${alquiler.vehiculo.caracteristicaVehiculo.imagen}}">
           </div>
-
-          <!-- Información -->
           <div class="card-body text-center">
             <h5 class="mb-1"
                 th:text="${alquiler.vehiculo.caracteristicaVehiculo.marca + ' ' + alquiler.vehiculo.caracteristicaVehiculo.modelo}"></h5>
-            <p class="label-muted mb-3" th:text="'Patente: ' + ${alquiler.vehiculo.patente}"></p>
+            <p class="text-muted mb-3" th:text="'Patente: ' + ${alquiler.vehiculo.patente}"></p>
             <div class="d-flex justify-content-between px-3">
               <span><strong>Puertas:</strong> <span
                   th:text="${alquiler.vehiculo.caracteristicaVehiculo.cantidadPuerta}">4</span></span>
               <span><strong>Asientos:</strong> <span
                   th:text="${alquiler.vehiculo.caracteristicaVehiculo.cantidadAsiento}">5</span></span>
-              <span><strong>Año:</strong> <span
-                  th:text="${alquiler.vehiculo.caracteristicaVehiculo.anio}">2023</span></span>
+              <span><strong>Año:</strong> <span th:text="${alquiler.vehiculo.caracteristicaVehiculo.anio}">2023</span></span>
             </div>
           </div>
         </div>
       </div>
 
-
-      <!-- Fechas y Costo -->
+      <!-- Fechas y costo -->
       <div class="col-span-12 xl:col-span-4 md:col-span-6">
         <div class="card h-100">
           <div class="card-header bg-gradient-warning d-flex justify-content-between align-items-center">
@@ -285,26 +201,26 @@
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
                 <strong>Fecha Desde:</strong>
-                <span th:text="${#temporals.format(alquiler.fechaDesde, 'dd/MM/yyyy')}">01/11/2025</span>
+                <span th:text="${#temporals.format(alquiler.fechaDesde, 'dd/MM/yyyy')}"></span>
               </li>
               <li class="list-group-item">
                 <strong>Fecha Hasta:</strong>
-                <span th:text="${#temporals.format(alquiler.fechaHasta, 'dd/MM/yyyy')}">07/11/2025</span>
+                <span th:text="${#temporals.format(alquiler.fechaHasta, 'dd/MM/yyyy')}"></span>
               </li>
               <li class="list-group-item">
                 <strong>Cantidad de Días:</strong>
-                <span th:text="${alquiler.cantidadDias}">7</span>
+                <span th:text="${alquiler.cantidadDias}"></span>
               </li>
               <li class="list-group-item">
                 <strong>Costo Total:</strong>
-                $<span th:text="${alquiler.costoCalculado}">150000</span>
+                $<span th:text="${alquiler.costoCalculado}"></span>
               </li>
             </ul>
           </div>
 
           <!-- Formulario de edición -->
           <div class="card-body" id="formEdicion" style="display:none;">
-            <form method="post" th:action="@{/alquiler/actualizarFechas}" th:object="${alquiler}">
+            <form method="post" th:action="@{/alquiler/modificar}" th:object="${alquiler}">
               <input th:field="*{id}" type="hidden">
               <div class="mb-3">
                 <label class="form-label fw-semibold">Fecha Desde</label>
@@ -346,9 +262,9 @@
             <i class="ti ti-file-description me-2"></i> Documentación del Alquiler
           </div>
           <div class="card-body">
-            <form enctype="multipart/form-data" method="post" th:action="@{/alquiler/actualizarDocumentacion}"
-                  th:object="${alquiler.documentacion}">
-              <input name="alquilerId" th:value="${alquiler.id}" type="hidden">
+            <form enctype="multipart/form-data" method="post" th:action="@{/documentacion/modificar}"
+                  th:object="${documentacion}">
+              <input th:field="*{id}" type="hidden">
               <div class="grid grid-cols-12 gap-4">
                 <div class="col-span-12 md:col-span-4">
                   <label class="form-label">Tipo de Documentación</label>
@@ -367,10 +283,11 @@
                 <div class="col-span-12 md:col-span-4">
                   <label class="form-label">Archivo PDF</label>
                   <input accept=".pdf" class="form-control" th:field="*{pdf}" type="file">
-                  <div class="mt-2" th:if="${alquiler.documentacion.pathArchivo != null}">
-                    <a class="btn btn-outline-primary btn-sm" target="_blank"
-                       th:href="@{${alquiler.documentacion.pathArchivo}}">
-                      <i class="ti ti-file"></i> Ver PDF actual
+                  <div class="mt-2" th:if="${alquiler.documentacion != null}">
+                    <a class="btn btn-outline-primary btn-sm"
+                       target="_blank"
+                       th:href="@{'http://localhost:9000/api/v1/documentacion/ver-pdf/' + ${alquiler.documentacion.nombreArchivo}}">
+                      <i class="ti ti-file"></i> Ver PDF
                     </a>
                   </div>
                 </div>
@@ -389,52 +306,49 @@
   </div>
 
   <div th:replace="fragments/layout :: footer"></div>
+</div>
 
-  <script th:src="@{/assets/js/plugins/simplebar.min.js}"></script>
-  <script th:src="@{/assets/js/plugins/popper.min.js}"></script>
-  <script th:src="@{/assets/js/plugins/feather.min.js}"></script>
-  <script th:src="@{/assets/js/component.js}"></script>
-  <script th:src="@{/assets/js/theme.js}"></script>
-  <script th:src="@{/assets/js/script.js}"></script>
-  <script>
-      // Simular costo diario recibido desde el backend
-      const costoPorDia = /*[[${alquiler.vehiculo.caracteristicaVehiculo.costoVehiculo.costo}]]*/ 0;
+<script th:src="@{/assets/js/plugins/simplebar.min.js}"></script>
+<script th:src="@{/assets/js/plugins/popper.min.js}"></script>
+<script th:src="@{/assets/js/plugins/feather.min.js}"></script>
+<script th:src="@{/assets/js/component.js}"></script>
+<script th:src="@{/assets/js/theme.js}"></script>
+<script th:src="@{/assets/js/script.js}"></script>
+<script th:inline="javascript">
+    const costoPorDia = /*[[${alquiler.vehiculo.caracteristicaVehiculo.costoVehiculo.costo}]]*/ 0;
 
-      function mostrarFormularioEdicion() {
-          document.getElementById("vistaInfo").style.display = "none";
-          document.getElementById("formEdicion").style.display = "block";
-          document.getElementById("btnEditar").style.display = "none";
+    function mostrarFormularioEdicion() {
+        document.getElementById("vistaInfo").style.display = "none";
+        document.getElementById("formEdicion").style.display = "block";
+        document.getElementById("btnEditar").style.display = "none";
 
-          const desde = document.getElementById("fechaDesdeInput");
-          const hasta = document.getElementById("fechaHastaInput");
+        document.getElementById("fechaDesdeInput").addEventListener("change", recalcular);
+        document.getElementById("fechaHastaInput").addEventListener("change", recalcular);
+    }
 
-          desde.addEventListener("change", recalcular);
-          hasta.addEventListener("change", recalcular);
-      }
+    function cancelarEdicion() {
+        document.getElementById("vistaInfo").style.display = "block";
+        document.getElementById("formEdicion").style.display = "none";
+        document.getElementById("btnEditar").style.display = "inline-block";
+    }
 
-      function cancelarEdicion() {
-          document.getElementById("vistaInfo").style.display = "block";
-          document.getElementById("formEdicion").style.display = "none";
-          document.getElementById("btnEditar").style.display = "inline-block";
-      }
+    function recalcular() {
+        const desde = new Date(document.getElementById("fechaDesdeInput").value);
+        const hasta = new Date(document.getElementById("fechaHastaInput").value);
+        const diasInput = document.getElementById("diasInput");
+        const costoInput = document.getElementById("costoInput");
 
-      function recalcular() {
-          const desde = new Date(document.getElementById("fechaDesdeInput").value);
-          const hasta = new Date(document.getElementById("fechaHastaInput").value);
-          const diasInput = document.getElementById("diasInput");
-          const costoInput = document.getElementById("costoInput");
+        if (isNaN(desde) || isNaN(hasta) || hasta < desde) {
+            diasInput.value = "";
+            costoInput.value = "";
+            return;
+        }
 
-          if (isNaN(desde) || isNaN(hasta) || hasta < desde) {
-              diasInput.value = "";
-              costoInput.value = "";
-              return;
-          }
-
-          const diffTime = Math.abs(hasta - desde);
-          const dias = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-          diasInput.value = dias;
-          costoInput.value = (dias * costoPorDia).toFixed(2);
-      }
-  </script>
+        const diffTime = Math.abs(hasta - desde);
+        const dias = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+        diasInput.value = dias;
+        costoInput.value = (dias * costoPorDia).toFixed(2);
+    }
+</script>
 </body>
 </html>

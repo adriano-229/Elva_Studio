@@ -105,7 +105,7 @@ public class DocumentacionServiceImpl extends BaseServiceImpl<Documentacion, Doc
 
     }
 
-    @Override
+    /*@Override
     public String almacenarPdf(MultipartFile pdf) throws Exception {
         if (pdf == null || pdf.isEmpty()) {
             throw new IllegalArgumentException("El archivo PDF está vacío");
@@ -130,15 +130,42 @@ public class DocumentacionServiceImpl extends BaseServiceImpl<Documentacion, Doc
             log.error("Error al subir archivo PDF", e);
             throw new Exception("Error al subir archivo", e);
         }
+    }*/
+    
+    @Override
+    public String almacenarPdf(MultipartFile pdf) throws Exception {
+        if (pdf == null || pdf.isEmpty()) {
+            throw new IllegalArgumentException("El archivo PDF está vacío");
+        }
+        try {
+            File carpeta = new File(uploadDir);
+            if (!carpeta.exists() && !carpeta.mkdirs()) {
+                throw new IllegalStateException("No se pudo crear el directorio: " + uploadDir);
+            }
+
+            String original = pdf.getOriginalFilename();
+            String seguro = (original == null ? "archivo" : original).replaceAll("[^a-zA-Z0-9._-]", "_");
+            String nombreArchivo = System.currentTimeMillis() + "_" + seguro;
+
+            Path pathDestino = Paths.get(uploadDir, nombreArchivo).normalize();
+            pdf.transferTo(pathDestino.toFile());
+
+            log.info("Archivo PDF almacenado en {}", pathDestino);
+            return nombreArchivo; // 🔥 DEVOLVEMOS SOLO EL NOMBRE
+        } catch (Exception e) {
+            log.error("Error al subir archivo PDF", e);
+            throw new Exception("Error al subir archivo", e);
+        }
     }
 
+    
     @Override
     @Transactional
-    public DocumentacionDTO update(Long id, DocumentacionDTO documentacion, MultipartFile archivo)
+    public DocumentacionDTO updateDocumentacion(Long id, DocumentacionDTO documentacion, MultipartFile archivo)
             throws Exception {
 
         try {
-
+        	System.out.println("ESTOY EN DOCUMENTACION CONTROLLER - UPDATE");
             validate(documentacion);
 
             Documentacion doc = convertToEntity(documentacion);
@@ -148,11 +175,14 @@ public class DocumentacionServiceImpl extends BaseServiceImpl<Documentacion, Doc
 
             //podria hacer que se elimine del directorio el archivo que estaba cargado antes
             if (archivo != null && !archivo.isEmpty()) {
-                String ruta = almacenarPdf(archivo);
-
-                doc.setNombreArchivo(documentacion.getNombreArchivo());
-                doc.setPathArchivo(ruta);
-
+            	
+            	String nombreArchivo = almacenarPdf(archivo);
+                doc.setNombreArchivo(nombreArchivo);
+                doc.setPathArchivo(uploadDir + File.separator + nombreArchivo);
+                
+                
+                
+                doc.setNombreArchivo(nombreArchivo);
             }
 
             saveToRepository(doc);

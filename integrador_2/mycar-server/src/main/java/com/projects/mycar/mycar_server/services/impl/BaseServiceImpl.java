@@ -61,6 +61,7 @@ public abstract class BaseServiceImpl<E extends Base, D extends BaseDTO, ID exte
     @Override
     @Transactional
     public D save(D dto) throws Exception {
+    	System.out.println("SERVICE SERVICE");
         validate(dto);
         beforeSave(dto);
         E entity = baseMapper.toEntity(dto);
