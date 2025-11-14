@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html data-pc-direction="ltr" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-theme="light"
+      dir="ltr" lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Promoción activa | MyCar</title>
+
+  <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/icons.css}">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="~{fragments/layout :: sidebar}"></div>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<div class="pc-container">
+  <div class="pc-content">
+
+    <div class="flex justify-between items-center mb-6">
+      <div>
+        <p class="text-sm tracking-widest uppercase text-theme-text">Promociones</p>
+        <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">Promoción activa</h3>
+        <p class="text-muted mt-1">Consultá la configuración vigente para los envíos.</p>
+      </div>
+      <a class="btn btn-outline-primary flex items-center gap-2" th:href="@{/promociones/configurar}">
+        <i class="ti ti-edit"></i> Reconfigurar
+      </a>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show flex items-center gap-2" role="alert"
+         th:if="${msgError}">
+      <i class="text-danger-500" data-feather="alert-circle"></i>
+      <span th:text="${msgError}"></span>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div th:if="${configuracion != null}">
+          <p class="text-muted text-sm mb-2">Mensaje actual</p>
+          <p class="text-lg font-medium mb-4" th:text="${configuracion.mensajePromocion}">-</p>
+
+          <p class="text-muted text-sm mb-2">Porcentaje de descuento</p>
+          <p class="text-3xl font-semibold text-success-600" th:text="${configuracion.porcentajeDescuento + ' %'}">
+            0 %
+          </p>
+        </div>
+        <div class="text-muted text-center py-5" th:if="${configuracion == null}">
+          No hay una promoción activa.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+
+<script th:src="@{/assets/js/plugins/simplebar.min.js}"></script>
+<script th:src="@{/assets/js/plugins/popper.min.js}"></script>
+<script th:src="@{/assets/js/plugins/feather.min.js}"></script>
+<script th:src="@{/assets/js/component.js}"></script>
+<script th:src="@{/assets/js/theme.js}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        feather.replace();
+    });
+</script>
+</body>
+</html>

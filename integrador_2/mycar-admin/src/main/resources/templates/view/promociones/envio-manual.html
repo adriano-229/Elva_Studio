@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html data-pc-direction="ltr" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-theme="light"
+      dir="ltr" lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Enviar promoción manual | MyCar</title>
+
+  <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/icons.css}">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="~{fragments/layout :: sidebar}"></div>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<div class="pc-container">
+  <div class="pc-content">
+
+    <div class="flex justify-between items-center mb-6">
+      <div>
+        <p class="text-sm tracking-widest uppercase text-theme-text">Promociones</p>
+        <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">Enviar promoción manualmente</h3>
+        <p class="text-muted mt-1">Generá un envío inmediato usando la configuración activa.</p>
+      </div>
+      <a class="btn btn-outline-primary flex items-center gap-2" th:href="@{/promociones/verActiva}">
+        <i class="ti ti-info-circle"></i> Ver activa
+      </a>
+    </div>
+
+    <div class="alert alert-success alert-dismissible fade show flex items-center gap-2 justify-center" role="alert"
+         th:if="${msgExito}">
+      <i class="text-success-500" data-feather="check-circle"></i>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show flex items-center gap-2" role="alert"
+         th:if="${msgError}">
+      <i class="text-danger-500" data-feather="alert-circle"></i>
+      <span th:text="${msgError}"></span>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-body flex flex-col gap-4">
+        <p>Se enviará la promoción activa a los canales configurados. Esta acción no necesita parámetros y puede tardar
+          algunos segundos.</p>
+        <form method="post" th:action="@{/promociones/envioManual}">
+          <button class="btn btn-danger flex items-center gap-2" type="submit">
+            <i class="ti ti-send"></i> Enviar ahora
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+
+<script th:src="@{/assets/js/plugins/simplebar.min.js}"></script>
+<script th:src="@{/assets/js/plugins/popper.min.js}"></script>
+<script th:src="@{/assets/js/plugins/feather.min.js}"></script>
+<script th:src="@{/assets/js/component.js}"></script>
+<script th:src="@{/assets/js/theme.js}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        feather.replace();
+    });
+</script>
+</body>
+</html>

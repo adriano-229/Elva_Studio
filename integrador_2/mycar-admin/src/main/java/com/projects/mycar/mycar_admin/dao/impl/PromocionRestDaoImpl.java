@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 public class PromocionRestDaoImpl extends BaseRestDaoImpl<ConfiguracionPromocionDTO, Long> implements PromocionRestDao {
 
     public PromocionRestDaoImpl() {
-        super(ConfiguracionPromocionDTO.class, ConfiguracionPromocionDTO[].class, "http://localhost:9000/api/promociones");
+        super(ConfiguracionPromocionDTO.class, ConfiguracionPromocionDTO[].class, "http://localhost:8083/api/promociones");
     }
 
     @Override
@@ -36,7 +36,7 @@ public class PromocionRestDaoImpl extends BaseRestDaoImpl<ConfiguracionPromocion
 
         try {
 
-            String uri = baseUrl + "//configuracion-activa";
+            String uri = baseUrl + "/configuracion-activa";
             ResponseEntity<ConfiguracionPromocionDTO> response = restTemplate.getForEntity(
                     uri,
                     ConfiguracionPromocionDTO.class
