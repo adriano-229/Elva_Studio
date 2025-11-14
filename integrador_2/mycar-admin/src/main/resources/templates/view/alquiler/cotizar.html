@@ -1,314 +1,527 @@
 <!DOCTYPE html>
-<html data-pc-direction="ltr" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-theme="light" dir="ltr"
-      lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light" xmlns:th="http://www.thymeleaf.org">
+<!--<head>
+    <title>Cotización | Tu Aplicación</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
+    <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>-->
+
 <head>
-  <title>Cotización | Tu Aplicación</title>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" name="viewport"/>
-  <link href="../assets/css/style.css" id="main-style-link" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <title>Cotización | Tu Aplicación</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
+    <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+	<style>
+	/* General */
+	body {
+	    font-family: 'Open Sans', sans-serif;
+	    background-color: #f5f6fa;
+	    color: #333;
+	}
+	.card {
+	    background: #fff;
+	    border-radius: 10px;
+	    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+	    padding: 20px;
+	    margin-bottom: 20px;
+	}
+	.card-header {
+	    font-size: 1.25rem;
+	    font-weight: 600;
+	    margin-bottom: 15px;
+	    border-bottom: 1px solid #e0e0e0;
+	    padding-bottom: 8px;
+	}
+
+	/* Formulario */
+	.form-label {
+	    font-weight: 500;
+	    margin-bottom: 6px;
+	    display: block;
+	}
+	.form-control, .form-select {
+	    width: 100%;
+	    padding: 10px 12px;
+	    border-radius: 6px;
+	    border: 1px solid #ccc;
+	    font-size: 0.95rem;
+	    margin-bottom: 15px;
+	    transition: border 0.3s, box-shadow 0.3s;
+	}
+	.form-control:focus, .form-select:focus {
+	    outline: none;
+	    border-color: #007bff;
+	    box-shadow: 0 0 0 2px rgba(0,123,255,0.2);
+	}
+
+	/* Botones */
+	.btn-primary {
+	    background-color: #007bff;
+	    color: #fff;
+	    font-weight: 500;
+	    border: none;
+	    padding: 10px 20px;
+	    border-radius: 6px;
+	    cursor: pointer;
+	    transition: background 0.3s;
+	}
+	.btn-primary:hover {
+	    background-color: #0056b3;
+	}
+	.btn-success {
+	    background-color: #28a745;
+	    color: #fff;
+	    font-weight: 500;
+	    border: none;
+	    padding: 6px 12px;
+	    border-radius: 6px;
+	    cursor: pointer;
+	    transition: background 0.3s;
+	}
+	.btn-success:hover {
+	    background-color: #1e7e34;
+	}
+
+	/* Imágenes */
+	img.vehiculo-img {
+	    width: 100%;
+	    max-width: 300px;
+	    height: 200px;
+	    object-fit: cover;
+	    border-radius: 10px;
+	    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+	    margin: 0 auto;
+	}
+
+	/* Textos */
+	.text-center { text-align: center; }
+	.text-muted { color: #6c757d; }
+
+	/* Detalles de cotización */
+	.detalle-item {
+	    display: flex;
+	    justify-content: space-between;
+	    padding: 8px 0;
+	    border-bottom: 1px solid #eee;
+	}
+	.detalle-item:last-child { border-bottom: none; }
+	.detalle-total {
+	    font-weight: 600;
+	    font-size: 1.1rem;
+	    color: #007bff;
+	}
+
+	/* Cliente */
+	.cliente-card {
+	    background: #f8f9fa;
+	    border-radius: 10px;
+	    padding: 20px;
+	    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+	    margin-top: 20px;
+	    margin-bottom: 30px;
+	}
+
+
+	/* Título de la card */
+	.cliente-card .card-header {
+	    font-size: 1.1rem;
+	    font-weight: 600;
+	    margin-bottom: 12px;
+	    border-bottom: 1px solid #e0e0e0;
+	    padding-bottom: 6px;
+	}
+
+	/* Input y botón buscar */
+	.input-group {
+	    display: flex;
+	    gap: 6px;
+	}
+
+	.input-group input {
+		margin-top: 10px;
+		padding: 4px 12px;
+	    border: 1px solid #ccc;
+	}
+
+	
+	.input-group button {
+		margin-top: 10px;
+		padding: 4px 12px;
+	    background-color:  #1e7e34;
+	    
+	}
+
+	.input-group button:hover {
+	    background-color: #1e7e34;
+	}
+
+
+	/* Botón continuar más pequeño */
+	#btnContinuar {
+	    margin-top: 10px;
+	    padding: 4px 12px; /* vertical 4px, horizontal 12px */
+	    background-color: #007bff;
+	}
+
+	.alert-danger { background-color: #f8d7da; color: #721c24; }
+	.alert-success { background-color: #d4edda; color: #155724; }
+
+	/* Totales dentro del detalle de cotización */
+	.detalle-totales {
+	    margin-top: 15px;
+	    padding-top: 10px;
+	    border-top: 1px solid #ddd;
+	}
+	.detalle-totales div {
+	    display: flex;
+	    justify-content: space-between;
+	    padding: 4px 0;
+	}
+	.detalle-totales div.total {
+	    font-weight: 600;
+	    font-size: 1.1rem;
+	    color: #007bff;
+	}
+	</style>
 
 </head>
 
+
 <body>
 
-<!-- Sidebar -->
-<div th:replace="fragments/layout :: sidebar"></div>
+    <!-- Sidebar -->
+    <div th:replace="fragments/layout :: sidebar"></div>
 
-<!-- Header -->
-<div th:replace="fragments/layout :: header"></div>
+    <!-- Header -->
+    <div th:replace="fragments/layout :: header"></div>
 
-<!-- Main Content -->
-<div class="pc-container">
-  <div class="pc-content">
+    <!-- Main Content -->
+    <div class="pc-container">
+        <div class="pc-content">
 
-    <!-- Breadcrumb -->
-    <div class="page-header">
-      <div class="page-block">
-        <div class="page-header-title">
-          <h5 class="mb-0 font-medium">Cotización de Vehículo</h5>
-
-          <!-- Mensajes de error -->
-          <div class="mb-4" th:if="${msgError != null}">
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-              <i class="me-2" data-feather="alert-circle"></i>
-              <span th:text="${msgError}">Error al procesar la solicitud</span>
-              <button aria-label="Cerrar" class="btn-close" data-bs-dismiss="alert" type="button"></button>
-            </div>
-          </div>
-
-        </div>
-        <!--<ul class="breadcrumb">
-            <li class="breadcrumb-item"><a th:href="@{/dashboard}">Home</a></li>
-            <li class="breadcrumb-item" aria-current="page">Cotización</li>
-        </ul>-->
-      </div>
-    </div>
-
-    <!-- Contenido principal -->
-    <div class="grid grid-cols-12 gap-x-6 mt-4">
-
-      <!-- Formulario Cotización -->
-      <div class="col-span-12 xl:col-span-8 md:col-span-12">
-        <div class="card">
-          <div class="card-header">
-            <h5>Formulario de Cotización</h5>
-          </div>
-          <div class="card-body">
-            <form class="grid grid-cols-12 gap-4" method="post" th:action="@{/alquiler/cotizar}"
-                  th:object="${alquiler}">
-
-              <!-- Selección de Auto -->
-              <div class="col-span-12 md:col-span-6">
-                <label class="form-label" for="auto">Selecciona un auto</label>
-                <select class="form-select" id="auto" th:field="*{idVehiculo}">
-                  <option disabled selected value="">-- Elige un vehículo --</option>
-                  <option th:each="auto : ${listaVehiculos}"
-                          th:text="${auto.caracteristicaVehiculo.marca} + ' - ' + ${auto.caracteristicaVehiculo.modelo}"
-                          th:value="${auto.id}">
-                    Auto 1
-                  </option>
-                </select>
-              </div>
-
-              <!-- Fecha de alquiler -->
-              <div class="col-span-12 md:col-span-6">
-                <label class="form-label" for="fechasAlquiler">Fechas de Alquiler</label>
-                <input class="form-control" id="fechasAlquiler" name="fechasAlquiler" onfocus="this.blur()"
-                       placeholder="Selecciona fechas" required type="text">
-                <!-- Hidden para enviar fechas por separado -->
-                <input name="fechaDesde" th:field="*{fechaDesde}" th:value="*{fechaDesde}" type="hidden">
-                <input name="fechaHasta" th:field="*{fechaHasta}" th:value="*{fechaHasta}" type="hidden">
-              </div>
-
-              <!-- Cupón de descuento -->
-              <div class="col-span-12 md:col-span-6">
-                <label class="form-label" for="cupon">Cupón de Descuento (opcional)</label>
-                <input class="form-control" id="cupon" placeholder="Ingresa tu cupón" th:field="*{codigoDescuento}"
-                       type="text">
-              </div>
-
-              <!-- Botón Cotizar -->
-              <div class="col-span-12 mt-4">
-                <button class="btn btn-primary" type="submit">
-                  <i class="mr-2"></i> Cotizar
-                </button>
-              </div>
-
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <!-- Detalle de Cotización -->
-      <div class="col-span-12 xl:col-span-4 md:col-span-12" th:if="${alquilerCotizado != null}">
-        <div class="card">
-          <form method="post" th:action="@{/alquiler/crearConCotizacion}" th:object="${alquilerCotizado}">
-            <input th:field="*{idVehiculo}" type="hidden">
-            <input th:field="*{fechaDesde}" type="hidden">
-            <input th:field="*{fechaHasta}" type="hidden">
-            <input th:field="*{subtotal}" type="hidden">
-            <input th:field="*{porcentajeDescuento}" type="hidden">
-            <input th:field="*{totalConDescuento}" type="hidden">
-            <input th:field="*{codigoDescuento}" type="hidden">
-            <input th:field="*{cantidadDias}" type="hidden">
-
-            <div class="card-header">
-              <h5>Detalle de Cotización</h5>
-            </div>
-            <div class="card-body">
-              <p>Selecciona un vehículo y las fechas para ver el resumen de la cotización.</p>
-
-              <div class="mt-4" id="detalle-cotizacion" th:if="${vehiculoSeleccionado != null}">
-                <!-- Imagen del vehículo -->
-                <div class="text-center mb-3">
-                  <img alt="Imagen del vehículo"
-                       style="width:100%; max-width:300px; height:200px; object-fit:cover; border-radius:8px;"
-                       th:src="@{${vehiculoSeleccionado.caracteristicaVehiculo.imagen}}">
-                </div>
-
-                <!-- Información del vehículo -->
-                <h5 class="text-center mb-2"
-                    th:text="${vehiculoSeleccionado.caracteristicaVehiculo.marca} + ' ' + ${vehiculoSeleccionado.caracteristicaVehiculo.modelo}"></h5>
-                <p class="text-center text-muted mb-3">
-                  Año: <span th:text="${vehiculoSeleccionado.caracteristicaVehiculo.anio}"></span> |
-                  Costo por día: $<span
-                    th:text="${vehiculoSeleccionado.caracteristicaVehiculo.costoVehiculo.costo}"></span> |
-                  Dias: <span th:text="${alquilerCotizado.cantidadDias}"> dias</span>
-                </p>
-
-                <!-- Fechas de alquiler (solo mostrar, no editar) -->
-                <div class="grid grid-cols-2 gap-3 mb-3 text-center">
-                  <div>
-                    <label class="form-label d-block">Desde</label>
-                    <span th:text="${#temporals.format(alquilerCotizado.fechaDesde, 'yyyy-MM-dd')}"></span>
-                  </div>
-                  <div>
-                    <label class="form-label d-block">Hasta</label>
-                    <span th:text="${#temporals.format(alquilerCotizado.fechaHasta, 'yyyy-MM-dd')}"></span>
-                  </div>
-                </div>
-
-
-                <!-- Totales -->
-                <div class="mb-2 flex justify-between">
-                  <span>Subtotal:</span>
-                  <span>$<span th:text="${alquilerCotizado.subtotal}">0</span></span>
-                </div>
-                <div class="mb-2 flex justify-between">
-                  <span>Descuento:</span>
-                  <span>$<span th:text="${alquilerCotizado.descuento}">0</span></span>
-                </div>
-                <div class="mb-4 flex justify-between font-bold">
-                  <span>Total:</span>
-                  <span>$<span th:text="${alquilerCotizado.totalConDescuento}">0</span></span>
-                </div>
-
-                <!--Busqueda cliente-->
-                <div class="col-span-12 xl:col-span-4 md:col-span-12" th:if="${alquilerCotizado != null}">
-                  <div class="card mt-4">
-                    <div class="card-header">
-                      <h5>Buscar Cliente</h5>
+            <!-- Breadcrumb -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="page-header-title">
+                        <h5 class="mb-0 font-medium">Cotización de Vehículo</h5>
+						
+						<!-- Mensajes de error -->
+						<div th:if="${msgError != null}" class="mb-4">
+						    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+						        <i data-feather="alert-circle" class="me-2"></i>
+						        <span th:text="${msgError}">Error al procesar la solicitud</span>
+						        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+						    </div>
+						</div>
+						
                     </div>
-                    <div class="card-body">
-                      <div class="input-group mb-3">
-                        <input class="form-control" id="dniBuscar" placeholder="Ingrese DNI del cliente" required
-                               type="text">
-                        <button class="btn btn-primary" onclick="buscarCliente()" type="button">Buscar</button>
-                      </div>
-                      <div id="resultadoCliente"></div>
-                      <input id="clienteId" name="idCliente" required th:field="*{idCliente}" type="hidden">
+                    <!--<ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/dashboard}">Home</a></li>
+                        <li class="breadcrumb-item" aria-current="page">Cotización</li>
+                    </ul>-->
+                </div>
+            </div>
+
+            <!-- Contenido principal -->
+            <div class="grid grid-cols-12 gap-x-6 mt-4">
+
+                <!-- Formulario Cotización -->
+                <div class="col-span-12 xl:col-span-8 md:col-span-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Formulario de Cotización</h5>
+                        </div>
+                        <div class="card-body">
+                            <form th:action="@{/alquiler/cotizar}" method="post" th:object="${alquiler}" class="grid grid-cols-12 gap-4">
+
+                                <!-- Selección de Auto -->
+                                <div class="col-span-12 md:col-span-6">
+                                    <label for="auto" class="form-label">Selecciona un auto</label>
+                                    <select id="auto" th:field="*{idVehiculo}" class="form-select">
+                                        <option value="" disabled selected>-- Elige un vehículo --</option>
+                                        <option th:each="auto : ${listaVehiculos}" th:value="${auto.id}"
+                                                th:text="${auto.caracteristicaVehiculo.marca} + ' - ' + ${auto.caracteristicaVehiculo.modelo} + ' - ' + ${auto.patente}">Auto 1</option>
+                                    </select>
+                                </div>
+
+								<!-- Fecha de alquiler -->
+								<div class="col-span-12 md:col-span-6">
+								    <label for="fechasAlquiler" class="form-label">Fechas de Alquiler</label>
+								    <input type="text" id="fechasAlquiler" class="form-control" placeholder="Selecciona fechas" required onfocus="this.blur()">
+								    <!-- Hidden para enviar fechas por separado -->
+									<input type="hidden" id="fechaDesde" th:field="*{fechaDesde}">
+									<input type="hidden" id="fechaHasta" th:field="*{fechaHasta}">
+								</div>
+
+								<!-- Cupón de descuento -->
+                                <div class="col-span-12 md:col-span-6">
+                                    <label for="cupon" class="form-label">Cupón de Descuento (opcional)</label>
+                                    <input type="text" id="cupon" th:field="*{codigoDescuento}" class="form-control" placeholder="Ingresa tu cupón">
+                                </div>
+
+                                <!-- Botón Cotizar -->
+                                <div class="col-span-12 mt-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="mr-2"></i> Cotizar
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
                     </div>
-                  </div>
                 </div>
+				
+	            <!-- Detalle de Cotización -->
+	            <div class="col-span-12 xl:col-span-4 md:col-span-12" th:if="${alquilerCotizado != null}">
+	                <div class="card">
+						<form th:action="@{/alquiler/crearConCotizacion}" th:object="${alquilerCotizado}" method="post">
+						    <input type="hidden" th:field="*{idVehiculo}">
+						    <input type="hidden" th:field="*{fechaDesde}">
+						    <input type="hidden" th:field="*{fechaHasta}">
+						    <input type="hidden" th:field="*{subtotal}">
+						    <input type="hidden" th:field="*{porcentajeDescuento}">
+						    <input type="hidden" th:field="*{totalConDescuento}">
+						    <input type="hidden" th:field="*{codigoDescuento}">
+							<input type="hidden" th:field="*{cantidadDias}">
+						
+		                    <div class="card-header">
+		                        <h5>Detalle de Cotización</h5>
+		                    </div>
+		                    <div class="card-body">
+							    <p>Selecciona un vehículo y las fechas para ver el resumen de la cotización.</p>
+		
+							    <div id="detalle-cotizacion" class="mt-4" th:if="${vehiculoSeleccionado != null}">
+							        <!-- Imagen del vehículo -->
+							        <div class="text-center mb-3">
+							            <img th:src="@{${vehiculoSeleccionado.caracteristicaVehiculo.imagen}}" alt="Imagen del vehículo" style="width:100%; max-width:300px; height:200px; object-fit:cover; border-radius:8px;">
+							        </div>
+		
+							        <!-- Información del vehículo -->
+							        <h5 class="text-center mb-2" th:text="${vehiculoSeleccionado.caracteristicaVehiculo.marca} + ' ' + ${vehiculoSeleccionado.caracteristicaVehiculo.modelo}"></h5>
+							        <p class="text-center text-muted mb-3">
+							            Año: <span th:text="${vehiculoSeleccionado.caracteristicaVehiculo.anio}"></span> |
+							            Costo por día: $<span th:text="${vehiculoSeleccionado.caracteristicaVehiculo.costoVehiculo.costo}"></span> |
+										Dias: <span th:text="${alquilerCotizado.cantidadDias}"> dias</span>
+							        </p>
+		
+									<!-- Fechas de alquiler (solo mostrar, no editar) -->
+									<div class="grid grid-cols-2 gap-3 mb-3 text-center">
+									    <div>
+									        <label class="form-label d-block">Desde</label>
+									        <span th:text="${#temporals.format(alquilerCotizado.fechaDesde, 'yyyy-MM-dd')}"></span>
+									    </div>
+									    <div>
+									        <label class="form-label d-block">Hasta</label>
+									        <span th:text="${#temporals.format(alquilerCotizado.fechaHasta, 'yyyy-MM-dd')}"></span>
+									    </div>
+									</div>
+
+		
+							        <!-- Totales -->
+							        <div class="mb-2 flex justify-between">
+							            <span>Subtotal:</span>
+							            <span>$<span th:text="${alquilerCotizado.subtotal}">0</span></span>
+							        </div>
+							        <div class="mb-2 flex justify-between">
+							            <span>Descuento:</span>
+							            <span>$<span th:text="${alquilerCotizado.descuento}">0</span></span>
+							        </div>
+							        <div class="mb-4 flex justify-between font-bold">
+							            <span>Total:</span>
+							            <span>$<span th:text="${alquilerCotizado.totalConDescuento}">0</span></span>
+							        </div>
+									
+									<!--Busqueda cliente-->
+									<div class="cliente-card">
+									    <div class="card-header">
+									        <h5>Buscar Cliente</h5>
+									    </div>
+									    <div class="card-body">
+									        <div class="input-group mb-3">
+									            <input type="text" id="dniBuscar" class="form-control" placeholder="Ingrese DNI del cliente" required>
+									            <button type="button" class="btn btn-success btn-sm" onclick="buscarCliente()">Buscar</button>
+									        </div>
+									        <div id="resultadoCliente"></div>
+									        <input type="hidden" id="clienteId" name="idCliente" th:field="*{idCliente}" required>
+									    </div>
+									</div>
 
 
-                <!-- Botón de alquilar -->
-                <div class="text-center">
-                  <button class="btn btn-primary w-full" disabled id="btnContinuar" type="submit">Continuar</button>
 
-                </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-</div>
+		
+									<!-- Botón de alquilar -->
+									<div class="text-center">
+									    <button type="submit" id="btnContinuar" class="btn btn-primary btn-sm" style="padding: 0.25rem 0.5rem;" disabled>
+									        Continuar
+									    </button>
+									</div>
 
-<!-- Footer -->
-<div th:replace="fragments/layout :: footer"></div>
+								</form>
+						    </div>
+						</div>
+					</div>
+	            </div>
+			</div>
+    	</div>
+	</div>
 
-<!-- JS Scripts -->
-<script src="../assets/js/plugins/simplebar.min.js"></script>
-<script src="../assets/js/plugins/popper.min.js"></script>
-<script src="../assets/js/plugins/feather.min.js"></script>
-<script src="../assets/js/component.js"></script>
-<script src="../assets/js/theme.js"></script>
-<script src="../assets/js/script.js"></script>
-<!--<script src="../assets/js/plugins/datepicker.min.js"></script>-->
+    <!-- Footer -->
+    <div th:replace="fragments/layout :: footer"></div>
 
-<!-- Flatpickr CSS -->
-<link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+    <!-- JS Scripts -->
+    <script src="../assets/js/plugins/simplebar.min.js"></script>
+    <script src="../assets/js/plugins/popper.min.js"></script>
+    <script src="../assets/js/plugins/feather.min.js"></script>
+    <script src="../assets/js/component.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <!--<script src="../assets/js/plugins/datepicker.min.js"></script>-->
+	
+	<!-- Flatpickr CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+			    const listaClientes = /*[[${listaClientes}]]*/ [];
+			    /*]]>*/
+		
+	</script>
 
+    <!-- Inicializar datepicker -->
+    <script>
+		function recalcular() {
+	       const startVal = document.getElementById("fechaDesde").value;
+	       const endVal   = document.getElementById("fechaHasta").value;
 
-<!-- Inicializar datepicker -->
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    const listaClientes = /*[[${listaClientes}]]*/ [];
-    /*]]>*/
+	       const diasInput = document.getElementById("diasInput");
+	       const costoInput = document.getElementById("costoInput");
 
-    // Fechas disponibles (puedes inyectarlas desde Thymeleaf)
-    let fechasDisponibles = /*[[${fechasDisponibles}]]*/ ["2025-11-12", "2025-11-13", "2025-11-15", "2025-11-16"];
+	       if (!startVal || !endVal) {
+	           diasInput.value = "";
+	           costoInput.value = "";
+	           return;
+	       }
 
-    // Convertimos fechas a objetos Date para comparación
-    let fechasDisponiblesObj = fechasDisponibles.map(d => new Date(d + "T00:00:00"));
+	       const start = new Date(startVal);
+	       const end   = new Date(endVal);
 
-    function isAvailable(date) {
-        const dateStr = date.toISOString().split('T')[0];
-        return fechasDisponibles.includes(dateStr);
-    }
+	       if (end < start) {
+	           diasInput.value = "";
+	           costoInput.value = "";
+	           return;
+	       }
 
-    flatpickr("#fechasAlquiler", {
-        mode: "range",
-        dateFormat: "Y-m-d",
-        disable: [
-            function (date) {
-                return !isAvailable(date); // Deshabilitar fechas no disponibles
-            }
-        ],
-        onDayCreate: function (dObj, dStr, fp, dayElem) {
-            const dateStr = dayElem.dateObj.toISOString().split('T')[0];
-            if (isAvailable(dayElem.dateObj)) {
-                dayElem.style.backgroundColor = "#3b82f6"; // azul
-                dayElem.style.color = "#fff";
-                dayElem.style.borderRadius = "50%";
-            } else {
-                dayElem.style.color = "#a1a1aa"; // gris
-                dayElem.style.cursor = "not-allowed";
-            }
-        },
-        onChange: function (selectedDates, dateStr, instance) {
-            const fechaDesdeInput = document.querySelector("input[name='fechaDesde']");
-            const fechaHastaInput = document.querySelector("input[name='fechaHasta']");
+	       const diffTime = end - start;
+	       const dias = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
 
-            // Si seleccionó una sola fecha
-            if (selectedDates.length === 1) {
-                const fecha = selectedDates[0].toISOString().split('T')[0];
-                fechaDesdeInput.value = fecha;
-                fechaHastaInput.value = fecha;
-            }
+	       diasInput.value = dias;
+	       
+		   // Calcular costo
+           const total = dias * costoPorDia;
+           costoInput.value = total.toFixed(2);
+		   
+		   console.log("Recalculado:", { start, end, dias, costoPorDia, total });
+	  	}   
+		
+		// Fechas disponibles (puedes inyectarlas desde Thymeleaf)
+	    let fechasDisponibles = /*[[${fechasDisponibles}]]*/ ["2025-11-12","2025-11-13","2025-11-15","2025-11-16"];
+	
+	    // Convertimos fechas a objetos Date para comparación
+	    let fechasDisponiblesObj = fechasDisponibles.map(d => new Date(d + "T00:00:00"));
+	
+	    function isAvailable(date) {
+	        const dateStr = date.toISOString().split('T')[0];
+	        return fechasDisponibles.includes(dateStr);
+	    }
 
+	    flatpickr("#fechasAlquiler", {
+	        mode: "range",
+	        dateFormat: "Y-m-d",
+	        disable: [
+	            function(date) {
+	                return !isAvailable(date); // Deshabilitar fechas no disponibles
+	            }
+	        ],
+	        onDayCreate: function(dObj, dStr, fp, dayElem) {
+	            const dateStr = dayElem.dateObj.toISOString().split('T')[0];
+	            if (isAvailable(dayElem.dateObj)) {
+	                dayElem.style.backgroundColor = "#3b82f6"; // azul
+	                dayElem.style.color = "#fff";
+	                dayElem.style.borderRadius = "50%";
+	            } else {
+	                dayElem.style.color = "#a1a1aa"; // gris
+	                dayElem.style.cursor = "not-allowed";
+	            }
+	        },
+			onChange: function(selectedDates, dateStr, instance) {
+				const fechaDesdeInput = document.querySelector("input[name='fechaDesde']");
+	            const fechaHastaInput = document.querySelector("input[name='fechaHasta']");
 
-            if (selectedDates.length === 2) {
-                let start = selectedDates[0];
-                let end = selectedDates[1];
+	            // Si seleccionó una sola fecha
+	            if (selectedDates.length === 1) {
+	               const fecha = selectedDates[0].toISOString().split('T')[0];
+	               fechaDesdeInput.value = fecha;
+	               fechaHastaInput.value = fecha;
+	            }
 
-                // Validar que todas las fechas entre start y end estén disponibles
-                let current = new Date(start);
-                let valid = true;
-                while (current <= end) {
-                    const currentStr = current.toISOString().split('T')[0];
-                    if (!fechasDisponibles.includes(currentStr)) {
-                        valid = false;
-                        break;
-                    }
-                    current.setDate(current.getDate() + 1);
-                }
+				
+	            if(selectedDates.length === 2){
+	                let start = selectedDates[0];
+	                let end = selectedDates[1];
+					
+					fechaDesdeInput.value = start.toISOString().split("T")[0];
+					fechaHastaInput.value = end.toISOString().split("T")[0];
 
-                if (!valid) {
-                    alert("El rango seleccionado contiene fechas no disponibles. Por favor selecciona solo fechas disponibles consecutivas.");
-                    instance.clear();
-                    document.querySelector("input[name='fechaDesde']").value = "";
-                    document.querySelector("input[name='fechaHasta']").value = "";
-                } else {
-                    document.querySelector("input[name='fechaDesde']").value = start.toISOString().split('T')[0];
-                    document.querySelector("input[name='fechaHasta']").value = end.toISOString().split('T')[0];
-                }
-            }
-        }
-    });
+		            recalcular(start, end);
 
-    function buscarCliente() {
-        const dni = document.getElementById('dniBuscar').value.trim();
-        const contenedor = document.getElementById('resultadoCliente');
+	                // Validar que todas las fechas entre start y end estén disponibles
+	                let current = new Date(start);
+	                let valid = true;
+	                while(current <= end){
+	                    const currentStr = current.toISOString().split('T')[0];
+	                    if(!fechasDisponibles.includes(currentStr)){
+	                        valid = false;
+	                        break;
+	                    }
+	                    current.setDate(current.getDate() + 1);
+	                }
 
-        if (!dni) {
-            contenedor.innerHTML = `<p class="text-danger mt-2">Por favor ingresa un DNI.</p>`;
-            return;
-        }
+	                if(!valid){
+	                    alert("El rango seleccionado contiene fechas no disponibles. Por favor selecciona solo fechas disponibles consecutivas.");
+	                    instance.clear();
+	                    document.querySelector("input[name='fechaDesde']").value = "";
+	                    document.querySelector("input[name='fechaHasta']").value = "";
+	                } else {
+	                    document.querySelector("input[name='fechaDesde']").value = start.toISOString().split('T')[0];
+	                    document.querySelector("input[name='fechaHasta']").value = end.toISOString().split('T')[0];
+	                }
+	            }
+	        }
+	    });
+		
+		function buscarCliente() {
+		    const dni = document.getElementById('dniBuscar').value.trim();
+		    const contenedor = document.getElementById('resultadoCliente');
 
-        const cliente = listaClientes.find(c => c.numeroDocumento == dni);
+		    if (!dni) {
+		        contenedor.innerHTML = `<p class="text-danger mt-2">Por favor ingresa un DNI.</p>`;
+		        return;
+		    }
 
-        if (!cliente) {
-            contenedor.innerHTML = `<p class="text-danger mt-2">No se encontró ningún cliente con ese DNI.</p>`;
-            return;
-        }
+		    const cliente = listaClientes.find(c => c.numeroDocumento == dni);
 
-        contenedor.innerHTML = `
+		    if (!cliente) {
+		        contenedor.innerHTML = `<p class="text-danger mt-2">No se encontró ningún cliente con ese DNI.</p>`;
+		        return;
+		    }
+
+		    contenedor.innerHTML = `
 		        <div class="card mt-2">
 		            <div class="card-body p-2">
 		                <strong>${cliente.nombre} ${cliente.apellido}</strong><br>
@@ -320,19 +533,19 @@
 		            </div>
 		        </div>
 		    `;
-    }
+		}
 
-    function seleccionarCliente(id, nombre, apellido, dni) {
-        document.getElementById('clienteId').value = id;
-        document.getElementById('resultadoCliente').innerHTML = `
+		function seleccionarCliente(id, nombre, apellido, dni) {
+		    document.getElementById('clienteId').value = id;
+		    document.getElementById('resultadoCliente').innerHTML = `
 		        <div class="alert alert-success mt-2">
 		            Cliente seleccionado: <strong>${nombre} ${apellido}</strong> (DNI: ${dni})
 		        </div>
 		    `;
-        document.getElementById("btnContinuar").disabled = false;
-    }
-
-</script>
+			document.getElementById("btnContinuar").disabled = false; 
+		}
+		
+    </script>
 
 </body>
 </html>

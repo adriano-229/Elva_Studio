@@ -1,195 +1,204 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head">
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" name="viewport">
-  <meta content="IE=edge" http-equiv="X-UA-Compatible">
-  <meta content="Datta Able Dashboard Template" name="description">
-  <meta content="Bootstrap admin template, Dashboard UI Kit, Backend Panel" name="keywords">
-  <meta content="CodedThemes" name="author">
+  <head th:fragment="head">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Datta Able Dashboard Template">
+    <meta name="keywords" content="Bootstrap admin template, Dashboard UI Kit, Backend Panel">
+    <meta name="author" content="CodedThemes">
 
-  <link rel="icon" th:href="@{/assets/images/favicon.svg}" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" th:href="@{/assets/images/favicon.svg}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Icon fonts -->
-  <link rel="stylesheet" th:href="@{/assets/fonts/phosphor/duotone/style.css}">
-  <link rel="stylesheet" th:href="@{/assets/fonts/tabler-icons.min.css}">
-  <link rel="stylesheet" th:href="@{/assets/fonts/feather.css}">
-  <link rel="stylesheet" th:href="@{/assets/fonts/fontawesome.css}">
-  <link rel="stylesheet" th:href="@{/assets/fonts/material.css}">
+    <!-- Icon fonts -->
+	<link rel="stylesheet" th:href="@{/assets/fonts/phosphor/duotone/style.css}">
+	<link rel="stylesheet" th:href="@{/assets/fonts/tabler-icons.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/fonts/feather.css}">
+	<link rel="stylesheet" th:href="@{/assets/fonts/fontawesome.css}">
+	<link rel="stylesheet" th:href="@{/assets/fonts/material.css}">
 
 
-  <!-- Template CSS -->
-  <link id="main-style-link" rel="stylesheet" th:href="@{/assets/css/style.css}">
-</head>
+    <!-- Template CSS -->
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}" id="main-style-link">
+  </head>
 
-<body>
-<!-- ================= Sidebar Fragment ================= -->
-<div th:fragment="sidebar">
-  <nav class="pc-sidebar">
-    <div class="navbar-wrapper">
-      <div class="m-header flex items-center py-4 px-6 h-header-height">
-        <a class="b-brand flex items-center gap-3" th:href="@{/dashboard}">
-          <img alt="logo" class="img-fluid logo logo-lg" th:src="@{/assets/images/logo-white.svg}">
-          <img alt="logo" class="img-fluid logo logo-sm" th:src="@{/assets/images/favicon.svg}">
-        </a>
-      </div>
-      <div class="navbar-content h-[calc(100vh_-_74px)] py-2.5">
-        <ul class="pc-navbar">
-          <li class="pc-item pc-caption"><label>Usuarios</label></li>
-          <li class="pc-item pc-hasmenu">
-            <a class="pc-link" th:href="@{/usuario/listar}">
-              <span class="pc-micon"><i data-feather="users"></i></span>
-              <span class="pc-mtext">Listar</span>
+  <body>
+    <!-- ================= Sidebar Fragment ================= -->
+    <div th:fragment="sidebar">
+      <nav class="pc-sidebar">
+        <div class="navbar-wrapper">
+          <div class="m-header flex items-center py-4 px-6 h-header-height">
+            <a th:href="@{/dashboard}" class="b-brand flex items-center gap-3">
+              <img th:src="@{/assets/images/logo-white.svg}" class="img-fluid logo logo-lg" alt="logo">
+              <img th:src="@{/assets/images/favicon.svg}" class="img-fluid logo logo-sm" alt="logo">
             </a>
-          </li>
-          <!--<li class="pc-item">
-            <a th:href="@{/dashboard}" class="pc-link">
-              <span class="pc-micon"><i data-feather="home"></i></span>
-              <span class="pc-mtext">Dashboard</span>
-            </a>
-          </li>-->
-          <li class="pc-item pc-caption"><label>Vehiculos</label></li>
-          <li class="pc-item pc-hasmenu">
-            <a class="pc-link" th:href="@{/vehiculo/listar}">
-              <span class="pc-micon"><i data-feather="truck"></i></span>
-              <span class="pc-mtext">Ver flota</span>
-            </a>
-          </li>
-          <!--<li class="pc-item pc-hasmenu">
-            <a th:href="@{/elements/color}" class="pc-link">
-              <span class="pc-micon"><i data-feather="edit"></i></span>
-              <span class="pc-mtext">Color</span>
-            </a>
-          </li>
-          <li class="pc-item pc-hasmenu">
-            <a th:href="@{/elements/typography}" class="pc-link">
-              <span class="pc-micon"><i data-feather="type"></i></span>
-              <span class="pc-mtext">Typography</span>
-            </a>
-          </li>-->
-          <li class="pc-item pc-caption"><label>Alquileres</label></li>
-          <li class="pc-item pc-hasmenu">
-            <a class="pc-link" th:href="@{/alquiler/cotizar}">
-              <span class="pc-micon"><i data-feather="dollar-sign"></i></span>
-              <span class="pc-mtext">Cotizar</span>
-            </a>
-          </li>
-          <li class="pc-item pc-hasmenu">
-            <a class="pc-link" th:href="@{/alquiler/listar}">
-              <span class="pc-micon"><i data-feather="users"></i></span>
-              <span class="pc-mtext">Listar</span>
-            </a>
-          </li>
-          <li class="pc-item pc-caption"><label>Reportes</label></li>
-          <li class="pc-item pc-hasmenu">
-            <a class="pc-link" target="_blank" th:href="@{/register}">
-              <span class="pc-micon"><i data-feather="bar-chart-2"></i></span>
-              <span class="pc-mtext">Ver reportes</span>
-            </a>
-          </li>
-          <li class="pc-item pc-caption"><label>Promociones</label></li>
-          <li class="pc-item pc-hasmenu">
-            <a class="pc-link" target="_blank" th:href="@{/register}">
-              <span class="pc-micon"><i data-feather="gift"></i></span>
-              <span class="pc-mtext">Ver Promociones</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+          </div>
+          <div class="navbar-content h-[calc(100vh_-_74px)] py-2.5">
+            <ul class="pc-navbar">
+              <li class="pc-item pc-caption"><label>Usuarios</label></li>
+			  <li class="pc-item pc-hasmenu">
+	             <a th:href="@{/usuario/listar}" class="pc-link">
+	                 <span class="pc-micon"><i data-feather="users"></i></span>
+	                 <span class="pc-mtext">Listar</span>
+	             </a>
+	         </li>
+			 <li class="pc-item pc-caption"><label>Clientes</label></li>
+ 			  <li class="pc-item pc-hasmenu">
+ 	             <a th:href="@{/clientes/listar}" class="pc-link">
+ 	                 <span class="pc-micon"><i data-feather="users"></i></span>
+ 	                 <span class="pc-mtext">Listar</span>
+ 	             </a>
+ 	         </li>
+              <!--<li class="pc-item">
+                <a th:href="@{/dashboard}" class="pc-link">
+                  <span class="pc-micon"><i data-feather="home"></i></span>
+                  <span class="pc-mtext">Dashboard</span>
+                </a>
+              </li>-->
+              <li class="pc-item pc-caption"><label>Vehiculos</label></li>
+			  <li class="pc-item pc-hasmenu">
+	              <a th:href="@{/vehiculo/listar}" class="pc-link">
+	                  <span class="pc-micon"><i data-feather="truck"></i></span>
+	                  <span class="pc-mtext">Ver flota</span>
+	              </a>
+	          </li>
+              <!--<li class="pc-item pc-hasmenu">
+                <a th:href="@{/elements/color}" class="pc-link">
+                  <span class="pc-micon"><i data-feather="edit"></i></span>
+                  <span class="pc-mtext">Color</span>
+                </a>
+              </li>
+              <li class="pc-item pc-hasmenu">
+                <a th:href="@{/elements/typography}" class="pc-link">
+                  <span class="pc-micon"><i data-feather="type"></i></span>
+                  <span class="pc-mtext">Typography</span>
+                </a>
+              </li>-->
+              <li class="pc-item pc-caption"><label>Alquileres</label></li>
+			  <li class="pc-item pc-hasmenu">
+				<a th:href="@{/alquiler/cotizar}" class="pc-link">
+			       <span class="pc-micon"><i data-feather="dollar-sign"></i></span>
+			       <span class="pc-mtext">Cotizar</span>
+			   	</a>
+	          </li>
+			  <li class="pc-item pc-hasmenu">
+  	             <a th:href="@{/alquiler/listar}" class="pc-link">
+  	                 <span class="pc-micon"><i data-feather="users"></i></span>
+  	                 <span class="pc-mtext">Listar</span>
+  	             </a>
+  	         </li>
+			 <li class="pc-item pc-hasmenu">
+   	             <a th:href="@{/factura/listar}" class="pc-link">
+   	                 <span class="pc-micon"><i data-feather="users"></i></span>
+   	                 <span class="pc-mtext">Pagos</span>
+   	             </a>
+   	         </li>
+              <li class="pc-item pc-caption"><label>Reportes</label></li>
+			  <li class="pc-item pc-hasmenu">
+	              <a th:href="@{/register}" class="pc-link" target="_blank">
+	                  <span class="pc-micon"><i data-feather="bar-chart-2"></i></span>
+	                  <span class="pc-mtext">Ver reportes</span>
+	              </a>
+	          </li>
+			  <li class="pc-item pc-caption"><label>Promociones</label></li>
+			  <li class="pc-item pc-hasmenu">
+	              <a th:href="@{/register}" class="pc-link" target="_blank">
+	                  <span class="pc-micon"><i data-feather="gift"></i></span>
+	                  <span class="pc-mtext">Ver Promociones</span>
+	              </a>
+	          </li>
+	        </ul>
+          </div>
+        </div>
+      </nav>
     </div>
-  </nav>
-</div>
 
-<!-- ================= Navbar Fragment ================= -->
-<div th:fragment="navbar">
-  <header class="pc-header">
-    <div class="header-wrapper flex max-sm:px-[15px] px-[25px] grow">
-      <div class="me-auto pc-mob-drp">
-        <ul class="inline-flex *:min-h-header-height *:inline-flex *:items-center">
-          <li class="pc-h-item pc-sidebar-collapse max-lg:hidden lg:inline-flex">
-            <a class="pc-head-link" href="#" id="sidebar-hide"><i data-feather="menu"></i></a>
-          </li>
-          <li class="pc-h-item pc-sidebar-popup lg:hidden">
-            <a class="pc-head-link" href="#" id="mobile-collapse"><i data-feather="menu"></i></a>
-          </li>
-          <li class="dropdown pc-h-item">
-            <a class="pc-head-link dropdown-toggle me-0" data-pc-toggle="dropdown" href="#" role="button">
-              <i data-feather="search"></i>
-            </a>
-            <div class="dropdown-menu pc-h-dropdown drp-search">
-              <form class="px-2 py-1">
-                <input class="form-control !border-0 !shadow-none" placeholder="Search here..." type="search">
-              </form>
-            </div>
-          </li>
-        </ul>
-      </div>
+    <!-- ================= Navbar Fragment ================= -->
+    <div th:fragment="navbar">
+      <header class="pc-header">
+        <div class="header-wrapper flex max-sm:px-[15px] px-[25px] grow">
+          <div class="me-auto pc-mob-drp">
+            <ul class="inline-flex *:min-h-header-height *:inline-flex *:items-center">
+              <li class="pc-h-item pc-sidebar-collapse max-lg:hidden lg:inline-flex">
+                <a href="#" class="pc-head-link" id="sidebar-hide"><i data-feather="menu"></i></a>
+              </li>
+              <li class="pc-h-item pc-sidebar-popup lg:hidden">
+                <a href="#" class="pc-head-link" id="mobile-collapse"><i data-feather="menu"></i></a>
+              </li>
+              <li class="dropdown pc-h-item">
+                <a class="pc-head-link dropdown-toggle me-0" data-pc-toggle="dropdown" href="#" role="button">
+                  <i data-feather="search"></i>
+                </a>
+                <div class="dropdown-menu pc-h-dropdown drp-search">
+                  <form class="px-2 py-1">
+                    <input type="search" class="form-control !border-0 !shadow-none" placeholder="Search here...">
+                  </form>
+                </div>
+              </li>
+            </ul>
+          </div>
 
-      <div class="ms-auto">
-        <ul class="inline-flex *:min-h-header-height *:inline-flex *:items-center">
-          <li class="dropdown pc-h-item">
-            <a class="pc-head-link dropdown-toggle me-0" data-pc-toggle="dropdown" href="#" role="button">
-              <i data-feather="sun"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end pc-h-dropdown">
-              <a class="dropdown-item" href="#!" onclick="layout_change('dark')"><i
-                  data-feather="moon"></i><span>Dark</span></a>
-              <a class="dropdown-item" href="#!" onclick="layout_change('light')"><i
-                  data-feather="sun"></i><span>Light</span></a>
-              <a class="dropdown-item" href="#!" onclick="layout_change_default()"><i data-feather="settings"></i><span>Default</span></a>
-            </div>
-          </li>
-          <li class="dropdown pc-h-item header-user-profile">
-            <a class="pc-head-link dropdown-toggle arrow-none me-0" data-pc-toggle="dropdown" href="#" role="button">
-              <i data-feather="user"></i>
-            </a>
-            <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown p-2 overflow-hidden">
-              <div class="dropdown-header flex items-center justify-between py-4 px-5 bg-primary-500">
-                <div class="flex mb-1 items-center">
-                  <div class="shrink-0">
-                    <img alt="user-image" class="w-10 rounded-full" src="../assets/images/user/avatar-2.jpg">
+          <div class="ms-auto">
+            <ul class="inline-flex *:min-h-header-height *:inline-flex *:items-center">
+              <li class="dropdown pc-h-item">
+                <a class="pc-head-link dropdown-toggle me-0" data-pc-toggle="dropdown" href="#" role="button">
+                  <i data-feather="sun"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end pc-h-dropdown">
+                  <a href="#!" class="dropdown-item" onclick="layout_change('dark')"><i data-feather="moon"></i><span>Dark</span></a>
+                  <a href="#!" class="dropdown-item" onclick="layout_change('light')"><i data-feather="sun"></i><span>Light</span></a>
+                  <a href="#!" class="dropdown-item" onclick="layout_change_default()"><i data-feather="settings"></i><span>Default</span></a>
+                </div>
+              </li>
+              <li class="dropdown pc-h-item header-user-profile">
+                <a class="pc-head-link dropdown-toggle arrow-none me-0" data-pc-toggle="dropdown" href="#" role="button">
+                  <i data-feather="user"></i>
+                </a>
+                <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown p-2 overflow-hidden">
+                  <div class="dropdown-header flex items-center justify-between py-4 px-5 bg-primary-500">
+                    <div class="flex mb-1 items-center">
+                      <div class="shrink-0">
+                        <img src="../assets/images/user/avatar-2.jpg" alt="user-image" class="w-10 rounded-full">
+                      </div>
+                      <div class="grow ms-3">
+                        <h6 class="mb-1 text-white">Carson Darrin 🖖</h6>
+                        <span class="text-white">carson.darrin@company.io</span>
+                      </div>
+                    </div>
                   </div>
-                  <div class="grow ms-3">
-                    <h6 class="mb-1 text-white">Carson Darrin 🖖</h6>
-                    <span class="text-white">carson.darrin@company.io</span>
+                  <div class="dropdown-body py-4 px-5">
+                    <div class="profile-notification-scroll position-relative" style="max-height: calc(100vh - 225px)">
+                      <a href="#" class="dropdown-item">Settings</a>
+                      <a href="#" class="dropdown-item">Share</a>
+                      <a href="#" class="dropdown-item">Change Password</a>
+                      <button class="btn btn-primary w-full mt-3">Logout</button>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="dropdown-body py-4 px-5">
-                <div class="profile-notification-scroll position-relative" style="max-height: calc(100vh - 225px)">
-                  <a class="dropdown-item" href="#">Settings</a>
-                  <a class="dropdown-item" href="#">Share</a>
-                  <a class="dropdown-item" href="#">Change Password</a>
-                  <button class="btn btn-primary w-full mt-3">Logout</button>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </header>
     </div>
-  </header>
-</div>
 
-<!-- ================= Footer Fragment ================= -->
-<div th:fragment="footer">
-  <footer class="pc-footer">
-    <div class="footer-wrapper container-fluid mx-10">
-      <div class="grid grid-cols-12 gap-1.5">
-        <div class="col-span-12 sm:col-span-6 my-1">
-          <p class="m-0">
-            <a href="https://codedthemes.com/" target="_blank">CodedThemes</a>, Built with ♥ for a smoother web
-            presence.
-          </p>
+    <!-- ================= Footer Fragment ================= -->
+    <div th:fragment="footer">
+      <footer class="pc-footer">
+        <div class="footer-wrapper container-fluid mx-10">
+          <div class="grid grid-cols-12 gap-1.5">
+            <div class="col-span-12 sm:col-span-6 my-1">
+              <p class="m-0">
+                <a href="https://codedthemes.com/" target="_blank">CodedThemes</a>, Built with ♥ for a smoother web presence.
+              </p>
+            </div>
+            <div class="col-span-12 sm:col-span-6 my-1 justify-self-end">
+              <p class="inline-block max-sm:mr-3 sm:ml-2">Distributed by <a href="https://themewagon.com" target="_blank">Themewagon</a></p>
+            </div>
+          </div>
         </div>
-        <div class="col-span-12 sm:col-span-6 my-1 justify-self-end">
-          <p class="inline-block max-sm:mr-3 sm:ml-2">Distributed by <a href="https://themewagon.com" target="_blank">Themewagon</a>
-          </p>
-        </div>
-      </div>
+      </footer>
     </div>
-  </footer>
-</div>
-</body>
+  </body>
 </html>

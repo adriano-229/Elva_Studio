@@ -106,6 +106,11 @@ public class DocumentacionServiceImpl extends BaseServiceImpl<Documentacion, Doc
     }
 
     @Override
+    public DocumentacionDTO updateDocumentacion(Long id, DocumentacionDTO documentacion, MultipartFile archivo) {
+        return null;
+    }
+
+    @Override
     public String almacenarPdf(MultipartFile pdf) throws Exception {
         if (pdf == null || pdf.isEmpty()) {
             throw new IllegalArgumentException("El archivo PDF está vacío");
@@ -132,7 +137,6 @@ public class DocumentacionServiceImpl extends BaseServiceImpl<Documentacion, Doc
         }
     }
 
-    @Override
     @Transactional
     public DocumentacionDTO update(Long id, DocumentacionDTO documentacion, MultipartFile archivo)
             throws Exception {
@@ -164,8 +168,5 @@ public class DocumentacionServiceImpl extends BaseServiceImpl<Documentacion, Doc
         }
 
 
-    }
-
-    public Object updateDocumentacion(Long id, DocumentacionDTO documentacion, MultipartFile archivo) {
     }
 }

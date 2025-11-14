@@ -79,13 +79,17 @@ public abstract class BaseControllerImpl<E extends BaseDTO, S extends BaseServic
     }
 
     @PostMapping("/modificar")
-    public String guardarModificacion(@ModelAttribute E entity, Model model) {
+    public String guardarModificacion(@ModelAttribute E entity, Model model, RedirectAttributes redirectAttributes) {
         try {
             servicio.update(entity.getId(), entity); // suponiendo que update recibe ID y entidad
-            model.addAttribute("msgExito", "Registro actualizado correctamente");
+            redirectAttributes.addFlashAttribute("msgExito", "Registro actualizado correctamente");
         } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("msgError", "Error al actualizar registro");
+            redirectAttributes.addFlashAttribute("msgError", "Error al actualizar registro");
+        }
+        
+        if (entity instanceof AlquilerDTO dto) {
+        	return "redirect:/alquiler/detalle/" + dto.getId();
         }
 
         return getRedirectList();

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Pagos | MyCar</title>
+
+    <!-- CSS Datta Able -->
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/icons.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Mantener mismos estilos que Listado de Alquileres */
+        body { font-family: 'Open Sans', sans-serif; background-color: #f5f6f8; color: #333; }
+        .card { border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: none; margin-bottom: 20px; }
+        .card-body { padding: 20px; }
+        .card-header { background-color: #e6f0fa; color: #2c3e50; font-weight: 600; font-size: 1.1rem; border-bottom: none; border-radius: 10px 10px 0 0; }
+        .alert { border-radius: 6px; padding: 12px 15px; font-size: 0.95rem; display: flex; align-items: center; }
+        .alert-success { background-color: #d4edda; color: #155724; }
+        .alert-danger { background-color: #f8d7da; color: #721c24; }
+        .btn { border-radius: 6px; font-weight: 500; padding: 6px 12px; transition: all 0.2s; }
+        .btn:hover { transform: translateY(-1px); }
+        .btn-success { background-color: #28a745; color: #fff; }
+        .btn-success:hover { background-color: #218838; }
+        .btn-secondary { background-color: #6c757d; color: #fff; }
+        .btn-secondary:hover { background-color: #5a6268; }
+        .btn-info { background-color: #2ab7ca; color: #fff; border-radius: 6px; font-weight: 500; padding: 4px 10px; transition: all 0.2s; }
+        .btn-info:hover { background-color: #24a0b0; }
+        .btn-danger { background-color: #dc3545; color: #fff; }
+        .btn-danger:hover { background-color: #c82333; }
+        .table { font-size: 0.95rem; color: #2c3e50; }
+        .table thead { background-color: #b0bec5; color: #2c3e50; }
+        .table tbody tr:hover { background-color: #f5f7fa; }
+        .table th, .table td { vertical-align: middle; text-align: center; padding: 12px; }
+        .text-gray-500 { color: #6c757d !important; }
+        form.flex { flex-wrap: wrap; align-items: flex-end; gap: 15px; }
+        form.flex .form-label { font-weight: 500; font-size: 0.9rem; }
+        input[type="date"] { border-radius: 6px; border: 1px solid #ced4da; padding: 6px 10px; font-size: 0.9rem; }
+        i[data-feather] { vertical-align: middle; }
+        @media (max-width: 768px) { form.flex { flex-direction: column; align-items: stretch; } form.flex .flex { width: 100%; justify-content: flex-start; } }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/layout :: sidebar"></div>
+
+    <!-- Navbar -->
+    <div th:replace="fragments/layout :: navbar"></div>
+
+    <!-- Contenido principal -->
+    <div class="pc-container">
+      <div class="pc-content">
+
+        <!-- Título -->
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">Listado de Pagos</h3>
+        </div>
+
+        <!-- Mensajes de éxito o error -->
+        <div th:if="${msgExito}" class="alert alert-success alert-dismissible fade show flex items-center gap-2" role="alert">
+          <i data-feather="check-circle" class="text-success-500"></i>
+          <span th:text="${msgExito}"></span>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <div th:if="${msgError}" class="alert alert-danger alert-dismissible fade show flex items-center gap-2" role="alert">
+          <i data-feather="alert-circle" class="text-danger-500"></i>
+          <span th:text="${msgError}"></span>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <!-- Filtro por fecha -->
+        <form class="flex items-end justify-end gap-3 mb-6" th:action="@{/pagos/listar}" method="get">
+          <div class="flex flex-col">
+            <label for="fechaDesde" class="form-label mb-1">Fecha Desde</label>
+            <input type="date" id="fechaDesde" name="fechaDesde" th:value="${fechaDesde}" class="form-control" style="width: 160px;" />
+          </div>
+          <div class="flex flex-col">
+            <label for="fechaHasta" class="form-label mb-1">Fecha Hasta</label>
+            <input type="date" id="fechaHasta" name="fechaHasta" th:value="${fechaHasta}" class="form-control" style="width: 160px;" />
+          </div>
+
+          <div class="flex gap-2 ml-4">
+            <button type="submit" class="btn btn-success flex items-center gap-2">Filtrar</button>
+            <a th:href="@{/pagos/listar}" class="btn btn-secondary flex items-center gap-2">Limpiar</a>
+          </div>
+        </form>
+
+		<!-- Tabla de facturas/pagos -->
+		<div class="card shadow-sm">
+		  <div class="card-body">
+		    <div class="table-responsive">
+		      <table class="table table-hover table-striped align-middle text-center">
+		        <thead class="bg-primary text-white">
+		          <tr>
+		            <th>#</th>
+		            <th>Número Factura</th>
+		            <th>Fecha</th>
+		            <th>Total</th>
+		            <th>Estado</th>
+		            <th>Acciones</th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		          <tr th:each="factura, iterStat : ${entities}" class="hover:bg-gray-50 transition-colors duration-200">
+		            <td th:text="${iterStat.index + 1}"></td>
+		            <td th:text="${factura.numeroFactura}"></td>
+		            <td th:text="${#temporals.format(factura.fechaFactura, 'dd/MM/yyyy')}"></td>
+		            <td th:text="${factura.totalPagado}"></td>
+					<td>
+						<span th:text="${factura.estado.name()}" 
+						                  th:classappend="${factura.estado.name() == 'Pagada' ? 'badge text-bg-success' 
+						                  : factura.estado.name() == 'Sin_definir' ? 'badge text-bg-primary' 
+						                  : 'badge text-bg-danger'}"></span>
+				    </td>
+
+		            <td>
+		              <div class="d-flex justify-content-center gap-2">
+		                <a th:href="@{'/factura/detalle/' + ${factura.id}}" class="btn btn-info btn-sm" style="min-width: 90px;">Ver</a>
+		              </div>
+		            </td>
+		          </tr>
+		          <tr th:if="${#lists.isEmpty(entities)}">
+		            <td colspan="6" class="text-center text-muted py-4">No se encontraron facturas para este período.</td>
+		          </tr>
+		        </tbody>
+		      </table>
+		    </div>
+		  </div>
+		</div>
+
+
+
+
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div th:replace="fragments/layout :: footer"></div>
+
+    <!-- Scripts Datta Able -->
+    <script th:src="@{/assets/js/plugins/simplebar.min.js}"></script>
+    <script th:src="@{/assets/js/plugins/popper.min.js}"></script>
+    <script th:src="@{/assets/js/plugins/feather.min.js}"></script>
+    <script th:src="@{/assets/js/component.js}"></script>
+    <script th:src="@{/assets/js/theme.js}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+        });
+    </script>
+
+</body>
+</html>
