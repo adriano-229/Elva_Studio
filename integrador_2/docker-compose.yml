@@ -49,7 +49,7 @@ services:
       - mycar-server
     environment:
       SERVER_PORT: 8081
-      MYCAR_API_BASE_URL: ${MYCAR_API_BASE_URL:-http://mycar-server:8083}
+      MYCAR_API_BASE_URL: ${MYCAR_API_BASE_URL:-http://168.181.186.171:8083}
       SPRING_PROFILES_ACTIVE: ${MYCAR_ADMIN_PROFILE:-dev}
     ports:
       - "8081:8081"
@@ -64,7 +64,7 @@ services:
       - mycar-server
     environment:
       SERVER_PORT: 8082
-      MYCAR_API_BASE_URL: ${MYCAR_API_BASE_URL:-http://mycar-server:8083}
+      MYCAR_API_BASE_URL: ${MYCAR_API_BASE_URL:-http://168.181.186.171:8083}
     ports:
       - "8082:8082"
     networks:
