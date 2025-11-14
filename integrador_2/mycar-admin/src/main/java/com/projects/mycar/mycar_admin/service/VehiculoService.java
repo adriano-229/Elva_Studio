@@ -13,4 +13,5 @@ public interface VehiculoService extends BaseService<VehiculoDTO, Long>{
 	
 	List<VehiculoDTO> buscarPorEstado(EstadoVehiculo estado) throws Exception;
 
+	//void guardar(VehiculoDTO vehiculoDTO) throws Exception;
 }

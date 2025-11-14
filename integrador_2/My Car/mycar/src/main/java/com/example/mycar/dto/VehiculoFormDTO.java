@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -56,11 +57,11 @@ public class VehiculoFormDTO extends BaseDTO {
     //costo vehiculo
     @NotNull(message = "La fecha desde no puede ser nula")
     @PastOrPresent(message = "La fecha desde no puede ser futura")
-    private Date fechaDesde;
+    private LocalDate fechaDesde;
 
     @NotNull(message = "La fecha hasta no puede ser nula")
     @Future(message = "La fecha hasta debe ser una fecha futura")
-    private Date fechaHasta;
+    private LocalDate fechaHasta;
 
     @Positive(message = "El costo debe ser un valor positivo")
     private BigDecimal costo;

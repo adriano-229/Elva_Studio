@@ -6,7 +6,7 @@
     <title>Vehículos | Dashboard</title>
 
     <!-- Datta Able CSS -->
-    <link rel="stylesheet" th:href="@{/assets/css/style.css}" id="main-style-link">
+    <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
@@ -16,9 +16,11 @@
     <!-- Header -->
     <div th:replace="fragments/layout :: navbar"></div>
 
+    <!-- Contenido principal -->
     <div class="pc-container">
         <div class="pc-content">
-            <!-- Encabezado con título y botón Nuevo Vehículo -->
+            
+			<!-- Encabezado con título y botón Nuevo Vehículo -->
 			<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
 			    <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">Listado de Vehiculos</h3>
 			</div>
@@ -92,7 +94,7 @@
                                             </td>
                                             <td class="flex gap-1">
                                                 <a th:href="@{/vehiculo/detalle/{id}(id=${vehiculo.id})}" class="badge bg-theme-bg-2 text-white">Ver</a>
-                                                <a th:href="@{/vehiculo/editar/{id}(id=${vehiculo.id})}" class="badge bg-theme-bg-1 text-white">Editar</a>
+                                                <a th:href="@{/vehiculo/editar/{patente}(patente=${vehiculo.patente})}" class="badge bg-theme-bg-1 text-white">Editar</a>
                                                 <a th:href="@{/vehiculo/eliminar/{id}(id=${vehiculo.id})}" 
                                                    onclick="return confirm('¿Está seguro que desea eliminar este vehículo?');" 
                                                    class="badge bg-danger text-black">Eliminar</a>
@@ -109,18 +111,20 @@
                     
                 </div>
             </div>
+
         </div>
     </div>
 
+    <!-- Footer -->
     <div th:replace="fragments/layout :: footer"></div>
 
     <!-- Scripts Datta Able -->
-    <script th:src="@{/assets/js/plugins/simplebar.min.js}"></script>
-    <script th:src="@{/assets/js/plugins/popper.min.js}"></script>
-    <script th:src="@{/assets/js/plugins/feather.min.js}"></script>
-    <script th:src="@{/assets/js/component.js}"></script>
-    <script th:src="@{/assets/js/theme.js}"></script>
-    <script th:src="@{/assets/js/script.js}"></script>
+    <script src="../assets/js/plugins/simplebar.min.js"></script>
+    <script src="../assets/js/plugins/popper.min.js"></script>
+    <script src="../assets/js/plugins/feather.min.js"></script>
+    <script src="../assets/js/component.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/script.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

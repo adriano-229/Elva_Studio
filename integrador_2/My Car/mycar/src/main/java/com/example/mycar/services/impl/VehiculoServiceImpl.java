@@ -131,4 +131,16 @@ public class VehiculoServiceImpl extends BaseServiceImpl<Vehiculo, VehiculoDTO, 
         return vehiculoMapper.toDtoList(vehiculos);
     }
 
+	public VehiculoDTO buscarPorPatente(String patente) {
+		
+		Optional<Vehiculo> vehiculo = repository.findByPatenteAndActivoTrue(patente);
+		
+		if (vehiculo.isPresent()) {
+			Vehiculo vehiculoExistente = vehiculo.get();
+			return vehiculoMapper.toDto(vehiculoExistente);
+		}
+		
+		return null;
+	}
+
 }

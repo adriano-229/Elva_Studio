@@ -2,9 +2,12 @@ package com.example.mycar.controller;
 
 
 import com.example.mycar.dto.AlquilerFormDTO;
-
+import com.example.mycar.dto.CostoVehiculoDTO;
 import com.example.mycar.dto.PagareDTO;
+import com.example.mycar.entities.CostoVehiculo;
 import com.example.mycar.services.CostoService;
+import com.example.mycar.services.impl.CostoVehiculoServiceImpl;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/costos")
-public class CostoController {
+public class CostoController extends BaseControllerImpl<CostoVehiculo, CostoVehiculoDTO, CostoVehiculoServiceImpl>{
 
     private final CostoService costoService;
 

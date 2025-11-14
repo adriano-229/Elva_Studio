@@ -6,7 +6,7 @@
     <title>Vehículos | Dashboard</title>
 
     <!-- Datta Able CSS -->
-    <link rel="stylesheet" th:href="@{/assets/css/style.css}" id="main-style-link">
+    <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
@@ -16,9 +16,11 @@
     <!-- Header -->
     <div th:replace="fragments/layout :: navbar"></div>
 
+    <!-- Contenido principal -->
     <div class="pc-container">
         <div class="pc-content">
-            <!-- Encabezado con título y botón Nuevo Vehículo -->
+            
+			<!-- Encabezado con título y botón Nuevo Vehículo -->
 			<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
 			    <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">Listado de Vehiculos</h3>
 			</div>
@@ -46,14 +48,14 @@
 					        <select name="estadoVehiculo" class="form-select" style="width: 140px;">
 					            <option value="">Todos</option>
 					            <option value="DISPONIBLE" th:selected="${estadoVehiculo=='Disponile'}">Disponible</option>
-					            <option value="ALQUILADO" th:selected="${estadoVehiculo=='Alquilado'}">Alquilado</option>
+					            <option value="ALQUILADO" th:selected="${estadoVehiculo=='Alquilado+'}">Alquilado</option>
 					        </select>
 					        <button type="submit" class="btn btn-success">Filtrar</button>
 					        <a th:href="@{/vehiculos/listar}" class="btn btn-secondary">Limpiar</a>
 					    </form>
 
 					    <!-- Botón Nuevo Vehículo a la derecha -->
-					    <a th:href="@{/vehiculo/nuevo}" class="btn btn-success">Agregar vehículo</a>
+					    <a th:href="@{/vehiculos/nuevo}" class="btn btn-success">Agregar vehículo</a>
 
 					</div>
 
@@ -86,16 +88,16 @@
                                             <td th:text="${vehiculo.patente}">ABC123</td>
                                             <td>
                                                 <span th:text="${vehiculo.estadoVehiculo}" 
-                                                      th:classappend="${vehiculo.estadoVehiculo=='Disponible'} ? 'badge bg-success' : 'badge bg-warning'">
+                                                      th:classappend="${vehiculo.estadoVehiculo=='DISPONIBLE'} ? 'badge bg-success' : 'badge bg-warning'">
                                                     Disponible
                                                 </span>
                                             </td>
                                             <td class="flex gap-1">
-                                                <a th:href="@{/vehiculo/detalle/{id}(id=${vehiculo.id})}" class="badge bg-theme-bg-2 text-white">Ver</a>
-                                                <a th:href="@{/vehiculo/editar/{id}(id=${vehiculo.id})}" class="badge bg-theme-bg-1 text-white">Editar</a>
-                                                <a th:href="@{/vehiculo/eliminar/{id}(id=${vehiculo.id})}" 
+                                                <a th:href="@{/vehiculos/detalle/{id}(id=${vehiculo.id})}" class="badge bg-theme-bg-2 text-white">Ver</a>
+                                                <a th:href="@{/vehiculos/modificar/{id}(id=${vehiculo.id})}" class="badge bg-theme-bg-1 text-white">Editar</a>
+                                                <a th:href="@{/vehiculos/eliminar/{id}(id=${vehiculo.id})}" 
                                                    onclick="return confirm('¿Está seguro que desea eliminar este vehículo?');" 
-                                                   class="badge bg-danger text-black">Eliminar</a>
+                                                   class="badge bg-danger text-white">Eliminar</a>
                                             </td>
                                         </tr>
                                         <tr th:if="${#lists.isEmpty(entities)}">
@@ -109,18 +111,20 @@
                     
                 </div>
             </div>
+
         </div>
     </div>
 
+    <!-- Footer -->
     <div th:replace="fragments/layout :: footer"></div>
 
     <!-- Scripts Datta Able -->
-    <script th:src="@{/assets/js/plugins/simplebar.min.js}"></script>
-    <script th:src="@{/assets/js/plugins/popper.min.js}"></script>
-    <script th:src="@{/assets/js/plugins/feather.min.js}"></script>
-    <script th:src="@{/assets/js/component.js}"></script>
-    <script th:src="@{/assets/js/theme.js}"></script>
-    <script th:src="@{/assets/js/script.js}"></script>
+    <script src="../assets/js/plugins/simplebar.min.js"></script>
+    <script src="../assets/js/plugins/popper.min.js"></script>
+    <script src="../assets/js/plugins/feather.min.js"></script>
+    <script src="../assets/js/component.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/script.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

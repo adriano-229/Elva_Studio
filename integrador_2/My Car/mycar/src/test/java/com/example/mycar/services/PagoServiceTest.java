@@ -82,8 +82,8 @@ class PagoServiceTest {
         clienteTest = clienteRepository.save(clienteTest);
         // Crear costo
         CostoVehiculo costoTest = new CostoVehiculo();
-        costoTest.setFechaDesde(Date.valueOf(LocalDate.of(2024, 1, 1)));
-        costoTest.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoTest.setFechaDesde((LocalDate.of(2024, 1, 1)));
+        costoTest.setFechaHasta((LocalDate.of(2025, 12, 31)));
         costoTest.setCosto(1500.00);
         costoTest.setActivo(true);
         costoTest = costoVehiculoRepository.save(costoTest);
@@ -396,8 +396,8 @@ class PagoServiceTest {
     void testProcesarPago_PrecisionDobles_Basico() throws Exception {
         // Given - Costo con decimales complejos
         CostoVehiculo costoDecimal = new CostoVehiculo();
-        costoDecimal.setFechaDesde(Date.valueOf(LocalDate.of(2024, 1, 1)));
-        costoDecimal.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoDecimal.setFechaDesde((LocalDate.of(2024, 1, 1)));
+        costoDecimal.setFechaHasta((LocalDate.of(2025, 12, 31)));
         costoDecimal.setCosto(1234.56);
         costoDecimal.setActivo(true);
         costoDecimal = costoVehiculoRepository.save(costoDecimal);

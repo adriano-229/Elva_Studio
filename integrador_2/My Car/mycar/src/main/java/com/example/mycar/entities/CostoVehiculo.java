@@ -9,7 +9,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
+
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -21,12 +23,13 @@ public class CostoVehiculo extends Base {
 
 
     @Column(name = "fecha_desde", nullable = false)
-    private Date fechaDesde;
+    private LocalDate fechaDesde;
 
     @Column(name = "fecha_hasta", nullable = false)
-    private Date fechaHasta;
+    private LocalDate fechaHasta;
 
     @Column(name = "costo", nullable = false)
     private double costo;
+
 
 }

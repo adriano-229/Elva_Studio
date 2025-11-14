@@ -321,93 +321,93 @@ public class DataInitializer implements CommandLineRunner {
         entityManager.persist(nacionalidadArgentina);
 
         CostoVehiculo costoVehiculo = new CostoVehiculo();
-        costoVehiculo.setFechaDesde(Date.valueOf(LocalDate.of(2024, 1, 1)));
-        costoVehiculo.setFechaHasta(Date.valueOf(LocalDate.of(2024, 12, 31)));
+        costoVehiculo.setFechaDesde((LocalDate.of(2024, 1, 1)));
+        costoVehiculo.setFechaHasta((LocalDate.of(2024, 12, 31)));
         costoVehiculo.setCosto(15000.0);
         entityManager.persist(costoVehiculo);
 
         
         CostoVehiculo costoToyota = new CostoVehiculo();
-        costoToyota.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
-        costoToyota.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoToyota.setFechaDesde((LocalDate.of(2025, 1, 1)));
+        costoToyota.setFechaHasta((LocalDate.of(2025, 12, 31)));
         costoToyota.setCosto(25000.0);
         entityManager.persist(costoToyota);
         
         CostoVehiculo costoRenault = new CostoVehiculo();
-        costoRenault.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
-        costoRenault.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoRenault.setFechaDesde((LocalDate.of(2025, 1, 1)));
+        costoRenault.setFechaHasta((LocalDate.of(2025, 12, 31)));
         costoRenault.setCosto(23500.0);
         entityManager.persist(costoRenault);
         
         CostoVehiculo costoCorolla = new CostoVehiculo();
-        costoCorolla.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
-        costoCorolla.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoCorolla.setFechaDesde((LocalDate.of(2025, 1, 1)));
+        costoCorolla.setFechaHasta((LocalDate.of(2025, 12, 31)));
         costoCorolla.setCosto(189000.0);
         entityManager.persist(costoCorolla);
         
         CostoVehiculo costoChevrolet = new CostoVehiculo();
-        costoChevrolet.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
-        costoChevrolet.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoChevrolet.setFechaDesde((LocalDate.of(2025, 1, 1)));
+        costoChevrolet.setFechaHasta((LocalDate.of(2025, 12, 31)));
         costoChevrolet.setCosto(32000.0);
         entityManager.persist(costoChevrolet);
         
         CostoVehiculo costoHilux = new CostoVehiculo();
-        costoHilux.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
-        costoHilux.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoHilux.setFechaDesde((LocalDate.of(2025, 1, 1)));
+        costoHilux.setFechaHasta((LocalDate.of(2025, 12, 31)));
         costoHilux.setCosto(45000.0);
         entityManager.persist(costoHilux);
         
         CostoVehiculo costoFocus = new CostoVehiculo();
-        costoFocus.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
-        costoFocus.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoFocus.setFechaDesde((LocalDate.of(2025, 1, 1)));
+        costoFocus.setFechaHasta((LocalDate.of(2025, 12, 31)));
         costoFocus.setCosto(14560.0);
         entityManager.persist(costoFocus);
         
         CostoVehiculo costoCivic = new CostoVehiculo();
-        costoCivic.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
-        costoCivic.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoCivic.setFechaDesde((LocalDate.of(2025, 1, 1)));
+        costoCivic.setFechaHasta((LocalDate.of(2025, 12, 31)));
         costoCivic.setCosto(21900.0);
         entityManager.persist(costoCivic);
         
         CostoVehiculo costoAmarok = new CostoVehiculo();
-        costoAmarok.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
-        costoAmarok.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoAmarok.setFechaDesde((LocalDate.of(2025, 1, 1)));
+        costoAmarok.setFechaHasta((LocalDate.of(2025, 12, 31)));
         costoAmarok.setCosto(33450.0);
         entityManager.persist(costoAmarok);
         
         CostoVehiculo costoOnix = new CostoVehiculo();
-        costoOnix.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
-        costoOnix.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoOnix.setFechaDesde((LocalDate.of(2025, 1, 1)));
+        costoOnix.setFechaHasta((LocalDate.of(2025, 12, 31)));
         costoOnix.setCosto(24590.0);
         entityManager.persist(costoOnix);
         
         CostoVehiculo costoRanger = new CostoVehiculo();
-        costoRanger.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
-        costoRanger.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoRanger.setFechaDesde((LocalDate.of(2025, 1, 1)));
+        costoRanger.setFechaHasta((LocalDate.of(2025, 12, 31)));
         costoRanger.setCosto(48900.0);
         entityManager.persist(costoRanger);
         
         CostoVehiculo costoNissan = new CostoVehiculo();
-        costoNissan.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
-        costoNissan.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoNissan.setFechaDesde((LocalDate.of(2025, 1, 1)));
+        costoNissan.setFechaHasta((LocalDate.of(2025, 12, 31)));
         costoNissan.setCosto(55670.0);
         entityManager.persist(costoNissan);
         
         CostoVehiculo costoPeugot = new CostoVehiculo();
-        costoPeugot.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
-        costoPeugot.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoPeugot.setFechaDesde((LocalDate.of(2025, 1, 1)));
+        costoPeugot.setFechaHasta((LocalDate.of(2025, 12, 31)));
         costoPeugot.setCosto(28700.0);
         entityManager.persist(costoPeugot);
         
         CostoVehiculo costoDuster = new CostoVehiculo();
-        costoDuster.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
-        costoDuster.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoDuster.setFechaDesde((LocalDate.of(2025, 1, 1)));
+        costoDuster.setFechaHasta((LocalDate.of(2025, 12, 31)));
         costoDuster.setCosto(23450.0);
         entityManager.persist(costoDuster);
         
         CostoVehiculo costoYaris = new CostoVehiculo();
-        costoYaris.setFechaDesde(Date.valueOf(LocalDate.of(2025, 1, 1)));
-        costoYaris.setFechaHasta(Date.valueOf(LocalDate.of(2025, 12, 31)));
+        costoYaris.setFechaDesde((LocalDate.of(2025, 1, 1)));
+        costoYaris.setFechaHasta((LocalDate.of(2025, 12, 31)));
         costoYaris.setCosto(21960.0);
         entityManager.persist(costoYaris);
 

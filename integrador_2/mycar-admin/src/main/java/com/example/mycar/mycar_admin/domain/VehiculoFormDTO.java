@@ -8,7 +8,8 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
+
 
 import com.example.mycar.mycar_admin.domain.enums.EstadoVehiculo;
 import com.example.mycar.mycar_admin.domain.enums.TipoImagen;
@@ -57,11 +58,11 @@ public class VehiculoFormDTO extends BaseDTO {
     //costo vehiculo
     @NotNull(message = "La fecha desde no puede ser nula")
     @PastOrPresent(message = "La fecha desde no puede ser futura")
-    private Date fechaDesde;
+    private LocalDate fechaDesde;
 
     @NotNull(message = "La fecha hasta no puede ser nula")
     @Future(message = "La fecha hasta debe ser una fecha futura")
-    private Date fechaHasta;
+    private LocalDate fechaHasta;
 
     @Positive(message = "El costo debe ser un valor positivo")
     private BigDecimal costo;
@@ -77,5 +78,6 @@ public class VehiculoFormDTO extends BaseDTO {
     @NotNull(message = "El tipo de imagen es obligatorio")
     private TipoImagen tipoImagen;
 
+    private Long caracteristicaVehiculoId;
 
 }

@@ -95,8 +95,8 @@ public class PromocionServiceTest {
         // Crear costo de vehículo
         CostoVehiculo costoVehiculo = new CostoVehiculo();
         costoVehiculo.setCosto(100.0);
-        costoVehiculo.setFechaDesde(java.sql.Date.valueOf(LocalDate.of(2024, 1, 1)));
-        costoVehiculo.setFechaHasta(Date.valueOf(LocalDate.of(2024, 12, 31)));
+        costoVehiculo.setFechaDesde((LocalDate.of(2024, 1, 1)));
+        costoVehiculo.setFechaHasta((LocalDate.of(2024, 12, 31)));
         costoVehiculo.setActivo(true);
         costoVehiculo = costoVehiculoRepository.save(costoVehiculo);
 

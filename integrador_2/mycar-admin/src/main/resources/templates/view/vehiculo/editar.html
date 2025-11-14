@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Vehículo</title>
+
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}" id="main-style-link">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+    <div th:replace="fragments/layout :: sidebar"></div>
+    <div th:replace="fragments/layout :: navbar"></div>
+
+    <div class="pc-container">
+        <div class="pc-content">
+            <div class="page-header">
+                <h2 class="mb-3">Editar Vehículo</h2>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div th:if="${error}" class="alert alert-danger mt-2">
+                        <span th:text="${error}"></span>
+                    </div>
+                    <div th:if="${success}" class="alert alert-success mt-2">
+                        <span th:text="${success}"></span>
+                    </div>
+
+                    <form th:action="@{/vehiculo/actualizar}" th:object="${vehiculoForm}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" th:field="*{id}" />
+
+                        <!-- Sección: Datos principales -->
+                        <h5 class="mb-3 mt-2">Datos del Vehículo</h5>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Patente:</label>
+                                <input type="text" th:field="*{patente}" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Estado:</label>
+                                <select th:field="*{estadoVehiculo}" class="form-select">
+                                    <option value="Disponible">Disponible</option>
+                                    <option value="Alquilado">Alquilado</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Costo:</label>
+                                <input type="number" th:field="*{costo}" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <!-- Sección: Características -->
+                        <h5 class="mb-3 mt-4">Características</h5>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Marca:</label>
+                                <input type="text" th:field="*{marca}" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Modelo:</label>
+                                <input type="text" th:field="*{modelo}" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Año:</label>
+                                <input type="number" th:field="*{anio}" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Cantidad Total:</label>
+                                <input type="number" th:field="*{cantidadTotalVehiculo}" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Puertas:</label>
+                                <select type="number" th:field="*{cantidadPuerta}" class="form-control" required>
+                                	<option value="1">1</option>
+                                	<option value="2">2</option>
+                                	<option value="3">3</option>
+                                	<option value="4">4</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Asientos:</label>
+                                <select type="number" th:field="*{cantidadAsiento}" class="form-control" required>
+                                	<option value="1">1</option>
+                                	<option value="2">2</option>
+                                	<option value="3">3</option>
+                                	<option value="4">4</option>
+                                	<option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Sección: Disponibilidad -->
+                        <h5 class="mb-3 mt-4">Disponibilidad</h5>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Fecha Desde:</label>
+                                <input type="date" th:field="*{fechaDesde}" class="form-control">  
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label">Fecha Hasta:</label>
+                                <input type="date" th:field="*{fechaHasta}" class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- Sección: Imagen -->
+                        <h5 class="mb-3 mt-4">Imagen del Vehículo</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Seleccionar Imagen:</label>
+                            <input type="file" name="file" class="form-control">
+                        </div>
+
+						<input type="hidden" th:field="*{caracteristicaVehiculoId}" />
+						
+                        <!-- Botones -->
+                        <div class="d-flex justify-content-end mt-4">
+					        <a th:href="@{/vehiculo/listar}" class="btn btn-secondary me-2">Cancelar</a>
+					        <button type="submit" class="btn btn-success">Actualizar Vehículo</button>
+					    </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments/layout :: footer"></div>
+
+    <script th:src="@{/assets/js/plugins/simplebar.min.js}"></script>
+    <script th:src="@{/assets/js/plugins/popper.min.js}"></script>
+    <script th:src="@{/assets/js/plugins/feather.min.js}"></script>
+    <script th:src="@{/assets/js/component.js}"></script>
+    <script th:src="@{/assets/js/theme.js}"></script>
+    <script th:src="@{/assets/js/script.js}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+        });
+    </script>
+</body>
+</html>

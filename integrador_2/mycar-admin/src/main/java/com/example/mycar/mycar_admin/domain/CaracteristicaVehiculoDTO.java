@@ -39,8 +39,12 @@ public class CaracteristicaVehiculoDTO extends BaseDTO {
 
     @NotNull(message = "La imagen no puede ser nulo")
     private ImagenDTO imagen;
-
+    
+    private Long imagen_id;
+    
     @NotNull(message = "El costo del vehículo no puede ser nulo")
     private CostoVehiculoDTO costoVehiculo;
+    
+    private Long costoVehiculo_id;
 
 }

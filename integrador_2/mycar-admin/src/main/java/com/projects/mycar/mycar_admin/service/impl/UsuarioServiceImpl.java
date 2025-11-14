@@ -37,5 +37,7 @@ public class UsuarioServiceImpl extends BaseServiceImpl<UsuarioDTO, Long> implem
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 
 }
