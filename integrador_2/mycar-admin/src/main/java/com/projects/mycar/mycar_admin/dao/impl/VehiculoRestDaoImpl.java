@@ -61,7 +61,7 @@ public class VehiculoRestDaoImpl extends BaseRestDaoImpl<VehiculoDTO, Long> impl
 		try {
 			
 			String uri = UriComponentsBuilder
-	                .fromUriString(baseUrl + "/searchByEstadoYPeriodo")
+	                .fromUriString(baseUrl + "/searchByEstado")
 	                .queryParam("estado", estado)
 	                .build()
 	                .toUriString();

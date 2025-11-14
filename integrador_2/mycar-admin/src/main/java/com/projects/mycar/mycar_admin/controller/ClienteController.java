@@ -1,28 +1,67 @@
 package com.projects.mycar.mycar_admin.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.mycar.mycar_admin.domain.ClienteDTO;
+import com.example.mycar.mycar_admin.domain.DireccionDTO;
+import com.example.mycar.mycar_admin.domain.DireccionFormDTO;
 import com.projects.mycar.mycar_admin.service.impl.ClienteServiceImpl;
+import com.projects.mycar.mycar_admin.service.impl.DepartamentoServiceImpl;
+import com.projects.mycar.mycar_admin.service.impl.LocalidadServiceImpl;
+import com.projects.mycar.mycar_admin.service.impl.PaisServiceImpl;
+import com.projects.mycar.mycar_admin.service.impl.ProvinciaServiceImpl;
 
 import lombok.Getter;
 
 @Controller
-@RequestMapping("/cliente")
+@RequestMapping("/clientes")
 @Getter
 public class ClienteController extends BaseControllerImpl<ClienteDTO, ClienteServiceImpl>{
 	
-	private String viewList = "";
-	private String viewEdit = "";
-	private String redirectList= "";
+	@Autowired
+	private PaisServiceImpl paisService;
+	
+	@Autowired
+	private ProvinciaServiceImpl provinciaService;
+	
+	@Autowired
+	private DepartamentoServiceImpl departamentoService;
+	
+	@Autowired
+	private LocalidadServiceImpl localidadService;
+	
+	private String viewList = "view/cliente/listar";
+	private String viewEdit = "view/cliente/eCliente";
+	private String redirectList= "redirect:/cliente/listar";
 	
 	@Override
+	@GetMapping("/crear")
 	public String crear(Model model) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		try {
+			
+			DireccionDTO direccion = new DireccionDTO();
+			ClienteDTO cliente = new ClienteDTO();
+			cliente.setDireccion(direccion);
+			model.addAttribute("cliente", cliente);
+			model.addAttribute("listaPaises", paisService.findAll());
+			model.addAttribute("listaDepartamentos", departamentoService.findAll());
+			model.addAttribute("listaProvincias", provinciaService.findAll());
+			model.addAttribute("listaLocalidades", localidadService.findAll());
+			
+			model.addAttribute("isNew", true);
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+	        model.addAttribute("msgError", "Error de Sistema");
+		}
+		
+		return viewEdit;
 	}
 	
 	@GetMapping("/search")

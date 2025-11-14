@@ -15,7 +15,7 @@ import com.projects.mycar.mycar_admin.dao.FacturaRestDao;
 public class FacturaRestDaoImpl extends BaseRestDaoImpl<FacturaDTO, Long> implements FacturaRestDao{
 
 	public FacturaRestDaoImpl() {
-		super(FacturaDTO.class, FacturaDTO[].class, "http://localhost:9000/api/pagos");
+		super(FacturaDTO.class, FacturaDTO[].class, "http://localhost:9000/api/facturas");
 		// TODO Auto-generated constructor stub
 	}
 
@@ -23,7 +23,7 @@ public class FacturaRestDaoImpl extends BaseRestDaoImpl<FacturaDTO, Long> implem
 	public List<FacturaDTO> obtenerPagosPendientes() throws Exception {
 		try {
 			
-			String uri = baseUrl;
+			String uri = "http://localhost:9000/api/pagos/pendientes";
 			ResponseEntity<FacturaDTO[]> response = this.restTemplate.getForEntity(uri, entityArrayClass);
 			FacturaDTO[] array = response.getBody();
 			
@@ -34,6 +34,7 @@ public class FacturaRestDaoImpl extends BaseRestDaoImpl<FacturaDTO, Long> implem
 			return Arrays.asList(array);
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new Exception("Error al obtener pagos pendientes",e);
 		}
 		
@@ -45,7 +46,7 @@ public class FacturaRestDaoImpl extends BaseRestDaoImpl<FacturaDTO, Long> implem
 		
 		try {
 			
-			String uri = baseUrl + "/aprobar/{facturaId}";
+			String uri = "http://localhost:9000/api/pagos/aprobar/{facturaId}";
 			ResponseEntity<FacturaDTO> response = this.restTemplate.getForEntity(uri, entityClass, idFactura);
 			FacturaDTO factura = response.getBody();
 			
@@ -60,7 +61,7 @@ public class FacturaRestDaoImpl extends BaseRestDaoImpl<FacturaDTO, Long> implem
 	public FacturaDTO anularPago(Long idFactura, String motivo) throws Exception {
 	    try {
 	        String uri = UriComponentsBuilder
-	                .fromUriString(baseUrl + "/anular/{facturaId}")
+	                .fromUriString("http://localhost:9000/api/pagos/anular/{facturaId}")
 	                .queryParam("motivo", motivo)
 	                .buildAndExpand(idFactura)
 	                .toUriString();

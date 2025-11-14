@@ -37,5 +37,13 @@ public class DireccionDTO extends BaseDTO {
 
     @NotBlank
     private Long localidadId;
+    
+    private LocalidadDTO localidad;
+    
+    private Long departamentoId;
+    
+    private Long provinciaId;
+    
+    private Long paisId;
 
 }

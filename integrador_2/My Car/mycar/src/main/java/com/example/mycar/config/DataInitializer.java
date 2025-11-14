@@ -108,10 +108,13 @@ public class DataInitializer implements CommandLineRunner {
         direccionCliente.setLocalidad(ciudadMendoza);
         entityManager.persist(direccionCliente);*/
 
+        Path pathCliente = Path.of("src/main/resources/static/img/clientes/person-f-10.webp");
+        byte[] contCliente = Files.readAllBytes(pathCliente);
+        System.out.println("Bytes Chevrolet: " + contCliente.length);
         Imagen imagenCliente = Imagen.builder()
                 .nombre("cliente-demo.png")
-                .mime("image/png")
-                .contenido(new byte[] { 0 })
+                .mime("image/webp")
+                .contenido(contCliente)
                 .tipoImagen(TipoImagen.Persona)
                 .build();
         entityManager.persist(imagenCliente);
@@ -126,11 +129,14 @@ public class DataInitializer implements CommandLineRunner {
 
         
         System.out.println("Estoy por leer una imagen");
+        Path sedan = Path.of("src/main/resources/static/img/vehiculos/vehiculo-sedan.jpg");
+        byte[] contSedan = Files.readAllBytes(sedan);
+        System.out.println("Bytes Chevrolet: " + contSedan.length);
 
         Imagen imagenVehiculo = Imagen.builder()
                 .nombre("vehiculo-sedan.png")
                 .mime("image/png")
-                .contenido(new byte[] { 0 })
+                .contenido(contSedan)
                 .tipoImagen(TipoImagen.Vehiculo)
                 .build();
         entityManager.persist(imagenVehiculo);
@@ -509,7 +515,7 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 3, 1), LocalDate.of(2024, 3, 15),
                 pagoEfectivo, new BigDecimal("30000"), 15000.0, 15000.0,
                 "Pago recibido en mostrador",
-                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imgCorolla, costoVehiculo, nacionalidadArgentina);
 
         crearAlquilerCompleto(
                 "Laura", "Pérez", LocalDate.of(1989, 7, 14), "28765432", "laura-perez",
@@ -520,7 +526,7 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 4, 5), LocalDate.of(2024, 4, 20),
                 pagoTransferencia, new BigDecimal("45000"), 32000.0, 13000.0,
                 "Pago con transferencia bancaria",
-                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imgCivic, costoVehiculo, nacionalidadArgentina);
 
         crearAlquilerCompleto(
                 "Jorge", "Ramírez", LocalDate.of(1985, 3, 22), "26543210", "jorge-ramirez",
@@ -531,7 +537,7 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 5, 10), LocalDate.of(2024, 5, 18),
                 pagoEfectivo, new BigDecimal("22000"), 18000.0, 4000.0,
                 "Pago en efectivo",
-                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imgToyota, costoVehiculo, nacionalidadArgentina);
 
         crearAlquilerCompleto(
                 "Sofía", "López", LocalDate.of(1995, 11, 3), "33445566", "sofia-lopez",
@@ -542,7 +548,7 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 6, 1), LocalDate.of(2024, 6, 12),
                 pagoTransferencia, new BigDecimal("28000"), 22000.0, 6000.0,
                 "Pago con tarjeta",
-                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imgFocus, costoVehiculo, nacionalidadArgentina);
 
         crearAlquilerCompleto(
                 "Diego", "Martínez", LocalDate.of(1990, 1, 18), "31223344", "diego-martinez",
@@ -553,7 +559,7 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 7, 3), LocalDate.of(2024, 7, 15),
                 pagoTransferencia, new BigDecimal("26000"), 21000.0, 5000.0,
                 "Pago mixto confirmado",
-                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imgFocus, costoVehiculo, nacionalidadArgentina);
 
         crearAlquilerCompleto(
                 "Carla", "Díaz", LocalDate.of(1993, 4, 8), "29998877", "carla-diaz",
@@ -575,7 +581,7 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDate.of(2024, 9, 5), LocalDate.of(2024, 9, 25),
                 pagoTransferencia, new BigDecimal("34000"), 28000.0, 6000.0,
                 "Pago anticipado por transferencia",
-                ciudadMendoza, imagenCliente, imagenVehiculo, costoVehiculo, nacionalidadArgentina);
+                ciudadMendoza, imagenCliente, imgChevrolet, costoVehiculo, nacionalidadArgentina);
 
 
         crearVehiculoDisponible("AE777BC", "Toyota", "Corolla", 2022, 4, 5, imgToyota, costoToyota);

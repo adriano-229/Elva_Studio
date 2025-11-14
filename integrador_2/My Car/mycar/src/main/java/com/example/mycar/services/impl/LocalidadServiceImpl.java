@@ -9,10 +9,12 @@ import com.example.mycar.services.LocalidadService;
 import com.example.mycar.services.mapper.BaseMapper;
 import com.example.mycar.services.mapper.DepartamentoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class LocalidadServiceImpl extends BaseServiceImpl<Localidad, LocalidadDTO, Long> implements LocalidadService {
 
     @Autowired

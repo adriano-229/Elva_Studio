@@ -19,7 +19,7 @@ public class PagoController {
     public PagoController(PagoService pagoService) {
         this.pagoService = pagoService;
     }
-
+    
     @PostMapping("/procesar")
     public ResponseEntity<?> procesarPago(@Valid @RequestBody SolicitudPagoDTO solicitud) {
         try {
@@ -63,4 +63,53 @@ public class PagoController {
                     .body("{\"error\":\"" + e.getMessage() + "\"}");
         }
     }
+    
+    /*@GetMapping
+    public ResponseEntity<?> getAll() {
+        try {
+        	return ResponseEntity.status(HttpStatus.OK).body(pagoService.findAll());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error. por favor intente más tarde.\"}");
+        }
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getOne(@PathVariable Long id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(pagoService.findById(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"Error. por favor intente más tarde.\"}");
+        }
+    }
+    
+    @PostMapping
+    public ResponseEntity<?> save(@RequestBody D dto) {
+        try {
+        	System.out.println("CONTROLLER SERVICE");
+            return ResponseEntity.status(HttpStatus.OK).body(pagoService.save(dto));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"Error. por favor intente más tarde.\"}");
+        }
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody D dto) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(pagoService.update(id, dto));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"Error. por favor intente más tarde.\"}");
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        try {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(pagoService.delete(id));
+        } catch (Exception e) {
+        	System.out.println("ERRROR AL ELIMINAR");
+        	e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"Error. por favor intente más tarde.\"}");
+        }
+
+    }*/
 }

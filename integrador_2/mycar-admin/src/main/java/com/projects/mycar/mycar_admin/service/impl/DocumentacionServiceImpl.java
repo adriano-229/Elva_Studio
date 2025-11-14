@@ -28,6 +28,16 @@ public class DocumentacionServiceImpl extends BaseServiceImpl<DocumentacionDTO, 
         }
     }
 	
+	public void updateDocumentacion(DocumentacionDTO entity) throws Exception {
+        try {
+            validar(entity);
+            daoDocumentacion.actualizarDocumentacion(entity);
+
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+	
 	@Override
 	protected void validar(DocumentacionDTO entity) throws Exception {
 		// TODO Auto-generated method stub
