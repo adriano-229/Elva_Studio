@@ -15,7 +15,7 @@ import java.util.List;
 public class AlquilerRestDaoImpl extends BaseRestDaoImpl<AlquilerDTO, Long> implements AlquilerRestDao {
 
     public AlquilerRestDaoImpl() {
-        super(AlquilerDTO.class, AlquilerDTO[].class, "http://168.181.186.171:8083/api/v1/alquileres");
+        super(AlquilerDTO.class, AlquilerDTO[].class, "/api/v1/alquileres");
     }
 
     @Override

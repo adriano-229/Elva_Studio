@@ -8,7 +8,7 @@ import com.projects.mycar.mycar_admin.domain.DepartamentoDTO;
 public class DepartamentoRestDaoImpl extends BaseRestDaoImpl<DepartamentoDTO, Long>{
 
 	public DepartamentoRestDaoImpl() {
-		super(DepartamentoDTO.class, DepartamentoDTO[].class, "http://168.181.186.171:8083/api/v1/departamentos");
+		super(DepartamentoDTO.class, DepartamentoDTO[].class, "/api/v1/departamentos");
 	}
 
 }

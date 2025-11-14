@@ -17,7 +17,7 @@ import com.projects.mycar.mycar_admin.domain.enums.EstadoVehiculo;
 public class VehiculoRestDaoImpl extends BaseRestDaoImpl<VehiculoDTO, Long> implements VehiculoRestDao {
 
     public VehiculoRestDaoImpl() {
-        super(VehiculoDTO.class, VehiculoDTO[].class, "http://168.181.186.171:8083/api/v1/vehiculos");
+        super(VehiculoDTO.class, VehiculoDTO[].class, "/api/v1/vehiculos");
     }
 
     @Override

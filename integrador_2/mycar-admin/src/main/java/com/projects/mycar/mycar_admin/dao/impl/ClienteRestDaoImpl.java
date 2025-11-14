@@ -10,7 +10,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class ClienteRestDaoImpl extends BaseRestDaoImpl<ClienteDTO, Long> implements ClienteRestDao {
 
     public ClienteRestDaoImpl() {
-        super(ClienteDTO.class, ClienteDTO[].class, "http://168.181.186.171:8083/api/v1/cliente");
+        super(ClienteDTO.class, ClienteDTO[].class, "/api/v1/cliente");
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.projects.mycar.mycar_admin.dao.impl;
 import com.projects.mycar.mycar_admin.dao.ReportesAlquileresRestDao;
 import com.projects.mycar.mycar_admin.domain.ReportFileDTO;
 import com.projects.mycar.mycar_admin.domain.ReporteAlquilerDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -24,16 +24,23 @@ import java.util.Optional;
 @Repository
 public class ReportesAlquileresRestDaoImpl implements ReportesAlquileresRestDao {
 
-    private static final String BASE_URL = "http://168.181.186.171:8083/reportes/alquileres";
+    private final String baseUrl;
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+
+    public ReportesAlquileresRestDaoImpl(RestTemplate restTemplate,
+                                         @Value("${mycar.api.base-url}") String apiBaseUrl) {
+        this.restTemplate = restTemplate;
+        this.baseUrl = UriComponentsBuilder.fromHttpUrl(apiBaseUrl)
+                .path("/reportes/alquileres")
+                .toUriString();
+    }
 
     @Override
     public List<ReporteAlquilerDTO> obtenerAlquileres(LocalDate desde, LocalDate hasta) throws Exception {
         try {
             String uri = UriComponentsBuilder
-                    .fromUriString(BASE_URL)
+                    .fromUriString(baseUrl)
                     .queryParam("desde", desde)
                     .queryParam("hasta", hasta)
                     .build()
@@ -61,7 +68,7 @@ public class ReportesAlquileresRestDaoImpl implements ReportesAlquileresRestDao 
     public ReportFileDTO descargarAlquileres(LocalDate desde, LocalDate hasta, String formato) throws Exception {
         try {
             URI uri = UriComponentsBuilder
-                    .fromUriString(BASE_URL)
+                    .fromUriString(baseUrl)
                     .queryParam("desde", desde)
                     .queryParam("hasta", hasta)
                     .queryParam("formato", formato)

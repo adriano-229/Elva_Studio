@@ -5,9 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.projects.mycar.mycar_admin.dao.BaseRestDao;
 import com.projects.mycar.mycar_admin.domain.BaseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -27,10 +30,23 @@ public abstract class BaseRestDaoImpl<E extends BaseDTO, ID extends Serializable
 
     protected Class<E[]> entityArrayClass;
 
-    public BaseRestDaoImpl(Class<E> entityClass, Class<E[]> entityArrayClass, String baseUrl) {
+    @Value("${mycar.api.base-url}")
+    private String apiBaseUrl;
+
+    private final String resourcePath;
+
+    public BaseRestDaoImpl(Class<E> entityClass, Class<E[]> entityArrayClass, String resourcePath) {
         this.entityClass = entityClass;
-        this.baseUrl = baseUrl;
         this.entityArrayClass = entityArrayClass;
+        this.resourcePath = resourcePath;
+    }
+
+    @PostConstruct
+    private void initBaseUrl() {
+        String normalizedPath = resourcePath.startsWith("/") ? resourcePath : "/" + resourcePath;
+        this.baseUrl = UriComponentsBuilder.fromHttpUrl(apiBaseUrl)
+                .path(normalizedPath)
+                .toUriString();
     }
 
     @Override

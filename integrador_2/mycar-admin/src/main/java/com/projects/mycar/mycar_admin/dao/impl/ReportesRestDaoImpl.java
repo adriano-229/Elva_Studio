@@ -3,7 +3,7 @@ package com.projects.mycar.mycar_admin.dao.impl;
 import com.projects.mycar.mycar_admin.dao.ReportesRestDao;
 import com.projects.mycar.mycar_admin.domain.ReportFileDTO;
 import com.projects.mycar.mycar_admin.domain.ReporteRecaudacionModeloDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -24,10 +24,17 @@ import java.util.Optional;
 @Repository
 public class ReportesRestDaoImpl implements ReportesRestDao {
 
-    private static final String BASE_URL = "http://168.181.186.171:8083/reportes";
+    private final String baseUrl;
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+
+    public ReportesRestDaoImpl(RestTemplate restTemplate,
+                               @Value("${mycar.api.base-url}") String apiBaseUrl) {
+        this.restTemplate = restTemplate;
+        this.baseUrl = UriComponentsBuilder.fromHttpUrl(apiBaseUrl)
+                .path("/reportes")
+                .toUriString();
+    }
 
     @Override
     public List<ReporteRecaudacionModeloDTO> obtenerRecaudacionPorModelo(LocalDate desde, LocalDate hasta)
@@ -35,7 +42,7 @@ public class ReportesRestDaoImpl implements ReportesRestDao {
 
         try {
             String uri = UriComponentsBuilder
-                    .fromUriString(BASE_URL + "/recaudacion-modelo")
+                    .fromUriString(baseUrl + "/recaudacion-modelo")
                     .queryParam("desde", desde)
                     .queryParam("hasta", hasta)
                     .build()
@@ -64,7 +71,7 @@ public class ReportesRestDaoImpl implements ReportesRestDao {
             throws Exception {
         try {
             URI uri = UriComponentsBuilder
-                    .fromUriString(BASE_URL + "/recaudacion-modelo")
+                    .fromUriString(baseUrl + "/recaudacion-modelo")
                     .queryParam("desde", desde)
                     .queryParam("hasta", hasta)
                     .queryParam("formato", formato)

@@ -18,7 +18,7 @@ import com.projects.mycar.mycar_admin.domain.DocumentacionDTO;
 public class DocumentacionRestDaoImpl extends BaseRestDaoImpl<DocumentacionDTO, Long> implements DocumentacionRestDao {
 
     public DocumentacionRestDaoImpl() {
-        super(DocumentacionDTO.class, DocumentacionDTO[].class, "http://168.181.186.171:8083/api/v1/documentacion");
+        super(DocumentacionDTO.class, DocumentacionDTO[].class, "/api/v1/documentacion");
     }
 
     @Override

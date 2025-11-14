@@ -1,18 +1,26 @@
 package com.projects.mycar.mycar_admin.dao.impl;
 
 import com.projects.mycar.mycar_admin.domain.contacto.ContactoWhatsappResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Repository
 public class ContactoWhatsAppRestDaoImpl {
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
-    private String baseUrl = "http://168.181.186.171:8083/contactos";
+    private final String baseUrl;
+
+    public ContactoWhatsAppRestDaoImpl(RestTemplate restTemplate,
+                                       @Value("${mycar.api.base-url}") String apiBaseUrl) {
+        this.restTemplate = restTemplate;
+        this.baseUrl = UriComponentsBuilder.fromHttpUrl(apiBaseUrl)
+                .path("/contactos")
+                .toUriString();
+    }
 
 
     public ContactoWhatsappResponse obtenerWhatsapp(Long clienteId) throws Exception {

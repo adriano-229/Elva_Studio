@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 public class PromocionRestDaoImpl extends BaseRestDaoImpl<ConfiguracionPromocionDTO, Long> implements PromocionRestDao {
 
     public PromocionRestDaoImpl() {
-        super(ConfiguracionPromocionDTO.class, ConfiguracionPromocionDTO[].class, "http://168.181.186.171:8083/api/promociones");
+        super(ConfiguracionPromocionDTO.class, ConfiguracionPromocionDTO[].class, "/api/promociones");
     }
 
     @Override

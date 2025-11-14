@@ -3,7 +3,7 @@ package com.projects.mycar.mycar_admin.dao.impl;
 import com.projects.mycar.mycar_admin.dao.CorreoHistorialRestDao;
 import com.projects.mycar.mycar_admin.domain.CorreoHistorialDTO;
 import com.projects.mycar.mycar_admin.domain.PageResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +17,17 @@ import java.time.LocalDate;
 @Repository
 public class CorreoHistorialRestDaoImpl implements CorreoHistorialRestDao {
 
-    private static final String BASE_URL = "http://168.181.186.171:8083/api/correos/historial";
+    private final String baseUrl;
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+
+    public CorreoHistorialRestDaoImpl(RestTemplate restTemplate,
+                                      @Value("${mycar.api.base-url}") String apiBaseUrl) {
+        this.restTemplate = restTemplate;
+        this.baseUrl = UriComponentsBuilder.fromHttpUrl(apiBaseUrl)
+                .path("/api/correos/historial")
+                .toUriString();
+    }
 
     @Override
     public PageResponse<CorreoHistorialDTO> buscar(String destinatario,
@@ -32,7 +39,7 @@ public class CorreoHistorialRestDaoImpl implements CorreoHistorialRestDao {
 
         try {
             UriComponentsBuilder builder = UriComponentsBuilder
-                    .fromUriString(BASE_URL)
+                    .fromUriString(baseUrl)
                     .queryParam("page", page)
                     .queryParam("size", size);
 

@@ -3,20 +3,28 @@ package com.projects.mycar.mycar_admin.dao.impl;
 import com.projects.mycar.mycar_admin.dao.CostoRestDao;
 import com.projects.mycar.mycar_admin.domain.AlquilerFormDTO;
 import com.projects.mycar.mycar_admin.domain.PagareDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
 @Repository
 public class CostoRestDaoImpl implements CostoRestDao {
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
-    private String baseUrl = "http://168.181.186.171:8083/api/costos";
+    private final String baseUrl;
+
+    public CostoRestDaoImpl(RestTemplate restTemplate,
+                            @Value("${mycar.api.base-url}") String apiBaseUrl) {
+        this.restTemplate = restTemplate;
+        this.baseUrl = UriComponentsBuilder.fromHttpUrl(apiBaseUrl)
+                .path("/api/costos")
+                .toUriString();
+    }
 
     @Override
     public PagareDTO calcularPagare(List<Long> alquilerIds, Long clienteId) throws Exception {

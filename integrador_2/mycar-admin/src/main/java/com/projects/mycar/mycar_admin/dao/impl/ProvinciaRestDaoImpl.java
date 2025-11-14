@@ -8,7 +8,7 @@ import com.projects.mycar.mycar_admin.domain.ProvinciaDTO;
 public class ProvinciaRestDaoImpl extends BaseRestDaoImpl<ProvinciaDTO, Long>{
 
 	public ProvinciaRestDaoImpl() {
-		super(ProvinciaDTO.class, ProvinciaDTO[].class, "http://168.181.186.171:8083/api/v1/provincias");
+		super(ProvinciaDTO.class, ProvinciaDTO[].class, "/api/v1/provincias");
 	}
 
 }

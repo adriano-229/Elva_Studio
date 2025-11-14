@@ -16,7 +16,7 @@ import com.projects.mycar.mycar_admin.domain.FacturaDTO;
 public class FacturaRestDaoImpl extends BaseRestDaoImpl<FacturaDTO, Long> implements FacturaRestDao {
 
     public FacturaRestDaoImpl() {
-        super(FacturaDTO.class, FacturaDTO[].class, "http://168.181.186.171:8083/api/pagos");
+        super(FacturaDTO.class, FacturaDTO[].class, "/api/pagos");
     }
 
     @Override
