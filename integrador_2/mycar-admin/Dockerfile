@@ -9,7 +9,7 @@ FROM eclipse-temurin:17-jre
 WORKDIR /app
 ENV SPRING_PROFILES_ACTIVE=prod \
     JAVA_OPTS="" \
-    SERVER_PORT=9100
-EXPOSE 9100
+    SERVER_PORT=8081
+EXPOSE 8081
 COPY --from=builder /workspace/target/*.jar app.jar
 ENTRYPOINT ["sh","-c","java $JAVA_OPTS -Dserver.port=$SERVER_PORT -jar /app/app.jar"]

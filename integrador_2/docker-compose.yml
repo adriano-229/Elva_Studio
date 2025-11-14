@@ -35,9 +35,9 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-mycar}?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: ${MYSQL_USER:-mycar}
       SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD:-mycar}
-      SERVER_PORT: 9300
+      SERVER_PORT: 8083
     ports:
-      - "9300:9300"
+      - "8083:8083"
     networks:
       - mycar
 
@@ -48,11 +48,11 @@ services:
     depends_on:
       - mycar-server
     environment:
-      SERVER_PORT: 9100
-      MYCAR_API_BASE_URL: ${MYCAR_API_BASE_URL:-http://mycar-server:9300}
+      SERVER_PORT: 8081
+      MYCAR_API_BASE_URL: ${MYCAR_API_BASE_URL:-http://mycar-server:8083}
       SPRING_PROFILES_ACTIVE: ${MYCAR_ADMIN_PROFILE:-dev}
     ports:
-      - "9100:9100"
+      - "8081:8081"
     networks:
       - mycar
 
@@ -63,10 +63,10 @@ services:
     depends_on:
       - mycar-server
     environment:
-      SERVER_PORT: 9200
-      MYCAR_API_BASE_URL: ${MYCAR_API_BASE_URL:-http://mycar-server:9300}
+      SERVER_PORT: 8082
+      MYCAR_API_BASE_URL: ${MYCAR_API_BASE_URL:-http://mycar-server:8083}
     ports:
-      - "9200:9200"
+      - "8082:8082"
     networks:
       - mycar
 
