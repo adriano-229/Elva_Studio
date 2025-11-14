@@ -80,7 +80,11 @@ pipeline {
                 dir("${env.TARGET_DIR}") {
                     sh '''
                         set -e
-                        API_URL="http://${HOST_IP:-localhost}:9300/actuator/health"
+                        HOST_TARGET="${HOST_IP:-$(ip route | awk '/default/ {print $3}' | head -n1)}"
+                        if [ -z "$HOST_TARGET" ]; then
+                          HOST_TARGET="localhost"
+                        fi
+                        API_URL="http://${HOST_TARGET}:9300/actuator/health"
                         echo "Chequeando API en: $API_URL"
 
                         for i in $(seq 1 60); do
