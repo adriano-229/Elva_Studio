@@ -29,8 +29,4 @@ public class LocalidadDTO extends BaseDTO {
     @NotNull(message = "El departamento es obligatorio")
     private Long departamentoId;
 
-    @Builder.Default
-    @Valid
-    private List<DireccionDTO> direcciones = new ArrayList<>();
-
 }

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html data-pc-direction="ltr" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-theme="light"
+      dir="ltr" lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Editar cliente | MyCar</title>
+
+  <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/icons.css}">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="~{fragments/layout :: sidebar}"></div>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<div class="pc-container">
+  <div class="pc-content">
+
+    <div class="flex justify-between items-center mb-6">
+      <div>
+        <p class="text-sm tracking-widest uppercase text-theme-text">Clientes</p>
+        <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">Editar cliente</h3>
+      </div>
+      <a class="btn btn-outline-secondary flex items-center gap-2" th:href="@{/clientes/listar}">
+        <i class="ti ti-arrow-left"></i> Volver
+      </a>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show flex items-center gap-2" role="alert"
+         th:if="${msgError}">
+      <i class="text-danger-500" data-feather="alert-circle"></i>
+      <span th:text="${msgError}"></span>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <form method="post" th:action="@{/clientes/modificar}" th:object="${entity}">
+          <input th:field="*{id}" type="hidden">
+
+          <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-12 md:col-span-6">
+              <label class="form-label">Nombre</label>
+              <input class="form-control" th:field="*{nombre}" type="text">
+            </div>
+            <div class="col-span-12 md:col-span-6">
+              <label class="form-label">Apellido</label>
+              <input class="form-control" th:field="*{apellido}" type="text">
+            </div>
+            <div class="col-span-12 md:col-span-6">
+              <label class="form-label">Tipo de documento</label>
+              <select class="form-select" th:field="*{tipoDocumento}">
+                <option th:each="tipo : ${tiposDocumento}" th:text="${tipo}" th:value="${tipo}"></option>
+              </select>
+            </div>
+            <div class="col-span-12 md:col-span-6">
+              <label class="form-label">Número de documento</label>
+              <input class="form-control" th:field="*{numeroDocumento}" type="text">
+            </div>
+            <div class="col-span-12 md:col-span-6">
+              <label class="form-label">Dirección de estadía</label>
+              <input class="form-control" th:field="*{direccionEstadia}" type="text">
+            </div>
+            <div class="col-span-12 md:col-span-6">
+              <label class="form-label">Localidad</label>
+              <select class="form-select" th:field="*{direccion.localidadId}">
+                <option value="">Seleccione</option>
+                <option th:each="loc : ${listaLocalidades}" th:text="${loc.nombre}" th:value="${loc.id}"></option>
+              </select>
+            </div>
+            <div class="col-span-12 md:col-span-6">
+              <label class="form-label">Calle</label>
+              <input class="form-control" th:field="*{direccion.calle}" type="text">
+            </div>
+            <div class="col-span-12 md:col-span-6">
+              <label class="form-label">Número</label>
+              <input class="form-control" th:field="*{direccion.numeracion}" type="number">
+            </div>
+            <div class="col-span-12 md:col-span-6">
+              <label class="form-label">Barrio</label>
+              <input class="form-control" th:field="*{direccion.barrio}" type="text">
+            </div>
+            <div class="col-span-12 md:col-span-6">
+              <label class="form-label">Referencia</label>
+              <input class="form-control" th:field="*{direccion.referencia}" type="text">
+            </div>
+          </div>
+
+          <div class="flex gap-3 mt-6">
+            <button class="btn btn-success flex items-center gap-2" type="submit">
+              <i class="ti ti-device-floppy"></i> Guardar cambios
+            </button>
+            <a class="btn btn-secondary" th:href="@{/clientes/listar}">Cancelar</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+
+<script th:src="@{/assets/js/plugins/simplebar.min.js}"></script>
+<script th:src="@{/assets/js/plugins/popper.min.js}"></script>
+<script th:src="@{/assets/js/plugins/feather.min.js}"></script>
+<script th:src="@{/assets/js/component.js}"></script>
+<script th:src="@{/assets/js/theme.js}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        feather.replace();
+    });
+</script>
+</body>
+</html>

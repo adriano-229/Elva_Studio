@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html data-pc-direction="ltr" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-theme="light"
+      dir="ltr" lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Detalle de cliente | MyCar</title>
+
+  <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/icons.css}">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="~{fragments/layout :: sidebar}"></div>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<div class="pc-container">
+  <div class="pc-content">
+
+    <div class="flex justify-between items-center mb-6">
+      <div>
+        <p class="text-sm tracking-widest uppercase text-theme-text">Clientes</p>
+        <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">Detalle del cliente</h3>
+      </div>
+      <div class="flex gap-2">
+        <a class="btn btn-outline-primary flex items-center gap-2"
+           th:href="@{/clientes/modificar/{id}(id=${cliente.id})}">
+          <i class="ti ti-edit"></i> Editar
+        </a>
+        <a class="btn btn-secondary flex items-center gap-2" th:href="@{/clientes/listar}">
+          <i class="ti ti-arrow-left"></i> Volver
+        </a>
+      </div>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show flex items-center gap-2" role="alert"
+         th:if="${msgError}">
+      <i class="text-danger-500" data-feather="alert-circle"></i>
+      <span th:text="${msgError}"></span>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+    </div>
+
+    <div class="card shadow-sm" th:if="${cliente != null}">
+      <div class="card-body grid grid-cols-12 gap-4">
+        <div class="col-span-12 md:col-span-6">
+          <h5 class="text-muted text-sm uppercase mb-1">Nombre</h5>
+          <p class="text-lg font-semibold" th:text="${cliente.nombre + ' ' + cliente.apellido}">Nombre</p>
+        </div>
+        <div class="col-span-12 md:col-span-6">
+          <h5 class="text-muted text-sm uppercase mb-1">Documento</h5>
+          <p class="m-0" th:text="${cliente.tipoDocumento}">DNI</p>
+          <small class="text-muted" th:text="${cliente.numeroDocumento}">12345678</small>
+        </div>
+        <div class="col-span-12 md:col-span-6">
+          <h5 class="text-muted text-sm uppercase mb-1">Fecha de nacimiento</h5>
+          <p th:text="${cliente.fechaNacimiento != null ? #temporals.format(cliente.fechaNacimiento, 'dd/MM/yyyy') : '-'}">-</p>
+        </div>
+        <div class="col-span-12 md:col-span-6">
+          <h5 class="text-muted text-sm uppercase mb-1">Dirección de estadía</h5>
+          <p th:text="${cliente.direccionEstadia != null ? cliente.direccionEstadia : '-'}">-</p>
+        </div>
+        <div class="col-span-12">
+          <h5 class="text-muted text-sm uppercase mb-1">Dirección</h5>
+          <p th:text="${cliente.direccion != null ? cliente.direccion.calle + ' ' + cliente.direccion.numeracion : '-'}">-</p>
+          <small class="text-muted" th:text="${cliente.direccion != null ? cliente.direccion.barrio : ''}"></small>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+
+<script th:src="@{/assets/js/plugins/simplebar.min.js}"></script>
+<script th:src="@{/assets/js/plugins/popper.min.js}"></script>
+<script th:src="@{/assets/js/plugins/feather.min.js}"></script>
+<script th:src="@{/assets/js/component.js}"></script>
+<script th:src="@{/assets/js/theme.js}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        feather.replace();
+    });
+</script>
+</body>
+</html>
