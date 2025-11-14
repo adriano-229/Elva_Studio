@@ -157,9 +157,9 @@ public class ProdDataInitializer implements CommandLineRunner {
 
         // Configuración de correo y empresa
         ConfiguracionCorreoAutomatico configuracionCorreo = new ConfiguracionCorreoAutomatico();
-        configuracionCorreo.setCorreo("a08055d0c45e21");
+        configuracionCorreo.setCorreo("82458da8f5f403");
         configuracionCorreo.setPuerto("2525");
-        configuracionCorreo.setClave("3995babf3a61a2");
+        configuracionCorreo.setClave("63969ce85506ea");
         configuracionCorreo.setSmtp("sandbox.smtp.mailtrap.io");
         configuracionCorreo.setTls(true);
         entityManager.persist(configuracionCorreo);
