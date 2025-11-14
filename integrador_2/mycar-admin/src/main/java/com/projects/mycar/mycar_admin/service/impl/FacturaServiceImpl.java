@@ -25,6 +25,7 @@ public class FacturaServiceImpl extends BaseServiceImpl<FacturaDTO, Long> implem
 		try {
 			return daoFactura.obtenerPagosPendientes();
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new Exception(e.getMessage());
 		}
 	}

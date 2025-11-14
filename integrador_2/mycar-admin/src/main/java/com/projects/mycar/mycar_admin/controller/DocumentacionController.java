@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.mycar.mycar_admin.domain.DocumentacionDTO;
 import com.projects.mycar.mycar_admin.service.impl.DocumentacionServiceImpl;
@@ -26,19 +27,19 @@ public class DocumentacionController extends BaseControllerImpl<DocumentacionDTO
 		return null;
 	}
 	
-	 @PostMapping("/modificar")
-	    public String guardarModificacion(@ModelAttribute DocumentacionDTO entity, Model model) {
-	        try {
-	        	System.out.println("ID: " + entity.getId());
-	            servicio.updateDocumentacion(entity); 
-	            model.addAttribute("msgExito", "Registro actualizado correctamente");
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            model.addAttribute("msgError", "Error al actualizar registro");
-	        }
+	@PostMapping("/modificar")
+    public String guardarModificacion(@ModelAttribute DocumentacionDTO entity, Model model, RedirectAttributes redirectAttributes) {
+        try {
+        	System.out.println("ID: " + entity.getId());
+            servicio.updateDocumentacion(entity); 
+            redirectAttributes.addFlashAttribute("msgExito", "Registro actualizado correctamente");
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("msgError", "Error al actualizar registro");
+        }
 
-	        return getRedirectList();
-	    }
+        return getRedirectList();
+    }
 
 	
 

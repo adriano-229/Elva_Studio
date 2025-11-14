@@ -251,10 +251,10 @@
 								<!-- Fecha de alquiler -->
 								<div class="col-span-12 md:col-span-6">
 								    <label for="fechasAlquiler" class="form-label">Fechas de Alquiler</label>
-								    <input type="text" id="fechasAlquiler" name="fechasAlquiler" class="form-control" placeholder="Selecciona fechas" required onfocus="this.blur()">
+								    <input type="text" id="fechasAlquiler" class="form-control" placeholder="Selecciona fechas" required onfocus="this.blur()">
 								    <!-- Hidden para enviar fechas por separado -->
-								    <input type="hidden" name="fechaDesde" th:field="*{fechaDesde}" th:value="*{fechaDesde}">
-								    <input type="hidden" name="fechaHasta"th:field="*{fechaHasta}"  th:value="*{fechaHasta}">
+									<input type="hidden" id="fechaDesde" th:field="*{fechaDesde}">
+									<input type="hidden" id="fechaHasta" th:field="*{fechaHasta}">
 								</div>
 
 								<!-- Cupón de descuento -->
@@ -386,19 +386,55 @@
 
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 	
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+			    const listaClientes = /*[[${listaClientes}]]*/ [];
+			    /*]]>*/
+		
+	</script>
 
     <!-- Inicializar datepicker -->
-    <script th:inline="javascript">
-		/*<![CDATA[*/
-		    const listaClientes = /*[[${listaClientes}]]*/ [];
-		    /*]]>*/
+    <script>
+		function recalcular() {
+	       const startVal = document.getElementById("fechaDesde").value;
+	       const endVal   = document.getElementById("fechaHasta").value;
+
+	       const diasInput = document.getElementById("diasInput");
+	       const costoInput = document.getElementById("costoInput");
+
+	       if (!startVal || !endVal) {
+	           diasInput.value = "";
+	           costoInput.value = "";
+	           return;
+	       }
+
+	       const start = new Date(startVal);
+	       const end   = new Date(endVal);
+
+	       if (end < start) {
+	           diasInput.value = "";
+	           costoInput.value = "";
+	           return;
+	       }
+
+	       const diffTime = end - start;
+	       const dias = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+	       diasInput.value = dias;
+	       
+		   // Calcular costo
+           const total = dias * costoPorDia;
+           costoInput.value = total.toFixed(2);
+		   
+		   console.log("Recalculado:", { start, end, dias, costoPorDia, total });
+	  	}   
 		
 		// Fechas disponibles (puedes inyectarlas desde Thymeleaf)
 	    let fechasDisponibles = /*[[${fechasDisponibles}]]*/ ["2025-11-12","2025-11-13","2025-11-15","2025-11-16"];
-
+	
 	    // Convertimos fechas a objetos Date para comparación
 	    let fechasDisponiblesObj = fechasDisponibles.map(d => new Date(d + "T00:00:00"));
-
+	
 	    function isAvailable(date) {
 	        const dateStr = date.toISOString().split('T')[0];
 	        return fechasDisponibles.includes(dateStr);
@@ -423,7 +459,7 @@
 	                dayElem.style.cursor = "not-allowed";
 	            }
 	        },
-	        onChange: function(selectedDates, dateStr, instance) {
+			onChange: function(selectedDates, dateStr, instance) {
 				const fechaDesdeInput = document.querySelector("input[name='fechaDesde']");
 	            const fechaHastaInput = document.querySelector("input[name='fechaHasta']");
 
@@ -438,6 +474,11 @@
 	            if(selectedDates.length === 2){
 	                let start = selectedDates[0];
 	                let end = selectedDates[1];
+					
+					fechaDesdeInput.value = start.toISOString().split("T")[0];
+					fechaHastaInput.value = end.toISOString().split("T")[0];
+
+		            recalcular(start, end);
 
 	                // Validar que todas las fechas entre start y end estén disponibles
 	                let current = new Date(start);
