@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 public class UsuarioRestDaoImpl extends BaseRestDaoImpl<UsuarioDTO, Long> implements UsuarioRestDao {
 
     public UsuarioRestDaoImpl() {
-        super(UsuarioDTO.class, UsuarioDTO[].class, "http://localhost:9000/api/v1/auth");
+        super(UsuarioDTO.class, UsuarioDTO[].class, "http://localhost:8083/api/v1/auth");
         // TODO Auto-generated constructor stub
     }
 

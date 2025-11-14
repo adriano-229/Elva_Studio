@@ -13,7 +13,7 @@ import java.util.List;
 public class VehiculoRestDaoImpl extends BaseRestDaoImpl<VehiculoDTO, Long> implements VehiculoRestDao {
 
     public VehiculoRestDaoImpl() {
-        super(VehiculoDTO.class, VehiculoDTO[].class, "http://localhost:9000/api/v1/vehiculos");
+        super(VehiculoDTO.class, VehiculoDTO[].class, "http://localhost:8083/api/v1/vehiculos");
 
     }
 

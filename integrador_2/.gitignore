@@ -1,1 +1,3 @@
 /.metadata/
+# Ignorar carpetas de build de Java/Spring Boot
+**/target/
