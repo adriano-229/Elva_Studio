@@ -79,11 +79,12 @@ pipeline {
 
     post {
         always {
-            dir("${env.TARGET_DIR ?: env.SUBDIR}") {
-                sh '''
-                    docker compose logs --no-color > compose.logs || true
-                    docker compose logs mysql --no-color > mysql.logs || true
-                    docker compose logs mycar-server --no-color > mycar-server.logs || true
+                dir("${env.TARGET_DIR ?: env.SUBDIR}") {
+                    sh '''
+                        rm -f mycar-api.logs
+                        docker compose logs --no-color > compose.logs || true
+                        docker compose logs mysql --no-color > mysql.logs || true
+                        docker compose logs mycar-server --no-color > mycar-server.logs || true
                     docker compose logs mycar-admin --no-color > mycar-admin.logs || true
                     docker compose logs mycar-cliente --no-color > mycar-cliente.logs || true
                 '''
