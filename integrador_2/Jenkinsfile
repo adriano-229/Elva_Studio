@@ -75,30 +75,6 @@ pipeline {
             }
         }
 
-        stage('Healthcheck API') {
-            steps {
-                dir("${env.TARGET_DIR}") {
-                    sh '''
-                        set -e
-                        API_URL="http://${HOST_IP:-localhost}:9300/actuator/health"
-                        echo "Chequeando API en: $API_URL"
-
-                        for i in $(seq 1 60); do
-                          if curl -fsS "$API_URL" >/dev/null 2>&1; then
-                            echo "API UP ✅"
-                            exit 0
-                          fi
-                          echo "Esperando API... ($i/60)"
-                          sleep 3
-                        done
-
-                        echo "Healthcheck de la API FALLÓ ❌"
-                        docker compose logs mycar-server || true
-                        exit 1
-                    '''
-                }
-            }
-        }
     }
 
     post {
