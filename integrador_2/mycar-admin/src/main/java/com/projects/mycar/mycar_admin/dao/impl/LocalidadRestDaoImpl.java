@@ -8,7 +8,7 @@ import com.projects.mycar.mycar_admin.domain.LocalidadDTO;
 public class LocalidadRestDaoImpl extends BaseRestDaoImpl<LocalidadDTO, Long>{
 
 	public LocalidadRestDaoImpl() {
-		super(LocalidadDTO.class, LocalidadDTO[].class, "http://localhost:8083/api/v1/localidades");
+		super(LocalidadDTO.class, LocalidadDTO[].class, "http://168.181.186.171:8083/api/v1/localidades");
 	}
 
 }

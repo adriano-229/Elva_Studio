@@ -24,7 +24,7 @@ import java.util.Optional;
 @Repository
 public class ReportesRestDaoImpl implements ReportesRestDao {
 
-    private static final String BASE_URL = "http://localhost:8083/reportes";
+    private static final String BASE_URL = "http://168.181.186.171:8083/reportes";
 
     @Autowired
     private RestTemplate restTemplate;

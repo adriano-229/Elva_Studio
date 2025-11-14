@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 public class UsuarioRestDaoImpl extends BaseRestDaoImpl<UsuarioDTO, Long> implements UsuarioRestDao {
 
     public UsuarioRestDaoImpl() {
-        super(UsuarioDTO.class, UsuarioDTO[].class, "http://localhost:8083/api/usuarios");
+        super(UsuarioDTO.class, UsuarioDTO[].class, "http://168.181.186.171:8083/api/usuarios");
 
     }
 

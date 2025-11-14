@@ -12,7 +12,7 @@ public class ContactoWhatsAppRestDaoImpl {
     @Autowired
     private RestTemplate restTemplate;
 
-    private String baseUrl = "http://localhost:8083/contactos";
+    private String baseUrl = "http://168.181.186.171:8083/contactos";
 
 
     public ContactoWhatsappResponse obtenerWhatsapp(Long clienteId) throws Exception {

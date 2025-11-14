@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Repository
 public class CorreoHistorialRestDaoImpl implements CorreoHistorialRestDao {
 
-    private static final String BASE_URL = "http://localhost:8083/api/correos/historial";
+    private static final String BASE_URL = "http://168.181.186.171:8083/api/correos/historial";
 
     @Autowired
     private RestTemplate restTemplate;
