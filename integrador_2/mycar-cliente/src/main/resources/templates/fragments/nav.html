@@ -1,22 +1,27 @@
 <nav class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between"
      th:fragment="navbar">
 
-  <a class="logo d-flex align-items-center me-auto me-xl-0" href="index.html">
-
+  <a class="logo d-flex align-items-center me-auto me-xl-0" th:href="@{/}">
     <h2 class="sitename">My Car</h2>
   </a>
+  <!-- 
+  <a th:href="@{/}" class="logo d-flex align-items-center me-auto me-xl-0 text-decoration-none">
+	  <img th:src="@{/assets/img/logo.png}" alt="MyCar Logo" style="height: 45px; margin-right: 10px;">
+	  <h2 class="sitename mb-0" style="color: #4b3b91; font-weight: 700;">My Car</h2>
+  </a>  -->
 
   <nav class="navmenu" id="navmenu">
     <ul>
-      <li><a class="active" href="index.html">Inicio</a></li>
-      <li><a href="/flota/disponibles">Flota</a></li>
-      <li><a href="destinations.html">Promociones</a></li>
-      <li><a href="tours.html">Mis reservas</a></li>
-      <li><a href="gallery.html">Nosotros</a></li>
-      <li><a href="contact.html">Contacto</a></li>
+      <li><a class="active" th:href="@{/}">Inicio</a></li>
+      <li><a th:href="@{/flota/disponibles}">Flota</a></li>
+      <li><a th:href="@{/promociones}">Promociones</a></li>
+      <li><a th:href="@{/reservas}">Mis reservas</a></li>
+      <li><a th:href="@{/nosotros}">Nosotros</a></li>
+      <li><a th:href="@{/contacto}">Contacto</a></li>
     </ul>
     <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
   </nav>
 
-  <a class="btn-getstarted" href="destiantios.html">Iniciar Sesion</a>
+  <a class="btn-getstarted" th:href="@{/login}">Iniciar Sesión</a>
 </nav>
+

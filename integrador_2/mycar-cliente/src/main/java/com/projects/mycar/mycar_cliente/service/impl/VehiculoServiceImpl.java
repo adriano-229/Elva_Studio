@@ -6,6 +6,7 @@ import com.projects.mycar.mycar_cliente.domain.VehiculoDTO;
 import com.projects.mycar.mycar_cliente.domain.enums.EstadoVehiculo;
 import com.projects.mycar.mycar_cliente.service.VehiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
