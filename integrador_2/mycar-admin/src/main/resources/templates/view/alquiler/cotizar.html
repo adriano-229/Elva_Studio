@@ -1,13 +1,195 @@
 <!DOCTYPE html>
 <html lang="en" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light" xmlns:th="http://www.thymeleaf.org">
+<!--<head>
+    <title>Cotización | Tu Aplicación</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
+    <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>-->
+
 <head>
     <title>Cotización | Tu Aplicación</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
     <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link" />
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+	<style>
+	/* General */
+	body {
+	    font-family: 'Open Sans', sans-serif;
+	    background-color: #f5f6fa;
+	    color: #333;
+	}
+	.card {
+	    background: #fff;
+	    border-radius: 10px;
+	    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+	    padding: 20px;
+	    margin-bottom: 20px;
+	}
+	.card-header {
+	    font-size: 1.25rem;
+	    font-weight: 600;
+	    margin-bottom: 15px;
+	    border-bottom: 1px solid #e0e0e0;
+	    padding-bottom: 8px;
+	}
+
+	/* Formulario */
+	.form-label {
+	    font-weight: 500;
+	    margin-bottom: 6px;
+	    display: block;
+	}
+	.form-control, .form-select {
+	    width: 100%;
+	    padding: 10px 12px;
+	    border-radius: 6px;
+	    border: 1px solid #ccc;
+	    font-size: 0.95rem;
+	    margin-bottom: 15px;
+	    transition: border 0.3s, box-shadow 0.3s;
+	}
+	.form-control:focus, .form-select:focus {
+	    outline: none;
+	    border-color: #007bff;
+	    box-shadow: 0 0 0 2px rgba(0,123,255,0.2);
+	}
+
+	/* Botones */
+	.btn-primary {
+	    background-color: #007bff;
+	    color: #fff;
+	    font-weight: 500;
+	    border: none;
+	    padding: 10px 20px;
+	    border-radius: 6px;
+	    cursor: pointer;
+	    transition: background 0.3s;
+	}
+	.btn-primary:hover {
+	    background-color: #0056b3;
+	}
+	.btn-success {
+	    background-color: #28a745;
+	    color: #fff;
+	    font-weight: 500;
+	    border: none;
+	    padding: 6px 12px;
+	    border-radius: 6px;
+	    cursor: pointer;
+	    transition: background 0.3s;
+	}
+	.btn-success:hover {
+	    background-color: #1e7e34;
+	}
+
+	/* Imágenes */
+	img.vehiculo-img {
+	    width: 100%;
+	    max-width: 300px;
+	    height: 200px;
+	    object-fit: cover;
+	    border-radius: 10px;
+	    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+	    margin: 0 auto;
+	}
+
+	/* Textos */
+	.text-center { text-align: center; }
+	.text-muted { color: #6c757d; }
+
+	/* Detalles de cotización */
+	.detalle-item {
+	    display: flex;
+	    justify-content: space-between;
+	    padding: 8px 0;
+	    border-bottom: 1px solid #eee;
+	}
+	.detalle-item:last-child { border-bottom: none; }
+	.detalle-total {
+	    font-weight: 600;
+	    font-size: 1.1rem;
+	    color: #007bff;
+	}
+
+	/* Cliente */
+	.cliente-card {
+	    background: #f8f9fa;
+	    border-radius: 10px;
+	    padding: 20px;
+	    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+	    margin-top: 20px;
+	    margin-bottom: 30px;
+	}
+
+
+	/* Título de la card */
+	.cliente-card .card-header {
+	    font-size: 1.1rem;
+	    font-weight: 600;
+	    margin-bottom: 12px;
+	    border-bottom: 1px solid #e0e0e0;
+	    padding-bottom: 6px;
+	}
+
+	/* Input y botón buscar */
+	.input-group {
+	    display: flex;
+	    gap: 6px;
+	}
+
+	.input-group input {
+		margin-top: 10px;
+		padding: 4px 12px;
+	    border: 1px solid #ccc;
+	}
+
 	
+	.input-group button {
+		margin-top: 10px;
+		padding: 4px 12px;
+	    background-color:  #1e7e34;
+	    
+	}
+
+	.input-group button:hover {
+	    background-color: #1e7e34;
+	}
+
+
+	/* Botón continuar más pequeño */
+	#btnContinuar {
+	    margin-top: 10px;
+	    padding: 4px 12px; /* vertical 4px, horizontal 12px */
+	    background-color: #007bff;
+	}
+
+	.alert-danger { background-color: #f8d7da; color: #721c24; }
+	.alert-success { background-color: #d4edda; color: #155724; }
+
+	/* Totales dentro del detalle de cotización */
+	.detalle-totales {
+	    margin-top: 15px;
+	    padding-top: 10px;
+	    border-top: 1px solid #ddd;
+	}
+	.detalle-totales div {
+	    display: flex;
+	    justify-content: space-between;
+	    padding: 4px 0;
+	}
+	.detalle-totales div.total {
+	    font-weight: 600;
+	    font-size: 1.1rem;
+	    color: #007bff;
+	}
+	</style>
+
 </head>
+
 
 <body>
 
@@ -62,7 +244,7 @@
                                     <select id="auto" th:field="*{idVehiculo}" class="form-select">
                                         <option value="" disabled selected>-- Elige un vehículo --</option>
                                         <option th:each="auto : ${listaVehiculos}" th:value="${auto.id}"
-                                                th:text="${auto.caracteristicaVehiculo.marca} + ' - ' + ${auto.caracteristicaVehiculo.modelo}">Auto 1</option>
+                                                th:text="${auto.caracteristicaVehiculo.marca} + ' - ' + ${auto.caracteristicaVehiculo.modelo} + ' - ' + ${auto.patente}">Auto 1</option>
                                     </select>
                                 </div>
 
@@ -154,29 +336,30 @@
 							        </div>
 									
 									<!--Busqueda cliente-->
-									<div class="col-span-12 xl:col-span-4 md:col-span-12" th:if="${alquilerCotizado != null}">
-									    <div class="card mt-4">
-									        <div class="card-header">
-									            <h5>Buscar Cliente</h5>
+									<div class="cliente-card">
+									    <div class="card-header">
+									        <h5>Buscar Cliente</h5>
+									    </div>
+									    <div class="card-body">
+									        <div class="input-group mb-3">
+									            <input type="text" id="dniBuscar" class="form-control" placeholder="Ingrese DNI del cliente" required>
+									            <button type="button" class="btn btn-success btn-sm" onclick="buscarCliente()">Buscar</button>
 									        </div>
-									        <div class="card-body">
-									            <div class="input-group mb-3">
-									                <input type="text" id="dniBuscar" class="form-control" placeholder="Ingrese DNI del cliente" required>
-									                <button type="button" class="btn btn-primary" onclick="buscarCliente()">Buscar</button>
-									            </div>
-									            <div id="resultadoCliente"></div>
-									            <input type="hidden" id="clienteId" name="idCliente" th:field="*{idCliente}" required>
-									        </div>
+									        <div id="resultadoCliente"></div>
+									        <input type="hidden" id="clienteId" name="idCliente" th:field="*{idCliente}" required>
 									    </div>
 									</div>
 
 
-		
-							        <!-- Botón de alquilar -->
-							        <div class="text-center">
-										<button type="submit" id="btnContinuar" class="btn btn-primary w-full" disabled>Continuar</button>
 
-							        </div>
+		
+									<!-- Botón de alquilar -->
+									<div class="text-center">
+									    <button type="submit" id="btnContinuar" class="btn btn-primary btn-sm" style="padding: 0.25rem 0.5rem;" disabled>
+									        Continuar
+									    </button>
+									</div>
+
 								</form>
 						    </div>
 						</div>

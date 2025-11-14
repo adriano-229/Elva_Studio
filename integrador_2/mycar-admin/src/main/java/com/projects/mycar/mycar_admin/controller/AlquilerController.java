@@ -15,6 +15,7 @@ import com.example.mycar.mycar_admin.domain.AlquilerFormDTO;
 import com.example.mycar.mycar_admin.domain.ClienteDTO;
 import com.example.mycar.mycar_admin.domain.DocumentacionDTO;
 import com.example.mycar.mycar_admin.domain.VehiculoDTO;
+import com.example.mycar.mycar_admin.domain.enums.EstadoVehiculo;
 import com.projects.mycar.mycar_admin.service.impl.AlquilerServiceImpl;
 import com.projects.mycar.mycar_admin.service.impl.ClienteServiceImpl;
 import com.projects.mycar.mycar_admin.service.impl.CodigoDescuentoServiceImpl;
@@ -90,12 +91,12 @@ public class AlquilerController extends BaseControllerImpl<AlquilerDTO, Alquiler
 		
 		try {
 		
-			List<VehiculoDTO> vehiculos = vehiculoService.findAll();
+			List<VehiculoDTO> vehiculos = vehiculoService.buscarPorEstado(EstadoVehiculo.Disponible);
 			AlquilerFormDTO alquilerCotizar = new AlquilerFormDTO();
 			model.addAttribute("alquiler", alquilerCotizar);
 			model.addAttribute("listaVehiculos", vehiculos);
 			
-			model.addAttribute("fechasDisponibles", List.of("2025-11-12", "2025-11-15", "2025-11-18"));
+			model.addAttribute("fechasDisponibles", List.of("2025-11-12", "2025-11-13", "2025-11-14", "2025-11-15", "2025-11-18"));
 
 			
 		} catch (Exception e) {
@@ -123,7 +124,7 @@ public class AlquilerController extends BaseControllerImpl<AlquilerDTO, Alquiler
 			model.addAttribute("alquiler", alquilerCotizar);
 			
 			
-			List<VehiculoDTO> vehiculos = vehiculoService.findAll();
+			List<VehiculoDTO> vehiculos = vehiculoService.buscarPorEstado(EstadoVehiculo.Disponible);
 			model.addAttribute("listaVehiculos", vehiculos);
 			
 			List<ClienteDTO> clientes = clienteService.findAll();
@@ -154,18 +155,24 @@ public class AlquilerController extends BaseControllerImpl<AlquilerDTO, Alquiler
 	}
 	
 	@GetMapping("/detalle/{id}")
-	public String verDetalleLibro(@PathVariable Long id, Model model) {
+	public String verDetalle(@PathVariable Long id, Model model) {
 	    try {
 	        AlquilerDTO alquiler = servicio.findById(id);
-	        System.out.println("cliente: " + alquiler.getCliente());
 	        model.addAttribute("alquiler", alquiler);
-	    
+	        model.addAttribute("documentacion", alquiler.getDocumentacion());
+	        
+	        List<VehiculoDTO> vehiculos = vehiculoService.buscarPorEstado(EstadoVehiculo.Disponible);
+	        model.addAttribute("listaVehiculos", vehiculos);
+	        
 	    } catch (Exception e) {
-	        model.addAttribute("msgError", "No se pudo cargar el detalle del libro");
+	        model.addAttribute("msgError", "No se pudo cargar el detalle del alquiler");
 	        e.printStackTrace();
 	        
 	    }
 	    return "view/alquiler/detalle";
 	}
+
+	
+
 
 }

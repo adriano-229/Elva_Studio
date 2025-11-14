@@ -267,16 +267,17 @@
 
 			    <!-- Fechas y Costo -->
 			    <div class="col-span-12 xl:col-span-4 md:col-span-6">
-			        <div class="card h-100">
+			        <div class="card h-100" >
 			            <div class="card-header bg-gradient-warning d-flex justify-content-between align-items-center">
 			                <div><i class="ti ti-calendar me-2"></i> Fechas y Costo</div>
 			                <button type="button" id="btnEditar" class="btn btn-light btn-sm text-dark" onclick="mostrarFormularioEdicion()">
 			                    <i class="ti ti-edit me-1"></i>Editar
 			                </button>
 			            </div>
-
-			            <!-- Vista informativa -->
+						
+						<!-- Vista informativa -->
 			            <div class="card-body" id="vistaInfo">
+							
 			                <ul class="list-group list-group-flush">
 			                    <li class="list-group-item">
 			                        <strong>Fecha Desde:</strong>
@@ -295,29 +296,40 @@
 			                        $<span th:text="${alquiler.costoCalculado}">150000</span>
 			                    </li>
 			                </ul>
-			            </div>
-
-			            <!-- Formulario de edición -->
+							
+						</div>
+						
+						<!-- Formulario de edición -->
 			            <div class="card-body" id="formEdicion" style="display:none;">
-			                <form th:action="@{/alquiler/actualizarFechas}" th:object="${alquiler}" method="post">
+			                <form th:action="@{/alquiler/modificar}" th:object="${alquiler}" method="post">
 			                    <input type="hidden" th:field="*{id}">
-			                    <div class="mb-3">
+			                    <!--<div class="mb-3">
 			                        <label class="form-label fw-semibold">Fecha Desde</label>
 			                        <input type="date" class="form-control" th:field="*{fechaDesde}" id="fechaDesdeInput">
 			                    </div>
 			                    <div class="mb-3">
 			                        <label class="form-label fw-semibold">Fecha Hasta</label>
 			                        <input type="date" class="form-control" th:field="*{fechaHasta}" id="fechaHastaInput">
-			                    </div>
+			                    </div>-->
+								
+								<!-- Fecha de alquiler -->
+								<div class="col-span-12 md:col-span-6">
+								    <label for="fechasAlquiler" class="form-label">Fechas de Alquiler</label>
+								    <input type="text" id="fechasAlquiler" class="form-control" placeholder="Selecciona fechas" required onfocus="this.blur()">
+								    <!-- Hidden para enviar fechas por separado -->
+								    <input type="hidden" id="fechaDesde" th:field="*{fechaDesde}">
+								    <input type="hidden" id="fechaHasta" th:field="*{fechaHasta}">
+								</div>
+								
 			                    <div class="mb-3">
 			                        <label class="form-label fw-semibold">Cantidad de Días</label>
-			                        <input type="text" class="form-control" id="diasInput" th:value="${alquiler.cantidadDias}" readonly>
+			                        <input type="text" class="form-control" id="diasInput" th:field="*{cantidadDias}" readonly>
 			                    </div>
 			                    <div class="mb-3">
 			                        <label class="form-label fw-semibold">Costo Calculado</label>
 			                        <div class="input-group">
 			                            <span class="input-group-text">$</span>
-			                            <input type="text" class="form-control" id="costoInput" th:value="${alquiler.costoCalculado}" readonly>
+			                            <input type="text" class="form-control" id="costoInput" th:field="*{costoCalculado}" readonly>
 			                        </div>
 			                    </div>
 			                    <div class="d-flex gap-2">
@@ -340,8 +352,8 @@
 			                <i class="ti ti-file-description me-2"></i> Documentación del Alquiler
 			            </div>
 			            <div class="card-body">
-			                <form th:action="@{/alquiler/actualizarDocumentacion}" th:object="${alquiler.documentacion}" method="post" enctype="multipart/form-data">
-			                    <input type="hidden" name="alquilerId" th:value="${alquiler.id}">
+			                <form th:action="@{/documentacion/modificar}" th:object="${documentacion}" method="post" enctype="multipart/form-data">
+			                    <input type="hidden" th:field="*{id}">
 			                    <div class="grid grid-cols-12 gap-4">
 			                        <div class="col-span-12 md:col-span-4">
 			                            <label class="form-label">Tipo de Documentación</label>
@@ -358,11 +370,14 @@
 			                        <div class="col-span-12 md:col-span-4">
 			                            <label class="form-label">Archivo PDF</label>
 			                            <input type="file" class="form-control" th:field="*{pdf}" accept=".pdf">
-			                            <div class="mt-2" th:if="${alquiler.documentacion.pathArchivo != null}">
-			                                <a class="btn btn-outline-primary btn-sm" th:href="@{${alquiler.documentacion.pathArchivo}}" target="_blank">
-			                                    <i class="ti ti-file"></i> Ver PDF actual
-			                                </a>
-			                            </div>
+										<div th:if="${alquiler.documentacion != null}">
+										    <a class="btn btn-outline-primary"
+										       th:href="@{'http://localhost:9000/api/v1/documentacion/ver-pdf/' + ${alquiler.documentacion.nombreArchivo}}"
+										       target="_blank">
+										       <i class="ti ti-file"></i> Ver PDF
+										    </a>
+										</div>
+
 			                        </div>
 			                    </div>
 			                    <div class="text-end mt-4">
@@ -386,17 +401,27 @@
     <script th:src="@{/assets/js/component.js}"></script>
     <script th:src="@{/assets/js/theme.js}"></script>
     <script th:src="@{/assets/js/script.js}"></script>
-	<script>
-	    // Simular costo diario recibido desde el backend
-	    const costoPorDia = /*[[${alquiler.vehiculo.caracteristicaVehiculo.costoVehiculo.costo}]]*/ 0;
+	
+	<!-- Flatpickr CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	
+	<script th:inline="javascript">
+	    const costoPorDia = /*[[${alquiler.vehiculo.caracteristicaVehiculo.costoVehiculo.costo}]]*/ 0;
+	    console.log("Costo día:", costoPorDia);
+	</script>
+
+	
+	<script >
+		
 	    function mostrarFormularioEdicion() {
 	        document.getElementById("vistaInfo").style.display = "none";
 	        document.getElementById("formEdicion").style.display = "block";
 	        document.getElementById("btnEditar").style.display = "none";
 
-	        const desde = document.getElementById("fechaDesdeInput");
-	        const hasta = document.getElementById("fechaHastaInput");
+	        const desde = document.getElementById("fechaDesde");
+	        const hasta = document.getElementById("fechaHasta");
 
 	        desde.addEventListener("change", recalcular);
 	        hasta.addEventListener("change", recalcular);
@@ -408,23 +433,115 @@
 	        document.getElementById("btnEditar").style.display = "inline-block";
 	    }
 
-	    function recalcular() {
-	        const desde = new Date(document.getElementById("fechaDesdeInput").value);
-	        const hasta = new Date(document.getElementById("fechaHastaInput").value);
-	        const diasInput = document.getElementById("diasInput");
-	        const costoInput = document.getElementById("costoInput");
+		function recalcular() {
+		       const startVal = document.getElementById("fechaDesde").value;
+		       const endVal   = document.getElementById("fechaHasta").value;
 
-	        if (isNaN(desde) || isNaN(hasta) || hasta < desde) {
-	            diasInput.value = "";
-	            costoInput.value = "";
-	            return;
-	        }
+		       const diasInput = document.getElementById("diasInput");
+		       const costoInput = document.getElementById("costoInput");
 
-	        const diffTime = Math.abs(hasta - desde);
-	        const dias = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-	        diasInput.value = dias;
-	        costoInput.value = (dias * costoPorDia).toFixed(2);
+		       if (!startVal || !endVal) {
+		           diasInput.value = "";
+		           costoInput.value = "";
+		           return;
+		       }
+
+		       const start = new Date(startVal);
+		       const end   = new Date(endVal);
+
+		       if (end < start) {
+		           diasInput.value = "";
+		           costoInput.value = "";
+		           return;
+		       }
+
+		       const diffTime = end - start;
+		       const dias = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+		       diasInput.value = dias;
+		       
+			   // Calcular costo
+	           const total = dias * costoPorDia;
+	           costoInput.value = total.toFixed(2);
+			   
+			   console.log("Recalculado:", { start, end, dias, costoPorDia, total });
+		}
+		
+		// Fechas disponibles (puedes inyectarlas desde Thymeleaf)
+	    let fechasDisponibles = /*[[${fechasDisponibles}]]*/ ["2025-11-12","2025-11-13","2025-11-14", "2025-11-15","2025-11-16", "2025-11-18"];
+
+	    // Convertimos fechas a objetos Date para comparación
+	    let fechasDisponiblesObj = fechasDisponibles.map(d => new Date(d + "T00:00:00"));
+
+	    function isAvailable(date) {
+	        const dateStr = date.toISOString().split('T')[0];
+	        return fechasDisponibles.includes(dateStr);
 	    }
+
+	    flatpickr("#fechasAlquiler", {
+	        mode: "range",
+	        dateFormat: "Y-m-d",
+	        disable: [
+	            function(date) {
+	                return !isAvailable(date); // Deshabilitar fechas no disponibles
+	            }
+	        ],
+	        onDayCreate: function(dObj, dStr, fp, dayElem) {
+	            const dateStr = dayElem.dateObj.toISOString().split('T')[0];
+	            if (isAvailable(dayElem.dateObj)) {
+	                dayElem.style.backgroundColor = "#3b82f6"; // azul
+	                dayElem.style.color = "#fff";
+	                dayElem.style.borderRadius = "50%";
+	            } else {
+	                dayElem.style.color = "#a1a1aa"; // gris
+	                dayElem.style.cursor = "not-allowed";
+	            }
+	        },
+	        onChange: function(selectedDates, dateStr, instance) {
+				const fechaDesdeInput = document.querySelector("input[name='fechaDesde']");
+	            const fechaHastaInput = document.querySelector("input[name='fechaHasta']");
+
+	            // Si seleccionó una sola fecha
+	            if (selectedDates.length === 1) {
+	               const fecha = selectedDates[0].toISOString().split('T')[0];
+	               fechaDesdeInput.value = fecha;
+	               fechaHastaInput.value = fecha;
+	            }
+
+				
+	            if(selectedDates.length === 2){
+	                let start = selectedDates[0];
+	                let end = selectedDates[1];
+					
+					fechaDesdeInput.value = start.toISOString().split("T")[0];
+					fechaHastaInput.value = end.toISOString().split("T")[0];
+
+		            recalcular(start, end);
+
+	                // Validar que todas las fechas entre start y end estén disponibles
+	                let current = new Date(start);
+	                let valid = true;
+	                while(current <= end){
+	                    const currentStr = current.toISOString().split('T')[0];
+	                    if(!fechasDisponibles.includes(currentStr)){
+	                        valid = false;
+	                        break;
+	                    }
+	                    current.setDate(current.getDate() + 1);
+	                }
+
+	                if(!valid){
+	                    alert("El rango seleccionado contiene fechas no disponibles. Por favor selecciona solo fechas disponibles consecutivas.");
+	                    instance.clear();
+	                    document.querySelector("input[name='fechaDesde']").value = "";
+	                    document.querySelector("input[name='fechaHasta']").value = "";
+	                } else {
+	                    document.querySelector("input[name='fechaDesde']").value = start.toISOString().split('T')[0];
+	                    document.querySelector("input[name='fechaHasta']").value = end.toISOString().split('T')[0];
+	                }
+	            }
+	        }
+	    });
 	</script>
 </body>
 </html>
