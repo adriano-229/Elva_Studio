@@ -1,9 +1,9 @@
-package com.example.mycar.services;
+package com.projects.mycar.mycar_server.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.example.mycar.dto.correos.RegistroEnvioCorreoDTO;
+import com.projects.mycar.mycar_server.dto.correos.RegistroEnvioCorreoDTO;
 
 import java.time.LocalDateTime;
 

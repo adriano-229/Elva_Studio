@@ -1,4 +1,4 @@
-package com.example.mycar.controller;
+package com.projects.mycar.mycar_server.controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.mycar.dto.correos.RegistroEnvioCorreoDTO;
-import com.example.mycar.services.RegistroEnvioCorreoService;
+import com.projects.mycar.mycar_server.dto.correos.RegistroEnvioCorreoDTO;
+import com.projects.mycar.mycar_server.services.RegistroEnvioCorreoService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -3,6 +3,7 @@ package com.projects.mycar.mycar_server.services.impl;
 import java.time.LocalDateTime;
 import java.util.Properties;
 
+import com.projects.mycar.mycar_server.entities.RegistroEnvioCorreo;
 import org.springframework.beans.factory.annotation.Value;
 
 
@@ -15,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
-import com.example.mycar.mycar_server.repositories.RegistroEnvioCorreoRepository;
+import com.projects.mycar.mycar_server.repositories.RegistroEnvioCorreoRepository;
 @Service
 @RequiredArgsConstructor
 @Slf4j

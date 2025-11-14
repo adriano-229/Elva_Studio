@@ -1,4 +1,4 @@
-package com.example.mycar.services.impl;
+package com.projects.mycar.mycar_server.services.impl;
 
 import java.time.LocalDateTime;
 
@@ -6,10 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.example.mycar.dto.correos.RegistroEnvioCorreoDTO;
-import com.example.mycar.entities.RegistroEnvioCorreo;
-import com.example.mycar.repositories.RegistroEnvioCorreoRepository;
-import com.example.mycar.services.RegistroEnvioCorreoService;
+import com.projects.mycar.mycar_server.dto.correos.RegistroEnvioCorreoDTO;
+import com.projects.mycar.mycar_server.entities.RegistroEnvioCorreo;
+import com.projects.mycar.mycar_server.repositories.RegistroEnvioCorreoRepository;
+import com.projects.mycar.mycar_server.services.RegistroEnvioCorreoService;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.example.mycar.entities;
+package com.projects.mycar.mycar_server.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,11 +1,11 @@
-package com.example.mycar.repositories;
+package com.projects.mycar.mycar_server.repositories;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.example.mycar.entities.RegistroEnvioCorreo;
+import com.projects.mycar.mycar_server.entities.RegistroEnvioCorreo;
 
 import java.time.LocalDateTime;
 

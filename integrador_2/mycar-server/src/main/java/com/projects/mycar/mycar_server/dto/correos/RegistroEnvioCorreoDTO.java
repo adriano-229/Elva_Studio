@@ -1,4 +1,4 @@
-package com.example.mycar.dto.correos;
+package com.projects.mycar.mycar_server.dto.correos;
 
 import java.time.LocalDateTime;
 
