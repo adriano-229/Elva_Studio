@@ -1,4 +1,4 @@
-package com.projects.mycar.mycar_server.mycar_admin.domain;
+package com.projects.mycar.mycar_server.dto;
 
 public class DireccionFormDTO {
 
