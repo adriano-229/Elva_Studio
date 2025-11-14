@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle Vehículo</title>
+
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}" id="main-style-link">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+    <div th:replace="fragments/layout :: sidebar"></div>
+    <div th:replace="fragments/layout :: navbar"></div>
+
+    <div class="pc-container">
+        <div class="pc-content">
+            <div class="page-header">
+                <h2 class="mb-3">Detalles</h2>
+            </div>
+            
+            <div class="card">
+			    <div class="card-header">
+			        <h5>Vehículo:</h5>
+			    </div>
+			    <div class="card-body">
+			        <p><strong>Marca:</strong> <span th:text="${vehiculo.caracteristicaVehiculo.marca}"></span></p>
+			        <p><strong>Modelo:</strong> <span th:text="${vehiculo.caracteristicaVehiculo.modelo}"></span></p>
+			        <p><strong>Año:</strong> <span th:text="${vehiculo.caracteristicaVehiculo.anio}"></span></p>
+			        <p><strong>Patente:</strong> <span th:text="${vehiculo.patente}"></span></p>
+			        <p><strong>Estado:</strong> <span th:text="${vehiculo.estadoVehiculo}"></span></p>
+			
+					<p><strong>Imagen:</strong></p>
+					<div th:if="${imagenBase64 != null}">
+					    <img th:src="'data:' + ${mimeImagen} + ';base64,' + ${imagenBase64}" 
+					         alt="Imagen del vehículo" style="max-width: 300px;">
+					</div>
+					<div th:if="${imagenBase64 == null}">
+					    <span>No hay imagen disponible</span>
+					</div>
+			
+			        <!--  <p><strong>Imagen:</strong></p>
+			        <div th:if="${vehiculo.caracteristicaVehiculo.imagen.contenido != null}">
+			            <img th:src="'data:' + ${vehiculo.caracteristicaVehiculo.imagen.mime} + ';base64,' + ${T(org.apache.tomcat.util.codec.binary.Base64).encodeBase64String(vehiculo.caracteristicaVehiculo.imagen.contenido)}" 
+			                 alt="Imagen del vehículo" style="max-width: 300px;">
+			        </div>
+			        <div th:if="${vehiculo.caracteristicaVehiculo.imagen.contenido == null}">
+			            <span>No hay imagen disponible</span>
+			        </div> -->
+			    </div>
+			
+			    <div class="card-footer">
+			        <a th:href="@{/vehiculo/listar}" class="btn btn-secondary">Volver</a>
+			    </div>
+			</div>
+            
+
+            
+        </div>
+    </div>
+
+    <div th:replace="fragments/layout :: footer"></div>
+
+    <script th:src="@{/assets/js/plugins/simplebar.min.js}"></script>
+    <script th:src="@{/assets/js/plugins/popper.min.js}"></script>
+    <script th:src="@{/assets/js/plugins/feather.min.js}"></script>
+    <script th:src="@{/assets/js/component.js}"></script>
+    <script th:src="@{/assets/js/theme.js}"></script>
+    <script th:src="@{/assets/js/script.js}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+        });
+    </script>
+</body>
+</html>

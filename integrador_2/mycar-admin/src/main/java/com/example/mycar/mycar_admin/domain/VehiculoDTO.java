@@ -30,6 +30,8 @@ public class VehiculoDTO extends BaseDTO {
     private Long caracteristicaVehiculoId;
 
     private CaracteristicaVehiculoDTO caracteristicaVehiculo;
+    
+    private boolean activo;
 
     // Removido costoVehiculo: ahora el costo se obtiene via caracteristicaVehiculo.getCostoVehiculo()
 }

@@ -192,36 +192,67 @@ public class VehiculoController extends BaseControllerImpl<VehiculoDTO, Vehiculo
 	@GetMapping("/eliminar/{id}")
 	public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 	    try {
+	        service.delete(id);  
+	        redirectAttributes.addFlashAttribute("success", "Vehículo desactivado correctamente.");
+	    } catch (Exception e) {
+	        redirectAttributes.addFlashAttribute("error", "No se pudo desactivar el vehículo: " + e.getMessage());
+	    }
+	    return "redirect:/vehiculo/listar";
+	}
+	
+	@GetMapping("/detalle/{id}")
+	public String verVehiculo(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+	    try {
 	        Optional<VehiculoDTO> optVehiculo = service.buscarPorId(id);
 
 	        if (optVehiculo.isPresent()) {
 	            VehiculoDTO vehiculo = optVehiculo.get();
 
-	            // Si hay relaciones, eliminarlas primero según corresponda
-	            if (vehiculo.getCaracteristicaVehiculo() != null) {
-	                if (vehiculo.getCaracteristicaVehiculo().getCostoVehiculo() != null) {
-	                    service.deleteCostoVehiculo(vehiculo.getCaracteristicaVehiculo().getCostoVehiculo().getId());
-	                }
-	                if (vehiculo.getCaracteristicaVehiculo().getImagen() != null) {
-	                    service.deleteImagenVehiculo(vehiculo.getCaracteristicaVehiculo().getImagen().getId());
-	                }
-	                service.deleteCaracteristicaVehiculo(vehiculo.getCaracteristicaVehiculo().getId());
+	            if (vehiculo.getCaracteristicaVehiculo().getImagen() != null &&
+	                vehiculo.getCaracteristicaVehiculo().getImagen().getContenido() != null) {
+
+	                // Convertir a Base64
+	                String base64Imagen = java.util.Base64.getEncoder()
+	                        .encodeToString(vehiculo.getCaracteristicaVehiculo().getImagen().getContenido());
+
+	                model.addAttribute("imagenBase64", base64Imagen);
+	                model.addAttribute("mimeImagen", vehiculo.getCaracteristicaVehiculo().getImagen().getMime());
 	            }
 
-	            // Finalmente eliminar el Vehículo
-	            service.delete(id);
-
-	            redirectAttributes.addFlashAttribute("success", "Vehículo eliminado correctamente.");
+	            model.addAttribute("vehiculo", vehiculo);
+	            return "view/vehiculo/detalle";
 	        } else {
-	            redirectAttributes.addFlashAttribute("error", "No se encontró el vehículo con ID " + id);
+	            redirectAttributes.addFlashAttribute("error", "Vehículo no encontrado.");
+	            return "redirect:/vehiculo/listar";
 	        }
-
 	    } catch (Exception e) {
-	        redirectAttributes.addFlashAttribute("error", "No se pudo eliminar el vehículo: " + e.getMessage());
+	        redirectAttributes.addFlashAttribute("error", "Error al cargar el vehículo: " + e.getMessage());
+	        return "redirect:/vehiculo/listar";
 	    }
-
-	    return "redirect:/vehiculo/listar";
 	}
+
+	
+	/*
+	
+	@GetMapping("/detalle/{id}")
+	public String verVehiculo(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
+	    try {
+	        Optional<VehiculoDTO> optVehiculo = service.buscarPorId(id);
+
+	        if (optVehiculo.isPresent()) {
+	            VehiculoDTO vehiculo = optVehiculo.get();
+	            model.addAttribute("vehiculo", vehiculo);
+	            return "view/vehiculo/detalle"; // plantilla Thymeleaf que vamos a crear
+	        } else {
+	            redirectAttributes.addFlashAttribute("error", "Vehículo no encontrado.");
+	            return "redirect:/vehiculo/listar";
+	        }
+	    } catch (Exception e) {
+	        redirectAttributes.addFlashAttribute("error", "Error al cargar el vehículo: " + e.getMessage());
+	        return "redirect:/vehiculo/listar";
+	    }
+	} */
+
 
 
 
