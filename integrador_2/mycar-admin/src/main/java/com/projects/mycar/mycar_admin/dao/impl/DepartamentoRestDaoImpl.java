@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 public class DepartamentoRestDaoImpl extends BaseRestDaoImpl<DepartamentoDTO, Long>{
 
 	public DepartamentoRestDaoImpl() {
-		super(DepartamentoDTO.class, DepartamentoDTO[].class, "http://localhost:9000/api/v1/departamentos");
+        super(DepartamentoDTO.class, DepartamentoDTO[].class, "http://localhost:8083/api/v1/departamentos");
 	}
 
 }

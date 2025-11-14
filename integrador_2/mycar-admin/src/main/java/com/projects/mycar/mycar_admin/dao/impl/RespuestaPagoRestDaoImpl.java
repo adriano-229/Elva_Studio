@@ -13,7 +13,7 @@ public class RespuestaPagoRestDaoImpl {
     @Autowired
     private RestTemplate restTemplate;
 
-    private String baseUrl = "http://localhost:9000/api/pagos";
+    private final String baseUrl = "http://localhost:8083/api/pagos";
 
     public RespuestaPagoDTO procesarPago(SolicitudPagoDTO solicitud) throws Exception {
 

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html data-pc-direction="ltr" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-theme="light"
+      dir="ltr" lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Reportes de Alquileres | MyCar</title>
+
+  <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/icons.css}">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="~{fragments/layout :: sidebar}"></div>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<div class="pc-container">
+  <div class="pc-content">
+
+    <div class="flex justify-between items-center mb-6">
+      <div>
+        <p class="text-sm tracking-widest uppercase text-theme-text">Reportes</p>
+        <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">Detalle de alquileres</h3>
+      </div>
+      <div class="flex gap-2" th:if="${mostrarResultados}">
+        <form class="inline" method="get" th:action="@{/reportes/alquileres}">
+          <input name="desde" th:value="${fechaDesde}" type="hidden">
+          <input name="hasta" th:value="${fechaHasta}" type="hidden">
+          <input name="formato" type="hidden" value="pdf">
+          <button class="btn btn-outline-secondary flex items-center gap-1" type="submit">
+            <i class="ti ti-file-text"></i> PDF
+          </button>
+        </form>
+        <form class="inline" method="get" th:action="@{/reportes/alquileres}">
+          <input name="desde" th:value="${fechaDesde}" type="hidden">
+          <input name="hasta" th:value="${fechaHasta}" type="hidden">
+          <input name="formato" type="hidden" value="xlsx">
+          <button class="btn btn-outline-primary flex items-center gap-1" type="submit">
+            <i class="ti ti-file-spreadsheet"></i> Excel
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show flex items-center gap-2" role="alert"
+         th:if="${msgError}">
+      <i class="text-danger-500" data-feather="alert-circle"></i>
+      <span th:text="${msgError}"></span>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+    </div>
+
+    <form class="flex items-end justify-end gap-3 mb-6" method="get" th:action="@{/reportes/alquileres}">
+      <div class="flex flex-col">
+        <label class="form-label mb-1" for="fechaDesde">Fecha Desde</label>
+        <input class="form-control" id="fechaDesde" name="desde" required style="width: 160px;"
+               th:value="${fechaDesde}" type="date"/>
+      </div>
+      <div class="flex flex-col">
+        <label class="form-label mb-1" for="fechaHasta">Fecha Hasta</label>
+        <input class="form-control" id="fechaHasta" name="hasta" required style="width: 160px;"
+               th:value="${fechaHasta}" type="date"/>
+      </div>
+
+      <div class="flex gap-2 ml-4">
+        <button class="btn btn-success flex items-center gap-2" type="submit">Consultar</button>
+        <a class="btn btn-secondary flex items-center gap-2" th:href="@{/reportes/alquileres}">Limpiar</a>
+      </div>
+    </form>
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover table-striped align-middle text-center">
+            <thead class="bg-primary-100 dark:bg-primary-600 text-white">
+            <tr>
+              <th>#</th>
+              <th>Cliente</th>
+              <th>Documento</th>
+              <th>Vehículo</th>
+              <th>Patente</th>
+              <th>Desde</th>
+              <th>Hasta</th>
+              <th>Monto total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                th:each="reporte, iterStat : ${entities}">
+              <td th:text="${iterStat.index + 1}"></td>
+              <td th:text="${reporte.clienteNombreCompleto}">Nombre</td>
+              <td th:text="${reporte.clienteDocumento}">Documento</td>
+              <td th:text="${reporte.vehiculoMarca + ' ' + reporte.vehiculoModelo}">Vehículo</td>
+              <td th:text="${reporte.vehiculoPatente}">Patente</td>
+              <td th:text="${reporte.fechaDesde != null ? #temporals.format(reporte.fechaDesde, 'dd/MM/yyyy') : ''}">-
+              </td>
+              <td th:text="${reporte.fechaHasta != null ? #temporals.format(reporte.fechaHasta, 'dd/MM/yyyy') : ''}">-
+              </td>
+              <td th:text="${'$ ' + #numbers.formatDecimal(reporte.montoTotal, 1, 'COMMA', 2, 'POINT')}">$ 0,00</td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(entities)}">
+              <td class="text-center text-gray-500 py-4" colspan="8">
+                Seleccioná un período para visualizar resultados.
+              </td>
+            </tr>
+            </tbody>
+            <tfoot th:if="${mostrarResultados}">
+            <tr class="fw-semibold">
+              <td class="text-right" colspan="5">Totales</td>
+              <td colspan="2" th:text="${totalAlquileres + ' alquileres'}">0</td>
+              <td th:text="${'$ ' + #numbers.formatDecimal(totalMonto, 1, 'COMMA', 2, 'POINT')}">$ 0,00</td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+
+<script th:src="@{/assets/js/plugins/simplebar.min.js}"></script>
+<script th:src="@{/assets/js/plugins/popper.min.js}"></script>
+<script th:src="@{/assets/js/plugins/feather.min.js}"></script>
+<script th:src="@{/assets/js/component.js}"></script>
+<script th:src="@{/assets/js/theme.js}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        feather.replace();
+    });
+</script>
+</body>
+</html>

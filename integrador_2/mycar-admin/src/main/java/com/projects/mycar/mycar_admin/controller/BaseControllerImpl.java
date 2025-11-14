@@ -2,7 +2,9 @@ package com.projects.mycar.mycar_admin.controller;
 
 import com.projects.mycar.mycar_admin.domain.AlquilerDTO;
 import com.projects.mycar.mycar_admin.domain.BaseDTO;
+import com.projects.mycar.mycar_admin.domain.VehiculoDTO;
 import com.projects.mycar.mycar_admin.service.impl.BaseServiceImpl;
+import com.projects.mycar.mycar_admin.service.impl.VehiculoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,9 @@ public abstract class BaseControllerImpl<E extends BaseDTO, S extends BaseServic
 
     @Autowired
     protected S servicio;
+
+    @Autowired
+    protected VehiculoServiceImpl vehiculoService;
 
     protected abstract String getViewList();
 
@@ -49,14 +54,28 @@ public abstract class BaseControllerImpl<E extends BaseDTO, S extends BaseServic
     }
 
     @PostMapping("/crear")
-    public String guardar(@ModelAttribute E entity, Model model) {
+    public String guardar(@ModelAttribute E entity, Model model, RedirectAttributes redirectAttributes) {
         try {
             System.out.println("POST CREAR CONTROLADOR");
+
+            if (entity instanceof AlquilerDTO dto) {
+                VehiculoDTO vehiculo = vehiculoService.findById(dto.getVehiculoId());
+
+                System.out.println("TOTALES ANTES DE CREAR ALQUILER: " + vehiculo.getCaracteristicaVehiculo().getCantidadTotalVehiculo());
+                System.out.println("TOTAL ALQUILADO ANTES DE CREAR ALQUILER: " + vehiculo.getCaracteristicaVehiculo().getCantidadVehiculoAlquilado());
+            }
+
             servicio.save(entity);
-            model.addAttribute("msgExito", "Registro creado correctamente");
+
+            if (entity instanceof AlquilerDTO dto) {
+                VehiculoDTO vehiculo = vehiculoService.findById(dto.getVehiculoId());
+                System.out.println("TOTALES DESPUES DE CREAR ALQUILER: " + vehiculo.getCaracteristicaVehiculo().getCantidadTotalVehiculo());
+                System.out.println("TOTAL DESPUES ANTES DE CREAR ALQUILER: " + vehiculo.getCaracteristicaVehiculo().getCantidadVehiculoAlquilado());
+            }
+            redirectAttributes.addFlashAttribute("msgExito", "Registro creado correctamente");
         } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("msgError", "Error al guardar registro");
+            redirectAttributes.addFlashAttribute("msgError", "Error al crear el registro");
         }
 
         return getRedirectList();
@@ -67,6 +86,7 @@ public abstract class BaseControllerImpl<E extends BaseDTO, S extends BaseServic
     public String modificar(@PathVariable Long id, Model model) {
         try {
             // Buscar la entidad por id
+            System.out.println("ESTOY EN MODIFICAR");
             E entity = servicio.findById(id);
             model.addAttribute("entity", entity);
             model.addAttribute("isNew", false);
@@ -82,6 +102,11 @@ public abstract class BaseControllerImpl<E extends BaseDTO, S extends BaseServic
     @PostMapping("/modificar")
     public String guardarModificacion(@ModelAttribute E entity, Model model, RedirectAttributes redirectAttributes) {
         try {
+            System.out.println("ID: " + entity.getId());
+            if (entity instanceof AlquilerDTO dto) {
+                System.out.println("COSTO POR DIA: " + dto.getCostoCalculado());
+            }
+        	
             servicio.update(entity.getId(), entity); // suponiendo que update recibe ID y entidad
             redirectAttributes.addFlashAttribute("msgExito", "Registro actualizado correctamente");
         } catch (Exception e) {

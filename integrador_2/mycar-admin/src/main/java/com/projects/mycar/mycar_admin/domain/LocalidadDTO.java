@@ -1,15 +1,14 @@
 package com.projects.mycar.mycar_admin.domain;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -28,9 +27,5 @@ public class LocalidadDTO extends BaseDTO {
 
     @NotNull(message = "El departamento es obligatorio")
     private Long departamentoId;
-
-    @Builder.Default
-    @Valid
-    private List<DireccionDTO> direcciones = new ArrayList<>();
 
 }

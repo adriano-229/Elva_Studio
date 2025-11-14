@@ -27,12 +27,11 @@ public class FacturaController extends BaseControllerImpl<FacturaDTO, FacturaSer
 	
 	@Autowired 
 	private ClienteServiceImpl clienteService;
-	
-	
-	
-	private final String viewList = "view/pagos/listar";
-	private final String viewEdit = "";
-	private final String redirectList= "redirect:/factura/listar";
+
+
+    private final String viewList = "view/pagos/listar";
+    private final String viewEdit = "";
+    private final String redirectList = "redirect:/factura/listar";
 	
 	@Override
 	@GetMapping("/crear")

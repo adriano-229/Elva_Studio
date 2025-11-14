@@ -6,7 +6,6 @@ import com.projects.mycar.mycar_cliente.domain.enums.EstadoVehiculo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,40 +17,23 @@ public class VehiculoRestDaoImpl extends BaseRestDaoImpl<VehiculoDTO, Long> impl
 
     }
 
+    public List<VehiculoDTO> findByEstadoVehiculoAndActivoTrue(EstadoVehiculo estado) {
+        try {
+            String url = baseUrl + "/searchByEstado?estado=" + estado.name();
+            ResponseEntity<VehiculoDTO[]> response = restTemplate.getForEntity(url, VehiculoDTO[].class);
+            VehiculoDTO[] body = response.getBody();
+            return body != null ? Arrays.asList(body) : List.of();
+        } catch (Exception e) {
+            throw new RuntimeException("Error al buscar vehículos: " + e.getMessage(), e);
+        }
+    }
+
     @Override
     public List<VehiculoDTO> findByEstado(EstadoVehiculo estado) throws Exception {
-
-        try {
-
-            String uri = baseUrl + "/searchByEstado?estado=" + estado;
-            ResponseEntity<VehiculoDTO[]> response = this.restTemplate.getForEntity(uri, entityArrayClass);
-            VehiculoDTO[] array = response.getBody();
-
-            if (array == null) {
-                return new ArrayList<VehiculoDTO>();
-            }
-
-            return Arrays.asList(array);
-
-
-        } catch (Exception e) {
-            throw new Exception("Error al buscar persona por estado", e);
-        }
-
+        return List.of();
     }
-	/*
-	public List<VehiculoDTO> findByEstadoVehiculoAndActivoTrue(EstadoVehiculo estado){
-		try {
-	        String url = baseUrl + "/searchByEstado?estado=" + estado.name();
-	        ResponseEntity<VehiculoDTO[]> response = restTemplate.getForEntity(url, VehiculoDTO[].class);
-	        VehiculoDTO[] body = response.getBody();
-	        return body != null ? Arrays.asList(body) : List.of();
-	    } catch (Exception e) {
-	        throw new RuntimeException("Error al buscar vehículos: " + e.getMessage(), e);
-	    }
-	}
 
-	
+	/*
 	@Override
 	public List<VehiculoDTO> findByEstadoVehiculoAndActivoTrue(EstadoVehiculo estado) {
 		String url = baseUrl + "/disponibles"; // ajustar este endpoint con el back

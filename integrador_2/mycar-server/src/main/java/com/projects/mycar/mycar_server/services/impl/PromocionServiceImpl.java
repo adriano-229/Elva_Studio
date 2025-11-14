@@ -9,7 +9,7 @@ import com.projects.mycar.mycar_server.entities.ContactoCorreoElectronico;
 import com.projects.mycar.mycar_server.repositories.ClienteRepository;
 import com.projects.mycar.mycar_server.repositories.CodigoDescuentoRepository;
 import com.projects.mycar.mycar_server.repositories.ConfiguracionPromocionRepository;
-import com.projects.mycar.mycar_server.services.EmailService;
+import com.projects.mycar.mycar_server.services.CorreoService;
 import com.projects.mycar.mycar_server.services.PromocionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,17 +26,17 @@ public class PromocionServiceImpl implements PromocionService {
     private final ConfiguracionPromocionRepository configuracionPromocionRepository;
     private final CodigoDescuentoRepository codigoDescuentoRepository;
     private final ClienteRepository clienteRepository;
-    private final EmailService emailService;
+    private final CorreoService correoService;
 
     public PromocionServiceImpl(
             ConfiguracionPromocionRepository configuracionPromocionRepository,
             CodigoDescuentoRepository codigoDescuentoRepository,
             ClienteRepository clienteRepository,
-            EmailService emailService) {
+            CorreoService correoService) {
         this.configuracionPromocionRepository = configuracionPromocionRepository;
         this.codigoDescuentoRepository = codigoDescuentoRepository;
         this.clienteRepository = clienteRepository;
-        this.emailService = emailService;
+        this.correoService = correoService;
     }
 
     @Override
@@ -127,14 +127,15 @@ public class PromocionServiceImpl implements PromocionService {
 
                 if (email != null && !email.isEmpty()) {
                     String nombreCompleto = cliente.getNombre() + " " + cliente.getApellido();
-
-                    emailService.enviarCorreoPromocion(
-                            email,
+                    String asunto = "¡Promoción especial de MyCar para ti!";
+                    String cuerpo = construirCuerpoPromocion(
                             nombreCompleto,
+                            config.getMensajePromocion(),
                             codigo,
-                            config.getPorcentajeDescuento(),
-                            config.getMensajePromocion()
+                            config.getPorcentajeDescuento()
                     );
+
+                    correoService.enviarCorreo(email, asunto, cuerpo);
 
                     emailsEnviados++;
                     log.info("Promoción enviada a cliente {}: {} ({})",
@@ -222,6 +223,25 @@ public class PromocionServiceImpl implements PromocionService {
                 codigo.getFechaExpiracion(),
                 codigo.getUtilizado(),
                 codigo.getFechaUtilizacion()
+        );
+    }
+
+    private String construirCuerpoPromocion(String nombreCliente,
+                                            String mensajePromocion,
+                                            String codigo,
+                                            Double porcentajeDescuento) {
+        return String.format(
+                "Hola %s,%n%n" +
+                        "%s%n%n" +
+                        "Tu código de descuento exclusivo es: %s%n" +
+                        "Descuento: %.0f%%%n%n" +
+                        "Este código es personal e intransferible. Úsalo en tu próximo alquiler.%n%n" +
+                        "¡Gracias por elegirnos!%n" +
+                        "Equipo MyCar",
+                nombreCliente,
+                mensajePromocion,
+                codigo,
+                porcentajeDescuento
         );
     }
 }

@@ -17,15 +17,15 @@ import java.io.File;
 public class DocumentacionRestDaoImpl extends BaseRestDaoImpl<DocumentacionDTO, Long> implements DocumentacionRestDao {
 
     public DocumentacionRestDaoImpl() {
-        super(DocumentacionDTO.class, DocumentacionDTO[].class, "http://localhost:9000/api/v1/documentacion");
+        super(DocumentacionDTO.class, DocumentacionDTO[].class, "http://localhost:8083/api/v1/documentacion");
     }
 
-
+    @Override
     public DocumentacionDTO crearDocumentacion(DocumentacionDTO dto) throws Exception {
         try {
             String uri = baseUrl + "/saveConDocumento";
 
-            // Crear archivo temporal
+            // Crear archivo temporal para adjuntar el PDF
             File tempFile = File.createTempFile("doc-", ".pdf");
             dto.getPdf().transferTo(tempFile);
             tempFile.deleteOnExit();
@@ -37,12 +37,8 @@ public class DocumentacionRestDaoImpl extends BaseRestDaoImpl<DocumentacionDTO, 
 
             // Parte archivo PDF
             HttpHeaders fileHeaders = new HttpHeaders();
-            // APPLICATION_OCTET_STREAM indica que es contenido binario genérico, no JSON ni texto
             fileHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-            //FileSystemResource es un wrapper de Spring que toma un archivo en disco (tempFile)
-            // y lo convierte en un recurso que Spring puede usar para enviar por HTTP.
             HttpEntity<FileSystemResource> pdfPart = new HttpEntity<>(new FileSystemResource(tempFile), fileHeaders);
-            // HttpEntity<FileSystemResource> combina ese archivo con sus headers (tipo de contenido) para que RestTemplate sepa cómo enviarlo.
 
             // Armar cuerpo multipart
             MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
@@ -54,22 +50,52 @@ public class DocumentacionRestDaoImpl extends BaseRestDaoImpl<DocumentacionDTO, 
 
             HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-            System.out.println("=== Multipart body ===");
-            body.forEach((key, value) -> {
-                System.out.println(key + " => " + value);
-            });
-            System.out.println("=====================");
-
-
-            ResponseEntity<DocumentacionDTO> documentacion = restTemplate.postForEntity(uri, requestEntity, entityClass);
+            ResponseEntity<DocumentacionDTO> documentacion =
+                    restTemplate.postForEntity(uri, requestEntity, entityClass);
 
             return documentacion.getBody();
-
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("Error al crear documentacion", e);
         }
     }
 
+    @Override
+    public void actualizarDocumentacion(DocumentacionDTO dto) throws Exception {
+        try {
+            if (dto.getPdf() != null) {
+                File tempFile = File.createTempFile("doc-", ".pdf");
+                dto.getPdf().transferTo(tempFile);
+                tempFile.deleteOnExit();
 
+                HttpHeaders jsonHeaders = new HttpHeaders();
+                jsonHeaders.setContentType(MediaType.APPLICATION_JSON);
+                HttpEntity<DocumentacionDTO> docuPart = new HttpEntity<>(dto, jsonHeaders);
+
+                HttpHeaders fileHeaders = new HttpHeaders();
+                fileHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+                HttpEntity<FileSystemResource> pdfPart =
+                        new HttpEntity<>(new FileSystemResource(tempFile), fileHeaders);
+
+                MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+                body.add("documentacion", docuPart);
+                body.add("pdf", pdfPart);
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+                HttpEntity<MultiValueMap<String, Object>> requestEntity =
+                        new HttpEntity<>(body, headers);
+
+                String uri = baseUrl + "/updateConDocumento/{id}";
+                restTemplate.put(uri, requestEntity, dto.getId());
+            } else {
+                String uri = baseUrl + "/{id}";
+                restTemplate.put(uri, dto, dto.getId());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Error al actualizar entidad", e);
+        }
+    }
 }

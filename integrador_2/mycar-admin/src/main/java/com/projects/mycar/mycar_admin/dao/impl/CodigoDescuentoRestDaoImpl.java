@@ -10,7 +10,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class CodigoDescuentoRestDaoImpl extends BaseRestDaoImpl<CodigoDescuentoDTO, Long> implements CodigoDescuentoRestDao {
 
     public CodigoDescuentoRestDaoImpl() {
-        super(CodigoDescuentoDTO.class, CodigoDescuentoDTO[].class, "http://localhost:9000/api/codigoDescuento");
+        super(CodigoDescuentoDTO.class, CodigoDescuentoDTO[].class, "http://localhost:8083/api/codigoDescuento");
     }
 
     @Override

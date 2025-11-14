@@ -29,10 +29,10 @@ public class AlquilerController extends BaseControllerImpl<AlquilerDTO, Alquiler
 	
 	@Autowired
 	private CostoServiceImpl costoService;
-	
-	private final String viewList = "view/alquiler/listar";
-	private final String viewEdit = "view/alquiler/eAlquiler";
-	private final String redirectList= "redirect:/alquiler/listar";
+
+    private final String viewList = "view/alquiler/listar";
+    private final String viewEdit = "view/alquiler/eAlquiler";
+    private final String redirectList = "redirect:/alquiler/listar";
 	
 	@Override
 	@GetMapping("/crear")

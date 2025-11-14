@@ -16,7 +16,7 @@ import java.util.List;
 public class VehiculoRestDaoImpl extends BaseRestDaoImpl<VehiculoDTO, Long> implements VehiculoRestDao {
 
     public VehiculoRestDaoImpl() {
-        super(VehiculoDTO.class, VehiculoDTO[].class, "http://localhost:9000/api/v1/vehiculos");
+        super(VehiculoDTO.class, VehiculoDTO[].class, "http://localhost:8083/api/v1/vehiculos");
     }
 
     @Override
@@ -24,7 +24,6 @@ public class VehiculoRestDaoImpl extends BaseRestDaoImpl<VehiculoDTO, Long> impl
             throws Exception {
 
         try {
-
             String uri = UriComponentsBuilder
                     .fromUriString(baseUrl + "/searchByEstadoYPeriodo")
                     .queryParam("estado", estado)
@@ -34,11 +33,10 @@ public class VehiculoRestDaoImpl extends BaseRestDaoImpl<VehiculoDTO, Long> impl
                     .toUriString();
 
             ResponseEntity<VehiculoDTO[]> response = restTemplate.getForEntity(uri, entityArrayClass);
-
             VehiculoDTO[] array = response.getBody();
 
             if (array == null) {
-                return new ArrayList<VehiculoDTO>();
+                return new ArrayList<>();
             }
 
             return Arrays.asList(array);
@@ -52,19 +50,17 @@ public class VehiculoRestDaoImpl extends BaseRestDaoImpl<VehiculoDTO, Long> impl
     public List<VehiculoDTO> buscarPorEstado(EstadoVehiculo estado) throws Exception {
 
         try {
-
             String uri = UriComponentsBuilder
-                    .fromUriString(baseUrl + "/searchByEstadoYPeriodo")
+                    .fromUriString(baseUrl + "/searchByEstado")
                     .queryParam("estado", estado)
                     .build()
                     .toUriString();
 
             ResponseEntity<VehiculoDTO[]> response = restTemplate.getForEntity(uri, entityArrayClass);
-
             VehiculoDTO[] array = response.getBody();
 
             if (array == null) {
-                return new ArrayList<VehiculoDTO>();
+                return new ArrayList<>();
             }
 
             return Arrays.asList(array);
@@ -72,7 +68,5 @@ public class VehiculoRestDaoImpl extends BaseRestDaoImpl<VehiculoDTO, Long> impl
         } catch (Exception e) {
             throw new Exception("Error al buscar vehiculo por estado", e);
         }
-
     }
-
 }

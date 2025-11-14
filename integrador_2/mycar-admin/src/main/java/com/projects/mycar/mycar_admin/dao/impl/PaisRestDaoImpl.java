@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 public class PaisRestDaoImpl extends BaseRestDaoImpl<PaisDTO, Long>{
 
 	public PaisRestDaoImpl() {
-		super(PaisDTO.class, PaisDTO[].class, "http://localhost:9000/api/v1/paises");
+        super(PaisDTO.class, PaisDTO[].class, "http://localhost:8083/api/v1/paises");
 	}
 
 }

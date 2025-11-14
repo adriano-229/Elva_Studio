@@ -25,25 +25,8 @@ public class VehiculoController extends BaseControllerImpl<VehiculoDTO, Vehiculo
     public String listarDisponibles(Model model) {
         List<VehiculoDTO> disponibles = service.buscarPorEstado(EstadoVehiculo.Disponible);
         model.addAttribute("vehiculos", disponibles);
-        return "flota";
+        return "flota"; 
     }
-	
-	/*
-	@GetMapping("/disponibles")
-	public String listarDisponibles(Model model) {
-	    List<VehiculoDTO> disponibles = service.buscarPorEstado(EstadoVehiculo.Disponible);
-	    disponibles.forEach(v -> {
-	        System.out.println(v.getPatente());
-	        if (v.getCaracteristicaVehiculo() != null) {
-	            System.out.println(v.getCaracteristicaVehiculo().getMarca());
-	        } else {
-	            System.out.println("⚠️ Caracteristica NULL");
-	        }
-	    });
-	    model.addAttribute("vehiculos", disponibles);
-	    return "flota";
-	}*/
-
 
     @Override
     public String crear(Model model) {

@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class FacturaServiceImpl extends BaseServiceImpl<FacturaDTO, Long> implements FacturaService{
+public class FacturaServiceImpl extends BaseServiceImpl<FacturaDTO, Long> implements FacturaService {
 
-	@Autowired
-	private FacturaRestDaoImpl daoFactura;
-	
-	public FacturaServiceImpl(BaseRestDao<FacturaDTO, Long> dao) {
-		super(dao);
-	}
+    @Autowired
+    private FacturaRestDaoImpl daoFactura;
+
+    public FacturaServiceImpl(BaseRestDao<FacturaDTO, Long> dao) {
+        super(dao);
+    }
 
 	@Override
 	public List<FacturaDTO> obtenerPagosPendientes() throws Exception {
@@ -29,34 +29,34 @@ public class FacturaServiceImpl extends BaseServiceImpl<FacturaDTO, Long> implem
 		}
 	}
 
-	@Override
-	public FacturaDTO aprobarPago(Long idFactura) throws Exception {
-		try {
-			return daoFactura.aprobarPago(idFactura);
-		} catch (Exception e) {
-			throw new Exception(e.getMessage());
-		}
-	}
+    @Override
+    public FacturaDTO aprobarPago(Long idFactura) throws Exception {
+        try {
+            return daoFactura.aprobarPago(idFactura);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
 
-	@Override
-	public FacturaDTO anularPago(Long idFactura, String motivo) throws Exception {
-		try {
-			return daoFactura.anularPago(idFactura, motivo);
-		} catch (Exception e) {
-			throw new Exception(e.getMessage());
-		}
-	}
+    @Override
+    public FacturaDTO anularPago(Long idFactura, String motivo) throws Exception {
+        try {
+            return daoFactura.anularPago(idFactura, motivo);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
 
-	@Override
-	protected void validar(FacturaDTO entity) throws Exception {
-		
-		
-	}
+    @Override
+    protected void validar(FacturaDTO entity) throws Exception {
 
-	@Override
-	protected void beforeSave(FacturaDTO entity) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+
+    }
+
+    @Override
+    protected void beforeSave(FacturaDTO entity) throws Exception {
+        // TODO Auto-generated method stub
+
+    }
 
 }

@@ -24,7 +24,7 @@ public class VehiculoServiceImpl extends BaseServiceImpl<VehiculoDTO, Long> impl
     @Override
     public List<VehiculoDTO> buscarPorEstado(EstadoVehiculo estado) {
         try {
-            return daoVehiculo.findByEstado(estado);
+            return daoVehiculo.findByEstadoVehiculoAndActivoTrue(estado);
         } catch (Exception e) {
             e.printStackTrace();
             return List.of();

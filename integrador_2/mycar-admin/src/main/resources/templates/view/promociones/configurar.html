@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html data-pc-direction="ltr" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-theme="light"
+      dir="ltr" lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Configurar promoción | MyCar</title>
+
+  <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/icons.css}">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="~{fragments/layout :: sidebar}"></div>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<div class="pc-container">
+  <div class="pc-content">
+
+    <div class="flex justify-between items-center mb-6">
+      <div>
+        <p class="text-sm tracking-widest uppercase text-theme-text">Promociones</p>
+        <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">Configurar promoción</h3>
+        <p class="text-muted mt-1">Definí el descuento y mensaje que se enviará a los clientes.</p>
+      </div>
+    </div>
+
+    <div class="alert alert-success alert-dismissible fade show flex items-center gap-2" role="alert"
+         th:if="${msgExito}">
+      <i class="text-success-500" data-feather="check-circle"></i>
+      <span th:text="${msgExito}"></span>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show flex items-center gap-2" role="alert"
+         th:if="${msgError}">
+      <i class="text-danger-500" data-feather="alert-circle"></i>
+      <span th:text="${msgError}"></span>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+    </div>
+
+    <div class="grid grid-cols-12 gap-4">
+      <div class="col-span-12 lg:col-span-7">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <form method="post" th:action="@{/promociones/configurar}"
+                  th:object="${configuracion}">
+              <div class="mb-4">
+                <label class="form-label" for="porcentajeDescuento">Porcentaje descuento</label>
+                <div class="input-group">
+                  <input class="form-control" id="porcentajeDescuento" min="0" name="porcentajeDescuento"
+                         placeholder="0" step="0.01" th:value="*{porcentajeDescuento}" type="number">
+                  <span class="input-group-text">%</span>
+                </div>
+              </div>
+              <div class="mb-4">
+                <label class="form-label" for="mensajePromocion">Mensaje</label>
+                <textarea class="form-control" id="mensajePromocion" maxlength="200" name="mensajePromocion"
+                          placeholder="Contale a tus clientes de qué se trata la promo"
+                          rows="4"
+                          th:text="*{mensajePromocion}"></textarea>
+              </div>
+              <div class="flex gap-3">
+                <button class="btn btn-success flex items-center gap-2" type="submit">
+                  <i class="ti ti-device-floppy"></i> Guardar
+                </button>
+                <a class="btn btn-secondary" th:href="@{/promociones/configurar}">Limpiar</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-12 lg:col-span-5">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="mb-3">Última configuración activa</h5>
+            <div th:if="${configuracionActual != null}">
+              <p class="text-muted text-sm mb-2">Mensaje</p>
+              <p class="mb-3" th:text="${configuracionActual.mensajePromocion}">-</p>
+              <p class="text-muted text-sm mb-2">Descuento aplicado</p>
+              <p class="mb-0" th:text="${configuracionActual.porcentajeDescuento + ' %'}">0 %</p>
+            </div>
+            <div class="text-muted text-center py-4" th:if="${configuracionActual == null}">
+              No hay una promoción activa.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+
+<script th:src="@{/assets/js/plugins/simplebar.min.js}"></script>
+<script th:src="@{/assets/js/plugins/popper.min.js}"></script>
+<script th:src="@{/assets/js/plugins/feather.min.js}"></script>
+<script th:src="@{/assets/js/component.js}"></script>
+<script th:src="@{/assets/js/theme.js}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        feather.replace();
+    });
+</script>
+</body>
+</html>

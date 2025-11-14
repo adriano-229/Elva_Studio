@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html data-pc-direction="ltr" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-theme="light"
+      dir="ltr" lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Historial de correos | MyCar</title>
+
+  <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/icons.css}">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="~{fragments/layout :: sidebar}"></div>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<div class="pc-container">
+  <div class="pc-content">
+
+    <div class="flex justify-between items-center mb-6">
+      <div>
+        <p class="text-sm tracking-widest uppercase text-theme-text">Correo</p>
+        <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">Historial de envíos</h3>
+      </div>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show flex items-center gap-2" role="alert"
+         th:if="${msgError}">
+      <i class="text-danger-500" data-feather="alert-circle"></i>
+      <span th:text="${msgError}"></span>
+      <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+    </div>
+
+    <form class="grid grid-cols-12 gap-3 mb-6" method="get" th:action="@{/correo/historial}">
+      <div class="col-span-12 md:col-span-3">
+        <label class="form-label mb-1" for="destinatario">Destinatario</label>
+        <input class="form-control" id="destinatario" name="destinatario" placeholder="correo@cliente.com"
+               th:value="${destinatario}" type="text">
+      </div>
+      <div class="col-span-12 md:col-span-2">
+        <label class="form-label mb-1" for="exito">Éxito</label>
+        <select class="form-select" id="exito" name="exito">
+          <option th:selected="${exito == null}" value="">Todos</option>
+          <option th:selected="${exito == true}" value="true">Enviados</option>
+          <option th:selected="${exito == false}" value="false">Fallidos</option>
+        </select>
+      </div>
+      <div class="col-span-12 md:col-span-2">
+        <label class="form-label mb-1" for="fechaDesde">Fecha desde</label>
+        <input class="form-control" id="fechaDesde" name="fechaDesde" th:value="${fechaDesde}" type="date">
+      </div>
+      <div class="col-span-12 md:col-span-2">
+        <label class="form-label mb-1" for="fechaHasta">Fecha hasta</label>
+        <input class="form-control" id="fechaHasta" name="fechaHasta" th:value="${fechaHasta}" type="date">
+      </div>
+      <div class="col-span-12 md:col-span-3 flex gap-2 items-end">
+        <button class="btn btn-success flex items-center gap-2" type="submit">
+          <i class="ti ti-search"></i> Consultar
+        </button>
+        <a class="btn btn-secondary" th:href="@{/correo/historial}">Limpiar</a>
+      </div>
+    </form>
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover table-striped align-middle">
+            <thead class="bg-primary-100 dark:bg-primary-600 text-white">
+            <tr>
+              <th>#</th>
+              <th>Destinatario</th>
+              <th>Asunto</th>
+              <th>Fecha envío</th>
+              <th>Estado</th>
+              <th>Error</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                th:each="correo, iterStat : ${entities}">
+              <td th:text="${iterStat.index + 1 + (page * size)}">1</td>
+              <td>
+                <span class="font-semibold" th:text="${correo.destinatario}">correo@cliente.com</span>
+              </td>
+              <td>
+                <p class="m-0 fw-semibold" th:text="${correo.asunto}">Asunto</p>
+                <small class="text-muted" th:text="${#strings.abbreviate(correo.cuerpo, 80)}"></small>
+              </td>
+              <td th:text="${correo.fechaEnvio != null ? #temporals.format(correo.fechaEnvio, 'dd/MM/yyyy HH:mm') : '-'}">
+                -
+              </td>
+              <td>
+                <span class="badge" th:classappend="${correo.exito} ? ' bg-success' : ' bg-danger'">
+                  <span th:text="${correo.exito ? 'Enviado' : 'Fallido'}">-</span>
+                </span>
+              </td>
+              <td th:text="${correo.mensajeError != null ? correo.mensajeError : '-'}">-</td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(entities)}">
+              <td class="text-center text-gray-500 py-4" colspan="6">
+                No hay correos para los filtros seleccionados.
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="flex justify-between items-center mt-4" th:if="${pageResponse != null}">
+          <div class="text-sm text-muted">
+            <span th:text="${'Página ' + (pageResponse.number + 1) + ' de ' + pageResponse.totalPages}">-</span>
+            |
+            <span th:text="${pageResponse.totalElements + ' correos'}">0</span>
+          </div>
+          <div class="flex gap-2">
+            <a class="btn btn-outline-secondary btn-sm" th:classappend="${pageResponse.first} ? ' disabled' : ''"
+               th:href="@{/correo/historial(page=${pageResponse.number - 1}, size=${size}, destinatario=${destinatario}, exito=${exito}, fechaDesde=${fechaDesde}, fechaHasta=${fechaHasta})}">
+              Anterior
+            </a>
+            <a class="btn btn-outline-secondary btn-sm" th:classappend="${pageResponse.last} ? ' disabled' : ''"
+               th:href="@{/correo/historial(page=${pageResponse.number + 1}, size=${size}, destinatario=${destinatario}, exito=${exito}, fechaDesde=${fechaDesde}, fechaHasta=${fechaHasta})}">
+              Siguiente
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div th:replace="~{fragments/layout :: footer}"></div>
+
+<script th:src="@{/assets/js/plugins/simplebar.min.js}"></script>
+<script th:src="@{/assets/js/plugins/popper.min.js}"></script>
+<script th:src="@{/assets/js/plugins/feather.min.js}"></script>
+<script th:src="@{/assets/js/component.js}"></script>
+<script th:src="@{/assets/js/theme.js}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        feather.replace();
+    });
+</script>
+</body>
+</html>

@@ -7,8 +7,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.math.BigDecimal;
@@ -16,8 +14,8 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
-@Configuration
-@Profile({"dev", "test"})
+//@Configuration
+//@Profile({ "dev", "test" })
 public class DataInitializer implements CommandLineRunner {
 
     private final UsuarioRepository usuarioRepository;

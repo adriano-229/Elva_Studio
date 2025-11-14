@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 public class ProvinciaRestDaoImpl extends BaseRestDaoImpl<ProvinciaDTO, Long>{
 
 	public ProvinciaRestDaoImpl() {
-		super(ProvinciaDTO.class, ProvinciaDTO[].class, "http://localhost:9000/api/v1/provincias");
+        super(ProvinciaDTO.class, ProvinciaDTO[].class, "http://localhost:8083/api/v1/provincias");
 	}
 
 }

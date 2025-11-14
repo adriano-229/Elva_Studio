@@ -14,10 +14,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/documentacion")
 @Getter
 public class DocumentacionController extends BaseControllerImpl<DocumentacionDTO, DocumentacionServiceImpl>{
-	
-	private final String viewList = "";
-	private final String viewEdit = "";
-	private final String redirectList= "redirect:/alquiler/listar";
+
+    private final String viewList = "";
+    private final String viewEdit = "";
+    private final String redirectList = "redirect:/alquiler/listar";
 	
 	@Override
 	public String crear(Model model) {
